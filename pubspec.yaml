@@ -46,17 +46,7 @@ dev_dependencies:
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
   flutter_lints: ^4.0.0
-  app2:
-    git:
-      url: https://github.com/mansi-benzatine/trail_uikit.git
-      ref: app2/application2
-      path: packages/app2
 
-  app1:
-    git:
-      url: https://github.com/mansi-benzatine/trail_uikit.git
-      ref: app1/application1
-      path: packages/app1
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 
