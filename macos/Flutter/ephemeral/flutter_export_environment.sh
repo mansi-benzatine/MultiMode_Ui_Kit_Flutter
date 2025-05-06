@@ -1,6 +1,6 @@
 #!/bin/sh
 # This is a generated file; do not edit or check into version control.
-export "FLUTTER_ROOT=/Volumes/DATA/FlutterSDK/3.19.2"
+export "FLUTTER_ROOT=/Volumes/DATA/FlutterSDK/3.27.0"
 export "FLUTTER_APPLICATION_PATH=/Volumes/DATA/Mansi/plugin_trial"
 export "COCOAPODS_PARALLEL_CODE_SIGN=true"
 export "FLUTTER_BUILD_DIR=build"

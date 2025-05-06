@@ -16,7 +16,7 @@ class MainHomeScreen extends StatelessWidget {
               Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (_) => const App1HomeScreen(),
+                    builder: (_) => App1HomeScreen(),
                   ));
             },
             child: const Text("Open App 1"),
@@ -26,7 +26,7 @@ class MainHomeScreen extends StatelessWidget {
               Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (_) => const App2HomeScreen(),
+                    builder: (_) => App2HomeScreen(),
                   ));
             },
             child: const Text("Open App 2"),

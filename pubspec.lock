@@ -6,7 +6,7 @@ packages:
     description:
       path: "packages/app1"
       ref: "app1/application1"
-      resolved-ref: "572095cf824450b32f7b5c3e3e625366494aad3b"
+      resolved-ref: "9c4ec35c0312c1b85b96cb6ad4bd1f0061b3725e"
       url: "https://github.com/mansi-benzatine/trail_uikit.git"
     source: git
     version: "0.0.1"
@@ -15,7 +15,7 @@ packages:
     description:
       path: "packages/app2"
       ref: "app2/application2"
-      resolved-ref: "8da096de1296a9395f2a42418067f67ae3ae3bd6"
+      resolved-ref: "38a6cfb88fabfc9b82629e6e9c4009759a19f178"
       url: "https://github.com/mansi-benzatine/trail_uikit.git"
     source: git
     version: "0.0.1"
