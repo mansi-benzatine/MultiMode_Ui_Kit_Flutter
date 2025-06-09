@@ -1,0 +1,75 @@
+name: job_finder_screens_app_package
+description: "A new Flutter package project."
+version: 0.0.1
+homepage:
+
+environment:
+  sdk: ^3.5.0
+  flutter: ">=1.17.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_localizations:
+    sdk: flutter
+  shared_preferences: ^2.3.5
+  get_it: ^8.0.3
+  flutter_screenutil: ^5.9.3
+  auto_size_text: ^3.0.0
+  smooth_page_indicator: ^1.2.0+3
+  widgets_easier: ^0.0.10
+  syncfusion_flutter_sliders: 29.2.9
+  flutter_switch: ^0.3.2
+  syncfusion_flutter_core: 29.2.9
+  intl: 0.20.2
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^4.0.0
+
+# For information on the generic Dart part of this file, see the
+# following page: https://dart.dev/tools/pub/pubspec
+
+# The following section is specific to Flutter packages.
+flutter:
+
+  assets:
+    - assets/
+    - assets/images/
+    - assets/icons/
+    - assets/dark_icons/
+    - assets/dark_images/
+  #
+  # For details regarding assets in packages, see
+  # https://flutter.dev/to/asset-from-package
+  #
+  # An image asset can refer to one or more resolution-specific "variants", see
+  # https://flutter.dev/to/resolution-aware-images
+
+  # To add custom fonts to your package, add a fonts section here,
+  # in this "flutter" section. Each entry in this list should have a
+  # "family" key with the font family name, and a "fonts" key with a
+  # list giving the asset and other descriptors for the font. For
+  # example:
+  fonts:
+    - family: DMSans
+      fonts:
+        - asset: assets/fonts/DMSans-Light.ttf
+          weight: 300
+        - asset: assets/fonts/DMSans-Regular.ttf
+          weight: 400
+        - asset: assets/fonts/DMSans-Medium.ttf
+          weight: 500
+        - asset: assets/fonts/DMSans-Black.ttf
+          weight: 600
+        - asset: assets/fonts/DMSans-SemiBold.ttf
+          weight: 700
+        - asset: assets/fonts/DMSans-Bold.ttf
+          weight: 800
+        - asset: assets/fonts/DMSans-ExtraBold.ttf
+          weight: 900
+
+  #
+  # For details regarding fonts in packages, see
+  # https://flutter.dev/to/font-from-package

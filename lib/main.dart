@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:plugin_trial/home_screen.dart';
+
+import 'home_screen.dart';
 
 void main() {
   runApp(MyApp());
@@ -14,7 +15,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       key: MyApp.navigatorKey,
-      title: 'Flutter Demo',
+      title: 'MultiMode Flutter',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
