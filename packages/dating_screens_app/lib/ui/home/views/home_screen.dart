@@ -348,7 +348,7 @@ class ProfileCardSwiper extends StatelessWidget {
     showDialog(
       context: context,
       barrierDismissible: false,
-      builder: (context) => Dialog(
+      builder: (dialogContext) => Dialog(
         backgroundColor: Colors.transparent,
         insetPadding: EdgeInsets.symmetric(horizontal: 24.setWidth),
         child: Container(
@@ -385,7 +385,11 @@ class ProfileCardSwiper extends StatelessWidget {
                     ],
                   ),
                   child: GestureDetector(
-                    onTap: () => Navigator.of(context).pop(),
+                    onTap: () {
+                      if (dialogContext.mounted) {
+                        Navigator.pop(dialogContext);
+                      }
+                    },
                     child: Icon(Icons.close, color: CustomAppColor.of(context).txtPink),
                   ),
                 ),
@@ -485,7 +489,9 @@ class ProfileCardSwiper extends StatelessWidget {
                   child: CommonButton(
                     text: Languages.of(context).txtSendAMessage,
                     onTap: () {
-                      Navigator.pop(context);
+                      if (dialogContext.mounted) {
+                        Navigator.pop(dialogContext);
+                      }
                       Navigator.push(context, ChatScreen.route());
                     },
                     height: 40.setHeight,
@@ -494,7 +500,11 @@ class ProfileCardSwiper extends StatelessWidget {
               ),
               SizedBox(height: 10.setHeight),
               InkWell(
-                onTap: () => Navigator.pop(context),
+                onTap: () {
+                  if (dialogContext.mounted) {
+                    Navigator.pop(dialogContext);
+                  }
+                },
                 child: CommonText(
                   text: Languages.of(context).txtKeepPlaying,
                   fontSize: 18.setFontSize,
