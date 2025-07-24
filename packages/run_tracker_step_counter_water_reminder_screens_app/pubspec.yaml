@@ -1,0 +1,65 @@
+name: run_tracker_step_counter_water_reminder_screens_app
+description: "A new Flutter package project."
+version: 0.0.1
+homepage:
+
+environment:
+  sdk: ^3.8.0
+  flutter: ">=1.17.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_localizations:
+    sdk: flutter
+
+  shared_preferences: ^2.3.5
+  get_it: ^8.0.3
+  flutter_screenutil: ^5.9.3
+  auto_size_text: ^3.0.0
+  smooth_page_indicator: ^1.2.0+3
+  flutter_switch: ^0.3.2
+  intl: 0.20.2
+  syncfusion_flutter_charts: ^29.2.9
+  syncfusion_flutter_gauges: ^29.2.9
+  syncfusion_flutter_core: ^29.2.9
+  lottie: ^3.3.1
+  flutter_rating_bar: ^4.0.1
+  fl_chart: ^1.0.0
+  table_calendar: ^3.2.0
+  liquid_progress_indicator_v2: ^0.5.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^5.0.0
+
+flutter:
+  assets:
+    - assets/
+    - assets/images/
+    - assets/dark_images/
+    - assets/icons/
+    - assets/dark_icons/
+    - assets/jsons/
+
+  fonts:
+    - family: Roboto
+      fonts:
+        - asset: assets/fonts/Roboto-Regular.ttf
+          weight: 400
+        - asset: assets/fonts/Roboto-Medium.ttf
+          weight: 500
+        - asset: assets/fonts/Roboto-SemiBold.ttf
+          weight: 600
+        - asset: assets/fonts/Roboto-Bold.ttf
+          weight: 700
+        - asset: assets/fonts/Roboto-Light.ttf
+          weight: 300
+        - asset: assets/fonts/Roboto-ExtraBold.ttf
+          weight: 800
+
+    - family: Oswald
+      fonts:
+        - asset: assets/fonts/Oswald-Regular.ttf
+          weight: 400
