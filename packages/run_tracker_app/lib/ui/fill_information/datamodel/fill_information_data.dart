@@ -1,0 +1,1 @@
+enum UnitType { km, mi }
