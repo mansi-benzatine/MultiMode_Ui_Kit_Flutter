@@ -442,10 +442,11 @@ class _PauseRunTrackerScreenState extends State<PauseRunTrackerScreen>
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(10),
           ),
-          backgroundColor: CustomAppColor.of(context).white,
-
+          backgroundColor: CustomAppColor.of(
+            context,
+          ).white, // Use parent context
           child: Padding(
-            padding: EdgeInsetsGeometry.symmetric(
+            padding: EdgeInsets.symmetric(
               horizontal: 20.setWidth,
               vertical: 26.setHeight,
             ),
@@ -455,7 +456,9 @@ class _PauseRunTrackerScreenState extends State<PauseRunTrackerScreen>
                 Align(
                   alignment: Alignment.topRight,
                   child: GestureDetector(
-                    onTap: () => Navigator.pop(context),
+                    onTap: () => Navigator.pop(
+                      dialogContext,
+                    ), // Use dialogContext for pop
                     child: const Icon(
                       Icons.close,
                       color: Colors.black,
@@ -470,18 +473,29 @@ class _PauseRunTrackerScreenState extends State<PauseRunTrackerScreen>
                 ),
                 SizedBox(height: 10.setHeight),
                 CommonText(
-                  text: Languages.of(context).txtFinishTraining.toUpperCase(),
+                  text: Languages.of(
+                    context,
+                  ).txtFinishTraining.toUpperCase(), // Use parent context
                   fontWeight: FontWeight.w900,
                   fontSize: 20.setFontSize,
-                  textColor: CustomAppColor.of(context).black,
+                  textColor: CustomAppColor.of(
+                    context,
+                  ).black, // Use parent context
                 ),
                 SizedBox(height: 24.setHeight),
                 CommonButton(
-                  text: Languages.of(context).txtFinish.toUpperCase(),
+                  text: Languages.of(
+                    context,
+                  ).txtFinish.toUpperCase(), // Use parent context
                   onTap: () {
                     if (dialogContext.mounted) {
-                      Navigator.pop(dialogContext);
-                      // Navigator.push(context, WellDoneScreen.route());
+                      Navigator.pop(
+                        dialogContext,
+                      ); // Close dialog with dialogContext
+                      /*Navigator.push(
+                        context,
+                        WellDoneScreen.route(),
+                      ); */ // Use parent context for push
                     }
                   },
                 ),

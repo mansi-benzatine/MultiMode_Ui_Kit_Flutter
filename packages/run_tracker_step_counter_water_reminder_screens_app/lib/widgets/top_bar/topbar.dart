@@ -67,7 +67,7 @@ class TopBar extends StatelessWidget {
           color: appbarColor ?? CustomAppColor.of(context).bgScaffold,
         ),
         child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          // crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             if (isShowBack)
               IgnorePointer(
@@ -106,16 +106,19 @@ class TopBar extends StatelessWidget {
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                   ),
-                  SizedBox(height: 5.setHeight),
-                  CommonText(
-                    text: shortHeading ?? "",
-                    fontWeight: FontWeight.w500,
-                    fontSize: 13.setFontSize,
-                    textColor: textColor ?? CustomAppColor.of(context).txtGrey,
-                    height: 1,
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                  ),
+                  if (shortHeading != null && shortHeading!.isNotEmpty) ...[
+                    SizedBox(height: 5.setHeight),
+                    CommonText(
+                      text: shortHeading!,
+                      fontWeight: FontWeight.w500,
+                      fontSize: 13.setFontSize,
+                      textColor:
+                          textColor ?? CustomAppColor.of(context).txtGrey,
+                      height: 1,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ],
                 ],
               ),
             if (isShowTitle)
@@ -202,16 +205,14 @@ class TopBar extends StatelessWidget {
                 child: Container(
                   padding: EdgeInsets.all(10),
                   decoration: BoxDecoration(
-                    border: Border.all(
-                      color: CustomAppColor.of(context).txtBlack,
-                    ),
+                    border: Border.all(color: CustomAppColor.of(context).white),
                     borderRadius: BorderRadius.circular(15),
                   ),
                   child: Image.asset(
                     AppAssets.icFilter,
                     height: 24.setHeight,
                     width: 24.setWidth,
-                    color: CustomAppColor.of(context).icBlack,
+                    color: CustomAppColor.of(context).white,
                   ),
                 ),
               ),

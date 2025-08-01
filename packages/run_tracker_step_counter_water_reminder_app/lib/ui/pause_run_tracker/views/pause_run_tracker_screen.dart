@@ -469,9 +469,8 @@ class _PauseRunTrackerScreenState extends State<PauseRunTrackerScreen>
             borderRadius: BorderRadius.circular(10),
           ),
           backgroundColor: CustomAppColor.of(context).white,
-
           child: Padding(
-            padding: EdgeInsetsGeometry.symmetric(
+            padding: EdgeInsets.symmetric(
               horizontal: 20.setWidth,
               vertical: 26.setHeight,
             ),
@@ -481,7 +480,7 @@ class _PauseRunTrackerScreenState extends State<PauseRunTrackerScreen>
                 Align(
                   alignment: Alignment.topRight,
                   child: GestureDetector(
-                    onTap: () => Navigator.pop(context),
+                    onTap: () => Navigator.pop(dialogContext),
                     child: const Icon(
                       Icons.close,
                       color: Colors.black,
@@ -507,7 +506,7 @@ class _PauseRunTrackerScreenState extends State<PauseRunTrackerScreen>
                   onTap: () {
                     if (dialogContext.mounted) {
                       Navigator.pop(dialogContext);
-                      Navigator.push(dialogContext, WellDoneScreen.route());
+                      Navigator.push(context, WellDoneScreen.route());
                     }
                   },
                 ),
