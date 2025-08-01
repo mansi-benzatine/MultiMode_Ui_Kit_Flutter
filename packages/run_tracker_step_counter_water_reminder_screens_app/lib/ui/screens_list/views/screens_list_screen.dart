@@ -229,17 +229,30 @@ class _ScreenListScreen extends State<ScreenListScreen> {
               widget.onBack?.call();
             },
           ),
-          title: CommonText(
-            text: "Run Tracker, Step Counter and Water Reminder App",
-            fontSize: 22.setFontSize,
-            fontWeight: FontWeight.w700,
-            textColor: CustomAppColor.of(context).white,
+          title: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              CommonText(
+                text: "Tracker Mode",
+                fontSize: 20.setFontSize,
+                fontWeight: FontWeight.w700,
+                textColor: CustomAppColor.of(context).white,
+              ),
+              CommonText(
+                text: "Run Tracker, Step Counter and Water Reminder App",
+                fontSize: 14.setFontSize,
+                fontWeight: FontWeight.w500,
+                maxLines: 2,
+                textColor: CustomAppColor.of(context).white,
+                textAlign: TextAlign.start,
+              ),
+            ],
           ),
         ),
         body: Container(
           width: double.infinity,
           height: double.infinity,
-          padding: EdgeInsets.only(top: 20.setHeight),
+          padding: EdgeInsets.only(top: 6.setHeight),
           decoration: BoxDecoration(
             image: DecorationImage(
               image: AssetImage(AppAssets.imgBgHomeScreenPlain),
@@ -248,7 +261,7 @@ class _ScreenListScreen extends State<ScreenListScreen> {
           ),
           child: Column(
             children: [
-              const SizedBox(height: kToolbarHeight + 26),
+              const SizedBox(height: kToolbarHeight + 40),
               _ModeGridView(screenList: screenList),
             ],
           ),
@@ -268,7 +281,7 @@ class _ModeGridView extends StatelessWidget {
     return Expanded(
       child: Container(
         width: 0.screenWidth,
-        margin: EdgeInsets.only(top: 10.setHeight),
+        margin: EdgeInsets.only(top: 20.setHeight),
         decoration: BoxDecoration(
           color: CustomAppColor.of(context).txtWhite,
           borderRadius: const BorderRadius.vertical(top: Radius.circular(40)),
