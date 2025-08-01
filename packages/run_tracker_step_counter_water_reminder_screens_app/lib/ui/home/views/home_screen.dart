@@ -99,7 +99,7 @@ class _HomeScreenState extends State<HomeScreen>
             TopBar(
               this,
               isShowTitle: true,
-              title: Languages.of(context).txtRunTracker.toUpperCase(),
+              title: Languages.of(context).txtAppName.toUpperCase(),
               shortHeading: Languages.of(context).txtGoFasterAndSmarter,
               isShowInfo: true,
             ),

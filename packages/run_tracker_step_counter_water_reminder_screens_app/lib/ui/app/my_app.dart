@@ -153,7 +153,7 @@ class _RunTrackerStepCounterWaterReminderScreensAppState
             return supportedLocales.first;
           },
           home: ScreenListScreen(
-            title: "Run Tracker, Step Counter and Water Reminder App",
+            title: "Tracker Mode App",
             onBack: () {
               Navigator.pop(context);
             },

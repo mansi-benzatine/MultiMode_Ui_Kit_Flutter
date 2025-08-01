@@ -18,7 +18,8 @@ class HistoryScreen extends StatefulWidget {
   State<HistoryScreen> createState() => _HistoryScreenState();
 }
 
-class _HistoryScreenState extends State<HistoryScreen> implements TopBarClickListener {
+class _HistoryScreenState extends State<HistoryScreen>
+    implements TopBarClickListener {
   List<Map<String, dynamic>>? historyList;
 
   ValueNotifier<bool> isDeleteMode = ValueNotifier(false);
@@ -130,45 +131,81 @@ class _HistoryScreenState extends State<HistoryScreen> implements TopBarClickLis
                       ? _buildEmptyHistory()
                       : ListView.builder(
                           itemCount: historyList?.length ?? 0,
-                          padding: EdgeInsets.only(left: 16.setWidth, right: 16.setWidth, top: 16.setHeight, bottom: 30.setHeight),
+                          padding: EdgeInsets.only(
+                              left: 16.setWidth,
+                              right: 16.setWidth,
+                              top: 16.setHeight,
+                              bottom: 30.setHeight),
                           itemBuilder: (context, index) {
                             return GestureDetector(
                               onTap: () {
                                 if (isDeleteMode.value) {
                                   // showDeleteDialog();
-                                  historyList?[index]['isSelected'] = !historyList?[index]['isSelected'];
-                                  isSelectAll.value = historyList?.every((element) => element['isSelected'] == true) ?? false;
-                                  isDeleteMode.value = historyList?.any((element) => element['isSelected'] == true) ?? false;
+                                  historyList?[index]['isSelected'] =
+                                      !historyList?[index]['isSelected'];
+                                  isSelectAll.value = historyList?.every(
+                                          (element) =>
+                                              element['isSelected'] == true) ??
+                                      false;
+                                  isDeleteMode.value = historyList?.any(
+                                          (element) =>
+                                              element['isSelected'] == true) ??
+                                      false;
                                   setState(() {});
                                 } else {
                                   if (historyList?[index] != null) {
-                                    Navigator.push(context, MaterialPageRoute(builder: (context) => QrCodeResultScreen(qrType: historyList![index])));
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                QrCodeResultScreen(
+                                                    qrType:
+                                                        historyList![index])));
                                   }
                                 }
                               },
                               onLongPress: () {
                                 if (isDeleteMode.value) {
-                                  historyList?[index]['isSelected'] = !historyList?[index]['isSelected'];
-                                  isSelectAll.value = historyList?.every((element) => element['isSelected'] == true) ?? false;
-                                  isDeleteMode.value = historyList?.any((element) => element['isSelected'] == true) ?? false;
+                                  historyList?[index]['isSelected'] =
+                                      !historyList?[index]['isSelected'];
+                                  isSelectAll.value = historyList?.every(
+                                          (element) =>
+                                              element['isSelected'] == true) ??
+                                      false;
+                                  isDeleteMode.value = historyList?.any(
+                                          (element) =>
+                                              element['isSelected'] == true) ??
+                                      false;
                                   setState(() {});
                                 } else {
                                   isDeleteMode.value = true;
                                   historyList?[index]['isSelected'] = true;
-                                  isSelectAll.value = historyList?.every((element) => element['isSelected'] == true) ?? false;
-                                  isDeleteMode.value = historyList?.any((element) => element['isSelected'] == true) ?? false;
+                                  isSelectAll.value = historyList?.every(
+                                          (element) =>
+                                              element['isSelected'] == true) ??
+                                      false;
+                                  isDeleteMode.value = historyList?.any(
+                                          (element) =>
+                                              element['isSelected'] == true) ??
+                                      false;
                                   setState(() {});
                                 }
                               },
                               child: Container(
                                 width: double.infinity,
                                 margin: EdgeInsets.only(bottom: 16.setHeight),
-                                padding: EdgeInsets.symmetric(horizontal: 14.setWidth, vertical: 12.setHeight),
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: 14.setWidth,
+                                    vertical: 12.setHeight),
                                 decoration: BoxDecoration(
-                                  color: (historyList?[index]['isSelected']) ? CustomAppColor.of(context).primary : CustomAppColor.of(context).bgCard,
-                                  borderRadius: BorderRadius.circular(12.setHeight),
+                                  color: (historyList?[index]['isSelected'])
+                                      ? CustomAppColor.of(context).primary
+                                      : CustomAppColor.of(context).bgCard,
+                                  borderRadius:
+                                      BorderRadius.circular(12.setHeight),
                                   border: Border.all(
-                                    color: CustomAppColor.of(context).containerBorder,
+                                    color: CustomAppColor.of(context)
+                                        .containerBorder,
                                     width: 1,
                                   ),
                                 ),
@@ -182,26 +219,35 @@ class _HistoryScreenState extends State<HistoryScreen> implements TopBarClickLis
                                     SizedBox(width: 16.setWidth),
                                     Expanded(
                                       child: Column(
-                                        crossAxisAlignment: CrossAxisAlignment.start,
-                                        mainAxisAlignment: MainAxisAlignment.center,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
                                         children: [
                                           CommonText(
                                             text: historyList?[index]['name'],
                                             fontSize: 14.setFontSize,
                                             fontWeight: FontWeight.w500,
                                             maxLines: 1,
-                                            textColor: (historyList?[index]['isSelected'])
-                                                ? CustomAppColor.of(context).txtWhite
-                                                : CustomAppColor.of(context).txtBlack,
+                                            textColor: (historyList?[index]
+                                                    ['isSelected'])
+                                                ? CustomAppColor.of(context)
+                                                    .txtWhite
+                                                : CustomAppColor.of(context)
+                                                    .txtBlack,
                                           ),
                                           SizedBox(height: 4.setHeight),
                                           CommonText(
-                                            text: historyList?[index]['description'],
+                                            text: historyList?[index]
+                                                ['description'],
                                             fontSize: 12.setFontSize,
                                             fontWeight: FontWeight.w400,
-                                            textColor: (historyList?[index]['isSelected'])
-                                                ? CustomAppColor.of(context).txtWhite
-                                                : CustomAppColor.of(context).txtDarkGray,
+                                            textColor: (historyList?[index]
+                                                    ['isSelected'])
+                                                ? CustomAppColor.of(context)
+                                                    .txtWhite
+                                                : CustomAppColor.of(context)
+                                                    .txtDarkGray,
                                           ),
                                           SizedBox(height: 8.setHeight),
                                           Row(
@@ -210,36 +256,50 @@ class _HistoryScreenState extends State<HistoryScreen> implements TopBarClickLis
                                                 AppAssets.icDate,
                                                 height: 14.setHeight,
                                                 width: 14.setWidth,
-                                                color: (historyList?[index]['isSelected'])
-                                                    ? CustomAppColor.of(context).txtWhite
-                                                    : CustomAppColor.of(context).primary,
+                                                color: (historyList?[index]
+                                                        ['isSelected'])
+                                                    ? CustomAppColor.of(context)
+                                                        .txtWhite
+                                                    : CustomAppColor.of(context)
+                                                        .primary,
                                               ),
                                               SizedBox(width: 4.setWidth),
                                               CommonText(
-                                                text: historyList?[index]['date'],
+                                                text: historyList?[index]
+                                                    ['date'],
                                                 fontSize: 12.setFontSize,
                                                 fontWeight: FontWeight.w400,
-                                                textColor: (historyList?[index]['isSelected'])
-                                                    ? CustomAppColor.of(context).txtWhite
-                                                    : CustomAppColor.of(context).txtDarkGray,
+                                                textColor: (historyList?[index]
+                                                        ['isSelected'])
+                                                    ? CustomAppColor.of(context)
+                                                        .txtWhite
+                                                    : CustomAppColor.of(context)
+                                                        .txtDarkGray,
                                               ),
                                               SizedBox(width: 16.setWidth),
                                               Image.asset(
                                                 AppAssets.icTime,
                                                 height: 16.setHeight,
                                                 width: 16.setWidth,
-                                                color: (historyList?[index]['isSelected'])
-                                                    ? CustomAppColor.of(context).txtWhite
-                                                    : CustomAppColor.of(context).primary,
+                                                color: (historyList?[index]
+                                                        ['isSelected'])
+                                                    ? CustomAppColor.of(context)
+                                                        .txtWhite
+                                                    : CustomAppColor.of(context)
+                                                        .primary,
                                               ),
                                               SizedBox(width: 4.setWidth),
                                               CommonText(
-                                                text: historyList?[index]['time'],
+                                                text: historyList?[index]
+                                                    ['time'],
                                                 fontSize: 12.setFontSize,
                                                 fontWeight: FontWeight.w400,
-                                                textColor: (historyList?[index]['isSelected'])
-                                                    ? CustomAppColor.of(context).txtWhite
-                                                    : CustomAppColor.of(context).txtDarkGray,
+                                                textColor: (historyList?[index]
+                                                        ['isSelected'])
+                                                    ? CustomAppColor.of(context)
+                                                        .txtWhite
+                                                    : CustomAppColor.of(context)
+                                                        .txtDarkGray,
                                               ),
                                             ],
                                           ),
@@ -250,15 +310,22 @@ class _HistoryScreenState extends State<HistoryScreen> implements TopBarClickLis
                                     GestureDetector(
                                       onTap: () {
                                         if (!isDeleteMode.value) {
-                                          historyList?[index]['isFavorite'] = !historyList?[index]['isFavorite'];
+                                          historyList?[index]['isFavorite'] =
+                                              !historyList?[index]
+                                                  ['isFavorite'];
                                           setState(() {});
                                         }
                                       },
                                       child: Image.asset(
-                                        (historyList?[index]['isFavorite']) ? AppAssets.icTabFavoriteSelected : AppAssets.icTabFavorite,
-                                        color: (historyList?[index]['isSelected'])
-                                            ? CustomAppColor.of(context).txtWhite
-                                            : CustomAppColor.of(context).primary,
+                                        (historyList?[index]['isFavorite'])
+                                            ? AppAssets.icTabFavoriteSelected
+                                            : AppAssets.icTabFavorite,
+                                        color: (historyList?[index]
+                                                ['isSelected'])
+                                            ? CustomAppColor.of(context)
+                                                .txtWhite
+                                            : CustomAppColor.of(context)
+                                                .primary,
                                         height: 24.setHeight,
                                         width: 24.setWidth,
                                       ),
@@ -306,7 +373,11 @@ class _HistoryScreenState extends State<HistoryScreen> implements TopBarClickLis
   }
 
   void showDeleteDialog() {
-    showDialog(context: context, builder: (context) => const HistoryDeleteConfirmationDialog()).then((value) {
+    showDialog(
+            context: context,
+            builder: (_) =>
+                HistoryDeleteConfirmationDialog(parentContext: context))
+        .then((value) {
       if (value == true) {
         historyList?.removeWhere((element) => element['isSelected'] == true);
         isDeleteMode.value = false;

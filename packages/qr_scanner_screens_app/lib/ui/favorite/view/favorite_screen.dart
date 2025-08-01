@@ -280,9 +280,10 @@ class _FavoriteScreenState extends State<FavoriteScreen>
 
   void showDeleteDialog() {
     showDialog(
-            context: context,
-            builder: (context) => const FavoriteDeleteConfirmationDialog())
-        .then((value) {
+        context: context,
+        builder: (_) => FavoriteDeleteConfirmationDialog(
+              parentContext: context,
+            )).then((value) {
       if (value == true) {
         favoriteList?.removeWhere((element) => element['isSelected'] == true);
         isDeleteMode.value = false;

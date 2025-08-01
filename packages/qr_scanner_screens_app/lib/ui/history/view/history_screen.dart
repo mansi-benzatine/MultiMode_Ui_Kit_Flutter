@@ -373,8 +373,10 @@ class _HistoryScreenState extends State<HistoryScreen>
 
   void showDeleteDialog() {
     showDialog(
-        context: context,
-        builder: (_) => const HistoryDeleteConfirmationDialog()).then((value) {
+            context: context,
+            builder: (_) =>
+                HistoryDeleteConfirmationDialog(parentContext: context))
+        .then((value) {
       if (value == true) {
         historyList?.removeWhere((element) => element['isSelected'] == true);
         isDeleteMode.value = false;

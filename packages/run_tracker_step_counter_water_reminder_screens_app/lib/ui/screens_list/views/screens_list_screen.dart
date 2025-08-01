@@ -230,7 +230,7 @@ class _ScreenListScreen extends State<ScreenListScreen> {
             },
           ),
           title: CommonText(
-            text: "Run Tracker, Step Counter and Water Reminder App",
+            text: "Tracker Mode App",
             fontSize: 22.setFontSize,
             fontWeight: FontWeight.w700,
             textColor: CustomAppColor.of(context).white,

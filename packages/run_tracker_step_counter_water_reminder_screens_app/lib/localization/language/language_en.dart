@@ -2,7 +2,7 @@ import 'languages.dart';
 
 class LanguageEn extends Languages {
   @override
-  String get txtAppName => "Food Delivery UiKit";
+  String get txtAppName => "Tracker Mode";
   @override
   String get txtRunTracker => "Run Tracker";
   @override
@@ -19,7 +19,7 @@ class LanguageEn extends Languages {
   String get txtWaterReminderDesc =>
       "Water is essential to our life, drinking enough and the right quantity of water is vital for our health. Water reminder app is drink water tracker & reminder free";
   @override
-  String get txtWelcomeToFitMode => "Welcome to FitMode";
+  String get txtWelcomeToFitMode => "Welcome to Tracker Mode";
   @override
   String get txtWelcomeToFitModeDesc1 =>
       "I’m Christy, your personal fitness coatch.";
@@ -123,10 +123,10 @@ class LanguageEn extends Languages {
   String get txtUseYourLocation => "Use Your Permission";
   @override
   String get txtLocationDesc =>
-      "To see maps for automatically tracked activities, allow FitMode to use your location all of the time.";
+      "To see maps for automatically tracked activities, allow tracker mode to use your location all of the time.";
   @override
   String get txtLocationDesc1 =>
-      "FitMode will use location in the background to show walks, runs and bike rides on a map.";
+      "Tracker mode will use location in the background to show walks, runs and bike rides on a map.";
   @override
   String get txtAllow => "Allow";
   @override

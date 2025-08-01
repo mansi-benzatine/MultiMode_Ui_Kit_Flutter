@@ -18,7 +18,8 @@ class FavoriteScreen extends StatefulWidget {
   State<FavoriteScreen> createState() => _FavoriteScreenState();
 }
 
-class _FavoriteScreenState extends State<FavoriteScreen> implements TopBarClickListener {
+class _FavoriteScreenState extends State<FavoriteScreen>
+    implements TopBarClickListener {
   List<Map<String, dynamic>>? favoriteList;
 
   ValueNotifier<bool> isDeleteMode = ValueNotifier(false);
@@ -81,8 +82,11 @@ class _FavoriteScreenState extends State<FavoriteScreen> implements TopBarClickL
           children: [
             ValueListenableBuilder(
               valueListenable: isDeleteMode,
-              builder: (context, value, child) =>
-                  TopBar(this, title: Languages.of(context).txtFavorite, isShowDelete: true, isShowDone: value, isDeleteEnabled: value),
+              builder: (context, value, child) => TopBar(this,
+                  title: Languages.of(context).txtFavorite,
+                  isShowDelete: true,
+                  isShowDone: value,
+                  isDeleteEnabled: value),
             ),
             Expanded(
               child: favoriteList == null
@@ -130,7 +134,11 @@ class _FavoriteScreenState extends State<FavoriteScreen> implements TopBarClickL
   Widget _buildFavoriteList() {
     return ListView.builder(
       itemCount: favoriteList?.length ?? 0,
-      padding: EdgeInsets.only(left: 16.setWidth, right: 16.setWidth, top: 16.setHeight, bottom: 30.setHeight),
+      padding: EdgeInsets.only(
+          left: 16.setWidth,
+          right: 16.setWidth,
+          top: 16.setHeight,
+          bottom: 30.setHeight),
       itemBuilder: (context, index) => _buildFavoriteItem(favoriteList![index]),
     );
   }
@@ -141,33 +149,51 @@ class _FavoriteScreenState extends State<FavoriteScreen> implements TopBarClickL
           if (isDeleteMode.value) {
             // showDeleteDialog();
             item['isSelected'] = !item['isSelected'];
-            isSelectAll.value = favoriteList?.every((element) => element['isSelected'] == true) ?? false;
-            isDeleteMode.value = favoriteList?.any((element) => element['isSelected'] == true) ?? false;
+            isSelectAll.value = favoriteList
+                    ?.every((element) => element['isSelected'] == true) ??
+                false;
+            isDeleteMode.value =
+                favoriteList?.any((element) => element['isSelected'] == true) ??
+                    false;
             setState(() {});
           } else {
-            Navigator.push(context, MaterialPageRoute(builder: (context) => QrCodeResultScreen(qrType: item)));
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => QrCodeResultScreen(qrType: item)));
           }
         },
         onLongPress: () {
           if (isDeleteMode.value) {
             item['isSelected'] = !item['isSelected'];
-            isSelectAll.value = favoriteList?.every((element) => element['isSelected'] == true) ?? false;
-            isDeleteMode.value = favoriteList?.any((element) => element['isSelected'] == true) ?? false;
+            isSelectAll.value = favoriteList
+                    ?.every((element) => element['isSelected'] == true) ??
+                false;
+            isDeleteMode.value =
+                favoriteList?.any((element) => element['isSelected'] == true) ??
+                    false;
             setState(() {});
           } else {
             isDeleteMode.value = true;
             item['isSelected'] = true;
-            isSelectAll.value = favoriteList?.every((element) => element['isSelected'] == true) ?? false;
-            isDeleteMode.value = favoriteList?.any((element) => element['isSelected'] == true) ?? false;
+            isSelectAll.value = favoriteList
+                    ?.every((element) => element['isSelected'] == true) ??
+                false;
+            isDeleteMode.value =
+                favoriteList?.any((element) => element['isSelected'] == true) ??
+                    false;
             setState(() {});
           }
         },
         child: Container(
           width: double.infinity,
           margin: EdgeInsets.only(bottom: 16.setHeight),
-          padding: EdgeInsets.symmetric(horizontal: 14.setWidth, vertical: 12.setHeight),
+          padding: EdgeInsets.symmetric(
+              horizontal: 14.setWidth, vertical: 12.setHeight),
           decoration: BoxDecoration(
-            color: (item['isSelected']) ? CustomAppColor.of(context).primary : CustomAppColor.of(context).bgCard,
+            color: (item['isSelected'])
+                ? CustomAppColor.of(context).primary
+                : CustomAppColor.of(context).bgCard,
             borderRadius: BorderRadius.circular(12.setHeight),
             border: Border.all(
               color: CustomAppColor.of(context).containerBorder,
@@ -192,14 +218,18 @@ class _FavoriteScreenState extends State<FavoriteScreen> implements TopBarClickL
                       fontSize: 14.setFontSize,
                       fontWeight: FontWeight.w500,
                       maxLines: 1,
-                      textColor: (item['isSelected']) ? CustomAppColor.of(context).txtWhite : CustomAppColor.of(context).txtBlack,
+                      textColor: (item['isSelected'])
+                          ? CustomAppColor.of(context).txtWhite
+                          : CustomAppColor.of(context).txtBlack,
                     ),
                     SizedBox(height: 4.setHeight),
                     CommonText(
                       text: item['description'],
                       fontSize: 12.setFontSize,
                       fontWeight: FontWeight.w400,
-                      textColor: (item['isSelected']) ? CustomAppColor.of(context).txtWhite : CustomAppColor.of(context).txtDarkGray,
+                      textColor: (item['isSelected'])
+                          ? CustomAppColor.of(context).txtWhite
+                          : CustomAppColor.of(context).txtDarkGray,
                     ),
                     SizedBox(height: 8.setHeight),
                     Row(
@@ -208,28 +238,36 @@ class _FavoriteScreenState extends State<FavoriteScreen> implements TopBarClickL
                           AppAssets.icDate,
                           height: 14.setHeight,
                           width: 14.setWidth,
-                          color: (item['isSelected']) ? CustomAppColor.of(context).txtWhite : CustomAppColor.of(context).primary,
+                          color: (item['isSelected'])
+                              ? CustomAppColor.of(context).txtWhite
+                              : CustomAppColor.of(context).primary,
                         ),
                         SizedBox(width: 4.setWidth),
                         CommonText(
                           text: item['date'],
                           fontSize: 12.setFontSize,
                           fontWeight: FontWeight.w400,
-                          textColor: (item['isSelected']) ? CustomAppColor.of(context).txtWhite : CustomAppColor.of(context).txtDarkGray,
+                          textColor: (item['isSelected'])
+                              ? CustomAppColor.of(context).txtWhite
+                              : CustomAppColor.of(context).txtDarkGray,
                         ),
                         SizedBox(width: 16.setWidth),
                         Image.asset(
                           AppAssets.icTime,
                           height: 16.setHeight,
                           width: 16.setWidth,
-                          color: (item['isSelected']) ? CustomAppColor.of(context).txtWhite : CustomAppColor.of(context).primary,
+                          color: (item['isSelected'])
+                              ? CustomAppColor.of(context).txtWhite
+                              : CustomAppColor.of(context).primary,
                         ),
                         SizedBox(width: 4.setWidth),
                         CommonText(
                           text: item['time'],
                           fontSize: 12.setFontSize,
                           fontWeight: FontWeight.w400,
-                          textColor: (item['isSelected']) ? CustomAppColor.of(context).txtWhite : CustomAppColor.of(context).txtDarkGray,
+                          textColor: (item['isSelected'])
+                              ? CustomAppColor.of(context).txtWhite
+                              : CustomAppColor.of(context).txtDarkGray,
                         ),
                       ],
                     ),
@@ -242,7 +280,11 @@ class _FavoriteScreenState extends State<FavoriteScreen> implements TopBarClickL
   }
 
   void showDeleteDialog() {
-    showDialog(context: context, builder: (context) => const FavoriteDeleteConfirmationDialog()).then((value) {
+    showDialog(
+        context: context,
+        builder: (_) => FavoriteDeleteConfirmationDialog(
+              parentContext: context,
+            )).then((value) {
       if (value == true) {
         favoriteList?.removeWhere((element) => element['isSelected'] == true);
         isDeleteMode.value = false;

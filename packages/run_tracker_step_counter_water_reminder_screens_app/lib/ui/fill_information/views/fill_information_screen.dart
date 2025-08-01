@@ -594,7 +594,7 @@ class _OnboardingDetailsScreenState extends State<OnboardingDetailsScreen> {
                     SizedBox(height: 80.setHeight),
                     CommonText(
                       text: Languages.of(context).txtWelcomeToFitMode,
-                      fontSize: 28.setFontSize,
+                      fontSize: 24.setFontSize,
                       fontWeight: FontWeight.w700,
                       textColor: CustomAppColor.of(context).txtPurple,
                     ),
