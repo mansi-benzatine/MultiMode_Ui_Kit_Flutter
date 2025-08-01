@@ -1,0 +1,96 @@
+import 'package:flutter/material.dart';
+import 'package:qr_scanner_screens_app_package/utils/sizer_utils.dart';
+import 'package:qr_scanner_screens_app_package/utils/utils.dart';
+
+import '../../localization/language/languages.dart';
+import '../../utils/app_assets.dart';
+import '../../utils/app_color.dart';
+import '../../widgets/button/common_button.dart';
+import '../../widgets/text/common_text.dart';
+
+class HistoryDeleteConfirmationDialog extends StatefulWidget {
+  const HistoryDeleteConfirmationDialog({super.key});
+
+  @override
+  State<HistoryDeleteConfirmationDialog> createState() =>
+      _HistoryDeleteConfirmationDialogState();
+}
+
+class _HistoryDeleteConfirmationDialogState
+    extends State<HistoryDeleteConfirmationDialog> {
+  @override
+  Widget build(BuildContext context) {
+    return Dialog(
+      backgroundColor:
+          CustomAppColor.of(context).txtBlack.withOpacityPercent(.6),
+      child: Container(
+        padding: EdgeInsets.all(20.setWidth),
+        decoration: BoxDecoration(
+          color: CustomAppColor.of(context).bgDialog,
+          borderRadius: BorderRadius.circular(20),
+        ),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            CommonText(
+              text: Languages.of(context).txtDeleteHistory,
+              fontSize: 20.setFontSize,
+              fontWeight: FontWeight.w600,
+              textColor: CustomAppColor.of(context).primary,
+              textAlign: TextAlign.center,
+            ),
+            SizedBox(height: 35.setHeight),
+            Image.asset(
+              AppAssets.icDeleteHistoryDialog,
+              width: double.infinity,
+              gaplessPlayback: true,
+              fit: BoxFit.contain,
+            ),
+            SizedBox(height: 35.setHeight),
+            CommonText(
+              text: Languages.of(context).txtDeleteThisHistoryMsg,
+              fontSize: 13.setFontSize,
+              fontWeight: FontWeight.w500,
+              textColor: CustomAppColor.of(context).txtBlack,
+              textAlign: TextAlign.center,
+            ),
+            SizedBox(height: 30.setHeight),
+            Row(
+              children: [
+                Expanded(
+                  child: CommonButton(
+                    onTap: () {
+                      Navigator.pop(context, false);
+                    },
+                    text: Languages.of(context).txtCancel.toUpperCase(),
+                    buttonColor: CustomAppColor.of(context).transparent,
+                    borderColor: CustomAppColor.of(context).primary,
+                    buttonFontStyle: FontStyle.normal,
+                    buttonTextColor: CustomAppColor.of(context).primary,
+                    buttonTextSize: 14.setFontSize,
+                    buttonTextWeight: FontWeight.w500,
+                    height: 40.setHeight,
+                  ),
+                ),
+                SizedBox(width: 16.setWidth),
+                Expanded(
+                  child: CommonButton(
+                    onTap: () {
+                      Navigator.pop(context, true);
+                    },
+                    text: Languages.of(context).txtOk.toUpperCase(),
+                    buttonColor: CustomAppColor.of(context).primary,
+                    buttonTextColor: CustomAppColor.of(context).white,
+                    height: 40.setHeight,
+                    buttonTextSize: 14.setFontSize,
+                    buttonTextWeight: FontWeight.w500,
+                  ),
+                ),
+              ],
+            )
+          ],
+        ),
+      ),
+    );
+  }
+}

@@ -1,7 +1,7 @@
 #!/bin/sh
 # This is a generated file; do not edit or check into version control.
-export "FLUTTER_ROOT=/Volumes/DATA/FlutterSDK/3.27.0"
-export "FLUTTER_APPLICATION_PATH=/Volumes/DATA/Mansi/plugin_trial"
+export "FLUTTER_ROOT=/Volumes/DATA/FlutterSDK/3.32.0"
+export "FLUTTER_APPLICATION_PATH=/Volumes/DATA/Mansi/FlutterProjects/Products/MultiMode_Ui_Kit_Flutter"
 export "COCOAPODS_PARALLEL_CODE_SIGN=true"
 export "FLUTTER_BUILD_DIR=build"
 export "FLUTTER_BUILD_NAME=1.0.0"

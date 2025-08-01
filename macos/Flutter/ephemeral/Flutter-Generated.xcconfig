@@ -1,6 +1,6 @@
 // This is a generated file; do not edit or check into version control.
-FLUTTER_ROOT=/Volumes/DATA/FlutterSDK/3.27.0
-FLUTTER_APPLICATION_PATH=/Volumes/DATA/Mansi/plugin_trial
+FLUTTER_ROOT=/Volumes/DATA/FlutterSDK/3.32.0
+FLUTTER_APPLICATION_PATH=/Volumes/DATA/Mansi/FlutterProjects/Products/MultiMode_Ui_Kit_Flutter
 COCOAPODS_PARALLEL_CODE_SIGN=true
 FLUTTER_BUILD_DIR=build
 FLUTTER_BUILD_NAME=1.0.0
