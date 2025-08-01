@@ -8,7 +8,9 @@ import '../../widgets/button/common_button.dart';
 import '../../widgets/text/common_text.dart';
 
 class ChangeCameraTypeDialog extends StatefulWidget {
-  const ChangeCameraTypeDialog({super.key});
+  final BuildContext parentContext; // Add parentContext
+
+  const ChangeCameraTypeDialog({super.key, required this.parentContext});
 
   @override
   State<ChangeCameraTypeDialog> createState() => _ChangeCameraTypeDialogState();
@@ -20,28 +22,30 @@ class _ChangeCameraTypeDialogState extends State<ChangeCameraTypeDialog> {
   @override
   Widget build(BuildContext context) {
     return Dialog(
-      backgroundColor:
-          CustomAppColor.of(context).txtBlack.withOpacityPercent(0.6),
+      backgroundColor: CustomAppColor.of(widget.parentContext)
+          .txtBlack
+          .withOpacityPercent(0.6),
       insetPadding: EdgeInsets.symmetric(horizontal: 16.setWidth),
       child: Container(
         padding: EdgeInsets.all(20.setWidth),
         decoration: BoxDecoration(
-          color: CustomAppColor.of(context).bgDialog,
+          color: CustomAppColor.of(widget.parentContext).bgDialog,
           borderRadius: BorderRadius.circular(20),
         ),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
             CommonText(
-              text: Languages.of(context).txtCameraType,
+              text: Languages.of(widget.parentContext)
+                  .txtCameraType, // Use parentContext
               fontSize: 20.setFontSize,
               fontWeight: FontWeight.w600,
-              textColor: CustomAppColor.of(context).primary,
+              textColor: CustomAppColor.of(widget.parentContext).primary,
               textAlign: TextAlign.center,
             ),
             SizedBox(height: 15.setHeight),
             Divider(
-              color: CustomAppColor.of(context).containerBorder,
+              color: CustomAppColor.of(widget.parentContext).containerBorder,
               height: 1,
             ),
             SizedBox(height: 25.setHeight),
@@ -56,7 +60,8 @@ class _ChangeCameraTypeDialogState extends State<ChangeCameraTypeDialog> {
                       child: Radio(
                         value: true,
                         groupValue: isRearCamera.value,
-                        activeColor: CustomAppColor.of(context).primary,
+                        activeColor:
+                            CustomAppColor.of(widget.parentContext).primary,
                         onChanged: (value) {
                           isRearCamera.value = value ?? false;
                         },
@@ -65,10 +70,12 @@ class _ChangeCameraTypeDialogState extends State<ChangeCameraTypeDialog> {
                   },
                 ),
                 CommonText(
-                  text: Languages.of(context).txtRearCamera,
+                  text: Languages.of(widget.parentContext)
+                      .txtRearCamera, // Use parentContext
                   fontSize: 15.setFontSize,
                   fontWeight: FontWeight.w500,
-                  textColor: CustomAppColor.of(context).txtDarkGray,
+                  textColor:
+                      CustomAppColor.of(widget.parentContext).txtDarkGray,
                   textAlign: TextAlign.center,
                 ),
               ],
@@ -85,7 +92,8 @@ class _ChangeCameraTypeDialogState extends State<ChangeCameraTypeDialog> {
                       child: Radio(
                         value: false,
                         groupValue: isRearCamera.value,
-                        activeColor: CustomAppColor.of(context).primary,
+                        activeColor:
+                            CustomAppColor.of(widget.parentContext).primary,
                         onChanged: (value) {
                           isRearCamera.value = value ?? false;
                         },
@@ -94,10 +102,12 @@ class _ChangeCameraTypeDialogState extends State<ChangeCameraTypeDialog> {
                   },
                 ),
                 CommonText(
-                  text: Languages.of(context).txtFrontCamera,
+                  text: Languages.of(widget.parentContext)
+                      .txtFrontCamera, // Use parentContext
                   fontSize: 15.setFontSize,
                   fontWeight: FontWeight.w500,
-                  textColor: CustomAppColor.of(context).txtDarkGray,
+                  textColor:
+                      CustomAppColor.of(widget.parentContext).txtDarkGray,
                   textAlign: TextAlign.center,
                 ),
               ],
@@ -110,11 +120,16 @@ class _ChangeCameraTypeDialogState extends State<ChangeCameraTypeDialog> {
                     onTap: () {
                       Navigator.pop(context, false);
                     },
-                    text: Languages.of(context).txtCancel.toUpperCase(),
-                    buttonColor: CustomAppColor.of(context).transparent,
-                    borderColor: CustomAppColor.of(context).primary,
+                    text: Languages.of(widget.parentContext)
+                        .txtCancel
+                        .toUpperCase(), // Use parentContext
+                    buttonColor:
+                        CustomAppColor.of(widget.parentContext).transparent,
+                    borderColor:
+                        CustomAppColor.of(widget.parentContext).primary,
                     buttonFontStyle: FontStyle.normal,
-                    buttonTextColor: CustomAppColor.of(context).primary,
+                    buttonTextColor:
+                        CustomAppColor.of(widget.parentContext).primary,
                     buttonTextSize: 14.setFontSize,
                     buttonTextWeight: FontWeight.w500,
                     height: 40.setHeight,
@@ -126,9 +141,13 @@ class _ChangeCameraTypeDialogState extends State<ChangeCameraTypeDialog> {
                     onTap: () {
                       Navigator.pop(context, isRearCamera.value);
                     },
-                    text: Languages.of(context).txtOk.toUpperCase(),
-                    buttonColor: CustomAppColor.of(context).primary,
-                    buttonTextColor: CustomAppColor.of(context).white,
+                    text: Languages.of(widget.parentContext)
+                        .txtOk
+                        .toUpperCase(), // Use parentContext
+                    buttonColor:
+                        CustomAppColor.of(widget.parentContext).primary,
+                    buttonTextColor:
+                        CustomAppColor.of(widget.parentContext).white,
                     height: 40.setHeight,
                     buttonTextSize: 14.setFontSize,
                     buttonTextWeight: FontWeight.w500,

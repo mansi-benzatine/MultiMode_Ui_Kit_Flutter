@@ -291,7 +291,8 @@ class _GeneralSettingWidget extends StatelessWidget {
       onTap: () {
         showDialog(
             context: context,
-            builder: (context) => const ChangeThemeDialog()).then((value) {
+            builder: (dialogContext) =>
+                ChangeThemeDialog(parentContext: context)).then((value) {
           if (value != null) {
             getIt
                 .get<LocalStorageService>()
@@ -690,7 +691,7 @@ class _ScanControlWidget extends StatelessWidget {
       onTap: () {
         showDialog(
             context: context,
-            builder: (context) => const ChangeCameraTypeDialog());
+            builder: (_) => ChangeCameraTypeDialog(parentContext: context));
       },
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
