@@ -27,8 +27,7 @@ class CreateNewPinScreen extends StatefulWidget {
   State<CreateNewPinScreen> createState() => _CreateNewPinScreenState();
 }
 
-class _CreateNewPinScreenState extends State<CreateNewPinScreen>
-    implements TopBarClickListener {
+class _CreateNewPinScreenState extends State<CreateNewPinScreen> implements TopBarClickListener {
   Timer? resendTimer;
   final ValueNotifier<String> _otpValue = ValueNotifier('');
 
@@ -94,13 +93,10 @@ class _CreateNewPinScreenState extends State<CreateNewPinScreen>
                     textFieldAlignment: MainAxisAlignment.spaceBetween,
                     otpFieldStyle: OtpFieldStyle(
                       backgroundColor: CustomAppColor.of(context).bgScreen,
-                      borderColor:
-                          CustomAppColor.of(context).borderTextFormField,
+                      borderColor: CustomAppColor.of(context).borderTextFormField,
                       focusBorderColor: CustomAppColor.of(context).primary,
-                      enabledBorderColor:
-                          CustomAppColor.of(context).dividerColor,
-                      disabledBorderColor:
-                          CustomAppColor.of(context).dividerColor,
+                      enabledBorderColor: CustomAppColor.of(context).dividerColor,
+                      disabledBorderColor: CustomAppColor.of(context).dividerColor,
                       errorBorderColor: CustomAppColor.of(context).txtRed,
                     ),
                     onChanged: (value) {
@@ -127,12 +123,10 @@ class _CreateNewPinScreenState extends State<CreateNewPinScreen>
                       builder: (context, value, child) {
                         return value > 0
                             ? CommonText(
-                                text:
-                                    "$value ${Languages.of(context).txtSeconds}",
+                                text: "$value ${Languages.of(context).txtSeconds}",
                                 fontSize: 14.setFontSize,
                                 fontWeight: FontWeight.w500,
-                                textColor:
-                                    CustomAppColor.of(context).txtPrimary,
+                                textColor: CustomAppColor.of(context).txtPrimary,
                               )
                             : InkWell(
                                 onTap: () {
@@ -142,8 +136,7 @@ class _CreateNewPinScreenState extends State<CreateNewPinScreen>
                                   text: Languages.of(context).txtResendOtp,
                                   fontSize: 15.setFontSize,
                                   fontWeight: FontWeight.w500,
-                                  textColor:
-                                      CustomAppColor.of(context).txtPrimary,
+                                  textColor: CustomAppColor.of(context).txtPrimary,
                                   textDecoration: TextDecoration.underline,
                                 ),
                               );
@@ -157,15 +150,14 @@ class _CreateNewPinScreenState extends State<CreateNewPinScreen>
           Align(
             alignment: Alignment.bottomCenter,
             child: Padding(
-              padding: EdgeInsets.symmetric(
-                  horizontal: 22.setWidth, vertical: 22.setHeight),
+              padding: EdgeInsets.symmetric(horizontal: 22.setWidth, vertical: 22.setHeight),
               child: CommonButton(
                 text: Languages.of(context).txtContinue,
                 onTap: () {
                   showDialog(
                     barrierDismissible: false,
                     context: context,
-                    builder: (_) {
+                    builder: (dialogContext) {
                       return Padding(
                         padding: EdgeInsets.symmetric(horizontal: 28.setWidth),
                         child: CommonDialog(
@@ -176,8 +168,7 @@ class _CreateNewPinScreenState extends State<CreateNewPinScreen>
                             textColor: CustomAppColor.of(context).txtBlack,
                           ),
                           descriptionText: CommonText(
-                            text: Languages.of(context)
-                                .txtYourAccountHasBeenCreatedSuccessfullyPressContinueToStartUsingApp,
+                            text: Languages.of(context).txtYourAccountHasBeenCreatedSuccessfullyPressContinueToStartUsingApp,
                             fontSize: 13.setFontSize,
                             fontWeight: FontWeight.w400,
                             textColor: CustomAppColor.of(context).txtGray,
@@ -188,9 +179,8 @@ class _CreateNewPinScreenState extends State<CreateNewPinScreen>
                           ),
                           button: GestureDetector(
                               onTap: () {
-                                Navigator.pop(context);
-                                Navigator.push(context,
-                                    HomeScreen.route(isFromRideBooked: false));
+                                Navigator.pop(dialogContext);
+                                Navigator.push(dialogContext, HomeScreen.route(isFromRideBooked: false));
                               },
                               child: Image.asset(
                                 AppAssets.icGoToNext,
