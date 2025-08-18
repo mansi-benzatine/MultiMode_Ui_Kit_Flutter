@@ -180,7 +180,7 @@ class _CreateNewPinScreenState extends State<CreateNewPinScreen> implements TopB
                           button: GestureDetector(
                               onTap: () {
                                 Navigator.pop(dialogContext);
-                                Navigator.push(dialogContext, HomeScreen.route(isFromRideBooked: false));
+                                Navigator.push(context, HomeScreen.route(isFromRideBooked: false));
                               },
                               child: Image.asset(
                                 AppAssets.icGoToNext,
