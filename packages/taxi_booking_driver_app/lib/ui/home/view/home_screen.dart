@@ -91,7 +91,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     showDialog(
       barrierDismissible: false,
       context: context,
-      builder: (_) {
+      builder: (dialogContext) {
         return Padding(
           padding: EdgeInsets.symmetric(horizontal: 28.setWidth),
           child: CommonDialog(
@@ -115,7 +115,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
               children: [
                 CommonButton(
                   text: Languages.of(context).txtEnableLocation,
-                  onTap: () => Navigator.pop(context),
+                  onTap: () => Navigator.pop(dialogContext),
                   height: 45.setHeight,
                   buttonColor: CustomAppColor.of(context).btnPrimary,
                   buttonTextSize: 14.setFontSize,
@@ -123,7 +123,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                 SizedBox(height: 16.setHeight),
                 CommonButton(
                   text: Languages.of(context).txtNotNow,
-                  onTap: () => Navigator.pop(context),
+                  onTap: () => Navigator.pop(dialogContext),
                   buttonColor: CustomAppColor.of(context).transparent,
                   borderColor: CustomAppColor.of(context).btnBorder,
                   buttonTextColor: CustomAppColor.of(context).txtBlack,
@@ -482,7 +482,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                 showDialog(
                   barrierDismissible: false,
                   context: context,
-                  builder: (_) {
+                  builder: (dialogContext) {
                     return Padding(
                       padding: EdgeInsets.symmetric(horizontal: 16.setWidth),
                       child: CommonDialog(
@@ -507,7 +507,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                             Expanded(
                               child: CommonButton(
                                 text: Languages.of(context).txtCancel,
-                                onTap: () => Navigator.pop(context),
+                                onTap: () => Navigator.pop(dialogContext),
                                 buttonColor: CustomAppColor.of(context).transparent,
                                 borderColor: CustomAppColor.of(context).txtGray,
                                 buttonTextColor: CustomAppColor.of(context).txtGray,
@@ -519,7 +519,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                             Expanded(
                               child: CommonButton(
                                 text: Languages.of(context).txtLogout,
-                                onTap: () => Navigator.pop(context),
+                                onTap: () => Navigator.pop(dialogContext),
                                 height: 45.setHeight,
                                 borderColor: CustomAppColor.of(context).orange,
                                 buttonColor: CustomAppColor.of(context).orange,

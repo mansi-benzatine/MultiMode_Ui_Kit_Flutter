@@ -104,7 +104,7 @@ class _RequiredDocumentsScreenState extends State<RequiredDocumentsScreen> imple
                   showDialog(
                     barrierDismissible: false,
                     context: context,
-                    builder: (_) {
+                    builder: (dialogContext) {
                       return Padding(
                         padding: EdgeInsets.symmetric(horizontal: 25.setWidth),
                         child: CommonDialog(
@@ -126,7 +126,7 @@ class _RequiredDocumentsScreenState extends State<RequiredDocumentsScreen> imple
                           ),
                           button: GestureDetector(
                               onTap: () {
-                                Navigator.pop(context);
+                                Navigator.pop(dialogContext);
                                 Navigator.push(context, HomeScreen.route(isFromRideBooked: false));
                               },
                               child: Image.asset(

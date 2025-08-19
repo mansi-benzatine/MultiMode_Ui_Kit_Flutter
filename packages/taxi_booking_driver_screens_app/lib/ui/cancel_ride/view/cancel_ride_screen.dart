@@ -140,7 +140,7 @@ class _CancelRideScreenState extends State<CancelRideScreen> implements TopBarCl
                       );
                       return;
                     }
-                    Navigator.of(context, rootNavigator: true).pop('cancelled');
+                    /*     Navigator.of(context, rootNavigator: true).pop('cancelled');*/
                   },
                 ),
               )
