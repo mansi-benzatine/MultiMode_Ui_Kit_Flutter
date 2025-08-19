@@ -140,7 +140,7 @@ class _SettingsScreenState extends State<SettingsScreen> implements TopBarClickL
           showDialog(
             barrierDismissible: false,
             context: context,
-            builder: (_) {
+            builder: (dialogContext) {
               return Padding(
                 padding: EdgeInsets.symmetric(horizontal: 16.setWidth),
                 child: CommonDialog(
@@ -165,7 +165,7 @@ class _SettingsScreenState extends State<SettingsScreen> implements TopBarClickL
                       Expanded(
                         child: CommonButton(
                           text: Languages.of(context).txtCancel,
-                          onTap: () => Navigator.pop(context),
+                          onTap: () => Navigator.pop(dialogContext),
                           buttonColor: CustomAppColor.of(context).transparent,
                           borderColor: CustomAppColor.of(context).txtGray,
                           buttonTextColor: CustomAppColor.of(context).txtGray,
@@ -177,7 +177,7 @@ class _SettingsScreenState extends State<SettingsScreen> implements TopBarClickL
                       Expanded(
                         child: CommonButton(
                           text: Languages.of(context).txtLogout,
-                          onTap: () => Navigator.pop(context),
+                          onTap: () => Navigator.pop(dialogContext),
                           height: 45.setHeight,
                           borderColor: CustomAppColor.of(context).orange,
                           buttonColor: CustomAppColor.of(context).orange,
