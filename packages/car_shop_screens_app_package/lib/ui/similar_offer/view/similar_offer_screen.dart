@@ -11,7 +11,7 @@ import '../../../widgets/top_bar/topbar.dart';
 
 class SimilarOfferScreen extends StatefulWidget {
   static Route<void> route() {
-    return MaterialPageRoute(builder: (_) => SimilarOfferScreen());
+    return MaterialPageRoute(builder: (_) => const SimilarOfferScreen());
   }
 
   const SimilarOfferScreen({super.key});

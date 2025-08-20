@@ -109,11 +109,11 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> implements To
                       onTap: () {
                         showDialog(
                           context: context,
-                          builder: (context) => CongratulationsDialog(
+                          builder: (dialogContext) => CongratulationsDialog(
                             title: Languages.of(context).txtCongratulations,
                             message: Languages.of(context).txtYourAccountIsReadyToUse,
                             onComplete: () {
-                              Navigator.pop(context);
+                              Navigator.pop(dialogContext);
                             },
                           ),
                         );

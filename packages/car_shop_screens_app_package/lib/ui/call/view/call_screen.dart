@@ -10,7 +10,7 @@ import '../../../widgets/text/common_text.dart';
 
 class CallScreen extends StatefulWidget {
   static Route<void> route() {
-    return MaterialPageRoute(builder: (_) => CallScreen());
+    return MaterialPageRoute(builder: (_) => const CallScreen());
   }
 
   const CallScreen({super.key});

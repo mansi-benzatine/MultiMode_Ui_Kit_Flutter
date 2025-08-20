@@ -14,7 +14,7 @@ import '../../enter_car_detail/view/enter_car_detail_screen.dart';
 
 class SellCarScreen extends StatefulWidget {
   static Route<void> route() {
-    return MaterialPageRoute(builder: (_) => SellCarScreen());
+    return MaterialPageRoute(builder: (_) => const SellCarScreen());
   }
 
   const SellCarScreen({super.key});

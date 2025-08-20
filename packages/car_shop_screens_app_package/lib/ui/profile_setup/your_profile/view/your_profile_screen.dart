@@ -14,7 +14,7 @@ import '../../create_new_pin/view/create_new_pin_screen.dart';
 
 class YourProfileScreen extends StatefulWidget {
   static Route<void> route() {
-    return MaterialPageRoute(builder: (_) => YourProfileScreen());
+    return MaterialPageRoute(builder: (_) => const YourProfileScreen());
   }
 
   const YourProfileScreen({super.key});

@@ -75,7 +75,7 @@ class DashedBorderPainter extends CustomPainter {
 
 class EnterCarDetailScreen extends StatefulWidget {
   static Route<void> route() {
-    return MaterialPageRoute(builder: (_) => EnterCarDetailScreen());
+    return MaterialPageRoute(builder: (_) => const EnterCarDetailScreen());
   }
 
   const EnterCarDetailScreen({super.key});

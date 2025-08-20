@@ -226,7 +226,10 @@ class _MyProfileScreenState extends State<MyProfileScreen> implements TopBarClic
                       textColor: CustomAppColor.of(context).txtRed,
                       isLast: true,
                       onTap: () {
-                        showDialog(context: context, builder: (dialogContext) => const LogoutDialog());
+                        showDialog(
+                          context: context,
+                          builder: (dialogContext) => LogoutDialog(dialogContext: dialogContext),
+                        );
                       },
                     ),
                   ],

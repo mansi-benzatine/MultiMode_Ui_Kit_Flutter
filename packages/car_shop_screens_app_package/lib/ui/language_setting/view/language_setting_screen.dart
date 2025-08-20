@@ -11,7 +11,7 @@ import '../../../widgets/top_bar/topbar.dart';
 
 class LanguageSettingScreen extends StatefulWidget {
   static Route<void> route() {
-    return MaterialPageRoute(builder: (_) => LanguageSettingScreen());
+    return MaterialPageRoute(builder: (_) => const LanguageSettingScreen());
   }
 
   const LanguageSettingScreen({super.key});

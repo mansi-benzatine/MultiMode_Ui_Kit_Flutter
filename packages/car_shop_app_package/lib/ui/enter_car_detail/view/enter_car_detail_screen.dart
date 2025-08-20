@@ -1,4 +1,5 @@
 import 'dart:io';
+
 import 'package:car_shop_app_package/utils/sizer_utils.dart';
 import 'package:car_shop_app_package/utils/utils.dart';
 import 'package:flutter/material.dart';
@@ -14,7 +15,6 @@ import '../../../widgets/button/common_button.dart';
 import '../../../widgets/text/common_text.dart';
 import '../../../widgets/text_field/text_form_field.dart';
 import '../../../widgets/top_bar/topbar.dart';
-import '../../brand_car_list/view/brand_car_list_screen.dart';
 import '../../profile_setup/your_fav_brand/view/your_fav_brand_screen.dart';
 
 // Custom dashed border painter
@@ -420,9 +420,7 @@ class _BrandSelectionState extends State<BrandSelection> {
                       width: 50.setWidth,
                       height: 50.setHeight,
                       fit: BoxFit.contain,
-                      color: (yourFavBrandList[index].brandImage == AppAssets.icAudi ||
-                              yourFavBrandList[index].brandImage == AppAssets.icJaguar ||
-                              yourFavBrandList[index].brandImage == AppAssets.icLandRover)
+                      color: (yourFavBrandList[index].brandImage == AppAssets.icAudi || yourFavBrandList[index].brandImage == AppAssets.icJaguar || yourFavBrandList[index].brandImage == AppAssets.icLandRover)
                           ? CustomAppColor.of(context).txtBlack
                           : null,
                     ),

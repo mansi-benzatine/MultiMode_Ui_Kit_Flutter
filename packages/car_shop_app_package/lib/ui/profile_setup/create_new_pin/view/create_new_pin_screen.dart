@@ -86,8 +86,8 @@ class _CreateNewPinScreenState extends State<CreateNewPinScreen> implements TopB
               onTap: () {
                 showDialog(
                   context: context,
-                  builder: (context) => CongratulationsDialog(onComplete: () {
-                    Navigator.pop(context);
+                  builder: (dialogContext) => CongratulationsDialog(onComplete: () {
+                    Navigator.pop(dialogContext);
                     Navigator.push(
                       context,
                       MaterialPageRoute(

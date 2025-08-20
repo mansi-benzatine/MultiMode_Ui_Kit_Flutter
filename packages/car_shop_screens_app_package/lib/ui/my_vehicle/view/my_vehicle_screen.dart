@@ -15,7 +15,7 @@ import '../../home/view/home_screen.dart';
 
 class MyVehicleScreen extends StatefulWidget {
   static Route<void> route() {
-    return MaterialPageRoute(builder: (_) => MyVehicleScreen());
+    return MaterialPageRoute(builder: (_) => const MyVehicleScreen());
   }
 
   const MyVehicleScreen({super.key});

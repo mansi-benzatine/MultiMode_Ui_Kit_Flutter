@@ -13,7 +13,7 @@ import '../../../widgets/top_bar/topbar.dart';
 
 class ViewSellerDetailScreen extends StatefulWidget {
   static Route<void> route() {
-    return MaterialPageRoute(builder: (_) => ViewSellerDetailScreen());
+    return MaterialPageRoute(builder: (_) => const ViewSellerDetailScreen());
   }
 
   const ViewSellerDetailScreen({super.key});

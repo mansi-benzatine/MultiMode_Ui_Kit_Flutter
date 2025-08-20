@@ -10,9 +10,8 @@ import '../../utils/app_color.dart';
 import '../../utils/sizer_utils.dart';
 
 class LogoutDialog extends StatefulWidget {
-  const LogoutDialog({
-    super.key,
-  });
+  final BuildContext dialogContext;
+  const LogoutDialog({super.key, required this.dialogContext});
 
   @override
   State<LogoutDialog> createState() => _LogoutDialogState();
@@ -145,7 +144,7 @@ class _LogoutDialogState extends State<LogoutDialog> with TickerProviderStateMix
                               ]),
                               borderColor: CustomAppColor.of(context).txtGray,
                               onTap: () {
-                                Navigator.pop(context);
+                                Navigator.pop(widget.dialogContext);
                               },
                             ),
                           ),
@@ -162,7 +161,7 @@ class _LogoutDialogState extends State<LogoutDialog> with TickerProviderStateMix
                               buttonTextWeight: FontWeight.w600,
                               buttonTextSize: 12.setFontSize,
                               onTap: () {
-                                Navigator.pop(context);
+                                Navigator.pop(widget.dialogContext);
                                 // Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => const LoginScreen()), (route) => false);
                               },
                             ),

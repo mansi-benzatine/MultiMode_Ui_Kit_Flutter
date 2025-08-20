@@ -12,7 +12,7 @@ import '../../sign_up/view/sign_up_screen.dart';
 
 class WelcomeScreen extends StatefulWidget {
   static Route<void> route() {
-    return MaterialPageRoute(builder: (_) => WelcomeScreen());
+    return MaterialPageRoute(builder: (_) => const WelcomeScreen());
   }
 
   const WelcomeScreen({super.key});

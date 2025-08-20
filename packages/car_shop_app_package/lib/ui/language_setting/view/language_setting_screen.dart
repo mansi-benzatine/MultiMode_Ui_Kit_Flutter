@@ -1,10 +1,9 @@
-import 'package:flutter/material.dart';
 import 'package:car_shop_app_package/utils/sizer_utils.dart';
+import 'package:flutter/material.dart';
 
 import '../../../interfaces/top_bar_click_listener.dart';
 import '../../../localization/language/languages.dart';
 import '../../../localization/locale_constant.dart';
-import '../../../utils/app_assets.dart';
 import '../../../utils/app_color.dart';
 import '../../../utils/constant.dart';
 import '../../../widgets/text/common_text.dart';
@@ -44,10 +43,7 @@ class _LanguageSettingScreenState extends State<LanguageSettingScreen> implement
   @override
   void initState() {
     super.initState();
-    filteredLanguages = allLanguages
-        .where((lang) =>
-            !suggestedLanguages.any((suggested) => suggested.languageCode == lang.languageCode && suggested.countryCode == lang.countryCode))
-        .toList();
+    filteredLanguages = allLanguages.where((lang) => !suggestedLanguages.any((suggested) => suggested.languageCode == lang.languageCode && suggested.countryCode == lang.countryCode)).toList();
 
     // Get current language
     selectedLanguage = getLocale().languageCode;
@@ -56,15 +52,10 @@ class _LanguageSettingScreenState extends State<LanguageSettingScreen> implement
   void _filterLanguages(String query) {
     setState(() {
       if (query.isEmpty) {
-        filteredLanguages = allLanguages
-            .where((lang) =>
-                !suggestedLanguages.any((suggested) => suggested.languageCode == lang.languageCode && suggested.countryCode == lang.countryCode))
-            .toList();
+        filteredLanguages = allLanguages.where((lang) => !suggestedLanguages.any((suggested) => suggested.languageCode == lang.languageCode && suggested.countryCode == lang.countryCode)).toList();
       } else {
         filteredLanguages = allLanguages
-            .where((lang) =>
-                lang.language.toLowerCase().contains(query.toLowerCase()) &&
-                !suggestedLanguages.any((suggested) => suggested.languageCode == lang.languageCode && suggested.countryCode == lang.countryCode))
+            .where((lang) => lang.language.toLowerCase().contains(query.toLowerCase()) && !suggestedLanguages.any((suggested) => suggested.languageCode == lang.languageCode && suggested.countryCode == lang.countryCode))
             .toList();
       }
     });

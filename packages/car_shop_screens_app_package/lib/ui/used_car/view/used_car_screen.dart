@@ -17,7 +17,7 @@ import '../../search/view/search_screen.dart';
 
 class UsedCarScreen extends StatefulWidget {
   static Route<void> route() {
-    return MaterialPageRoute(builder: (_) => UsedCarScreen());
+    return MaterialPageRoute(builder: (_) => const UsedCarScreen());
   }
 
   const UsedCarScreen({super.key});

@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 
 import '../../interfaces/top_bar_click_listener.dart';
 import '../../localization/language/languages.dart';
-import '../../utils/app_assets.dart';
 import '../../utils/app_color.dart';
 import '../../utils/constant.dart';
 import '../../widgets/button/common_button.dart';

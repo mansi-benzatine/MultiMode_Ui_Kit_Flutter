@@ -13,7 +13,7 @@ import '../../../widgets/top_bar/topbar.dart';
 
 class HelpCenterScreen extends StatefulWidget {
   static Route<void> route() {
-    return MaterialPageRoute(builder: (_) => HelpCenterScreen());
+    return MaterialPageRoute(builder: (_) => const HelpCenterScreen());
   }
 
   const HelpCenterScreen({super.key});

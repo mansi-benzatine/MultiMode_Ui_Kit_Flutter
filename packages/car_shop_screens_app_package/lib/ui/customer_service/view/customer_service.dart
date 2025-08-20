@@ -13,7 +13,7 @@ import '../../call/view/call_screen.dart';
 
 class CustomerService extends StatefulWidget {
   static Route<void> route() {
-    return MaterialPageRoute(builder: (_) => CustomerService());
+    return MaterialPageRoute(builder: (_) => const CustomerService());
   }
 
   const CustomerService({super.key});

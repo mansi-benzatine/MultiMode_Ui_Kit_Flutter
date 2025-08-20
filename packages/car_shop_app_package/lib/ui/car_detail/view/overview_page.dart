@@ -648,7 +648,7 @@ class _OverviewPageState extends State<OverviewPage> {
           text: stars.toString(),
           fontSize: 12.setFontSize,
           fontWeight: FontWeight.w400,
-          textColor: Color(0xFFFABD3B),
+          textColor: const Color(0xFFFABD3B),
         ),
         SizedBox(width: 6.setWidth),
         // Progress bar

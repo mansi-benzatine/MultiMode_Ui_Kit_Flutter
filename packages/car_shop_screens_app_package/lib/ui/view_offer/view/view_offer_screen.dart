@@ -14,7 +14,7 @@ import '../../../widgets/top_bar/topbar.dart';
 
 class ViewOfferScreen extends StatefulWidget {
   static Route<void> route() {
-    return MaterialPageRoute(builder: (_) => ViewOfferScreen());
+    return MaterialPageRoute(builder: (_) => const ViewOfferScreen());
   }
 
   const ViewOfferScreen({super.key});

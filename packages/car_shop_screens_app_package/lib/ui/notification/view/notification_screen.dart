@@ -10,9 +10,10 @@ import '../../../widgets/text/common_text.dart';
 import '../../../widgets/top_bar/topbar.dart';
 
 class NotificationScreen extends StatefulWidget {
-  static Route<void> route(){
-    return MaterialPageRoute(builder: (_)=> NotificationScreen());
+  static Route<void> route() {
+    return MaterialPageRoute(builder: (_) => const NotificationScreen());
   }
+
   const NotificationScreen({super.key});
 
   @override
@@ -31,25 +32,12 @@ class _NotificationScreenState extends State<NotificationScreen> implements TopB
 
     _notificationList = [
       NotificationItemData(
-          title: "Best Offer for You",
-          description: "Lorem Ipsum is simply dummy text of the printing  typesetting industry...",
-          dateTime: DateTime(now.year, now.month, now.day, 11, 20, now.second),
-          imageUrl: AppAssets.icOffer),
+          title: "Best Offer for You", description: "Lorem Ipsum is simply dummy text of the printing  typesetting industry...", dateTime: DateTime(now.year, now.month, now.day, 11, 20, now.second), imageUrl: AppAssets.icOffer),
       NotificationItemData(
-          title: "Warning!",
-          description: "Lorem Ipsum is simply dummy text of the printing  typesetting industry...",
-          dateTime: DateTime(now.year, now.month, now.day, 11, 30, now.second),
-          imageUrl: AppAssets.icWarning),
+          title: "Warning!", description: "Lorem Ipsum is simply dummy text of the printing  typesetting industry...", dateTime: DateTime(now.year, now.month, now.day, 11, 30, now.second), imageUrl: AppAssets.icWarning),
       NotificationItemData(
-          title: "Best Offer for You",
-          description: "Lorem Ipsum is simply dummy text of the printing  typesetting industry...",
-          dateTime: DateTime(now.year, now.month, now.day, 11, 40, now.second),
-          imageUrl: AppAssets.icOffer),
-      NotificationItemData(
-          title: "Did You Know?",
-          description: "Lorem Ipsum is simply dummy text of the printing  typesetting industry...",
-          dateTime: yesterday,
-          imageUrl: AppAssets.icKnow),
+          title: "Best Offer for You", description: "Lorem Ipsum is simply dummy text of the printing  typesetting industry...", dateTime: DateTime(now.year, now.month, now.day, 11, 40, now.second), imageUrl: AppAssets.icOffer),
+      NotificationItemData(title: "Did You Know?", description: "Lorem Ipsum is simply dummy text of the printing  typesetting industry...", dateTime: yesterday, imageUrl: AppAssets.icKnow),
       NotificationItemData(
           title: "Congratulations",
           description: "Lorem Ipsum is simply dummy text of the printing  typesetting industry...",

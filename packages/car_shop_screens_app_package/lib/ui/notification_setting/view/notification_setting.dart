@@ -12,7 +12,7 @@ import '../../../widgets/view/dotted_divider_view.dart';
 
 class NotificationSetting extends StatefulWidget {
   static Route<void> route() {
-    return MaterialPageRoute(builder: (_) => NotificationSetting());
+    return MaterialPageRoute(builder: (_) => const NotificationSetting());
   }
 
   const NotificationSetting({super.key});

@@ -13,7 +13,7 @@ import '../../widgets/text_field/text_form_field.dart';
 
 class EditProfileScreen extends StatefulWidget {
   static Route<void> route() {
-    return MaterialPageRoute(builder: (_) => EditProfileScreen());
+    return MaterialPageRoute(builder: (_) => const EditProfileScreen());
   }
 
   const EditProfileScreen({super.key});

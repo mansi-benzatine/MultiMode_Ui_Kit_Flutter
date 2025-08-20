@@ -589,7 +589,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
               indicatorSize: TabBarIndicatorSize.label,
               dividerColor: Colors.transparent,
               isScrollable: true,
-              labelPadding: EdgeInsets.symmetric(horizontal: 10),
+              labelPadding: const EdgeInsets.symmetric(horizontal: 10),
               padding: EdgeInsets.symmetric(horizontal: 16.setWidth),
               tabAlignment: TabAlignment.start,
               tabs: [

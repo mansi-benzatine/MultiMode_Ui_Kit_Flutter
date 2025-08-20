@@ -16,7 +16,7 @@ import '../../sign_up/view/sign_up_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   static Route<void> route() {
-    return MaterialPageRoute(builder: (_) => LoginScreen());
+    return MaterialPageRoute(builder: (_) => const LoginScreen());
   }
 
   const LoginScreen({super.key});
@@ -99,7 +99,7 @@ class _LoginScreenState extends State<LoginScreen> implements TopBarClickListene
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => DashboardScreen(selectedIndex: 0),
+                              builder: (context) => const DashboardScreen(selectedIndex: 0),
                             ),
                           );
                         },

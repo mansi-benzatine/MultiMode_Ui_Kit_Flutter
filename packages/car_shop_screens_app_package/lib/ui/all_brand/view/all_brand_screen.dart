@@ -14,7 +14,7 @@ import '../../profile_setup/your_fav_brand/view/your_fav_brand_screen.dart';
 
 class AllBrandScreen extends StatefulWidget {
   static Route<void> route() {
-    return MaterialPageRoute(builder: (_) => AllBrandScreen());
+    return MaterialPageRoute(builder: (_) => const AllBrandScreen());
   }
 
   const AllBrandScreen({super.key});
