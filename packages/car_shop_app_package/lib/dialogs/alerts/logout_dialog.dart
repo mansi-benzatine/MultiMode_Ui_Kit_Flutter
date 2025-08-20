@@ -4,7 +4,6 @@ import 'package:car_shop_app_package/widgets/button/common_button.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../../widgets/text/common_text.dart';
-import '../../localization/language/languages.dart';
 import '../../utils/app_assets.dart';
 import '../../utils/app_color.dart';
 import '../../utils/sizer_utils.dart';
@@ -104,7 +103,7 @@ class _LogoutDialogState extends State<LogoutDialog> with TickerProviderStateMix
                     children: [
                       // Title
                       CommonText(
-                        text: Languages.of(context).txtLogout,
+                        text: "Logout",
                         fontSize: 20.setFontSize,
                         fontWeight: FontWeight.w700,
                         textColor: CustomAppColor.of(context).txtRed,
@@ -120,7 +119,7 @@ class _LogoutDialogState extends State<LogoutDialog> with TickerProviderStateMix
 
                       // Message
                       CommonText(
-                        text: Languages.of(context).txtAreYouSureYouWantToLogout,
+                        text: "Are you sure you want to logout?",
                         fontSize: 12.setFontSize,
                         fontWeight: FontWeight.w400,
                         textColor: CustomAppColor.of(context).txtDarkGray,
@@ -134,7 +133,7 @@ class _LogoutDialogState extends State<LogoutDialog> with TickerProviderStateMix
                           Expanded(
                             child: CommonButton(
                               height: 40.setHeight,
-                              text: Languages.of(context).txtCancel,
+                              text: "Cancel",
                               buttonTextColor: CustomAppColor.of(context).txtGray,
                               buttonTextWeight: FontWeight.w600,
                               buttonTextSize: 12.setFontSize,
@@ -152,7 +151,7 @@ class _LogoutDialogState extends State<LogoutDialog> with TickerProviderStateMix
                           Expanded(
                             child: CommonButton(
                               height: 40.setHeight,
-                              text: Languages.of(context).txtLogout,
+                              text: "logout",
                               buttonTextColor: CustomAppColor.of(context).txtWhite,
                               buttonGradient: LinearGradient(colors: [
                                 CustomAppColor.of(context).txtRed,
