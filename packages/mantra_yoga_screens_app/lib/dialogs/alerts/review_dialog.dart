@@ -11,14 +11,25 @@ import '../../widgets/rating/animated_star_rating.dart';
 import '../../widgets/text/common_text.dart';
 
 class ReviewDialog extends StatefulWidget {
-  const ReviewDialog({super.key, required this.onTap});
-
   final Function? onTap;
+  final BuildContext parentContext;
 
-  static Future<void> show(BuildContext context, {Function? onTap}) async {
+  const ReviewDialog({
+    super.key,
+    required this.parentContext,
+    this.onTap,
+  });
+
+  static Future<void> show(
+    BuildContext context, {
+    Function? onTap,
+  }) async {
     return showDialog(
       context: context,
-      builder: (context) => ReviewDialog(onTap: onTap),
+      builder: (_) => ReviewDialog(
+        parentContext: context,
+        onTap: onTap,
+      ),
     );
   }
 
@@ -29,11 +40,13 @@ class ReviewDialog extends StatefulWidget {
 class _ReviewDialogState extends State<ReviewDialog> {
   @override
   Widget build(BuildContext context) {
+    final parentContext = widget.parentContext;
+
     return Container(
       margin: EdgeInsets.symmetric(horizontal: 20.setWidth, vertical: 20.setHeight),
       alignment: Alignment.center,
       child: Material(
-        color: CustomAppColor.of(context).bgScreen,
+        color: CustomAppColor.of(parentContext).bgScreen,
         borderRadius: BorderRadius.circular(34),
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: 20.setWidth, vertical: 20.setHeight),
@@ -41,28 +54,28 @@ class _ReviewDialogState extends State<ReviewDialog> {
             mainAxisSize: MainAxisSize.min,
             children: [
               CommonText(
-                text: Languages.of(context).txtReview,
+                text: Languages.of(parentContext).txtReview,
                 fontSize: 22.setFontSize,
                 fontWeight: FontWeight.w700,
                 fontFamily: Constant.fontFamilyBold700,
-                textColor: CustomAppColor.of(context).txtBlack,
+                textColor: CustomAppColor.of(parentContext).txtBlack,
               ),
               Divider(
-                color: CustomAppColor.of(context).txtBlack.withValues(alpha: 0.5),
+                color: CustomAppColor.of(parentContext).txtBlack.withValues(alpha: 0.5),
                 thickness: 1,
                 height: 25.setHeight,
               ),
               CommonText(
-                text: Languages.of(context).txtPleaseGiveYourRatesAndAlsoGiveYourReview,
+                text: Languages.of(parentContext).txtPleaseGiveYourRatesAndAlsoGiveYourReview,
                 fontSize: 12.setFontSize,
                 fontWeight: FontWeight.w400,
                 fontFamily: Constant.fontFamilyRegular400,
-                textColor: CustomAppColor.of(context).txtDarkGray,
+                textColor: CustomAppColor.of(parentContext).txtDarkGray,
               ),
               SizedBox(height: 20.setHeight),
               CommonTextFormField(
                 controller: TextEditingController(),
-                hintText: "${Languages.of(context).txtMessage}...",
+                hintText: "${Languages.of(parentContext).txtMessage}...",
                 maxLines: 3,
                 radius: 18,
               ),
@@ -76,13 +89,13 @@ class _ReviewDialogState extends State<ReviewDialog> {
               ),
               SizedBox(height: 20.setHeight),
               CommonButton(
-                text: Languages.of(context).txtSubmit,
+                text: Languages.of(parentContext).txtSubmit,
                 onTap: () {
                   Navigator.pop(context);
                   widget.onTap?.call();
                 },
-                buttonColor: CustomAppColor.of(context).primary,
-                borderColor: CustomAppColor.of(context).borderColor,
+                buttonColor: CustomAppColor.of(parentContext).primary,
+                borderColor: CustomAppColor.of(parentContext).borderColor,
                 borderWidth: 3,
                 height: 55.setHeight,
                 radius: 18,

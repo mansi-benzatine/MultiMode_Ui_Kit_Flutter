@@ -9,14 +9,22 @@ import '../../widgets/button/common_button.dart';
 import '../../widgets/text/common_text.dart';
 
 class SubscriptionCongratulationDialog extends StatefulWidget {
-  const SubscriptionCongratulationDialog({super.key, required this.onTap});
-
+  final BuildContext parentContext;
   final Function? onTap;
+
+  const SubscriptionCongratulationDialog({
+    super.key,
+    required this.parentContext,
+    this.onTap,
+  });
 
   static Future<void> show(BuildContext context, {Function? onTap}) async {
     return showDialog(
       context: context,
-      builder: (context) => SubscriptionCongratulationDialog(onTap: onTap),
+      builder: (_) => SubscriptionCongratulationDialog(
+        parentContext: context,
+        onTap: onTap,
+      ),
     );
   }
 
@@ -27,9 +35,14 @@ class SubscriptionCongratulationDialog extends StatefulWidget {
 class _SubscriptionCongratulationDialogState extends State<SubscriptionCongratulationDialog> {
   @override
   Widget build(BuildContext context) {
+    final parentContext = widget.parentContext;
+
     return AlertDialog(
-      backgroundColor: CustomAppColor.of(context).bgScreen,
-      contentPadding: EdgeInsets.symmetric(horizontal: 20.setWidth, vertical: 20.setHeight),
+      backgroundColor: CustomAppColor.of(parentContext).bgScreen,
+      contentPadding: EdgeInsets.symmetric(
+        horizontal: 20.setWidth,
+        vertical: 20.setHeight,
+      ),
       content: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
@@ -40,29 +53,29 @@ class _SubscriptionCongratulationDialogState extends State<SubscriptionCongratul
           ),
           SizedBox(height: 15.setHeight),
           CommonText(
-            text: "${Languages.of(context).txtCongratulations}!",
+            text: "${Languages.of(parentContext).txtCongratulations}!",
             fontSize: 28.setFontSize,
             fontWeight: FontWeight.w700,
             fontFamily: Constant.fontFamilyBold700,
-            textColor: CustomAppColor.of(context).txtBlack,
+            textColor: CustomAppColor.of(parentContext).txtBlack,
           ),
           SizedBox(height: 10.setHeight),
           CommonText(
-            text: Languages.of(context).txtLoremIpsum,
+            text: Languages.of(parentContext).txtLoremIpsum,
             fontSize: 12.setFontSize,
             fontWeight: FontWeight.w400,
             fontFamily: Constant.fontFamilyRegular400,
-            textColor: CustomAppColor.of(context).txtDarkGray,
+            textColor: CustomAppColor.of(parentContext).txtDarkGray,
           ),
           SizedBox(height: 20.setHeight),
           CommonButton(
-            text: Languages.of(context).txtDone,
+            text: Languages.of(parentContext).txtDone,
             onTap: () {
               Navigator.pop(context);
               widget.onTap?.call();
             },
-            buttonColor: CustomAppColor.of(context).primary,
-            borderColor: CustomAppColor.of(context).borderColor,
+            buttonColor: CustomAppColor.of(parentContext).primary,
+            borderColor: CustomAppColor.of(parentContext).borderColor,
             borderWidth: 3,
             height: 55.setHeight,
             width: 180.setWidth,

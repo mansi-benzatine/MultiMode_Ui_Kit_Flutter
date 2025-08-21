@@ -14,9 +14,10 @@ class MoodDialog extends StatefulWidget {
   final Function? onTap;
 
   static Future<void> show(BuildContext context, {Function? onTap}) async {
+    final rootContext = Navigator.of(context, rootNavigator: true).context;
     return showDialog(
-      context: context,
-      builder: (context) => MoodDialog(onTap: onTap),
+      context: rootContext,
+      builder: (_) => MoodDialog(onTap: onTap),
     );
   }
 
