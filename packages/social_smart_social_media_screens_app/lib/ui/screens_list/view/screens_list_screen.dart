@@ -399,16 +399,23 @@ class _SocialSmartSocialMediaScreenListScreen extends State<SocialSmartSocialMed
           backgroundColor: Colors.transparent,
           elevation: 0,
           leading: IconButton(
-            icon: Icon(Icons.arrow_back, color: CustomAppColor.of(context).white),
+            icon: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Icon(
+                Icons.arrow_back,
+                color: CustomAppColor.of(context).white,
+              ),
+            ),
             onPressed: () {
               widget.onBack?.call();
             },
           ),
+          leadingWidth: 38,
           title: CommonText(
             text: "Social Media App",
-            fontSize: AppSizes.setFontSize(20),
+            fontSize: AppSizes.setFontSize(22),
+            fontFamily: Constant.fontFamilyMontserratSemiBold,
             textColor: CustomAppColor.of(context).white,
-            fontWeight: FontWeight.w700,
           ),
         ),
         body: Container(
