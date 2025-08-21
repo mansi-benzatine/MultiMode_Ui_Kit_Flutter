@@ -280,48 +280,51 @@ class _UpgradePlanScreenState extends State<UpgradePlanScreen> implements TopBar
           textColor: CustomAppColor.of(context).txtBlack,
         ),
         SizedBox(height: 15.setHeight),
-        InkWell(
-          highlightColor: CustomAppColor.of(context).transparent,
-          splashColor: CustomAppColor.of(context).transparent,
-          onTap: () {
-            Navigator.push(context, PaymentMethodScreen.route(isFromSelection: true));
-          },
-          child: Container(
-            padding: EdgeInsets.symmetric(horizontal: 15.setWidth, vertical: 15.setHeight),
-            decoration: BoxDecoration(
-              color: CustomAppColor.of(context).bgScreen,
-              borderRadius: BorderRadius.circular(15),
-              border: Border.all(
-                color: CustomAppColor.of(context).txtBlack.withValues(alpha: 0.1),
-                width: 1,
+        IgnorePointer(
+          ignoring: true,
+          child: InkWell(
+            highlightColor: CustomAppColor.of(context).transparent,
+            splashColor: CustomAppColor.of(context).transparent,
+            onTap: () {
+              Navigator.push(context, PaymentMethodScreen.route(isFromSelection: true));
+            },
+            child: Container(
+              padding: EdgeInsets.symmetric(horizontal: 15.setWidth, vertical: 15.setHeight),
+              decoration: BoxDecoration(
+                color: CustomAppColor.of(context).bgScreen,
+                borderRadius: BorderRadius.circular(15),
+                border: Border.all(
+                  color: CustomAppColor.of(context).txtBlack.withValues(alpha: 0.1),
+                  width: 1,
+                ),
               ),
-            ),
-            child: Row(
-              children: [
-                Image.asset(
-                  AppAssets.icPaymentWallet,
-                  height: 20.setHeight,
-                  width: 20.setHeight,
-                  color: CustomAppColor.of(context).txtBlack,
-                ),
-                SizedBox(width: 10.setWidth),
-                Expanded(
-                  child: CommonText(
-                    text: Languages.of(context).txtMyWallet,
-                    fontSize: 14.setFontSize,
-                    fontWeight: FontWeight.w600,
-                    fontFamily: Constant.fontFamilySemiBold600,
-                    textColor: CustomAppColor.of(context).txtBlack,
-                    textAlign: TextAlign.start,
+              child: Row(
+                children: [
+                  Image.asset(
+                    AppAssets.icPaymentWallet,
+                    height: 20.setHeight,
+                    width: 20.setHeight,
+                    color: CustomAppColor.of(context).txtBlack,
                   ),
-                ),
-                Image.asset(
-                  AppAssets.icEditOutline,
-                  height: 20.setHeight,
-                  width: 20.setWidth,
-                  color: CustomAppColor.of(context).txtBlack,
-                ),
-              ],
+                  SizedBox(width: 10.setWidth),
+                  Expanded(
+                    child: CommonText(
+                      text: Languages.of(context).txtMyWallet,
+                      fontSize: 14.setFontSize,
+                      fontWeight: FontWeight.w600,
+                      fontFamily: Constant.fontFamilySemiBold600,
+                      textColor: CustomAppColor.of(context).txtBlack,
+                      textAlign: TextAlign.start,
+                    ),
+                  ),
+                  Image.asset(
+                    AppAssets.icEditOutline,
+                    height: 20.setHeight,
+                    width: 20.setWidth,
+                    color: CustomAppColor.of(context).txtBlack,
+                  ),
+                ],
+              ),
             ),
           ),
         ),
