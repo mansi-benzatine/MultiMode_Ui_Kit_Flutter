@@ -9,15 +9,18 @@ import '../../widgets/button/common_button.dart';
 import '../../widgets/text/common_text.dart';
 
 class MoodDialog extends StatefulWidget {
-  const MoodDialog({super.key, required this.onTap});
+  const MoodDialog({super.key, required this.onTap, required this.parentContext});
 
   final Function? onTap;
+  final BuildContext parentContext;
 
   static Future<void> show(BuildContext context, {Function? onTap}) async {
-    final rootContext = Navigator.of(context, rootNavigator: true).context;
     return showDialog(
-      context: rootContext,
-      builder: (_) => MoodDialog(onTap: onTap),
+      context: context,
+      builder: (_) => MoodDialog(
+        onTap: onTap,
+        parentContext: context,
+      ),
     );
   }
 
@@ -26,7 +29,7 @@ class MoodDialog extends StatefulWidget {
 }
 
 class _MoodDialogState extends State<MoodDialog> {
-  List<String> emojiList = [
+  final List<String> emojiList = [
     AppAssets.imgEmoji1,
     AppAssets.imgEmoji2,
     AppAssets.imgEmoji3,
@@ -36,88 +39,85 @@ class _MoodDialogState extends State<MoodDialog> {
     AppAssets.imgEmoji7,
     AppAssets.imgEmoji8,
   ];
-  ValueNotifier<int> selectedIndex = ValueNotifier(0);
+
+  final ValueNotifier<int> selectedIndex = ValueNotifier(0);
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: EdgeInsets.symmetric(horizontal: 20.setWidth, vertical: 20.setHeight),
-      alignment: Alignment.center,
-      child: Material(
-        color: CustomAppColor.of(context).bgScreen,
-        borderRadius: BorderRadius.circular(34),
-        child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 20.setWidth, vertical: 20.setHeight),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              CommonText(
-                text: Languages.of(context).txtHowWasYourMoodAfterLesson,
-                fontSize: 22.setFontSize,
-                fontWeight: FontWeight.w700,
-                fontFamily: Constant.fontFamilyBold700,
-                textColor: CustomAppColor.of(context).txtBlack,
-              ),
-              Divider(
-                color: CustomAppColor.of(context).txtBlack.withValues(alpha: 0.5),
-                thickness: 1,
-                height: 25.setHeight,
-              ),
-              ValueListenableBuilder(
-                valueListenable: selectedIndex,
-                builder: (context, value, child) {
-                  return GridView.builder(
-                    itemCount: emojiList.length,
-                    shrinkWrap: true,
-                    physics: const NeverScrollableScrollPhysics(),
-                    padding: EdgeInsets.only(top: 5.setHeight, bottom: 15.setHeight),
-                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 4,
-                      mainAxisSpacing: 0,
-                      crossAxisSpacing: 0,
-                      mainAxisExtent: 80.setHeight,
-                    ),
-                    itemBuilder: (context, index) {
-                      return InkWell(
-                        splashColor: CustomAppColor.of(context).transparent,
-                        highlightColor: CustomAppColor.of(context).transparent,
-                        onTap: () {
-                          selectedIndex.value = index;
-                        },
-                        child: Container(
-                          decoration: BoxDecoration(
-                            color: CustomAppColor.of(context).transparent,
-                            borderRadius: BorderRadius.circular(18),
-                            border: Border.all(
-                              color: selectedIndex.value == index ? CustomAppColor.of(context).primary : CustomAppColor.of(context).transparent,
-                              width: 2,
-                            ),
-                          ),
-                          child: Image.asset(
-                            emojiList[index],
-                            width: 80.setWidth,
-                            height: 80.setHeight,
+    final parentContext = widget.parentContext;
+
+    return Dialog(
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(34)),
+      backgroundColor: CustomAppColor.of(parentContext).bgScreen,
+      insetPadding: EdgeInsets.symmetric(horizontal: 20.setWidth, vertical: 20.setHeight),
+      child: Padding(
+        padding: EdgeInsets.symmetric(horizontal: 20.setWidth, vertical: 20.setHeight),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            CommonText(
+              text: Languages.of(parentContext).txtHowWasYourMoodAfterLesson,
+              fontSize: 22.setFontSize,
+              fontWeight: FontWeight.w700,
+              fontFamily: Constant.fontFamilyBold700,
+              textColor: CustomAppColor.of(parentContext).txtBlack,
+              textAlign: TextAlign.center,
+            ),
+            Divider(
+              color: CustomAppColor.of(parentContext).txtBlack.withValues(alpha: 0.5),
+              thickness: 1,
+              height: 25.setHeight,
+            ),
+            ValueListenableBuilder<int>(
+              valueListenable: selectedIndex,
+              builder: (context, value, child) {
+                return GridView.builder(
+                  itemCount: emojiList.length,
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  padding: EdgeInsets.only(top: 5.setHeight, bottom: 15.setHeight),
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 4,
+                    mainAxisExtent: 80.setHeight,
+                  ),
+                  itemBuilder: (context, index) {
+                    return InkWell(
+                      splashColor: Colors.transparent,
+                      highlightColor: Colors.transparent,
+                      onTap: () => selectedIndex.value = index,
+                      child: Container(
+                        margin: EdgeInsets.all(4.setWidth),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(18),
+                          border: Border.all(
+                            color: value == index ? CustomAppColor.of(parentContext).primary : Colors.transparent,
+                            width: 2,
                           ),
                         ),
-                      );
-                    },
-                  );
-                },
-              ),
-              CommonButton(
-                text: Languages.of(context).txtContinue,
-                onTap: () {
-                  Navigator.pop(context);
-                  widget.onTap?.call();
-                },
-                buttonColor: CustomAppColor.of(context).primary,
-                borderColor: CustomAppColor.of(context).borderColor,
-                borderWidth: 3,
-                height: 55.setHeight,
-                radius: 18,
-              ),
-            ],
-          ),
+                        child: Image.asset(
+                          emojiList[index],
+                          width: 80.setWidth,
+                          height: 80.setHeight,
+                        ),
+                      ),
+                    );
+                  },
+                );
+              },
+            ),
+            CommonButton(
+              text: Languages.of(parentContext).txtContinue,
+              onTap: () {
+                Navigator.of(context, rootNavigator: true).pop();
+                widget.onTap?.call();
+              },
+              buttonColor: CustomAppColor.of(parentContext).primary,
+              borderColor: CustomAppColor.of(parentContext).borderColor,
+              borderWidth: 3,
+              height: 55.setHeight,
+              radius: 18,
+            ),
+          ],
         ),
       ),
     );
