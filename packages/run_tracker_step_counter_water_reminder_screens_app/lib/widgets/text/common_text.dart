@@ -54,7 +54,7 @@ class CommonText extends StatelessWidget {
               decoration: textDecoration,
               decorationColor: textColor ?? CustomAppColor.of(context).txtWhite,
               height: height,
-              package: 'run_tracker_step_counter_water_reminder_app_package',
+              package: 'run_tracker_step_counter_water_reminder_screens_app',
             ),
           )
         : Text(
@@ -65,13 +65,13 @@ class CommonText extends StatelessWidget {
             style: TextStyle(
               fontSize: fontSize ?? 14.setFontSize,
               color: textColor ?? CustomAppColor.of(context).txtBlack,
-              fontFamily: fontFamily,
+              fontFamily: fontFamily ?? Constant.fontFamily,
               fontWeight: fontWeight,
               fontStyle: fontStyle,
               decoration: textDecoration,
               decorationColor: textColor ?? CustomAppColor.of(context).txtBlack,
               height: height,
-              package: 'run_tracker_step_counter_water_reminder_app_package',
+              package: 'run_tracker_step_counter_water_reminder_screens_app',
               letterSpacing: letterSpacing,
             ),
           );

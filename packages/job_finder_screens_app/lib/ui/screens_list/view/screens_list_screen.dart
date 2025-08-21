@@ -26,10 +26,10 @@ import 'package:job_finder_screens_app_package/ui/update_password/view/update_pa
 import 'package:job_finder_screens_app_package/ui/video_call/view/video_call_screen.dart';
 import 'package:job_finder_screens_app_package/ui/voice_call/view/voice_call_screen.dart';
 import 'package:job_finder_screens_app_package/utils/sizer_utils.dart';
-import 'package:job_finder_screens_app_package/utils/utils.dart';
 
 import '../../../utils/app_assets.dart';
 import '../../../utils/app_color.dart';
+import '../../../utils/constant.dart';
 import '../../../widgets/text/common_text.dart';
 import '../../splash/view/splash_screen.dart';
 import '../datamodel/screens_list_data.dart';
@@ -53,120 +53,112 @@ class _ScreenListScreenState extends State<ScreenListScreen> {
   _fillData() {
     screenList = [
       ScreenListDataModel(
-        title: "Splash".toUpperCase(),
+        title: "Splash",
         icon: AppAssets.icScreen,
         onClick: () => Navigator.push(context, SplashScreen.route()),
       ),
       ScreenListDataModel(
-        title: "Onboarding 1".toUpperCase(),
+        title: "Onboarding 1",
         icon: AppAssets.icScreen,
         onClick: () => Navigator.push(context, OnBoardingScreen.route(index: 0)),
       ),
       ScreenListDataModel(
-        title: "Onboarding 2".toUpperCase(),
+        title: "Onboarding 2",
         icon: AppAssets.icScreen,
         onClick: () => Navigator.push(context, OnBoardingScreen.route(index: 1)),
       ),
       ScreenListDataModel(
-        title: "Onboarding 3".toUpperCase(),
+        title: "Onboarding 3",
         icon: AppAssets.icScreen,
         onClick: () => Navigator.push(context, OnBoardingScreen.route(index: 2)),
       ),
       ScreenListDataModel(
-        title: "Select options".toUpperCase(),
+        title: "Select options",
         icon: AppAssets.icScreen,
         onClick: () => Navigator.push(context, SelectYourOptionScreen.route()),
       ),
       ScreenListDataModel(
-        title: "Sign in".toUpperCase(),
+        title: "Sign in",
         icon: AppAssets.icScreen,
         onClick: () => Navigator.push(context, SignInScreen.route()),
       ),
       ScreenListDataModel(
-        title: "Sign up".toUpperCase(),
+        title: "Sign up",
         icon: AppAssets.icScreen,
         onClick: () => Navigator.push(context, SignUpScreen.route()),
       ),
       ScreenListDataModel(
-        title: "Forgot password".toUpperCase(),
+        title: "Forgot password",
         icon: AppAssets.icScreen,
         onClick: () => Navigator.push(context, ForgotPasswordScreen.route()),
       ),
       ScreenListDataModel(
-        title: "Verify code".toUpperCase(),
+        title: "Verify code",
         icon: AppAssets.icScreen,
         onClick: () => Navigator.push(context, Enter4DigitCodeScreen.route()),
       ),
       ScreenListDataModel(
-        title: "Reset Password".toUpperCase(),
+        title: "Reset Password",
         icon: AppAssets.icScreen,
         onClick: () => Navigator.push(context, ResetPasswordScreen.route()),
       ),
       ScreenListDataModel(
-        title: "Set up profile".toUpperCase(),
+        title: "Set up profile",
         icon: AppAssets.icScreen,
         onClick: () => Navigator.push(context, SetUpProfileScreen.route()),
       ),
       ScreenListDataModel(
-        title: "What type of Job Role".toUpperCase(),
+        title: "What type of Job Role",
         icon: AppAssets.icScreen,
         onClick: () => Navigator.push(context, TypeJobRolesScreen.route()),
       ),
       ScreenListDataModel(
-        title: "What type of Job type".toUpperCase(),
+        title: "What type of Job type",
         icon: AppAssets.icScreen,
         onClick: () => Navigator.push(context, TypesOfJobTypeScreen.route()),
       ),
       ScreenListDataModel(
-        title: "Confirm new account".toUpperCase(),
+        title: "Confirm new account",
         icon: AppAssets.icScreen,
         onClick: () => Navigator.push(context, ConfirmNewAccountScreen.route()),
       ),
       ScreenListDataModel(
-        title: "Home".toUpperCase(),
+        title: "Home",
         icon: AppAssets.icScreen,
-        onClick: () => Navigator.push(
-            context,
-            DashboardScreen.route(
-                isFromEmptyMessage: false,
-                isFromHome: true,
-                isFromApplication: false,
-                isFromMessage: false,
-                isFromProfile: false,
-                isFromSavedJobs: false)),
+        onClick: () => Navigator.push(context, DashboardScreen.route(isFromEmptyMessage: false, isFromHome: true, isFromApplication: false, isFromMessage: false, isFromProfile: false, isFromSavedJobs: false)),
       ),
       ScreenListDataModel(
-        title: "Job Description".toUpperCase(),
+        title: "Job Description",
         icon: AppAssets.icScreen,
         onClick: () => Navigator.push(context, JobDetailsScreen.route(isFromCompany: false, isFromDescription: true, isFromReview: false)),
       ),
       ScreenListDataModel(
-        title: "Job Company".toUpperCase(),
+        title: "Job Company",
         icon: AppAssets.icScreen,
         onClick: () => Navigator.push(context, JobDetailsScreen.route(isFromCompany: true, isFromDescription: false, isFromReview: false)),
       ),
       ScreenListDataModel(
-        title: "Job Company Review".toUpperCase(),
+        title: "Job Company Review",
         icon: AppAssets.icScreen,
         onClick: () => Navigator.push(context, JobDetailsScreen.route(isFromCompany: false, isFromDescription: false, isFromReview: true)),
       ),
       ScreenListDataModel(
-        title: "Apply job".toUpperCase(),
+        title: "Apply job",
         icon: AppAssets.icScreen,
         onClick: () => Navigator.push(context, ApplyJobScreen.route()),
       ),
       ScreenListDataModel(
-        title: "Successfully Applied".toUpperCase(),
+        title: "Successfully Applied",
         icon: AppAssets.icScreen,
         onClick: () => Navigator.push(context, SuccessfullyJobAppliedScreen.route()),
       ),
       ScreenListDataModel(
-        title: "Filter options".toUpperCase(),
+        title: "Filter options",
         icon: AppAssets.icScreen,
         onClick: () => Navigator.push(context, FilterOptionsScreen.route()),
       ),
       ScreenListDataModel(
-        title: "Search Job".toUpperCase(),
+        title: "Search Job",
         icon: AppAssets.icScreen,
         onClick: () => Navigator.push(
           context,
@@ -178,7 +170,7 @@ class _ScreenListScreenState extends State<ScreenListScreen> {
         ),
       ),
       ScreenListDataModel(
-        title: "Search Result".toUpperCase(),
+        title: "Search Result",
         icon: AppAssets.icScreen,
         onClick: () => Navigator.push(
           context,
@@ -190,7 +182,7 @@ class _ScreenListScreenState extends State<ScreenListScreen> {
         ),
       ),
       ScreenListDataModel(
-        title: "No Result Found".toUpperCase(),
+        title: "No Result Found",
         icon: AppAssets.icScreen,
         onClick: () => Navigator.push(
           context,
@@ -202,117 +194,77 @@ class _ScreenListScreenState extends State<ScreenListScreen> {
         ),
       ),
       ScreenListDataModel(
-        title: "Applications".toUpperCase(),
+        title: "Applications",
         icon: AppAssets.icScreen,
-        onClick: () => Navigator.push(
-            context,
-            DashboardScreen.route(
-                isFromEmptyMessage: false,
-                isFromMessage: false,
-                isFromApplication: true,
-                isFromSavedJobs: false,
-                isFromProfile: false,
-                isFromHome: false)),
+        onClick: () => Navigator.push(context, DashboardScreen.route(isFromEmptyMessage: false, isFromMessage: false, isFromApplication: true, isFromSavedJobs: false, isFromProfile: false, isFromHome: false)),
       ),
       ScreenListDataModel(
-        title: "Job tracking application".toUpperCase(),
+        title: "Job tracking application",
         icon: AppAssets.icScreen,
         onClick: () => Navigator.push(context, AppliedJobDetailsScreen.route()),
       ),
       ScreenListDataModel(
-        title: "Notifications".toUpperCase(),
+        title: "Notifications",
         icon: AppAssets.icScreen,
         onClick: () => Navigator.push(context, NotificationsScreen.route(isFromEmptyNotification: false)),
       ),
       ScreenListDataModel(
-        title: "Empty Notification".toUpperCase(),
+        title: "Empty Notification",
         icon: AppAssets.icScreen,
         onClick: () => Navigator.push(context, NotificationsScreen.route(isFromEmptyNotification: true)),
       ),
       ScreenListDataModel(
-        title: "Message".toUpperCase(),
+        title: "Message",
         icon: AppAssets.icScreen,
-        onClick: () => Navigator.push(
-            context,
-            DashboardScreen.route(
-                isFromEmptyMessage: false,
-                isFromHome: false,
-                isFromApplication: false,
-                isFromMessage: true,
-                isFromProfile: false,
-                isFromSavedJobs: false)),
+        onClick: () => Navigator.push(context, DashboardScreen.route(isFromEmptyMessage: false, isFromHome: false, isFromApplication: false, isFromMessage: true, isFromProfile: false, isFromSavedJobs: false)),
       ),
       ScreenListDataModel(
-        title: "No message found".toUpperCase(),
+        title: "No message found",
         icon: AppAssets.icScreen,
-        onClick: () => Navigator.push(
-            context,
-            DashboardScreen.route(
-                isFromEmptyMessage: true,
-                isFromHome: false,
-                isFromApplication: false,
-                isFromMessage: true,
-                isFromProfile: false,
-                isFromSavedJobs: false)),
+        onClick: () => Navigator.push(context, DashboardScreen.route(isFromEmptyMessage: true, isFromHome: false, isFromApplication: false, isFromMessage: true, isFromProfile: false, isFromSavedJobs: false)),
       ),
       ScreenListDataModel(
-        title: "Message chat".toUpperCase(),
+        title: "Message chat",
         icon: AppAssets.icScreen,
         onClick: () => Navigator.push(context, ChatScreen.route()),
       ),
       ScreenListDataModel(
-        title: "Video call".toUpperCase(),
+        title: "Video call",
         icon: AppAssets.icScreen,
         onClick: () => Navigator.push(context, VideoCallScreen.route()),
       ),
       ScreenListDataModel(
-        title: "Voice call".toUpperCase(),
+        title: "Voice call",
         icon: AppAssets.icScreen,
         onClick: () => Navigator.push(context, VoiceCallScreen.route()),
       ),
       ScreenListDataModel(
-        title: "Saved Jobs".toUpperCase(),
+        title: "Saved Jobs",
         icon: AppAssets.icScreen,
-        onClick: () => Navigator.push(
-            context,
-            DashboardScreen.route(
-                isFromEmptyMessage: false,
-                isFromHome: false,
-                isFromApplication: false,
-                isFromMessage: false,
-                isFromProfile: false,
-                isFromSavedJobs: true)),
+        onClick: () => Navigator.push(context, DashboardScreen.route(isFromEmptyMessage: false, isFromHome: false, isFromApplication: false, isFromMessage: false, isFromProfile: false, isFromSavedJobs: true)),
       ),
       ScreenListDataModel(
-        title: "Profile".toUpperCase(),
+        title: "Profile",
         icon: AppAssets.icScreen,
-        onClick: () => Navigator.push(
-            context,
-            DashboardScreen.route(
-                isFromEmptyMessage: false,
-                isFromHome: false,
-                isFromApplication: false,
-                isFromMessage: false,
-                isFromProfile: true,
-                isFromSavedJobs: false)),
+        onClick: () => Navigator.push(context, DashboardScreen.route(isFromEmptyMessage: false, isFromHome: false, isFromApplication: false, isFromMessage: false, isFromProfile: true, isFromSavedJobs: false)),
       ),
       ScreenListDataModel(
-        title: "Settings".toUpperCase(),
+        title: "Settings",
         icon: AppAssets.icScreen,
         onClick: () => Navigator.push(context, SettingsScreen.route()),
       ),
       ScreenListDataModel(
-        title: "Privacy & Policy ".toUpperCase(),
+        title: "Privacy & Policy ",
         icon: AppAssets.icScreen,
         onClick: () => Navigator.push(context, PrivacyAndPolicyScreen.route()),
       ),
       ScreenListDataModel(
-        title: "Terms & Conditions ".toUpperCase(),
+        title: "Terms & Conditions ",
         icon: AppAssets.icScreen,
         onClick: () => Navigator.push(context, TermsAndConditionsScreen.route()),
       ),
       ScreenListDataModel(
-        title: "update password".toUpperCase(),
+        title: "update password",
         icon: AppAssets.icScreen,
         onClick: () => Navigator.push(context, UpdatePasswordScreen.route()),
       ),
@@ -329,11 +281,18 @@ class _ScreenListScreenState extends State<ScreenListScreen> {
         backgroundColor: Colors.transparent,
         elevation: 0,
         leading: IconButton(
-          icon: Icon(Icons.arrow_back, color: CustomAppColor.of(context).white),
+          icon: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Icon(
+              Icons.arrow_back,
+              color: CustomAppColor.of(context).white,
+            ),
+          ),
           onPressed: () {
             widget.onBack?.call();
           },
         ),
+        leadingWidth: 38.setWidth,
         title: CommonText(
           text: "Job Finder App",
           fontSize: 22.setFontSize,
@@ -374,7 +333,7 @@ class _ModeGridView extends StatelessWidget {
         width: 0.screenWidth,
         margin: EdgeInsets.only(top: 10.setHeight),
         decoration: BoxDecoration(
-          color: CustomAppColor.of(context).whiteBlackBg,
+          color: CustomAppColor.of(context).txtWhite,
           borderRadius: const BorderRadius.vertical(top: Radius.circular(40)),
         ),
         child: Column(
@@ -388,6 +347,7 @@ class _ModeGridView extends StatelessWidget {
                 borderRadius: BorderRadius.circular(100),
               ),
             ),
+            SizedBox(height: 5.setHeight),
             Expanded(
               child: SingleChildScrollView(
                 child: Column(
@@ -396,9 +356,13 @@ class _ModeGridView extends StatelessWidget {
                       spacing: 10.setWidth,
                       runSpacing: 10.setHeight,
                       alignment: WrapAlignment.start,
-                      children: screenList.map((item) {
-                        return _itemList(context: context, item: item);
-                      }).toList(),
+                      children: List.generate(screenList.length, (index) {
+                        return _itemList(
+                          context: context,
+                          item: screenList[index],
+                          index: index + 1,
+                        );
+                      }),
                     ),
                     SizedBox(height: 20.setHeight),
                   ],
@@ -411,67 +375,73 @@ class _ModeGridView extends StatelessWidget {
     );
   }
 
-  Widget _itemList({required BuildContext context, required ScreenListDataModel item}) {
+  Widget _itemList({
+    required BuildContext context,
+    required ScreenListDataModel item,
+    required int index,
+  }) {
     return InkWell(
       onTap: () {
         item.onClick?.call();
       },
-      child: Container(
-        margin: EdgeInsets.symmetric(horizontal: 4.setWidth, vertical: 4.setHeight),
-        padding: EdgeInsets.symmetric(horizontal: 14.setWidth, vertical: 14.setHeight),
-        width: (MediaQuery.of(context).size.width - 16.setWidth * 2 - 14.setWidth * 2) / 3,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(16),
-          color: CustomAppColor.of(context).listTileColorScreenList,
-          boxShadow: [
-            BoxShadow(
-              color: CustomAppColor.of(context).listTileShadow..withOpacityPercent(.10),
-              offset: const Offset(0, 4),
-              blurRadius: 10,
-              spreadRadius: 1,
-            )
-          ],
-        ),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            SizedBox(height: 6.setHeight),
-            Container(
-              padding: EdgeInsets.symmetric(horizontal: 20.setWidth, vertical: 15.setHeight),
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  colors: [
-                    CustomAppColor.of(context).bgSkyBlue,
-                    CustomAppColor.of(context).bgDarkBlue,
+      child: Padding(
+        padding: EdgeInsets.only(left: 20.setWidth, right: 20.setWidth, top: 3.setHeight),
+        child: Container(
+          padding: EdgeInsets.symmetric(horizontal: 16.setWidth, vertical: 18.setHeight),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(16),
+            color: CustomAppColor.of(context).listTileColorScreenList,
+            boxShadow: [
+              BoxShadow(
+                color: CustomAppColor.of(
+                  context,
+                ).listTileShadow.withValues(alpha: .10),
+                offset: const Offset(0, 4),
+                blurRadius: 10,
+                spreadRadius: 1,
+              ),
+            ],
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Expanded(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    CommonText(
+                      text: "${index.toString()}.  ",
+                      fontSize: 15.setFontSize,
+                      fontFamily: Constant.fontFamilyMontserratSemiBold,
+                      fontWeight: FontWeight.w600,
+                      textColor: CustomAppColor.of(context).txtBlack,
+                    ),
+                    Expanded(
+                      child: CommonText(
+                        text: item.title,
+                        fontSize: 14.setFontSize,
+                        fontFamily: Constant.fontFamilyMontserratSemiBold,
+                        fontWeight: FontWeight.w600,
+                        textColor: CustomAppColor.of(context).txtBlack,
+                        textAlign: TextAlign.start,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ),
                   ],
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
                 ),
-                shape: BoxShape.circle,
               ),
-              child: Image.asset(
-                item.icon,
-                height: 29.setHeight,
-                width: 18.setHeight,
-                gaplessPlayback: true,
+              Padding(
+                padding: EdgeInsets.only(left: 20.setWidth),
+                child: Image.asset(
+                  item.icon,
+                  height: 20.setHeight,
+                  width: 20.setHeight,
+                  gaplessPlayback: true,
+                ),
               ),
-            ),
-            SizedBox(height: 10.setHeight),
-            Container(
-              constraints: BoxConstraints(minHeight: 37.setHeight),
-              alignment: Alignment.center,
-              child: CommonText(
-                text: item.title.toUpperCase(),
-                fontSize: 12.setFontSize,
-                fontWeight: FontWeight.w700,
-                textColor: CustomAppColor.of(context).txtBlack,
-                textAlign: TextAlign.center,
-                isAutoSize: true,
-                maxLines: 2,
-                height: 1.2,
-              ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

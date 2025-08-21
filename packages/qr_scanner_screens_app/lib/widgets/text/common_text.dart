@@ -9,7 +9,7 @@ class CommonText extends StatelessWidget {
   final String text;
   final Color? textColor;
   final double? fontSize;
-  final String fontFamily;
+  final String? fontFamily;
   final FontWeight fontWeight;
   final FontStyle fontStyle;
   final TextAlign textAlign;
@@ -26,7 +26,7 @@ class CommonText extends StatelessWidget {
     this.maxLines,
     this.overflow,
     this.textColor,
-    this.fontFamily = Constant.fontFamily,
+    this.fontFamily,
     this.fontWeight = FontWeight.w500,
     this.fontStyle = FontStyle.normal,
     this.textAlign = TextAlign.center,
@@ -46,14 +46,14 @@ class CommonText extends StatelessWidget {
             style: TextStyle(
               fontSize: fontSize ?? 14.setFontSize,
               color: textColor ?? CustomAppColor.of(context).txtWhite,
-              fontFamily: fontFamily,
+              fontFamily: fontFamily ?? Constant.fontFamily,
               fontWeight: fontWeight,
               fontStyle: fontStyle,
               decoration: textDecoration,
               decorationColor: textColor ?? CustomAppColor.of(context).txtWhite,
               height: height,
               letterSpacing: -0.3,
-              package: 'qr_scanner_app_package',
+              package: 'qr_scanner_screens_app_package',
             ),
           )
         : Text(
@@ -64,14 +64,14 @@ class CommonText extends StatelessWidget {
             style: TextStyle(
               fontSize: fontSize ?? 14.setFontSize,
               color: textColor ?? CustomAppColor.of(context).txtWhite,
-              fontFamily: fontFamily,
+              fontFamily: fontFamily ?? Constant.fontFamily,
               fontWeight: fontWeight,
               fontStyle: fontStyle,
               decoration: textDecoration,
               decorationColor: textColor ?? CustomAppColor.of(context).txtWhite,
               height: height,
               letterSpacing: -0.3,
-              package: 'qr_scanner_app_package',
+              package: 'qr_scanner_screens_app_package',
             ),
           );
   }

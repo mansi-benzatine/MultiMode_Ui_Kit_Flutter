@@ -19,7 +19,7 @@ dependencies:
   auto_size_text: ^3.0.0
   smooth_page_indicator: ^1.2.0+3
   flutter_switch: ^0.3.2
-  intl: 0.20.2
+  intl: ^0.20.2
   syncfusion_flutter_charts: ^29.2.9
   syncfusion_flutter_gauges: ^29.2.9
   syncfusion_flutter_core: ^29.2.9
@@ -46,6 +46,8 @@ flutter:
   fonts:
     - family: Roboto
       fonts:
+        - asset: assets/fonts/Roboto-Light.ttf
+          weight: 300
         - asset: assets/fonts/Roboto-Regular.ttf
           weight: 400
         - asset: assets/fonts/Roboto-Medium.ttf
@@ -54,10 +56,13 @@ flutter:
           weight: 600
         - asset: assets/fonts/Roboto-Bold.ttf
           weight: 700
-        - asset: assets/fonts/Roboto-Light.ttf
-          weight: 300
         - asset: assets/fonts/Roboto-ExtraBold.ttf
           weight: 800
+
+    - family: Montserrat-SemiBold
+      fonts:
+        - asset: assets/fonts/Montserrat-SemiBold.ttf
+          weight: 600
 
     - family: Oswald
       fonts:

@@ -39,6 +39,7 @@ import 'package:food_delivery_screens_app_package/ui/term_and_condition/views/te
 import 'package:food_delivery_screens_app_package/ui/track_order/views/track_order_screen.dart';
 import 'package:food_delivery_screens_app_package/ui/view_cart/views/view_cart_screen.dart';
 import 'package:food_delivery_screens_app_package/ui/view_restaurant/views/view_restaurant_screen.dart';
+import 'package:food_delivery_screens_app_package/utils/constant.dart';
 import 'package:food_delivery_screens_app_package/utils/sizer_utils.dart';
 
 import '../../../utils/app_assets.dart';
@@ -68,237 +69,237 @@ class _FoodDeliveryScreensListScreen extends State<FoodDeliveryScreensListScreen
   _fillData() {
     screenList = [
       ScreenListDataModel(
-        title: "Splash".toUpperCase(),
+        title: "Splash",
         icon: AppAssets.icScreens,
         onClick: () => Navigator.push(context, SplashScreen.route()),
       ),
       ScreenListDataModel(
-        title: "OnBoarding 1".toUpperCase(),
+        title: "Onboarding 1",
         icon: AppAssets.icScreens,
         onClick: () => Navigator.push(context, OnBoardingScreen.route(currentIndex: 0)),
       ),
       ScreenListDataModel(
-        title: "OnBoarding 2".toUpperCase(),
+        title: "Onboarding 2",
         icon: AppAssets.icScreens,
         onClick: () => Navigator.push(context, OnBoardingScreen.route(currentIndex: 1)),
       ),
       ScreenListDataModel(
-        title: "OnBoarding 3".toUpperCase(),
+        title: "Onboarding 3",
         icon: AppAssets.icScreens,
         onClick: () => Navigator.push(context, OnBoardingScreen.route(currentIndex: 2)),
       ),
       ScreenListDataModel(
-        title: "Login Or Sign up".toUpperCase(),
+        title: "Login Or Sign Up",
         icon: AppAssets.icScreens,
         onClick: () => Navigator.push(context, LoginAndSignupScreen.route()),
       ),
       ScreenListDataModel(
-        title: "Otp Verification".toUpperCase(),
+        title: "Otp Verification",
         icon: AppAssets.icScreens,
         onClick: () => Navigator.push(context, MobileVerificationOtpScreen.route()),
       ),
       ScreenListDataModel(
-        title: "Email Sign up".toUpperCase(),
+        title: "Email Sign Up",
         icon: AppAssets.icScreens,
         onClick: () => Navigator.push(context, EmailSignUpScreen.route()),
       ),
       ScreenListDataModel(
-        title: "Check Your Email".toUpperCase(),
+        title: "Check Your Email",
         icon: AppAssets.icScreens,
         onClick: () => Navigator.push(context, CheckYourEmailScreen.route()),
       ),
       ScreenListDataModel(
-        title: "Email Verification".toUpperCase(),
+        title: "Email Verification",
         icon: AppAssets.icScreens,
         onClick: () => Navigator.push(context, EmailVerificationOtpScreen.route()),
       ),
       ScreenListDataModel(
-        title: "Login".toUpperCase(),
+        title: "Login",
         icon: AppAssets.icScreens,
         onClick: () => Navigator.push(context, LoginScreen.route()),
       ),
       ScreenListDataModel(
-        title: "Set Delivery Location".toUpperCase(),
+        title: "Set Delivery Location",
         icon: AppAssets.icScreens,
         onClick: () => Navigator.push(context, SetDeliveryLocationScreen.route()),
       ),
       ScreenListDataModel(
-        title: "Home".toUpperCase(),
+        title: "Home",
         icon: AppAssets.icScreens,
         onClick: () => Navigator.push(context, DashboardScreen.route(currentIndex: 0, isFromEmptyCart: false)),
       ),
       ScreenListDataModel(
-        title: "Add Address".toUpperCase(),
+        title: "Add Address",
         icon: AppAssets.icScreens,
         onClick: () => Navigator.push(context, AddAddressScreen.route()),
       ),
       ScreenListDataModel(
-        title: "Search".toUpperCase(),
+        title: "Search",
         icon: AppAssets.icScreens,
         onClick: () => Navigator.push(context, SearchScreen.route()),
       ),
       ScreenListDataModel(
-        title: "Near you".toUpperCase(),
+        title: "Near You",
         icon: AppAssets.icScreens,
         onClick: () => Navigator.push(context, NearYouScreen.route()),
       ),
       ScreenListDataModel(
-        title: "All Categories".toUpperCase(),
+        title: "All Categories",
         icon: AppAssets.icScreens,
         onClick: () => Navigator.push(context, AllCategoryScreen.route()),
       ),
       ScreenListDataModel(
-        title: "Category List".toUpperCase(),
+        title: "Category List",
         icon: AppAssets.icScreens,
         onClick: () => Navigator.push(context, AllCategoryListScreen.route()),
       ),
       ScreenListDataModel(
-        title: "View Item Details".toUpperCase(),
+        title: "View Item Details",
         icon: AppAssets.icScreens,
         onClick: () => Navigator.push(context, ViewCategoryDetailsScreen.route()),
       ),
       ScreenListDataModel(
-        title: "View Restaurant Details".toUpperCase(),
+        title: "View Restaurant Details",
         icon: AppAssets.icScreens,
         onClick: () => Navigator.push(context, ViewRestaurantScreen.route()),
       ),
       ScreenListDataModel(
-        title: "View Cart".toUpperCase(),
+        title: "View Cart",
         icon: AppAssets.icScreens,
         onClick: () => Navigator.push(context, ViewCartScreen.route(isFromDashboard: false, isFromEmptyCart: false)),
       ),
       ScreenListDataModel(
-        title: "Apply Coupon".toUpperCase(),
+        title: "Apply Coupon",
         icon: AppAssets.icScreens,
         onClick: () => Navigator.push(context, ApplyCouponScreen.route()),
       ),
       ScreenListDataModel(
-        title: "Proceed to pay".toUpperCase(),
+        title: "Proceed To Pay",
         icon: AppAssets.icScreens,
         onClick: () => Navigator.push(context, ProceedToPayScreen.route()),
       ),
       ScreenListDataModel(
-        title: "Add Card".toUpperCase(),
+        title: "Add Card",
         icon: AppAssets.icScreens,
         onClick: () => Navigator.push(context, AddCardScreen.route()),
       ),
       ScreenListDataModel(
-        title: "Order Summary".toUpperCase(),
+        title: "Order Summary",
         icon: AppAssets.icScreens,
         onClick: () => Navigator.push(context, OrderSummaryScreen.route()),
       ),
       ScreenListDataModel(
-        title: "Confirm Order".toUpperCase(),
+        title: "Confirm Order",
         icon: AppAssets.icScreens,
         onClick: () => Navigator.push(context, ConfirmOrderScreen.route()),
       ),
       ScreenListDataModel(
-        title: "Track Order".toUpperCase(),
+        title: "Track Order",
         icon: AppAssets.icScreens,
         onClick: () => Navigator.push(context, TrackOrderScreen.route()),
       ),
       ScreenListDataModel(
-        title: "Cancel Order".toUpperCase(),
+        title: "Cancel Order",
         icon: AppAssets.icScreens,
         onClick: () => Navigator.push(context, CancelOrderScreen.route()),
       ),
       ScreenListDataModel(
-        title: "Cart".toUpperCase(),
+        title: "Cart",
         icon: AppAssets.icScreens,
         onClick: () => Navigator.push(context, DashboardScreen.route(currentIndex: 1, isFromEmptyCart: false)),
       ),
       ScreenListDataModel(
-        title: "Empty Cart".toUpperCase(),
+        title: "Empty Cart",
         icon: AppAssets.icScreens,
         onClick: () => Navigator.push(context, DashboardScreen.route(currentIndex: 1, isFromEmptyCart: true)),
       ),
       ScreenListDataModel(
-        title: "Account".toUpperCase(),
+        title: "Account",
         icon: AppAssets.icScreens,
         onClick: () => Navigator.push(context, DashboardScreen.route(currentIndex: 2, isFromEmptyCart: false)),
       ),
       ScreenListDataModel(
-        title: "Edit Account".toUpperCase(),
+        title: "Edit Account",
         icon: AppAssets.icScreens,
         onClick: () => Navigator.push(context, EditAccountScreen.route()),
       ),
       ScreenListDataModel(
-        title: "My Account".toUpperCase(),
+        title: "My Account",
         icon: AppAssets.icScreens,
         onClick: () => Navigator.push(context, MyAccountScreen.route()),
       ),
       ScreenListDataModel(
-        title: "Manage Address".toUpperCase(),
+        title: "Manage Address",
         icon: AppAssets.icScreens,
         onClick: () => Navigator.push(context, ManageAddressScreen.route()),
       ),
       ScreenListDataModel(
-        title: "Favourites".toUpperCase(),
+        title: "Favourites",
         icon: AppAssets.icScreens,
         onClick: () => Navigator.push(context, FavouritesScreen.route()),
       ),
       ScreenListDataModel(
-        title: "Offers".toUpperCase(),
+        title: "Offers",
         icon: AppAssets.icScreens,
         onClick: () => Navigator.push(context, OffersScreen.route()),
       ),
       ScreenListDataModel(
-        title: "App Settings".toUpperCase(),
+        title: "App Settings",
         icon: AppAssets.icScreens,
         onClick: () => Navigator.push(context, AppSettingsScreen.route()),
       ),
       ScreenListDataModel(
-        title: "Payment".toUpperCase(),
+        title: "Payment",
         icon: AppAssets.icScreens,
         onClick: () => Navigator.push(context, PaymentScreen.route()),
       ),
       ScreenListDataModel(
-        title: "Edit card".toUpperCase(),
+        title: "Edit Card",
         icon: AppAssets.icScreens,
         onClick: () => Navigator.push(context, EditCardScreen.route()),
       ),
       ScreenListDataModel(
-        title: "Re Order".toUpperCase(),
+        title: "Re Order",
         icon: AppAssets.icScreens,
         onClick: () => Navigator.push(context, ReOrderScreen.route()),
       ),
       ScreenListDataModel(
-        title: "Review".toUpperCase(),
+        title: "Review",
         icon: AppAssets.icScreens,
         onClick: () => Navigator.push(context, FeedbackScreen.route()),
       ),
       ScreenListDataModel(
-        title: "Help & Support".toUpperCase(),
+        title: "Help & Support",
         icon: AppAssets.icScreens,
         onClick: () => Navigator.push(context, HelpsAndSupportScreen.route()),
       ),
       ScreenListDataModel(
-        title: "General Issues".toUpperCase(),
+        title: "General Issues",
         icon: AppAssets.icScreens,
         onClick: () => Navigator.push(context, GeneralIssuesScreen.route()),
       ),
       ScreenListDataModel(
-        title: "Chat".toUpperCase(),
+        title: "Chat",
         icon: AppAssets.icScreens,
         onClick: () => Navigator.push(context, ChatScreen.route(isFromPastThread: false)),
       ),
       ScreenListDataModel(
-        title: "Terms & Conditions".toUpperCase(),
+        title: "Terms & Conditions",
         icon: AppAssets.icScreens,
         onClick: () => Navigator.push(context, TermAndConditionScreen.route()),
       ),
       ScreenListDataModel(
-        title: "FAQS".toUpperCase(),
+        title: "FAQS",
         icon: AppAssets.icScreens,
         onClick: () => Navigator.push(context, FaqsScreen.route()),
       ),
       ScreenListDataModel(
-        title: "All Conversations threads".toUpperCase(),
+        title: "All Conversations Threads",
         icon: AppAssets.icScreens,
         onClick: () => Navigator.push(context, AllConversationsThreadsScreen.route()),
       ),
       ScreenListDataModel(
-        title: "Past Chat".toUpperCase(),
+        title: "Past Chat",
         icon: AppAssets.icScreens,
         onClick: () => Navigator.push(context, ChatScreen.route(isFromPastThread: true)),
       ),
@@ -334,20 +335,27 @@ class _FoodDeliveryScreensListScreen extends State<FoodDeliveryScreensListScreen
       child: Scaffold(
         extendBodyBehindAppBar: true,
         appBar: AppBar(
-          leadingWidth: 40.setWidth,
           centerTitle: false,
           leading: IconButton(
-            icon: Icon(Icons.arrow_back, color: CustomAppColor.of(context).white),
+            icon: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Icon(
+                Icons.arrow_back,
+                color: CustomAppColor.of(context).white,
+              ),
+            ),
             onPressed: () {
               widget.onBack?.call();
             },
           ),
+          leadingWidth: 38.setWidth,
           backgroundColor: Colors.transparent,
           elevation: 0,
           title: CommonText(
             text: "Food Delivery App",
             fontSize: 22.setFontSize,
             fontWeight: FontWeight.w700,
+            fontFamily: Constant.fontFamilyMontserratSemiBold,
             textColor: CustomAppColor.of(context).white,
           ),
         ),
@@ -399,6 +407,7 @@ class _ModeGridView extends StatelessWidget {
                 borderRadius: BorderRadius.circular(100),
               ),
             ),
+            SizedBox(height: 5.setHeight),
             Expanded(
               child: SingleChildScrollView(
                 child: Column(
@@ -407,9 +416,13 @@ class _ModeGridView extends StatelessWidget {
                       spacing: 10.setWidth,
                       runSpacing: 10.setHeight,
                       alignment: WrapAlignment.start,
-                      children: screenList.map((item) {
-                        return _itemList(context: context, item: item);
-                      }).toList(),
+                      children: List.generate(screenList.length, (index) {
+                        return _itemList(
+                          context: context,
+                          item: screenList[index],
+                          index: index + 1,
+                        );
+                      }),
                     ),
                     SizedBox(height: 20.setHeight),
                   ],
@@ -422,68 +435,73 @@ class _ModeGridView extends StatelessWidget {
     );
   }
 
-  Widget _itemList({required BuildContext context, required ScreenListDataModel item}) {
+  Widget _itemList({
+    required BuildContext context,
+    required ScreenListDataModel item,
+    required int index,
+  }) {
     return InkWell(
       onTap: () {
         item.onClick?.call();
       },
-      child: Container(
-        margin: EdgeInsets.symmetric(horizontal: 4.setWidth, vertical: 4.setHeight),
-        padding: EdgeInsets.symmetric(horizontal: 10.setWidth, vertical: 10.setHeight),
-        width: (MediaQuery.of(context).size.width - 16.setWidth * 2 - 14.setWidth * 2) / 3,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(16),
-          color: CustomAppColor.of(context).listTileColorScreenList,
-          boxShadow: [
-            BoxShadow(
-              color: CustomAppColor.of(context).listTileShadow.withValues(alpha: .10),
-              offset: const Offset(0, 4),
-              blurRadius: 10,
-              spreadRadius: 1,
-            )
-          ],
-        ),
-        child: Column(
-          // mainAxisSize: MainAxisSize.min,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            SizedBox(height: 6.setHeight),
-            Container(
-              padding: EdgeInsets.symmetric(horizontal: 20.setWidth, vertical: 15.setHeight),
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  colors: [
-                    CustomAppColor.of(context).bgSkyBlue,
-                    CustomAppColor.of(context).bgDarkBlue,
+      child: Padding(
+        padding: EdgeInsets.only(left: 20.setWidth, right: 20.setWidth, top: 3.setHeight),
+        child: Container(
+          padding: EdgeInsets.symmetric(horizontal: 16.setWidth, vertical: 18.setHeight),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(16),
+            color: CustomAppColor.of(context).listTileColorScreenList,
+            boxShadow: [
+              BoxShadow(
+                color: CustomAppColor.of(
+                  context,
+                ).listTileShadow.withValues(alpha: .10),
+                offset: const Offset(0, 4),
+                blurRadius: 10,
+                spreadRadius: 1,
+              ),
+            ],
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Expanded(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    CommonText(
+                      text: "${index.toString()}.  ",
+                      fontSize: 15.setFontSize,
+                      fontFamily: Constant.fontFamilyMontserratSemiBold,
+                      fontWeight: FontWeight.w600,
+                      textColor: CustomAppColor.of(context).txtBlack,
+                    ),
+                    Expanded(
+                      child: CommonText(
+                        text: item.title,
+                        fontSize: 14.setFontSize,
+                        fontFamily: Constant.fontFamilyMontserratSemiBold,
+                        fontWeight: FontWeight.w600,
+                        textColor: CustomAppColor.of(context).txtBlack,
+                        textAlign: TextAlign.start,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ),
                   ],
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
                 ),
-                shape: BoxShape.circle,
               ),
-              child: Image.asset(
-                item.icon,
-                height: 32.setHeight,
-                width: 32.setHeight,
-                gaplessPlayback: true,
+              Padding(
+                padding: EdgeInsets.only(left: 20.setWidth),
+                child: Image.asset(
+                  item.icon,
+                  height: 20.setHeight,
+                  width: 20.setHeight,
+                  gaplessPlayback: true,
+                ),
               ),
-            ),
-            SizedBox(height: 10.setHeight),
-            Container(
-              constraints: BoxConstraints(minHeight: 37.setHeight),
-              alignment: Alignment.center,
-              child: CommonText(
-                text: item.title.toUpperCase(),
-                fontSize: 12.setFontSize,
-                fontWeight: FontWeight.w600,
-                textColor: CustomAppColor.of(context).txtBlack,
-                textAlign: TextAlign.center,
-                isAutoSize: true,
-                maxLines: 2,
-                height: 1.2,
-              ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

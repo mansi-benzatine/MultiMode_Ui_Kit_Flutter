@@ -8,11 +8,7 @@ class AppTheme {
   static ThemeData getTheme(BuildContext context) {
     final isLightTheme = Theme.of(context).brightness == Brightness.light;
 
-    return ThemeData(
-      brightness: isLightTheme ? Brightness.light : Brightness.light,
-      fontFamily: Constant.fontFamily,
-      useMaterial3: true,
-    );
+    return ThemeData(brightness: isLightTheme ? Brightness.light : Brightness.light, fontFamily: Constant.fontFamily, useMaterial3: true);
   }
 
   static ThemeData lightTheme = ThemeData(

@@ -54,3 +54,7 @@ flutter:
           weight: 300
         - asset: assets/fonts/Roboto-ExtraBold.ttf
           weight: 800
+    - family: Montserrat-SemiBold
+      fonts:
+        - asset: assets/fonts/Montserrat-SemiBold.ttf
+          weight: 600

@@ -10,10 +10,8 @@ class AppAssets {
   static const _pIcons = "${_path}assets/icons/";
   static const _pVideos = "${_path}assets/videos/";
 
-  static String themeImages =
-      (Theme.of(SocialSmartSocialMediaScreensApp.navigatorKey.currentContext!).brightness == Brightness.light) ? _pImages : _pDarkImages;
-  static String themeIcons =
-      (Theme.of(SocialSmartSocialMediaScreensApp.navigatorKey.currentContext!).brightness == Brightness.light) ? _pIcons : _pDarkIcons;
+  static String themeImages = (Theme.of(SocialSmartSocialMediaScreensApp.navigatorKey.currentContext!).brightness == Brightness.light) ? _pImages : _pDarkImages;
+  static String themeIcons = (Theme.of(SocialSmartSocialMediaScreensApp.navigatorKey.currentContext!).brightness == Brightness.light) ? _pIcons : _pDarkIcons;
 
   static void refreshAssets() {
     final context = SocialSmartSocialMediaScreensApp.navigatorKey.currentContext;
@@ -242,7 +240,7 @@ class AppAssets {
   static const icFacebookColored = "${_pIcons}ic_facebook_color.webp";
   static const icWrong = "${_pIcons}ic_cloase.webp";
   static const icEdit = "${_pIcons}ic_edit.webp";
-  static const icScreen = "${_pIcons}ic_screen.webp";
+  static const icScreen = "${_pIcons}ic_blue_navigator.webp";
   static const icTrueMark = "${_pIcons}ic_true_mark.webp";
   static const icLiveTo = "${_pIcons}ic_live_to.webp";
   static const icLikeWhite = "${_pIcons}ic_like_white.webp";

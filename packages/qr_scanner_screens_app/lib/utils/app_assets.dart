@@ -13,12 +13,8 @@ class AppAssets {
   static String themeImages = _pImages;
 
   static void refreshAssets(BuildContext context) {
-    themeIcons = (Theme.of(context).brightness == Brightness.light)
-        ? _pIcons
-        : _pDarkIcons;
-    themeImages = (Theme.of(context).brightness == Brightness.light)
-        ? _pImages
-        : _pDarkImages;
+    themeIcons = (Theme.of(context).brightness == Brightness.light) ? _pIcons : _pDarkIcons;
+    themeImages = (Theme.of(context).brightness == Brightness.light) ? _pImages : _pDarkImages;
 
     Debug.printLog("refreshAssets --- $themeIcons $themeImages");
 
@@ -38,23 +34,20 @@ class AppAssets {
   static String imgOnBoarding3 = "${_pImages}img_on_boarding_3.webp";
 
   static const imgDummyQr = "${_pImages}img_dummy_qr.webp";
-  static const imgBgHomeScreenPlain =
-      "${_pImages}img_bg_home_screen_plain.webp";
+  static const imgBgHomeScreenPlain = "${_pImages}img_bg_home_screen_plain.webp";
   static const imgSplash = "${_pImages}img_splash.webp";
 
   /// ICONS ====================================================================
   static String icBack = "${themeIcons}ic_back.webp";
-  static const icScreens = "${_pIcons}ic_screens.webp";
+  static const icScreens = "${_pIcons}ic_blue_navigator.webp";
   static const icTabCreate = "${_pIcons}ic_bottombar_plus.webp";
   static const icTabHistory = "${_pIcons}ic_history.webp";
   static const icTabFavorite = "${_pIcons}ic_bottombar_star.webp";
   static const icTabSetting = "${_pIcons}ic_setting.webp";
 
-  static const icTabCreateSelected =
-      "${_pIcons}ic_bottombar_plus_selected.webp";
+  static const icTabCreateSelected = "${_pIcons}ic_bottombar_plus_selected.webp";
   static const icTabHistorySelected = "${_pIcons}ic_history_selected.webp";
-  static const icTabFavoriteSelected =
-      "${_pIcons}ic_bottombar_star_selected.webp";
+  static const icTabFavoriteSelected = "${_pIcons}ic_bottombar_star_selected.webp";
   static const icTabSettingSelected = "${_pIcons}ic_setting_selected.webp";
 
   static const icTabScan = "${_pIcons}ic_bottombar_scan.webp";
@@ -89,8 +82,7 @@ class AppAssets {
   static const icDelete = "${_pIcons}ic_delete.webp";
   static const icDate = "${_pIcons}ic_calendar.webp";
   static const icTime = "${_pIcons}ic_time.webp";
-  static const icDeleteHistoryDialog =
-      "${_pIcons}ic_delete_history_dialog.webp";
+  static const icDeleteHistoryDialog = "${_pIcons}ic_delete_history_dialog.webp";
   static const icPro = "${_pIcons}ic_pro.webp";
   static const icProSmall = "${_pIcons}ic_pro_small.webp";
   static const icIntroduction = "${_pIcons}ic_introduction.webp";
@@ -98,8 +90,7 @@ class AppAssets {
   static const icLanguageSetting = "${_pIcons}ic_language_setting.webp";
   static const icAutoWebSearch = "${_pIcons}ic_auto_web_search.webp";
   static const icCameraType = "${_pIcons}ic_camera_type.webp";
-  static const icClipboardToClipboard =
-      "${_pIcons}ic_clipboard_to_clipboard.webp";
+  static const icClipboardToClipboard = "${_pIcons}ic_clipboard_to_clipboard.webp";
   static const icPlaySound = "${_pIcons}ic_play_sound.webp";
   static const icVibrate = "${_pIcons}ic_vibrate.webp";
   static const icFeedback = "${_pIcons}ic_feedback.webp";
@@ -108,13 +99,10 @@ class AppAssets {
   static const icAppVersion = "${_pIcons}ic_app_version.webp";
   static const icNoAds = "${_pIcons}ic_no_ads.webp";
   static const icCustomize = "${_pIcons}ic_customize_color.webp";
-  static const icCustomizeQrDesign =
-      "${_pIcons}ic_customize_qr_code_design.webp";
+  static const icCustomizeQrDesign = "${_pIcons}ic_customize_qr_code_design.webp";
   static const icQrCodeSetting = "${_pIcons}ic_qr_code_setting.webp";
   static const icFlipCamera = "${_pIcons}ic_flip_camera.webp";
 
-  static String icNoDataFoundHistory =
-      "${themeIcons}ic_no_data_found_history.webp";
-  static String icNoDataFoundFavorite =
-      "${themeIcons}ic_no_data_found_favorite.webp";
+  static String icNoDataFoundHistory = "${themeIcons}ic_no_data_found_history.webp";
+  static String icNoDataFoundFavorite = "${themeIcons}ic_no_data_found_favorite.webp";
 }

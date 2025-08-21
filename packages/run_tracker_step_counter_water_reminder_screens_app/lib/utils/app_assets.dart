@@ -3,8 +3,7 @@ import 'package:flutter/material.dart';
 import 'debug.dart';
 
 class AppAssets {
-  static const _path =
-      "packages/run_tracker_step_counter_water_reminder_screens_app/";
+  static const _path = "packages/run_tracker_step_counter_water_reminder_screens_app/";
   static const _pImages = "${_path}assets/images/";
   static const _pDarkImages = "${_path}assets/dark_images/";
   static const _pIcons = "${_path}assets/icons/";
@@ -15,12 +14,8 @@ class AppAssets {
   static String themeImages = _pImages;
 
   static void refreshAssets(BuildContext context) {
-    themeIcons = (Theme.of(context).brightness == Brightness.light)
-        ? _pIcons
-        : _pDarkIcons;
-    themeImages = (Theme.of(context).brightness == Brightness.light)
-        ? _pImages
-        : _pDarkImages;
+    themeIcons = (Theme.of(context).brightness == Brightness.light) ? _pIcons : _pDarkIcons;
+    themeImages = (Theme.of(context).brightness == Brightness.light) ? _pImages : _pDarkImages;
 
     icFill100 = "${themeIcons}ic_fill_100.webp";
     icFill150 = "${themeIcons}ic_fill_150.webp";
@@ -39,8 +34,7 @@ class AppAssets {
   static String imgMapView = "${_pImages}img_map_view.webp";
   static String imgShareMapView = "${_pImages}img_share_mapview.webp";
   static String imgMap = "${_pImages}img_map.webp";
-  static String imgLocationPermission =
-      "${_pImages}img_location_permission_bg.webp";
+  static String imgLocationPermission = "${_pImages}img_location_permission_bg.webp";
   static String imgCount1 = "${_pImages}img_count_1.webp";
   static String imgCount2 = "${_pImages}img_count_2.webp";
   static String imgCount3 = "${_pImages}img_count_3.webp";
@@ -55,8 +49,7 @@ class AppAssets {
   static String img5Star = "${_pImages}img_5_star.webp";
   static String imgShoe = "${_pImages}img_shoe.webp";
   static String imgSplash = "${_pImages}img_splash.webp";
-  static String imgBgHomeScreenPlain =
-      "${_pImages}img_bg_home_screen_plain.webp";
+  static String imgBgHomeScreenPlain = "${_pImages}img_bg_home_screen_plain.webp";
 
   /// ICONS ====================================================================
   static String icArrowSelect = "${_pIcons}ic_arrow_select.webp";
@@ -109,7 +102,7 @@ class AppAssets {
   static String icReset = "${_pIcons}ic_reset.webp";
   static String icEdit = "${_pIcons}ic_edit.webp";
   static String icGraph = "${_pIcons}ic_graph.webp";
-  static String icScreens = "${_pIcons}ic_screens.webp";
+  static String icScreens = "${_pIcons}ic_blue_navigator.webp";
 
   static String icEmpty100 = "${_pIcons}ic_empty_100.webp";
   static String icEmpty150 = "${_pIcons}ic_empty_150.webp";

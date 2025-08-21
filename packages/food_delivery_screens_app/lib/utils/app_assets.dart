@@ -122,5 +122,5 @@ class AppAssets {
   static String icFilledRate = "${_pIcons}ic_filled_rate.webp";
   static String icRestaurant = "${_pIcons}ic_restaurant.webp";
   static String icDarkMode = "${_pIcons}ic_dark_mode.webp";
-  static String icScreens = "${_pIcons}ic_screens.webp";
+  static String icScreens = "${_pIcons}ic_blue_navigator.webp";
 }

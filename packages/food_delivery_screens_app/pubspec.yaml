@@ -52,4 +52,7 @@ flutter:
           weight: 700
         - asset: assets/fonts/SF-Pro-Display-Bold.ttf
           weight: 800
-
+    - family: Montserrat-SemiBold
+      fonts:
+        - asset: assets/fonts/Montserrat-SemiBold.ttf
+          weight: 600

@@ -12,12 +12,8 @@ class AppAssets {
   static String themeIcons = _pIcons;
   static String themeImages = _pImages;
   static void refreshAssets(ThemeData themeData) {
-    themeIcons = themeData.brightness == Brightness.light
-        ? _pIcons
-        : _pDarkIcons;
-    themeImages = themeData.brightness == Brightness.light
-        ? _pImages
-        : _pDarkImages;
+    themeIcons = themeData.brightness == Brightness.light ? _pIcons : _pDarkIcons;
+    themeImages = themeData.brightness == Brightness.light ? _pImages : _pDarkImages;
 
     imgEmptyHistory = "${themeImages}img_empty_history.webp";
     icLockWhiteDot = "${themeIcons}ic_lock_white_dot.webp";
@@ -40,8 +36,7 @@ class AppAssets {
   static String imgBgCountDown = "${_pImages}img_bg_count_down.webp";
   static String imgMap1 = "${_pImages}img_map1.webp";
   static String imgFinish = "${_pImages}img_finish.webp";
-  static String imgAchievementShareBg =
-      "${_pImages}img_achievement_share_bg.webp";
+  static String imgAchievementShareBg = "${_pImages}img_achievement_share_bg.webp";
   static String imgAchievementMedal = "${_pImages}img_achievement_medal.webp";
   static String imgSubscriptionBg = "${_pImages}img_subscription_bg.webp";
   static String imgItIsTimeToRun = "${_pImages}img_it_is_time_run.webp";
@@ -49,8 +44,7 @@ class AppAssets {
   static String imgSplash = "${_pImages}img_splash.webp";
 
   /// ICONS ====================================================================
-  static String icGreenRoundNavigator =
-      "${_pIcons}ic_green_round_navigator.webp";
+  static String icGreenRoundNavigator = "${_pIcons}ic_green_round_navigator.webp";
   static String icPrimaryNavigator = "${_pIcons}ic_primary_navigator.webp";
   static String icSelectedHome = "${_pIcons}ic_selected_home.webp";
   static String icSelectedReports = "${_pIcons}ic_selected_reports.webp";
@@ -109,5 +103,5 @@ class AppAssets {
   static String icMoreCircle = "${_pIcons}ic_more_circle.webp";
   static String icMoon = "${_pIcons}ic_moon.webp";
   static String icLockWhiteDot = "${themeIcons}ic_lock_white_dot.webp";
-  static String icScreens = "${_pIcons}ic_screens.webp";
+  static String icScreens = "${_pIcons}ic_blue_navigator.webp";
 }

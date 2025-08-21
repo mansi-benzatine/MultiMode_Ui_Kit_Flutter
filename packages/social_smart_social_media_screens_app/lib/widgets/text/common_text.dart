@@ -9,7 +9,7 @@ class CommonText extends StatelessWidget {
   final Color? textColor;
   final double? fontSize;
   final double? letterSpacing;
-  final String fontFamily;
+  final String? fontFamily;
   final FontWeight fontWeight;
   final FontStyle fontStyle;
   final TextAlign textAlign;
@@ -26,7 +26,7 @@ class CommonText extends StatelessWidget {
     this.letterSpacing,
     this.overflow,
     this.textColor,
-    this.fontFamily = Constant.fontFamilyUrbanist,
+    this.fontFamily,
     this.fontWeight = FontWeight.w400,
     this.fontStyle = FontStyle.normal,
     this.textAlign = TextAlign.center,
@@ -46,11 +46,11 @@ class CommonText extends StatelessWidget {
         fontSize: fontSize ?? AppSizes.setFontSize(14),
         color: textColor ?? CustomAppColor.of(context).txtBlack,
         letterSpacing: letterSpacing,
-        fontFamily: fontFamily,
+        fontFamily: fontFamily ?? Constant.fontFamilyUrbanist,
         fontWeight: fontWeight,
         fontStyle: fontStyle,
         decoration: textDecoration,
-        package: "social_smart_social_media_app_package",
+        package: "social_smart_social_media_screens_app_package",
         height: height,
       ),
     );

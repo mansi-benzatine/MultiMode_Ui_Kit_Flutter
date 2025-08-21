@@ -56,5 +56,8 @@ flutter:
           weight: 800
         - asset: assets/fonts/Nunito-ExtraBold.ttf
           weight: 900
-
+    - family: Montserrat-SemiBold
+      fonts:
+        - asset: assets/fonts/Montserrat-SemiBold.ttf
+          weight: 600
 

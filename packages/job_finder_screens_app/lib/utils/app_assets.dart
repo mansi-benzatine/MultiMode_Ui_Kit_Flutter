@@ -194,7 +194,7 @@ class AppAssets {
   static const icCloseSquare = "${_pIcons}ic_close_square.webp";
   static const icUniversity = "${_pIcons}ic_university.webp";
   static const icFilledDocument = "${_pIcons}ic_filled_document.webp";
-  static const icScreen = "${_pIcons}ic_screen.webp";
+  static const icScreen = "${_pIcons}ic_blue_navigator.webp";
   static const icWhiteLocation = "${_pIcons}ic_white_location.webp";
   static const icTypePartTimeSelected = "${_pIcons}ic_type_part_selected.webp";
   static const icTypePartTimeUnSelected = "${_pIcons}ic_type_part_unselected.webp";

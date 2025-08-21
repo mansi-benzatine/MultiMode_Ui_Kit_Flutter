@@ -91,7 +91,7 @@ class AppAssets {
   static String icTwitter = "${_pIcons}ic_twitter.webp";
   static String icDelete = "${_pIcons}ic_delete.webp";
   static String icDarkMode = "${_pIcons}ic_dark_mode.webp";
-  static String icScreen = "${_pIcons}ic_screens.webp";
+  static String icScreen = "${_pIcons}ic_blue_navigator.webp";
 
   /// Images ===================================================================
   static String imgSplash = "${_pImages}img_splash.webp";

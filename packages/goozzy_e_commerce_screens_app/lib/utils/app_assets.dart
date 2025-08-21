@@ -9,10 +9,8 @@ class AppAssets {
   static const _pDarkIcons = "${_path}assets/dark_icons/";
   static const _pIcons = "${_path}assets/icons/";
 
-  static String themeImages =
-      (Theme.of(GoozzyECommerceScreensMyApp.navigatorKey.currentContext!).brightness == Brightness.light) ? _pImages : _pDarkImages;
-  static String themeIcons =
-      (Theme.of(GoozzyECommerceScreensMyApp.navigatorKey.currentContext!).brightness == Brightness.light) ? _pIcons : _pDarkIcons;
+  static String themeImages = (Theme.of(GoozzyECommerceScreensMyApp.navigatorKey.currentContext!).brightness == Brightness.light) ? _pImages : _pDarkImages;
+  static String themeIcons = (Theme.of(GoozzyECommerceScreensMyApp.navigatorKey.currentContext!).brightness == Brightness.light) ? _pIcons : _pDarkIcons;
 
   static void refreshAssets() {
     final context = GoozzyECommerceScreensMyApp.navigatorKey.currentContext;
@@ -187,5 +185,5 @@ class AppAssets {
   static String icHide = "${_pIcons}ic_hide.webp";
   static String icLogout = "${_pIcons}ic_logout.webp";
   static String icHistory = "${_pIcons}ic_history.webp";
-  static String icScreens = "${_pIcons}ic_screen.webp";
+  static String icScreens = "${_pIcons}ic_blue_navigator.webp";
 }

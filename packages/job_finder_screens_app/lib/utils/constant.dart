@@ -3,6 +3,7 @@ class Constant {
   static const countryCodeEn = "US";
 
   static const fontFamily = "DMSans";
+  static const fontFamilyMontserratSemiBold = "Montserrat-SemiBold";
 
   static const strBack = "BACK";
   static const strNotification = "NOTIFICATION";

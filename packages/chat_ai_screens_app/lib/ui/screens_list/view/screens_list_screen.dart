@@ -16,7 +16,6 @@ import 'package:chat_ai_screens_app_package/ui/security/view/security_screen.dar
 import 'package:chat_ai_screens_app_package/ui/sign_up/view/sign_up_screen.dart';
 import 'package:chat_ai_screens_app_package/ui/upgrade_plan/view/upgrade_plan_screen.dart';
 import 'package:chat_ai_screens_app_package/utils/sizer_utils.dart';
-import 'package:chat_ai_screens_app_package/utils/utils.dart';
 import 'package:flutter/material.dart';
 
 import '../../../localization/language/languages.dart';
@@ -55,80 +54,77 @@ class _ChatAiScreenListScreen extends State<ChatAiScreenListScreen> {
   _fillData() {
     screenList = [
       ScreenListDataModel(
-        title: "Splash".toUpperCase(),
+        title: "Splash",
         icon: AppAssets.icScreen,
         onClick: () => Navigator.push(context, SplashScreen.route()),
       ),
       ScreenListDataModel(
-        title: "OnBoarding 1".toUpperCase(),
+        title: "Onboarding 1",
         icon: AppAssets.icScreen,
         onClick: () => Navigator.push(context, OnBoardingScreen.route(index: 0)),
       ),
       ScreenListDataModel(
-        title: "Onboarding 2".toUpperCase(),
+        title: "Onboarding 2",
         icon: AppAssets.icScreen,
         onClick: () => Navigator.push(context, OnBoardingScreen.route(index: 1)),
       ),
       ScreenListDataModel(
-        title: "Onboarding 3".toUpperCase(),
+        title: "Onboarding 3",
         icon: AppAssets.icScreen,
         onClick: () => Navigator.push(context, OnBoardingScreen.route(index: 2)),
       ),
       ScreenListDataModel(
-        title: "Welcome".toUpperCase(),
+        title: "Welcome",
         icon: AppAssets.icScreen,
         onClick: () => Navigator.push(context, WelcomeScreen.route()),
       ),
       ScreenListDataModel(
-        title: "Sign In".toUpperCase(),
+        title: "Sign In",
         icon: AppAssets.icScreen,
         onClick: () => Navigator.push(context, SignInScreen.route()),
       ),
       ScreenListDataModel(
-        title: "Sign up".toUpperCase(),
+        title: "Sign up",
         icon: AppAssets.icScreen,
         onClick: () => Navigator.push(context, SignUpScreen.route()),
       ),
       ScreenListDataModel(
-        title: "Forgot Password".toUpperCase(),
+        title: "Forgot Password",
         icon: AppAssets.icScreen,
         onClick: () => Navigator.push(context, ForgotPasswordScreen.route()),
       ),
       ScreenListDataModel(
-        title: "Enter otp".toUpperCase(),
+        title: "Enter otp",
         icon: AppAssets.icScreen,
         onClick: () => Navigator.push(context, ForgotPasswordOtpScreen.route()),
       ),
       ScreenListDataModel(
-        title: "Reset Password".toUpperCase(),
+        title: "Reset Password",
         icon: AppAssets.icScreen,
         onClick: () => Navigator.push(context, ResetPasswordScreen.route()),
       ),
       ScreenListDataModel(
-        title: "Create Profile".toUpperCase(),
+        title: "Create Profile",
         icon: AppAssets.icScreen,
         onClick: () => Navigator.push(context, CreateProfileScreen.route()),
       ),
       ScreenListDataModel(
-        title: "Create New Pin".toUpperCase(),
+        title: "Create New Pin",
         icon: AppAssets.icScreen,
         onClick: () => Navigator.push(context, CreateNewPinScreen.route()),
       ),
       ScreenListDataModel(
-        title: "Home".toUpperCase(),
+        title: "Home",
         icon: AppAssets.icScreen,
-        onClick: () => Navigator.push(
-            context,
-            ChatAiDashboardScreen.route(
-                isFromHomeScreen: true, isFromHistory: false, isFromExplore: false, isFromProfile: false, isFromEmptyHistoryScreen: false)),
+        onClick: () => Navigator.push(context, ChatAiDashboardScreen.route(isFromHomeScreen: true, isFromHistory: false, isFromExplore: false, isFromProfile: false, isFromEmptyHistoryScreen: false)),
       ),
       ScreenListDataModel(
-        title: "Notification".toUpperCase(),
+        title: "Notification",
         icon: AppAssets.icScreen,
         onClick: () => Navigator.push(context, NotificationScreen.route()),
       ),
       ScreenListDataModel(
-        title: "Chat".toUpperCase(),
+        title: "Chat",
         icon: AppAssets.icScreen,
         onClick: () => Navigator.push(
             context,
@@ -139,7 +135,7 @@ class _ChatAiScreenListScreen extends State<ChatAiScreenListScreen> {
             )),
       ),
       ScreenListDataModel(
-        title: "Empty Chat".toUpperCase(),
+        title: "Empty Chat",
         icon: AppAssets.icScreen,
         onClick: () => Navigator.push(
             context,
@@ -150,15 +146,12 @@ class _ChatAiScreenListScreen extends State<ChatAiScreenListScreen> {
             )),
       ),
       ScreenListDataModel(
-        title: "Explore".toUpperCase(),
+        title: "Explore",
         icon: AppAssets.icScreen,
-        onClick: () => Navigator.push(
-            context,
-            ChatAiDashboardScreen.route(
-                isFromHomeScreen: false, isFromHistory: false, isFromExplore: true, isFromProfile: false, isFromEmptyHistoryScreen: false)),
+        onClick: () => Navigator.push(context, ChatAiDashboardScreen.route(isFromHomeScreen: false, isFromHistory: false, isFromExplore: true, isFromProfile: false, isFromEmptyHistoryScreen: false)),
       ),
       ScreenListDataModel(
-        title: "Writing".toUpperCase(),
+        title: "Writing",
         icon: AppAssets.icScreen,
         onClick: () => Navigator.push(
             context,
@@ -172,7 +165,7 @@ class _ChatAiScreenListScreen extends State<ChatAiScreenListScreen> {
             )),
       ),
       ScreenListDataModel(
-        title: "Entertainment".toUpperCase(),
+        title: "Entertainment",
         icon: AppAssets.icScreen,
         onClick: () => Navigator.push(
             context,
@@ -186,7 +179,7 @@ class _ChatAiScreenListScreen extends State<ChatAiScreenListScreen> {
             )),
       ),
       ScreenListDataModel(
-        title: "code".toUpperCase(),
+        title: "Code",
         icon: AppAssets.icScreen,
         onClick: () => Navigator.push(
           context,
@@ -201,7 +194,7 @@ class _ChatAiScreenListScreen extends State<ChatAiScreenListScreen> {
         ),
       ),
       ScreenListDataModel(
-        title: "Business".toUpperCase(),
+        title: "Business",
         icon: AppAssets.icScreen,
         onClick: () => Navigator.push(
             context,
@@ -215,7 +208,7 @@ class _ChatAiScreenListScreen extends State<ChatAiScreenListScreen> {
             )),
       ),
       ScreenListDataModel(
-        title: "Social media".toUpperCase(),
+        title: "Social Media",
         icon: AppAssets.icScreen,
         onClick: () => Navigator.push(
             context,
@@ -229,7 +222,7 @@ class _ChatAiScreenListScreen extends State<ChatAiScreenListScreen> {
             )),
       ),
       ScreenListDataModel(
-        title: "Personal".toUpperCase(),
+        title: "Personal",
         icon: AppAssets.icScreen,
         onClick: () => Navigator.push(
             context,
@@ -243,7 +236,7 @@ class _ChatAiScreenListScreen extends State<ChatAiScreenListScreen> {
             )),
       ),
       ScreenListDataModel(
-        title: "Recipes".toUpperCase(),
+        title: "Recipes",
         icon: AppAssets.icScreen,
         onClick: () => Navigator.push(
             context,
@@ -257,7 +250,7 @@ class _ChatAiScreenListScreen extends State<ChatAiScreenListScreen> {
             )),
       ),
       ScreenListDataModel(
-        title: "Translator".toUpperCase(),
+        title: "Translator",
         icon: AppAssets.icScreen,
         onClick: () => Navigator.push(
             context,
@@ -271,73 +264,67 @@ class _ChatAiScreenListScreen extends State<ChatAiScreenListScreen> {
             )),
       ),
       ScreenListDataModel(
-        title: "History".toUpperCase(),
+        title: "History",
         icon: AppAssets.icScreen,
-        onClick: () => Navigator.push(
-            context,
-            ChatAiDashboardScreen.route(
-                isFromHomeScreen: false, isFromHistory: true, isFromExplore: false, isFromProfile: false, isFromEmptyHistoryScreen: false)),
+        onClick: () => Navigator.push(context, ChatAiDashboardScreen.route(isFromHomeScreen: false, isFromHistory: true, isFromExplore: false, isFromProfile: false, isFromEmptyHistoryScreen: false)),
       ),
       ScreenListDataModel(
-        title: "Search".toUpperCase(),
+        title: "Search",
         icon: AppAssets.icScreen,
         onClick: () => Navigator.push(context, SearchScreen.route()),
       ),
       ScreenListDataModel(
-        title: "Profile".toUpperCase(),
+        title: "Profile",
         icon: AppAssets.icScreen,
-        onClick: () => Navigator.push(
-            context,
-            ChatAiDashboardScreen.route(
-                isFromHomeScreen: false, isFromHistory: false, isFromExplore: false, isFromProfile: true, isFromEmptyHistoryScreen: false)),
+        onClick: () => Navigator.push(context, ChatAiDashboardScreen.route(isFromHomeScreen: false, isFromHistory: false, isFromExplore: false, isFromProfile: true, isFromEmptyHistoryScreen: false)),
       ),
       ScreenListDataModel(
-        title: "Upgrade plan".toUpperCase(),
+        title: "Upgrade Plan",
         icon: AppAssets.icScreen,
         onClick: () => Navigator.push(context, UpgradePlanScreen.route()),
       ),
       ScreenListDataModel(
-        title: "Payment Method".toUpperCase(),
+        title: "Payment Method",
         icon: AppAssets.icScreen,
         onClick: () => Navigator.push(context, PaymentMethodScreen.route()),
       ),
       ScreenListDataModel(
-        title: "Add New Card".toUpperCase(),
+        title: "Add New Card",
         icon: AppAssets.icScreen,
         onClick: () => Navigator.push(context, AddNewCardScreen.route()),
       ),
       ScreenListDataModel(
-        title: "Review Summary".toUpperCase(),
+        title: "Review Summary",
         icon: AppAssets.icScreen,
         onClick: () => Navigator.push(context, ReviewSummaryScreen.route()),
       ),
       ScreenListDataModel(
-        title: "Edit Profile".toUpperCase(),
+        title: "Edit Profile",
         icon: AppAssets.icScreen,
         onClick: () => Navigator.push(context, EditProfileScreen.route()),
       ),
       ScreenListDataModel(
-        title: "Notification setting".toUpperCase(),
+        title: "Notification Setting",
         icon: AppAssets.icScreen,
         onClick: () => Navigator.push(context, NotificationSettingsScreen.route()),
       ),
       ScreenListDataModel(
-        title: "Security".toUpperCase(),
+        title: "Security",
         icon: AppAssets.icScreen,
         onClick: () => Navigator.push(context, SecurityScreen.route()),
       ),
       ScreenListDataModel(
-        title: "Languages".toUpperCase(),
+        title: "Languages",
         icon: AppAssets.icScreen,
         onClick: () => Navigator.push(context, LanguagesScreen.route()),
       ),
       ScreenListDataModel(
-        title: "Privacy Policy".toUpperCase(),
+        title: "Privacy Policy",
         icon: AppAssets.icScreen,
         onClick: () => Navigator.push(context, PrivacyPolicyScreen.route()),
       ),
       ScreenListDataModel(
-        title: "Help center".toUpperCase(),
+        title: "Help Center",
         icon: AppAssets.icScreen,
         onClick: () => Navigator.push(context, HelpCenterScreen.route()),
       ),
@@ -347,40 +334,50 @@ class _ChatAiScreenListScreen extends State<ChatAiScreenListScreen> {
   @override
   Widget build(BuildContext context) {
     _fillData();
-    return Scaffold(
-      extendBodyBehindAppBar: true,
-      backgroundColor: Colors.transparent,
-      appBar: AppBar(
+    return SafeArea(
+      top: false,
+      child: Scaffold(
+        extendBodyBehindAppBar: true,
         backgroundColor: Colors.transparent,
-        elevation: 0,
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back, color: CustomAppColor.of(context).white),
-          onPressed: () {
-            widget.onBack?.call();
-          },
-        ),
-        title: CommonText(
-          text: "Chat Ai App",
-          fontSize: 22.setFontSize,
-          fontWeight: FontWeight.w700,
-          textColor: CustomAppColor.of(context).white,
-        ),
-      ),
-      body: Container(
-        width: double.infinity,
-        height: double.infinity,
-        padding: EdgeInsets.only(top: 20.setHeight),
-        decoration: const BoxDecoration(
-          image: DecorationImage(
-            image: AssetImage(AppAssets.imgBgHomeScreenPlain),
-            fit: BoxFit.cover,
+        appBar: AppBar(
+          backgroundColor: Colors.transparent,
+          elevation: 0,
+          leading: IconButton(
+            icon: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Icon(
+                Icons.arrow_back,
+                color: CustomAppColor.of(context).white,
+              ),
+            ),
+            onPressed: () {
+              widget.onBack?.call();
+            },
+          ),
+          leadingWidth: 38.setWidth,
+          title: CommonText(
+            text: "Chat Ai App",
+            fontSize: 22.setFontSize,
+            fontWeight: FontWeight.w700,
+            textColor: CustomAppColor.of(context).white,
           ),
         ),
-        child: Column(
-          children: [
-            const SizedBox(height: kToolbarHeight + 26),
-            _ModeGridView(screenList: screenList),
-          ],
+        body: Container(
+          width: double.infinity,
+          height: double.infinity,
+          padding: EdgeInsets.only(top: 20.setHeight),
+          decoration: const BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage(AppAssets.imgBgHomeScreenPlain),
+              fit: BoxFit.cover,
+            ),
+          ),
+          child: Column(
+            children: [
+              const SizedBox(height: kToolbarHeight + 26),
+              _ModeGridView(screenList: screenList),
+            ],
+          ),
         ),
       ),
     );
@@ -413,6 +410,7 @@ class _ModeGridView extends StatelessWidget {
                 borderRadius: BorderRadius.circular(100),
               ),
             ),
+            SizedBox(height: 5.setHeight),
             Expanded(
               child: SingleChildScrollView(
                 child: Column(
@@ -421,9 +419,13 @@ class _ModeGridView extends StatelessWidget {
                       spacing: 10.setWidth,
                       runSpacing: 10.setHeight,
                       alignment: WrapAlignment.start,
-                      children: screenList.map((item) {
-                        return _itemList(context: context, item: item);
-                      }).toList(),
+                      children: List.generate(screenList.length, (index) {
+                        return _itemList(
+                          context: context,
+                          item: screenList[index],
+                          index: index + 1,
+                        );
+                      }),
                     ),
                     SizedBox(height: 20.setHeight),
                   ],
@@ -436,68 +438,73 @@ class _ModeGridView extends StatelessWidget {
     );
   }
 
-  Widget _itemList({required BuildContext context, required ScreenListDataModel item}) {
+  Widget _itemList({
+    required BuildContext context,
+    required ScreenListDataModel item,
+    required int index,
+  }) {
     return InkWell(
       onTap: () {
         item.onClick?.call();
       },
-      child: Container(
-        margin: EdgeInsets.symmetric(horizontal: 4.setWidth, vertical: 4.setHeight),
-        padding: EdgeInsets.symmetric(horizontal: 14.setWidth, vertical: 14.setHeight),
-        width: (MediaQuery.of(context).size.width - 16.setWidth * 2 - 14.setWidth * 2) / 3,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(16),
-          color: CustomAppColor.of(context).listTileColorScreenList,
-          boxShadow: [
-            BoxShadow(
-              color: CustomAppColor.of(context).listTileShadow.withOpacityPercent(.10),
-              offset: const Offset(0, 4),
-              blurRadius: 10,
-              spreadRadius: 1,
-            )
-          ],
-        ),
-        child: Column(
-          // mainAxisSize: MainAxisSize.min,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            SizedBox(height: 6.setHeight),
-            Container(
-              padding: EdgeInsets.symmetric(horizontal: 20.setWidth, vertical: 15.setHeight),
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  colors: [
-                    CustomAppColor.of(context).bgSkyBlue,
-                    CustomAppColor.of(context).bgDarkBlue,
+      child: Padding(
+        padding: EdgeInsets.only(left: 20.setWidth, right: 20.setWidth, top: 3.setHeight),
+        child: Container(
+          padding: EdgeInsets.symmetric(horizontal: 16.setWidth, vertical: 18.setHeight),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(16),
+            color: CustomAppColor.of(context).listTileColorScreenList,
+            boxShadow: [
+              BoxShadow(
+                color: CustomAppColor.of(
+                  context,
+                ).listTileShadow.withValues(alpha: .10),
+                offset: const Offset(0, 4),
+                blurRadius: 10,
+                spreadRadius: 1,
+              ),
+            ],
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Expanded(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    CommonText(
+                      text: "${index.toString()}.  ",
+                      fontSize: 15.setFontSize,
+                      fontFamily: Constant.fontFamilyMontserratSemiBold,
+                      fontWeight: FontWeight.w600,
+                      textColor: CustomAppColor.of(context).txtBlack,
+                    ),
+                    Expanded(
+                      child: CommonText(
+                        text: item.title,
+                        fontSize: 14.setFontSize,
+                        fontFamily: Constant.fontFamilyMontserratSemiBold,
+                        fontWeight: FontWeight.w600,
+                        textColor: CustomAppColor.of(context).txtBlack,
+                        textAlign: TextAlign.start,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ),
                   ],
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
                 ),
-                shape: BoxShape.circle,
               ),
-              child: Image.asset(
-                item.icon,
-                height: 29.setHeight,
-                width: 18.setHeight,
-                gaplessPlayback: true,
+              Padding(
+                padding: EdgeInsets.only(left: 20.setWidth),
+                child: Image.asset(
+                  item.icon,
+                  height: 20.setHeight,
+                  width: 20.setHeight,
+                  gaplessPlayback: true,
+                ),
               ),
-            ),
-            SizedBox(height: 10.setHeight),
-            Container(
-              constraints: BoxConstraints(minHeight: 37.setHeight),
-              alignment: Alignment.center,
-              child: CommonText(
-                text: item.title.toUpperCase(),
-                fontSize: 13.setFontSize,
-                fontWeight: FontWeight.w700,
-                textColor: CustomAppColor.of(context).txtBlack,
-                textAlign: TextAlign.center,
-                isAutoSize: true,
-                maxLines: 2,
-                height: 1.2,
-              ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

@@ -9,8 +9,6 @@ import 'package:dating_screens_app_package/widgets/text/common_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_card_swiper/flutter_card_swiper.dart';
 
-import '../../chat/views/chat_screen.dart';
-
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
@@ -492,7 +490,6 @@ class ProfileCardSwiper extends StatelessWidget {
                       if (dialogContext.mounted) {
                         Navigator.pop(dialogContext);
                       }
-                      Navigator.push(context, ChatScreen.route());
                     },
                     height: 40.setHeight,
                   ),

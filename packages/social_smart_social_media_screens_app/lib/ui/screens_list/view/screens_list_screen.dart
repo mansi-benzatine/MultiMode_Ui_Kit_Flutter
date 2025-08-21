@@ -28,7 +28,7 @@ import 'package:social_smart_social_media_screens_app_package/ui/sign_up/view/si
 import 'package:social_smart_social_media_screens_app_package/ui/trending_sound/view/trending_sound_screen.dart';
 import 'package:social_smart_social_media_screens_app_package/ui/verify_email/view/verify_email_screen.dart';
 import 'package:social_smart_social_media_screens_app_package/ui/welcome/view/welcome_screen.dart';
-import 'package:social_smart_social_media_screens_app_package/utils/utils.dart';
+import 'package:social_smart_social_media_screens_app_package/utils/constant.dart';
 
 import '../../../utils/app_assets.dart';
 import '../../../utils/app_color.dart';
@@ -62,82 +62,82 @@ class _SocialSmartSocialMediaScreenListScreen extends State<SocialSmartSocialMed
   _fillData() {
     screenList = [
       ScreenListDataModel(
-        title: "Splash".toUpperCase(),
+        title: "Splash",
         icon: AppAssets.icScreen,
         onClick: () => Navigator.push(context, SplashScreen.route()),
       ),
       ScreenListDataModel(
-        title: "Onboarding 1".toUpperCase(),
+        title: "Onboarding 1",
         icon: AppAssets.icScreen,
         onClick: () => Navigator.push(context, OnboardingScreen.route(initialIndex: 0)),
       ),
       ScreenListDataModel(
-        title: "Onboarding 2".toUpperCase(),
+        title: "Onboarding 2",
         icon: AppAssets.icScreen,
         onClick: () => Navigator.push(context, OnboardingScreen.route(initialIndex: 1)),
       ),
       ScreenListDataModel(
-        title: "Onboarding 3".toUpperCase(),
+        title: "Onboarding 3",
         icon: AppAssets.icScreen,
         onClick: () => Navigator.push(context, OnboardingScreen.route(initialIndex: 2)),
       ),
       ScreenListDataModel(
-        title: "Welcome".toUpperCase(),
+        title: "Welcome",
         icon: AppAssets.icScreen,
         onClick: () => Navigator.push(context, WelcomeScreen.route()),
       ),
       ScreenListDataModel(
-        title: "Sign in".toUpperCase(),
+        title: "Sign In",
         icon: AppAssets.icScreen,
         onClick: () => Navigator.push(context, SignInScreen.route()),
       ),
       ScreenListDataModel(
-        title: "Sign up".toUpperCase(),
+        title: "Sign Up",
         icon: AppAssets.icScreen,
         onClick: () => Navigator.push(context, SignUpScreen.route()),
       ),
       ScreenListDataModel(
-        title: "Forgot Password".toUpperCase(),
+        title: "Forgot Password",
         icon: AppAssets.icScreen,
         onClick: () => Navigator.push(context, ForgotPasswordScreen.route()),
       ),
       ScreenListDataModel(
-        title: "Verify email".toUpperCase(),
+        title: "Verify Email",
         icon: AppAssets.icScreen,
         onClick: () => Navigator.push(context, VerifyEmailScreen.route()),
       ),
       ScreenListDataModel(
-        title: "Create new password".toUpperCase(),
+        title: "Create New Password",
         icon: AppAssets.icScreen,
         onClick: () => Navigator.push(context, CreateNewPasswordScreen.route()),
       ),
       ScreenListDataModel(
-        title: "Choose your interest".toUpperCase(),
+        title: "Choose Your Interest",
         icon: AppAssets.icScreen,
         onClick: () => Navigator.push(context, ProfileSetUpScreen.route(initialIndex: 0)),
       ),
       ScreenListDataModel(
-        title: "Tell us about yourself".toUpperCase(),
+        title: "Tell Us About Yourself",
         icon: AppAssets.icScreen,
         onClick: () => Navigator.push(context, ProfileSetUpScreen.route(initialIndex: 1)),
       ),
       ScreenListDataModel(
-        title: "When is your birthday".toUpperCase(),
+        title: "When Is Your Birthday",
         icon: AppAssets.icScreen,
         onClick: () => Navigator.push(context, ProfileSetUpScreen.route(initialIndex: 2)),
       ),
       ScreenListDataModel(
-        title: "Fill your profile".toUpperCase(),
+        title: "Fill Your Profile",
         icon: AppAssets.icScreen,
         onClick: () => Navigator.push(context, ProfileSetUpScreen.route(initialIndex: 3)),
       ),
       ScreenListDataModel(
-        title: "Create new pin".toUpperCase(),
+        title: "Create New Pin",
         icon: AppAssets.icScreen,
         onClick: () => Navigator.push(context, ProfileSetUpScreen.route(initialIndex: 4)),
       ),
       ScreenListDataModel(
-        title: "Home".toUpperCase(),
+        title: "Home",
         icon: AppAssets.icScreen,
         onClick: () => Navigator.push(
             context,
@@ -150,32 +150,32 @@ class _SocialSmartSocialMediaScreenListScreen extends State<SocialSmartSocialMed
             )),
       ),
       ScreenListDataModel(
-        title: "Report".toUpperCase(),
+        title: "Report",
         icon: AppAssets.icScreen,
         onClick: () => Navigator.push(context, ReportScreen.route()),
       ),
       ScreenListDataModel(
-        title: "User's Profile".toUpperCase(),
+        title: "User's Profile",
         icon: AppAssets.icScreen,
         onClick: () => Navigator.push(context, ProfileScreen.route(isFromPost: true)),
       ),
       ScreenListDataModel(
-        title: "Followers".toUpperCase(),
+        title: "Followers",
         icon: AppAssets.icScreen,
         onClick: () => Navigator.push(context, FollowersScreen.route()),
       ),
       ScreenListDataModel(
-        title: "Send Message".toUpperCase(),
+        title: "Send Message",
         icon: AppAssets.icScreen,
         onClick: () => Navigator.push(context, MessageScreen.route(false)),
       ),
       ScreenListDataModel(
-        title: "Search".toUpperCase(),
+        title: "Search",
         icon: AppAssets.icScreen,
         onClick: () => Navigator.push(context, SearchScreen.route()),
       ),
       ScreenListDataModel(
-        title: "Option for Create".toUpperCase(),
+        title: "Option For Create",
         icon: AppAssets.icScreen,
         onClick: () => Navigator.push(
             context,
@@ -188,7 +188,7 @@ class _SocialSmartSocialMediaScreenListScreen extends State<SocialSmartSocialMed
             )),
       ),
       ScreenListDataModel(
-        title: "Posts Quick photo".toUpperCase(),
+        title: "Posts Quick photo",
         icon: AppAssets.icScreen,
         onClick: () => Navigator.push(
             context,
@@ -201,7 +201,7 @@ class _SocialSmartSocialMediaScreenListScreen extends State<SocialSmartSocialMed
             )),
       ),
       ScreenListDataModel(
-        title: "Posts Quick Video".toUpperCase(),
+        title: "Posts Quick Video",
         icon: AppAssets.icScreen,
         onClick: () => Navigator.push(
             context,
@@ -214,7 +214,7 @@ class _SocialSmartSocialMediaScreenListScreen extends State<SocialSmartSocialMed
             )),
       ),
       ScreenListDataModel(
-        title: "Posts camera".toUpperCase(),
+        title: "Posts Camera",
         icon: AppAssets.icScreen,
         onClick: () => Navigator.push(
             context,
@@ -227,7 +227,7 @@ class _SocialSmartSocialMediaScreenListScreen extends State<SocialSmartSocialMed
             )),
       ),
       ScreenListDataModel(
-        title: "Posts Templates".toUpperCase(),
+        title: "Posts Templates",
         icon: AppAssets.icScreen,
         onClick: () => Navigator.push(
             context,
@@ -240,37 +240,37 @@ class _SocialSmartSocialMediaScreenListScreen extends State<SocialSmartSocialMed
             )),
       ),
       ScreenListDataModel(
-        title: "Posts add sounds".toUpperCase(),
+        title: "Posts Add Sounds",
         icon: AppAssets.icScreen,
         onClick: () => Navigator.push(context, AddSoundScreen.route()),
       ),
       ScreenListDataModel(
-        title: "Posts upload media".toUpperCase(),
+        title: "Posts Upload Media",
         icon: AppAssets.icScreen,
         onClick: () => Navigator.push(context, AddMediaScreen.route()),
       ),
       ScreenListDataModel(
-        title: "Posts edit pages".toUpperCase(),
+        title: "Posts Edit Pages",
         icon: AppAssets.icScreen,
         onClick: () => Navigator.push(context, EditContentScreen.route(isGoLiveScreen: false)),
       ),
       ScreenListDataModel(
-        title: "Posts add details information".toUpperCase(),
+        title: "Posts Add Details Information",
         icon: AppAssets.icScreen,
         onClick: () => Navigator.push(context, AddPostDetailsScreen.route()),
       ),
       ScreenListDataModel(
-        title: "Go Live".toUpperCase(),
+        title: "Go Live",
         icon: AppAssets.icScreen,
         onClick: () => Navigator.push(context, EditContentScreen.route(isGoLiveScreen: true)),
       ),
       ScreenListDataModel(
-        title: "See Live".toUpperCase(),
+        title: "See Live",
         icon: AppAssets.icScreen,
         onClick: () => Navigator.push(context, SeeLiveScreen.route()),
       ),
       ScreenListDataModel(
-        title: "Discover".toUpperCase(),
+        title: "Discover",
         icon: AppAssets.icScreen,
         onClick: () => Navigator.push(
             context,
@@ -283,17 +283,17 @@ class _SocialSmartSocialMediaScreenListScreen extends State<SocialSmartSocialMed
             )),
       ),
       ScreenListDataModel(
-        title: "Trending Sounds Details".toUpperCase(),
+        title: "Trending Sounds Details",
         icon: AppAssets.icScreen,
         onClick: () => Navigator.push(context, TrendingSoundScreen.route()),
       ),
       ScreenListDataModel(
-        title: "Trending Hashtags details".toUpperCase(),
+        title: "Trending Hashtags Details",
         icon: AppAssets.icScreen,
         onClick: () => Navigator.push(context, HashtagDetailsScreen.route()),
       ),
       ScreenListDataModel(
-        title: "All Activity".toUpperCase(),
+        title: "All Activity",
         icon: AppAssets.icScreen,
         onClick: () => Navigator.push(
             context,
@@ -306,22 +306,22 @@ class _SocialSmartSocialMediaScreenListScreen extends State<SocialSmartSocialMed
             )),
       ),
       ScreenListDataModel(
-        title: "Chat".toUpperCase(),
+        title: "Chat",
         icon: AppAssets.icScreen,
         onClick: () => Navigator.push(context, ChatScreen.route()),
       ),
       ScreenListDataModel(
-        title: "Sent Message".toUpperCase(),
+        title: "Sent Message",
         icon: AppAssets.icScreen,
         onClick: () => Navigator.push(context, MessageScreen.route(true)),
       ),
       ScreenListDataModel(
-        title: "Call".toUpperCase(),
+        title: "Call",
         icon: AppAssets.icScreen,
         onClick: () => Navigator.push(context, CallScreen.route()),
       ),
       ScreenListDataModel(
-        title: "Profile".toUpperCase(),
+        title: "Profile",
         icon: AppAssets.icScreen,
         onClick: () => Navigator.push(
             context,
@@ -334,52 +334,52 @@ class _SocialSmartSocialMediaScreenListScreen extends State<SocialSmartSocialMed
             )),
       ),
       ScreenListDataModel(
-        title: "Find Friends".toUpperCase(),
+        title: "Find Friends",
         icon: AppAssets.icScreen,
         onClick: () => Navigator.push(context, FindFriendsScreen.route()),
       ),
       ScreenListDataModel(
-        title: "Edit Profile".toUpperCase(),
+        title: "Edit Profile",
         icon: AppAssets.icScreen,
         onClick: () => Navigator.push(context, EditProfileScreen.route()),
       ),
       ScreenListDataModel(
-        title: "Edit About You".toUpperCase(),
+        title: "Edit About You",
         icon: AppAssets.icScreen,
         onClick: () => Navigator.push(context, EditAboutYouScreen.route()),
       ),
       ScreenListDataModel(
-        title: "Edit Social".toUpperCase(),
+        title: "Edit Social",
         icon: AppAssets.icScreen,
         onClick: () => Navigator.push(context, EditSocialYouScreen.route()),
       ),
       ScreenListDataModel(
-        title: "Settings".toUpperCase(),
+        title: "Settings",
         icon: AppAssets.icScreen,
         onClick: () => Navigator.push(context, SettingScreen.route()),
       ),
       ScreenListDataModel(
-        title: "Manage Accounts".toUpperCase(),
+        title: "Manage Accounts",
         icon: AppAssets.icScreen,
         onClick: () => Navigator.push(context, ManageAccountScreen.route()),
       ),
       ScreenListDataModel(
-        title: "Change Password".toUpperCase(),
+        title: "Change Password",
         icon: AppAssets.icScreen,
         onClick: () => Navigator.push(context, ChangePasswordScreen.route()),
       ),
       ScreenListDataModel(
-        title: "Language".toUpperCase(),
+        title: "Language",
         icon: AppAssets.icScreen,
         onClick: () => Navigator.push(context, LanguageScreen.route()),
       ),
       ScreenListDataModel(
-        title: "Help center".toUpperCase(),
+        title: "Help Center",
         icon: AppAssets.icScreen,
         onClick: () => Navigator.push(context, HelpCenterScreen.route()),
       ),
       ScreenListDataModel(
-        title: "Privacy Policy".toUpperCase(),
+        title: "Privacy Policy",
         icon: AppAssets.icScreen,
         onClick: () => Navigator.push(context, PrivacyPolicyScreen.route()),
       ),
@@ -467,9 +467,13 @@ class _ModeGridView extends StatelessWidget {
                       spacing: AppSizes.setWidth(10),
                       runSpacing: AppSizes.setHeight(10),
                       alignment: WrapAlignment.start,
-                      children: screenList.map((item) {
-                        return _itemList(context: context, item: item);
-                      }).toList(),
+                      children: List.generate(screenList.length, (index) {
+                        return _itemList(
+                          context: context,
+                          item: screenList[index],
+                          index: index + 1,
+                        );
+                      }),
                     ),
                     SizedBox(height: AppSizes.setHeight(20)),
                   ],
@@ -482,70 +486,73 @@ class _ModeGridView extends StatelessWidget {
     );
   }
 
-  Widget _itemList({required BuildContext context, required ScreenListDataModel item}) {
+  Widget _itemList({
+    required BuildContext context,
+    required ScreenListDataModel item,
+    required int index,
+  }) {
     return InkWell(
       onTap: () {
         item.onClick?.call();
       },
-      child: Container(
-        margin: EdgeInsets.symmetric(horizontal: AppSizes.setWidth(4), vertical: AppSizes.setHeight(4)),
-        padding: EdgeInsets.symmetric(horizontal: AppSizes.setWidth(14), vertical: AppSizes.setHeight(14)),
-        width: (MediaQuery.of(context).size.width - AppSizes.setWidth(16) * 2 - AppSizes.setWidth(14) * 2) / 3,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(16),
-          color: CustomAppColor.of(context).listTileColorScreenList,
-          boxShadow: [
-            BoxShadow(
-              color: CustomAppColor.of(context).listTileShadow.withOpacityPercent(.10),
-              offset: const Offset(0, 4),
-              blurRadius: 10,
-              spreadRadius: 1,
-            )
-          ],
-        ),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            SizedBox(height: AppSizes.setHeight(4)),
-            Container(
-              padding: EdgeInsets.symmetric(
-                horizontal: AppSizes.setWidth(20),
-                vertical: AppSizes.setHeight(15),
+      child: Padding(
+        padding: EdgeInsets.only(left: AppSizes.setWidth(20), right: AppSizes.setWidth(20), top: AppSizes.setHeight(3)),
+        child: Container(
+          padding: EdgeInsets.symmetric(horizontal: AppSizes.setWidth(16), vertical: AppSizes.setHeight(18)),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(16),
+            color: CustomAppColor.of(context).listTileColorScreenList,
+            boxShadow: [
+              BoxShadow(
+                color: CustomAppColor.of(
+                  context,
+                ).listTileShadow.withValues(alpha: .10),
+                offset: const Offset(0, 4),
+                blurRadius: 10,
+                spreadRadius: 1,
               ),
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  colors: [
-                    CustomAppColor.of(context).bgSkyBlue,
-                    CustomAppColor.of(context).bgDarkBlue,
+            ],
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Expanded(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    CommonText(
+                      text: "${index.toString()}.  ",
+                      fontSize: AppSizes.setFontSize(15),
+                      fontFamily: Constant.fontFamilyMontserratSemiBold,
+                      fontWeight: FontWeight.w600,
+                      textColor: CustomAppColor.of(context).txtBlack,
+                    ),
+                    Expanded(
+                      child: CommonText(
+                        text: item.title,
+                        fontSize: AppSizes.setFontSize(14),
+                        fontFamily: Constant.fontFamilyMontserratSemiBold,
+                        fontWeight: FontWeight.w600,
+                        textColor: CustomAppColor.of(context).txtBlack,
+                        textAlign: TextAlign.start,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ),
                   ],
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
                 ),
-                shape: BoxShape.circle,
               ),
-              child: Image.asset(
-                item.icon,
-                height: AppSizes.setHeight(29),
-                width: AppSizes.setHeight(18),
-                gaplessPlayback: true,
+              Padding(
+                padding: EdgeInsets.only(left: AppSizes.setWidth(20)),
+                child: Image.asset(
+                  item.icon,
+                  height: AppSizes.setHeight(20),
+                  width: AppSizes.setWidth(20),
+                  gaplessPlayback: true,
+                ),
               ),
-            ),
-            SizedBox(height: AppSizes.setHeight(10)),
-            Container(
-              constraints: BoxConstraints(minHeight: AppSizes.setHeight(37)),
-              alignment: Alignment.center,
-              child: CommonText(
-                text: item.title.toUpperCase(),
-                fontSize: AppSizes.setFontSize(12),
-                fontWeight: FontWeight.w700,
-                textColor: CustomAppColor.of(context).txtBlack,
-                textAlign: TextAlign.center,
-                isAutoSize: true,
-                maxLines: 2,
-                height: 1.2,
-              ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

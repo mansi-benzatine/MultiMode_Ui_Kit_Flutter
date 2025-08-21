@@ -3,4 +3,5 @@ class Constant {
 
   static const fontFamilyUrbanist = "Urbanist";
   static bool isLightThemeGlobal = true;
+  static const fontFamilyMontserratSemiBold = "Montserrat-SemiBold";
 }

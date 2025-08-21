@@ -28,6 +28,7 @@ import 'package:dating_screens_app_package/ui/terms_and_conditions/views/terms_a
 import 'package:dating_screens_app_package/ui/verify_your_number/views/verify_your_number_screen.dart';
 import 'package:dating_screens_app_package/ui/video_call/views/video_call_screen.dart';
 import 'package:dating_screens_app_package/utils/app_assets.dart';
+import 'package:dating_screens_app_package/utils/constant.dart';
 import 'package:dating_screens_app_package/utils/sizer_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -57,192 +58,192 @@ class _DatingAppScreenListScreen extends State<DatingAppScreenListScreen> {
   _fillData() {
     screenList = [
       ScreenListDataModel(
-        title: "Splash".toUpperCase(),
+        title: "Splash",
         icon: AppAssets.icScreen,
         onClick: () => Navigator.push(context, SplashScreen.route()),
       ),
       ScreenListDataModel(
-        title: "Login with google & facebook".toUpperCase(),
+        title: "Login with google & facebook",
         icon: AppAssets.icScreen,
         onClick: () => Navigator.push(context, LoginWithScreen.route()),
       ),
       ScreenListDataModel(
-        title: "Create Account".toUpperCase(),
+        title: "Create Account",
         icon: AppAssets.icScreen,
         onClick: () => Navigator.push(context, CreateAccountScreen.route()),
       ),
       ScreenListDataModel(
-        title: "Login".toUpperCase(),
+        title: "Login",
         icon: AppAssets.icScreen,
         onClick: () => Navigator.push(context, LoginScreen.route()),
       ),
       ScreenListDataModel(
-        title: "Forgot Password".toUpperCase(),
+        title: "Forgot Password",
         icon: AppAssets.icScreen,
         onClick: () => Navigator.push(context, ForgotPasswordScreen.route()),
       ),
       ScreenListDataModel(
-        title: "Mobile Verification".toUpperCase(),
+        title: "Mobile Verification",
         icon: AppAssets.icScreen,
         onClick: () => Navigator.push(context, MobileVerificationScreen.route()),
       ),
       ScreenListDataModel(
-        title: "Verify your number".toUpperCase(),
+        title: "Verify your number",
         icon: AppAssets.icScreen,
         onClick: () => Navigator.push(context, VerifyYourNumberScreen.route()),
       ),
       ScreenListDataModel(
-        title: "Rules".toUpperCase(),
+        title: "Rules",
         icon: AppAssets.icScreen,
         onClick: () => Navigator.push(context, RulesScreen.route()),
       ),
       ScreenListDataModel(
-        title: "What's your first name?".toUpperCase(),
+        title: "What's your first name?",
         icon: AppAssets.icScreen,
         onClick: () => Navigator.push(context, FillUpInformationScreen.route(currentIndex: 0)),
       ),
       ScreenListDataModel(
-        title: "What's your date of birth?".toUpperCase(),
+        title: "What's your date of birth?",
         icon: AppAssets.icScreen,
         onClick: () => Navigator.push(context, FillUpInformationScreen.route(currentIndex: 1)),
       ),
       ScreenListDataModel(
-        title: "Choose your gender".toUpperCase(),
+        title: "Choose your gender",
         icon: AppAssets.icScreen,
         onClick: () => Navigator.push(context, FillUpInformationScreen.route(currentIndex: 2)),
       ),
       ScreenListDataModel(
-        title: "Choose your passion".toUpperCase(),
+        title: "Choose your passion",
         icon: AppAssets.icScreen,
         onClick: () => Navigator.push(context, FillUpInformationScreen.route(currentIndex: 3)),
       ),
       ScreenListDataModel(
-        title: "Add your best photos".toUpperCase(),
+        title: "Add your best photos",
         icon: AppAssets.icScreen,
         onClick: () => Navigator.push(context, FillUpInformationScreen.route(currentIndex: 4)),
       ),
       ScreenListDataModel(
-        title: "Let's Start".toUpperCase(),
+        title: "Let's Start",
         icon: AppAssets.icScreen,
         onClick: () => Navigator.push(context, FillUpInformationScreen.route(currentIndex: 5)),
       ),
       ScreenListDataModel(
-        title: "Discover & NearBy".toUpperCase(),
+        title: "Discover & NearBy",
         icon: AppAssets.icScreen,
         onClick: () => Navigator.push(context, DashboardScreen.route(currentIndex: 0)),
       ),
       ScreenListDataModel(
-        title: "Profile details".toUpperCase(),
+        title: "Profile details",
         icon: AppAssets.icScreen,
         onClick: () => Navigator.push(context, ProfileDetailsScreen.route()),
       ),
       ScreenListDataModel(
-        title: "Likes".toUpperCase(),
+        title: "Likes",
         icon: AppAssets.icScreen,
         onClick: () => Navigator.push(context, DashboardScreen.route(currentIndex: 1)),
       ),
       ScreenListDataModel(
-        title: "Chats List".toUpperCase(),
+        title: "Chats List",
         icon: AppAssets.icScreen,
         onClick: () => Navigator.push(context, DashboardScreen.route(currentIndex: 2)),
       ),
       ScreenListDataModel(
-        title: "Search".toUpperCase(),
+        title: "Search",
         icon: AppAssets.icScreen,
         onClick: () => Navigator.push(context, ChatsSearchScreen.route()),
       ),
       ScreenListDataModel(
-        title: "Chat".toUpperCase(),
+        title: "Chat",
         icon: AppAssets.icScreen,
         onClick: () => Navigator.push(context, ChatScreen.route()),
       ),
       ScreenListDataModel(
-        title: "Phone Call".toUpperCase(),
+        title: "Phone Call",
         icon: AppAssets.icScreen,
         onClick: () => Navigator.push(context, PhoneCallScreen.route()),
       ),
       ScreenListDataModel(
-        title: "Video Call".toUpperCase(),
+        title: "Video Call",
         icon: AppAssets.icScreen,
         onClick: () => Navigator.push(context, VideoCallScreen.route()),
       ),
       ScreenListDataModel(
-        title: "Profile".toUpperCase(),
+        title: "Profile",
         icon: AppAssets.icScreen,
         onClick: () => Navigator.push(context, DashboardScreen.route(currentIndex: 3)),
       ),
       ScreenListDataModel(
-        title: "Settings".toUpperCase(),
+        title: "Settings",
         icon: AppAssets.icScreen,
         onClick: () => Navigator.push(context, SettingsScreen.route()),
       ),
       ScreenListDataModel(
-        title: "Edit Profile".toUpperCase(),
+        title: "Edit Profile",
         icon: AppAssets.icScreen,
         onClick: () => Navigator.push(context, EditProfileScreen.route()),
       ),
       ScreenListDataModel(
-        title: "Edit Basic Information".toUpperCase(),
+        title: "Edit Basic Information",
         icon: AppAssets.icScreen,
         onClick: () => Navigator.push(context, EditBasicDetailsScreen.route()),
       ),
       ScreenListDataModel(
-        title: "Edit Job & school".toUpperCase(),
+        title: "Edit Job & school",
         icon: AppAssets.icScreen,
         onClick: () => Navigator.push(context, EditJobAndSchoolScreen.route()),
       ),
       ScreenListDataModel(
-        title: "Edit gender & sexual".toUpperCase(),
+        title: "Edit gender & sexual",
         icon: AppAssets.icScreen,
         onClick: () => Navigator.push(context, EditGenderAndSexualScreen.route()),
       ),
       ScreenListDataModel(
-        title: "Edit Passion".toUpperCase(),
+        title: "Edit Passion",
         icon: AppAssets.icScreen,
         onClick: () => Navigator.push(context, EditPassionScreen.route()),
       ),
       ScreenListDataModel(
-        title: "Edit Language".toUpperCase(),
+        title: "Edit Language",
         icon: AppAssets.icScreen,
         onClick: () => Navigator.push(context, EditLanguagesScreen.route()),
       ),
       ScreenListDataModel(
-        title: "Subscription".toUpperCase(),
+        title: "Subscription",
         icon: AppAssets.icScreen,
         onClick: () => Navigator.push(context, SubscriptionPlanScreen.route()),
       ),
       ScreenListDataModel(
-        title: "Edit System".toUpperCase(),
+        title: "Edit System",
         icon: AppAssets.icScreen,
         onClick: () => Navigator.push(context, EditSystemScreen.route()),
       ),
       ScreenListDataModel(
-        title: "Privacy Policy".toUpperCase(),
+        title: "Privacy Policy",
         icon: AppAssets.icScreen,
         onClick: () => Navigator.push(context, PrivacyPolicyScreen.route()),
       ),
       ScreenListDataModel(
-        title: "Terms of service".toUpperCase(),
+        title: "Terms of service",
         icon: AppAssets.icScreen,
         onClick: () => Navigator.push(context, TermsAndConditionsScreen.route()),
       ),
       ScreenListDataModel(
-        title: "Report".toUpperCase(),
+        title: "Report",
         icon: AppAssets.icScreen,
         onClick: () => Navigator.push(context, ReportUserScreen.route()),
       ),
       ScreenListDataModel(
-        title: "Community Guidelines".toUpperCase(),
+        title: "Community Guidelines",
         icon: AppAssets.icScreen,
         onClick: () => Navigator.push(context, CommunityGuidelinesScreen.route()),
       ),
       ScreenListDataModel(
-        title: "Safety Tips".toUpperCase(),
+        title: "Safety Tips",
         icon: AppAssets.icScreen,
         onClick: () => Navigator.push(context, SafetyTipsScreen.route()),
       ),
       ScreenListDataModel(
-        title: "Help & Support".toUpperCase(),
+        title: "Help & Support",
         icon: AppAssets.icScreen,
         onClick: () => Navigator.push(context, HelpSupportScreen.route()),
       ),
@@ -281,15 +282,22 @@ class _DatingAppScreenListScreen extends State<DatingAppScreenListScreen> {
           backgroundColor: Colors.transparent,
           elevation: 0,
           leading: IconButton(
-            icon: Icon(Icons.arrow_back, color: CustomAppColor.of(context).white),
+            icon: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Icon(
+                Icons.arrow_back,
+                color: CustomAppColor.of(context).white,
+              ),
+            ),
             onPressed: () {
               widget.onBack?.call();
             },
           ),
+          leadingWidth: 38.setWidth,
           title: CommonText(
             text: "Dating App",
             fontSize: 22.setFontSize,
-            fontWeight: FontWeight.w700,
+            fontFamily: Constant.fontFamilyMontserratSemiBold,
             textColor: CustomAppColor.of(context).white,
           ),
         ),
@@ -341,6 +349,7 @@ class _ModeGridView extends StatelessWidget {
                 borderRadius: BorderRadius.circular(100),
               ),
             ),
+            SizedBox(height: 5.setHeight),
             Expanded(
               child: SingleChildScrollView(
                 child: Column(
@@ -349,9 +358,13 @@ class _ModeGridView extends StatelessWidget {
                       spacing: 10.setWidth,
                       runSpacing: 10.setHeight,
                       alignment: WrapAlignment.start,
-                      children: screenList.map((item) {
-                        return _itemList(context: context, item: item);
-                      }).toList(),
+                      children: List.generate(screenList.length, (index) {
+                        return _itemList(
+                          context: context,
+                          item: screenList[index],
+                          index: index + 1,
+                        );
+                      }),
                     ),
                     SizedBox(height: 20.setHeight),
                   ],
@@ -364,68 +377,73 @@ class _ModeGridView extends StatelessWidget {
     );
   }
 
-  Widget _itemList({required BuildContext context, required ScreenListDataModel item}) {
+  Widget _itemList({
+    required BuildContext context,
+    required ScreenListDataModel item,
+    required int index,
+  }) {
     return InkWell(
       onTap: () {
         item.onClick?.call();
       },
-      child: Container(
-        margin: EdgeInsets.symmetric(horizontal: 4.setWidth, vertical: 4.setHeight),
-        padding: EdgeInsets.symmetric(horizontal: 10.setWidth, vertical: 10.setHeight),
-        width: (MediaQuery.of(context).size.width - 16.setWidth * 2 - 14.setWidth * 2) / 3,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(16),
-          color: CustomAppColor.of(context).listTileColorScreenList,
-          boxShadow: [
-            BoxShadow(
-              color: CustomAppColor.of(context).listTileShadow.withValues(alpha: .10),
-              offset: const Offset(0, 4),
-              blurRadius: 10,
-              spreadRadius: 1,
-            )
-          ],
-        ),
-        child: Column(
-          // mainAxisSize: MainAxisSize.min,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            SizedBox(height: 6.setHeight),
-            Container(
-              padding: EdgeInsets.symmetric(horizontal: 20.setWidth, vertical: 15.setHeight),
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  colors: [
-                    CustomAppColor.of(context).bgSkyBlue,
-                    CustomAppColor.of(context).bgDarkBlue,
+      child: Padding(
+        padding: EdgeInsets.only(left: 20.setWidth, right: 20.setWidth, top: 3.setHeight),
+        child: Container(
+          padding: EdgeInsets.symmetric(horizontal: 16.setWidth, vertical: 18.setHeight),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(16),
+            color: CustomAppColor.of(context).listTileColorScreenList,
+            boxShadow: [
+              BoxShadow(
+                color: CustomAppColor.of(
+                  context,
+                ).listTileShadow.withValues(alpha: .10),
+                offset: const Offset(0, 4),
+                blurRadius: 10,
+                spreadRadius: 1,
+              ),
+            ],
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Expanded(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    CommonText(
+                      text: "${index.toString()}.  ",
+                      fontSize: 15.setFontSize,
+                      fontFamily: Constant.fontFamilyMontserratSemiBold,
+                      fontWeight: FontWeight.w600,
+                      textColor: CustomAppColor.of(context).txtBlack,
+                    ),
+                    Expanded(
+                      child: CommonText(
+                        text: item.title,
+                        fontSize: 14.setFontSize,
+                        fontFamily: Constant.fontFamilyMontserratSemiBold,
+                        fontWeight: FontWeight.w600,
+                        textColor: CustomAppColor.of(context).txtBlack,
+                        textAlign: TextAlign.start,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ),
                   ],
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
                 ),
-                shape: BoxShape.circle,
               ),
-              child: Image.asset(
-                item.icon,
-                height: 32.setHeight,
-                width: 32.setHeight,
-                gaplessPlayback: true,
+              Padding(
+                padding: EdgeInsets.only(left: 20.setWidth),
+                child: Image.asset(
+                  item.icon,
+                  height: 20.setHeight,
+                  width: 20.setHeight,
+                  gaplessPlayback: true,
+                ),
               ),
-            ),
-            SizedBox(height: 10.setHeight),
-            Container(
-              constraints: BoxConstraints(minHeight: 37.setHeight),
-              alignment: Alignment.center,
-              child: CommonText(
-                text: item.title.toUpperCase(),
-                fontSize: 13.setFontSize,
-                fontWeight: FontWeight.w700,
-                textColor: CustomAppColor.of(context).txtBlack,
-                textAlign: TextAlign.center,
-                isAutoSize: true,
-                maxLines: 2,
-                height: 1.2,
-              ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

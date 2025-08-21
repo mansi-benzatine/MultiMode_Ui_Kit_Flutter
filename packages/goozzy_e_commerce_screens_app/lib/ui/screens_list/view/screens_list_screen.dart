@@ -26,10 +26,10 @@ import 'package:goozzy_e_commerce_screens_app_package/ui/view_inner_product/view
 import 'package:goozzy_e_commerce_screens_app_package/ui/view_product/view/view_product_screen.dart';
 import 'package:goozzy_e_commerce_screens_app_package/ui/wishlist/view/wishlist_screen.dart';
 import 'package:goozzy_e_commerce_screens_app_package/utils/sizer_utils.dart';
-import 'package:goozzy_e_commerce_screens_app_package/utils/utils.dart';
 
 import '../../../utils/app_assets.dart';
 import '../../../utils/app_color.dart';
+import '../../../utils/constant.dart';
 import '../../../widgets/text/common_text.dart';
 import '../../login_to_your_account/view/login_to_your_account_screen.dart';
 import '../../on_boarding/view/on_boarding_screen.dart';
@@ -56,77 +56,77 @@ class _GoozzyECommerceScreenListScreen extends State<GoozzyECommerceScreenListSc
   _fillData() {
     screenList = [
       ScreenListDataModel(
-        title: "Splash".toUpperCase(),
+        title: "Splash",
         icon: AppAssets.icScreens,
         onClick: () => Navigator.push(context, SplashScreen.route()),
       ),
       ScreenListDataModel(
-        title: "OnBoarding 1".toUpperCase(),
+        title: "OnBoarding 1",
         icon: AppAssets.icScreens,
         onClick: () => Navigator.push(context, OnBoardingScreen.route(initialIndex: 0)),
       ),
       ScreenListDataModel(
-        title: "OnBoarding 2".toUpperCase(),
+        title: "OnBoarding 2",
         icon: AppAssets.icScreens,
         onClick: () => Navigator.push(context, OnBoardingScreen.route(initialIndex: 1)),
       ),
       ScreenListDataModel(
-        title: "OnBoarding 3".toUpperCase(),
+        title: "OnBoarding 3",
         icon: AppAssets.icScreens,
         onClick: () => Navigator.push(context, OnBoardingScreen.route(initialIndex: 2)),
       ),
       ScreenListDataModel(
-        title: "Sign Up With Phone Number".toUpperCase(),
+        title: "Sign Up With Phone Number",
         icon: AppAssets.icScreens,
         onClick: () => Navigator.push(context, SignUpScreen.route()),
       ),
       ScreenListDataModel(
-        title: "OTP Verification".toUpperCase(),
+        title: "OTP Verification",
         icon: AppAssets.icScreens,
         onClick: () => Navigator.push(context, OtpVerificationScreen.route()),
       ),
       ScreenListDataModel(
-        title: "Account Created".toUpperCase(),
+        title: "Account Created",
         icon: AppAssets.icScreens,
         onClick: () => Navigator.push(context, AccountCreatedScreen.route()),
       ),
       ScreenListDataModel(
-        title: "Sign in with Social login".toUpperCase(),
+        title: "Sign in with Social login",
         icon: AppAssets.icScreens,
         onClick: () => Navigator.push(context, SocialLoginScreen.route()),
       ),
       ScreenListDataModel(
-        title: "Create new Account".toUpperCase(),
+        title: "Create new Account",
         icon: AppAssets.icScreens,
         onClick: () => Navigator.push(context, CreateNewAccountScreen.route()),
       ),
       ScreenListDataModel(
-        title: "Log in to Your Account".toUpperCase(),
+        title: "Log in to Your Account",
         icon: AppAssets.icScreens,
         onClick: () => Navigator.push(context, LoginToYourAccountScreen.route()),
       ),
       ScreenListDataModel(
-        title: "Forgot Password with Email".toUpperCase(),
+        title: "Forgot Password with Email",
         icon: AppAssets.icScreens,
         onClick: () => Navigator.push(context, ForgotPasswordScreen.route(isFromEmail: true)),
       ),
       ScreenListDataModel(
-        title: "Create New Password".toUpperCase(),
+        title: "Create New Password",
         icon: AppAssets.icScreens,
         onClick: () => Navigator.push(context, CreateNewPasswordScreen.route()),
       ),
       ScreenListDataModel(
-        title: "Forgot Password with Phone Number".toUpperCase(),
+        title: "Forgot Password with Phone Number",
         icon: AppAssets.icScreens,
         onClick: () => Navigator.push(context, ForgotPasswordScreen.route(isFromEmail: false)),
       ),
       ScreenListDataModel(
-        title: "Verify Code".toUpperCase(),
+        title: "Verify Code",
         icon: AppAssets.icScreens,
         onClick: () => Navigator.push(context, VerifyCodeScreen.route()),
       ),
       ScreenListDataModel(
-        title: "Home".toUpperCase(),
+        title: "Home",
         icon: AppAssets.icScreens,
         onClick: () => Navigator.push(
             context,
@@ -138,17 +138,17 @@ class _GoozzyECommerceScreenListScreen extends State<GoozzyECommerceScreenListSc
             )),
       ),
       ScreenListDataModel(
-        title: "View Product".toUpperCase(),
+        title: "View Product",
         icon: AppAssets.icScreens,
         onClick: () => Navigator.push(context, ViewProductScreen.route()),
       ),
       ScreenListDataModel(
-        title: "View inner product".toUpperCase(),
+        title: "View inner product",
         icon: AppAssets.icScreens,
         onClick: () => Navigator.push(context, ViewInnerProductScreen.route()),
       ),
       ScreenListDataModel(
-        title: "Product Categories".toUpperCase(),
+        title: "Product Categories",
         icon: AppAssets.icScreens,
         onClick: () => Navigator.push(
             context,
@@ -160,12 +160,12 @@ class _GoozzyECommerceScreenListScreen extends State<GoozzyECommerceScreenListSc
             )),
       ),
       ScreenListDataModel(
-        title: "See All Products".toUpperCase(),
+        title: "See All Products",
         icon: AppAssets.icScreens,
         onClick: () => Navigator.push(context, SeeAllProductScreen.route()),
       ),
       ScreenListDataModel(
-        title: "Account".toUpperCase(),
+        title: "Account",
         icon: AppAssets.icScreens,
         onClick: () => Navigator.push(
             context,
@@ -177,62 +177,62 @@ class _GoozzyECommerceScreenListScreen extends State<GoozzyECommerceScreenListSc
             )),
       ),
       ScreenListDataModel(
-        title: "Edit Profile".toUpperCase(),
+        title: "Edit Profile",
         icon: AppAssets.icScreens,
         onClick: () => Navigator.push(context, EditProfileScreen.route()),
       ),
       ScreenListDataModel(
-        title: "Profile".toUpperCase(),
+        title: "Profile",
         icon: AppAssets.icScreens,
         onClick: () => Navigator.push(context, ProfileScreen.route()),
       ),
       ScreenListDataModel(
-        title: "Bank Details".toUpperCase(),
+        title: "Bank Details",
         icon: AppAssets.icScreens,
         onClick: () => Navigator.push(context, BankDetailsScreen.route()),
       ),
       ScreenListDataModel(
-        title: "My Catalogs".toUpperCase(),
+        title: "My Catalogs",
         icon: AppAssets.icScreens,
         onClick: () => Navigator.push(context, MyCatalogsScreen.route()),
       ),
       ScreenListDataModel(
-        title: "Refer And Earn".toUpperCase(),
+        title: "Refer And Earn",
         icon: AppAssets.icScreens,
         onClick: () => Navigator.push(context, ReferAndEarnScreen.route()),
       ),
       ScreenListDataModel(
-        title: "Settings".toUpperCase(),
+        title: "Settings",
         icon: AppAssets.icScreens,
         onClick: () => Navigator.push(context, SettingsScreen.route()),
       ),
       ScreenListDataModel(
-        title: "Notification Settings".toUpperCase(),
+        title: "Notification Settings",
         icon: AppAssets.icScreens,
         onClick: () => Navigator.push(context, NotificationSettingsScreen.route()),
       ),
       ScreenListDataModel(
-        title: "Cart".toUpperCase(),
+        title: "Cart",
         icon: AppAssets.icScreens,
         onClick: () => Navigator.push(context, CartScreen.route()),
       ),
       ScreenListDataModel(
-        title: "Add Margin".toUpperCase(),
+        title: "Add Margin",
         icon: AppAssets.icScreens,
         onClick: () => Navigator.push(context, AddMarginScreen.route()),
       ),
       ScreenListDataModel(
-        title: "Add Delivery Address".toUpperCase(),
+        title: "Add Delivery Address",
         icon: AppAssets.icScreens,
         onClick: () => Navigator.push(context, AddDeliveryAddressScreen.route()),
       ),
       ScreenListDataModel(
-        title: "Order Summary".toUpperCase(),
+        title: "Order Summary",
         icon: AppAssets.icScreens,
         onClick: () => Navigator.push(context, OrderSummaryScreen.route()),
       ),
       ScreenListDataModel(
-        title: "Order History".toUpperCase(),
+        title: "Order History",
         icon: AppAssets.icScreens,
         onClick: () => Navigator.push(
             context,
@@ -244,17 +244,17 @@ class _GoozzyECommerceScreenListScreen extends State<GoozzyECommerceScreenListSc
             )),
       ),
       ScreenListDataModel(
-        title: "Track Order".toUpperCase(),
+        title: "Track Order",
         icon: AppAssets.icScreens,
         onClick: () => Navigator.push(context, TrackOrderScreen.route()),
       ),
       ScreenListDataModel(
-        title: "Notification".toUpperCase(),
+        title: "Notification",
         icon: AppAssets.icScreens,
         onClick: () => Navigator.push(context, NotificationsScreen.route()),
       ),
       ScreenListDataModel(
-        title: "Wishlist".toUpperCase(),
+        title: "Wishlist",
         icon: AppAssets.icScreens,
         onClick: () => Navigator.push(context, WishlistScreen.route()),
       ),
@@ -274,7 +274,13 @@ class _GoozzyECommerceScreenListScreen extends State<GoozzyECommerceScreenListSc
           backgroundColor: Colors.transparent,
           elevation: 0,
           leading: IconButton(
-            icon: Icon(Icons.arrow_back, color: CustomAppColor.of(context).white),
+            icon: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Icon(
+                Icons.arrow_back,
+                color: CustomAppColor.of(context).white,
+              ),
+            ),
             onPressed: () {
               widget.onBack?.call();
             },
@@ -285,6 +291,7 @@ class _GoozzyECommerceScreenListScreen extends State<GoozzyECommerceScreenListSc
             textColor: CustomAppColor.of(context).white,
             fontWeight: FontWeight.w700,
           ),
+          leadingWidth: AppSizes.setWidth(38),
         ),
         body: Container(
           width: double.infinity,
@@ -342,9 +349,13 @@ class _ModeGridView extends StatelessWidget {
                       spacing: AppSizes.setWidth(10),
                       runSpacing: AppSizes.setHeight(10),
                       alignment: WrapAlignment.start,
-                      children: screenList.map((item) {
-                        return _itemList(context: context, item: item);
-                      }).toList(),
+                      children: List.generate(screenList.length, (index) {
+                        return _itemList(
+                          context: context,
+                          item: screenList[index],
+                          index: index + 1,
+                        );
+                      }),
                     ),
                     SizedBox(height: AppSizes.setHeight(20)),
                   ],
@@ -357,66 +368,73 @@ class _ModeGridView extends StatelessWidget {
     );
   }
 
-  Widget _itemList({required BuildContext context, required ScreenListDataModel item}) {
+  Widget _itemList({
+    required BuildContext context,
+    required ScreenListDataModel item,
+    required int index,
+  }) {
     return InkWell(
       onTap: () {
         item.onClick?.call();
       },
-      child: Container(
-        margin: EdgeInsets.symmetric(horizontal: AppSizes.setWidth(4), vertical: AppSizes.setHeight(4)),
-        padding: EdgeInsets.symmetric(horizontal: AppSizes.setWidth(14), vertical: AppSizes.setHeight(14)),
-        width: (MediaQuery.of(context).size.width - AppSizes.setWidth(16) * 2 - AppSizes.setWidth(14) * 2) / 3,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(16),
-          color: CustomAppColor.of(context).listTileColorScreenList,
-          boxShadow: [
-            BoxShadow(
-              color: CustomAppColor.of(context).listTileShadow.withOpacityPercent(.10),
-              offset: const Offset(0, 4),
-              blurRadius: 10,
-              spreadRadius: 1,
-            )
-          ],
-        ),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            SizedBox(height: AppSizes.setHeight(6)),
-            Container(
-              padding: EdgeInsets.symmetric(horizontal: AppSizes.setWidth(20), vertical: AppSizes.setHeight(15)),
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  colors: [
-                    CustomAppColor.of(context).bgSkyBlue,
-                    CustomAppColor.of(context).bgDarkBlue,
+      child: Padding(
+        padding: EdgeInsets.only(left: AppSizes.setWidth(20), right: AppSizes.setWidth(20), top: AppSizes.setHeight(3)),
+        child: Container(
+          padding: EdgeInsets.symmetric(horizontal: AppSizes.setWidth(16), vertical: AppSizes.setHeight(18)),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(16),
+            color: CustomAppColor.of(context).listTileColorScreenList,
+            boxShadow: [
+              BoxShadow(
+                color: CustomAppColor.of(
+                  context,
+                ).listTileShadow.withValues(alpha: .10),
+                offset: const Offset(0, 4),
+                blurRadius: 10,
+                spreadRadius: 1,
+              ),
+            ],
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Expanded(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    CommonText(
+                      text: "${index.toString()}.  ",
+                      fontSize: AppSizes.setFontSize(15),
+                      fontFamily: Constant.fontFamilyMontserratSemiBold,
+                      fontWeight: FontWeight.w600,
+                      textColor: CustomAppColor.of(context).txtBlack,
+                    ),
+                    Expanded(
+                      child: CommonText(
+                        text: item.title,
+                        fontSize: AppSizes.setFontSize(14),
+                        fontFamily: Constant.fontFamilyMontserratSemiBold,
+                        fontWeight: FontWeight.w600,
+                        textColor: CustomAppColor.of(context).txtBlack,
+                        textAlign: TextAlign.start,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ),
                   ],
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
                 ),
-                shape: BoxShape.circle,
               ),
-              child: Image.asset(
-                item.icon,
-                height: AppSizes.setHeight(29),
-                width: AppSizes.setHeight(18),
-                gaplessPlayback: true,
+              Padding(
+                padding: EdgeInsets.only(left: AppSizes.setWidth(20)),
+                child: Image.asset(
+                  item.icon,
+                  height: AppSizes.setHeight(20),
+                  width: AppSizes.setWidth(20),
+                  gaplessPlayback: true,
+                ),
               ),
-            ),
-            SizedBox(height: AppSizes.setHeight(10)),
-            Container(
-              height: AppSizes.setHeight(37),
-              alignment: Alignment.center,
-              child: CommonText(
-                text: item.title.toUpperCase(),
-                fontSize: AppSizes.setFontSize(12),
-                fontWeight: FontWeight.w700,
-                textColor: CustomAppColor.of(context).txtBlack,
-                textAlign: TextAlign.center,
-                isAutoSize: true,
-                maxLines: 2,
-              ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

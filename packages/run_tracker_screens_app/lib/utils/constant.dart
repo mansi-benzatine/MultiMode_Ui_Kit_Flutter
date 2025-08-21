@@ -4,6 +4,7 @@ class Constant {
 
   static const fontFamily = "Roboto";
   static const fontFamilyOswald = "Oswald";
+  static const fontFamilyMontserratSemiBold = "Montserrat-SemiBold";
 
   static const strBack = "BACK";
   static const strDustbin = "DUSTBIN";

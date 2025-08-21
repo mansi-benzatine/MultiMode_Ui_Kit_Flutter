@@ -202,7 +202,7 @@ class AppAssets {
   static const icToolWritingArticles = "${_pIcons}ic_tool_writing_articles.webp";
   static const icToolWritingSummarize = "${_pIcons}ic_tool_writing_summarize.webp";
   static const icSend = "${_pIcons}ic_send.webp";
-  static const icScreen = "${_pIcons}ic_screen.webp";
+  static const icScreen = "${_pIcons}ic_blue_navigator.webp";
   static const icEdit = "${_pIcons}ic_edit.webp";
   static const icCall = "${_pIcons}ic_phone.webp";
   static const icArrowLeft = "${_pIcons}ic_arrow_left.webp";

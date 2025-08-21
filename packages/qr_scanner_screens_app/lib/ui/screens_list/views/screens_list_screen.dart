@@ -42,42 +42,37 @@ class _ScreenListScreen extends State<ScreenListScreen> {
   _fillData() {
     screenList = [
       ScreenListDataModel(
-        title: "Splash".toUpperCase(),
+        title: "Splash",
         icon: AppAssets.icScreens,
         onClick: () => Navigator.push(context, SplashScreen.route()),
       ),
       ScreenListDataModel(
-        title: "Onboarding 1".toUpperCase(),
+        title: "Onboarding 1",
         icon: AppAssets.icScreens,
-        onClick: () =>
-            Navigator.push(context, OnboardingScreen.route(currentIndex: 0)),
+        onClick: () => Navigator.push(context, OnboardingScreen.route(currentIndex: 0)),
       ),
       ScreenListDataModel(
-        title: "Onboarding 2".toUpperCase(),
+        title: "Onboarding 2",
         icon: AppAssets.icScreens,
-        onClick: () =>
-            Navigator.push(context, OnboardingScreen.route(currentIndex: 1)),
+        onClick: () => Navigator.push(context, OnboardingScreen.route(currentIndex: 1)),
       ),
       ScreenListDataModel(
-        title: "Onboarding 3".toUpperCase(),
+        title: "Onboarding 3",
         icon: AppAssets.icScreens,
-        onClick: () =>
-            Navigator.push(context, OnboardingScreen.route(currentIndex: 2)),
+        onClick: () => Navigator.push(context, OnboardingScreen.route(currentIndex: 2)),
       ),
       ScreenListDataModel(
-        title: "Scanning Screen".toUpperCase(),
+        title: "Scanning Screen",
         icon: AppAssets.icScreens,
-        onClick: () =>
-            Navigator.push(context, DashboardScreen.route(currentIndex: 2)),
+        onClick: () => Navigator.push(context, DashboardScreen.route(currentIndex: 2)),
       ),
       ScreenListDataModel(
-        title: "Generate Qr screen".toUpperCase(),
+        title: "Generate Qr screen",
         icon: AppAssets.icScreens,
-        onClick: () =>
-            Navigator.push(context, DashboardScreen.route(currentIndex: 0)),
+        onClick: () => Navigator.push(context, DashboardScreen.route(currentIndex: 0)),
       ),
       ScreenListDataModel(
-        title: "Create Clipboard QR Code Screen".toUpperCase(),
+        title: "Create Clipboard QR Code Screen",
         icon: AppAssets.icScreens,
         onClick: () => Navigator.push(
             context,
@@ -90,7 +85,7 @@ class _ScreenListScreen extends State<ScreenListScreen> {
             )),
       ),
       ScreenListDataModel(
-        title: "Result - Clipboard Screen".toUpperCase(),
+        title: "Result - Clipboard Screen",
         icon: AppAssets.icScreens,
         onClick: () => Navigator.push(
             context,
@@ -103,7 +98,7 @@ class _ScreenListScreen extends State<ScreenListScreen> {
             )),
       ),
       ScreenListDataModel(
-        title: "Create Website QR Code Screen".toUpperCase(),
+        title: "Create Website QR Code Screen",
         icon: AppAssets.icScreens,
         onClick: () => Navigator.push(
             context,
@@ -116,7 +111,7 @@ class _ScreenListScreen extends State<ScreenListScreen> {
             )),
       ),
       ScreenListDataModel(
-        title: "Result - Website Screen".toUpperCase(),
+        title: "Result - Website Screen",
         icon: AppAssets.icScreens,
         onClick: () => Navigator.push(
             context,
@@ -129,7 +124,7 @@ class _ScreenListScreen extends State<ScreenListScreen> {
             )),
       ),
       ScreenListDataModel(
-        title: "Create Text QR Code Screen".toUpperCase(),
+        title: "Create Text QR Code Screen",
         icon: AppAssets.icScreens,
         onClick: () => Navigator.push(
             context,
@@ -142,7 +137,7 @@ class _ScreenListScreen extends State<ScreenListScreen> {
             )),
       ),
       ScreenListDataModel(
-        title: "Result - Text Screen".toUpperCase(),
+        title: "Result - Text Screen",
         icon: AppAssets.icScreens,
         onClick: () => Navigator.push(
             context,
@@ -155,7 +150,7 @@ class _ScreenListScreen extends State<ScreenListScreen> {
             )),
       ),
       ScreenListDataModel(
-        title: "Create Contact QR Code Screen".toUpperCase(),
+        title: "Create Contact QR Code Screen",
         icon: AppAssets.icScreens,
         onClick: () => Navigator.push(
             context,
@@ -168,7 +163,7 @@ class _ScreenListScreen extends State<ScreenListScreen> {
             )),
       ),
       ScreenListDataModel(
-        title: "Result - Contact Screen".toUpperCase(),
+        title: "Result - Contact Screen",
         icon: AppAssets.icScreens,
         onClick: () => Navigator.push(
             context,
@@ -181,7 +176,7 @@ class _ScreenListScreen extends State<ScreenListScreen> {
             )),
       ),
       ScreenListDataModel(
-        title: "Create Email QR Code Screen".toUpperCase(),
+        title: "Create Email QR Code Screen",
         icon: AppAssets.icScreens,
         onClick: () => Navigator.push(
             context,
@@ -194,7 +189,7 @@ class _ScreenListScreen extends State<ScreenListScreen> {
             )),
       ),
       ScreenListDataModel(
-        title: "Result - Email Screen".toUpperCase(),
+        title: "Result - Email Screen",
         icon: AppAssets.icScreens,
         onClick: () => Navigator.push(
             context,
@@ -207,7 +202,7 @@ class _ScreenListScreen extends State<ScreenListScreen> {
             )),
       ),
       ScreenListDataModel(
-        title: "Create SMS QR Code Screen".toUpperCase(),
+        title: "Create SMS QR Code Screen",
         icon: AppAssets.icScreens,
         onClick: () => Navigator.push(
             context,
@@ -220,7 +215,7 @@ class _ScreenListScreen extends State<ScreenListScreen> {
             )),
       ),
       ScreenListDataModel(
-        title: "Result - SMS Screen".toUpperCase(),
+        title: "Result - SMS Screen",
         icon: AppAssets.icScreens,
         onClick: () => Navigator.push(
             context,
@@ -233,7 +228,7 @@ class _ScreenListScreen extends State<ScreenListScreen> {
             )),
       ),
       ScreenListDataModel(
-        title: "Create Location QR Code Screen".toUpperCase(),
+        title: "Create Location QR Code Screen",
         icon: AppAssets.icScreens,
         onClick: () => Navigator.push(
             context,
@@ -246,7 +241,7 @@ class _ScreenListScreen extends State<ScreenListScreen> {
             )),
       ),
       ScreenListDataModel(
-        title: "Result - Location Screen".toUpperCase(),
+        title: "Result - Location Screen",
         icon: AppAssets.icScreens,
         onClick: () => Navigator.push(
             context,
@@ -259,7 +254,7 @@ class _ScreenListScreen extends State<ScreenListScreen> {
             )),
       ),
       ScreenListDataModel(
-        title: "Create Call QR Code Screen".toUpperCase(),
+        title: "Create Call QR Code Screen",
         icon: AppAssets.icScreens,
         onClick: () => Navigator.push(
             context,
@@ -272,7 +267,7 @@ class _ScreenListScreen extends State<ScreenListScreen> {
             )),
       ),
       ScreenListDataModel(
-        title: "Result - Call Screen".toUpperCase(),
+        title: "Result - Call Screen",
         icon: AppAssets.icScreens,
         onClick: () => Navigator.push(
             context,
@@ -285,7 +280,7 @@ class _ScreenListScreen extends State<ScreenListScreen> {
             )),
       ),
       ScreenListDataModel(
-        title: "Create Event - All Day Event On QR Code Screen".toUpperCase(),
+        title: "Create Event - All Day Event On QR Code Screen",
         icon: AppAssets.icScreens,
         onClick: () => Navigator.push(
             context,
@@ -298,7 +293,7 @@ class _ScreenListScreen extends State<ScreenListScreen> {
             )),
       ),
       ScreenListDataModel(
-        title: "Result - Event Screen".toUpperCase(),
+        title: "Result - Event Screen",
         icon: AppAssets.icScreens,
         onClick: () => Navigator.push(
             context,
@@ -311,7 +306,7 @@ class _ScreenListScreen extends State<ScreenListScreen> {
             )),
       ),
       ScreenListDataModel(
-        title: "Create Wifi QR Code Screen".toUpperCase(),
+        title: "Create Wifi QR Code Screen",
         icon: AppAssets.icScreens,
         onClick: () => Navigator.push(
             context,
@@ -324,7 +319,7 @@ class _ScreenListScreen extends State<ScreenListScreen> {
             )),
       ),
       ScreenListDataModel(
-        title: "Result - Wifi Screen".toUpperCase(),
+        title: "Result - Wifi Screen",
         icon: AppAssets.icScreens,
         onClick: () => Navigator.push(
             context,
@@ -337,12 +332,12 @@ class _ScreenListScreen extends State<ScreenListScreen> {
             )),
       ),
       ScreenListDataModel(
-        title: "App List screen".toUpperCase(),
+        title: "App List screen",
         icon: AppAssets.icScreens,
         onClick: () => Navigator.push(context, CreateAppQrCodeScreen.route()),
       ),
       ScreenListDataModel(
-        title: "Create App QR Code Screen".toUpperCase(),
+        title: "Create App QR Code Screen",
         icon: AppAssets.icScreens,
         onClick: () => Navigator.push(
             context,
@@ -355,7 +350,7 @@ class _ScreenListScreen extends State<ScreenListScreen> {
             )),
       ),
       ScreenListDataModel(
-        title: "Result - App Screen".toUpperCase(),
+        title: "Result - App Screen",
         icon: AppAssets.icScreens,
         onClick: () => Navigator.push(
             context,
@@ -368,12 +363,12 @@ class _ScreenListScreen extends State<ScreenListScreen> {
             )),
       ),
       ScreenListDataModel(
-        title: "Barcodes & other 2D Codes Screen".toUpperCase(),
+        title: "Barcodes & other 2D Codes Screen",
         icon: AppAssets.icScreens,
         onClick: () => Navigator.push(context, BarcodeOtherCodeScreen.route()),
       ),
       ScreenListDataModel(
-        title: "Create ISBN Barcode Screen".toUpperCase(),
+        title: "Create ISBN Barcode Screen",
         icon: AppAssets.icScreens,
         onClick: () => Navigator.push(
             context,
@@ -384,7 +379,7 @@ class _ScreenListScreen extends State<ScreenListScreen> {
             })),
       ),
       ScreenListDataModel(
-        title: "Result - ISBN Screen".toUpperCase(),
+        title: "Result - ISBN Screen",
         icon: AppAssets.icScreens,
         onClick: () => Navigator.push(
             context,
@@ -395,7 +390,7 @@ class _ScreenListScreen extends State<ScreenListScreen> {
             })),
       ),
       ScreenListDataModel(
-        title: "Create EAN 8 Barcode Screen".toUpperCase(),
+        title: "Create EAN 8 Barcode Screen",
         icon: AppAssets.icScreens,
         onClick: () => Navigator.push(
             context,
@@ -406,7 +401,7 @@ class _ScreenListScreen extends State<ScreenListScreen> {
             })),
       ),
       ScreenListDataModel(
-        title: "Result - EAN 8 Screen".toUpperCase(),
+        title: "Result - EAN 8 Screen",
         icon: AppAssets.icScreens,
         onClick: () => Navigator.push(
             context,
@@ -417,7 +412,7 @@ class _ScreenListScreen extends State<ScreenListScreen> {
             })),
       ),
       ScreenListDataModel(
-        title: "Create EAN 13 Barcode Screen".toUpperCase(),
+        title: "Create EAN 13 Barcode Screen",
         icon: AppAssets.icScreens,
         onClick: () => Navigator.push(
             context,
@@ -428,7 +423,7 @@ class _ScreenListScreen extends State<ScreenListScreen> {
             })),
       ),
       ScreenListDataModel(
-        title: "Result - EAN 13 Screen".toUpperCase(),
+        title: "Result - EAN 13 Screen",
         icon: AppAssets.icScreens,
         onClick: () => Navigator.push(
             context,
@@ -439,7 +434,7 @@ class _ScreenListScreen extends State<ScreenListScreen> {
             })),
       ),
       ScreenListDataModel(
-        title: "Create UPC E Barcode Screen".toUpperCase(),
+        title: "Create UPC E Barcode Screen",
         icon: AppAssets.icScreens,
         onClick: () => Navigator.push(
             context,
@@ -450,7 +445,7 @@ class _ScreenListScreen extends State<ScreenListScreen> {
             })),
       ),
       ScreenListDataModel(
-        title: "Result - UPC E Screen".toUpperCase(),
+        title: "Result - UPC E Screen",
         icon: AppAssets.icScreens,
         onClick: () => Navigator.push(
             context,
@@ -461,7 +456,7 @@ class _ScreenListScreen extends State<ScreenListScreen> {
             })),
       ),
       ScreenListDataModel(
-        title: "Create UPC A Barcode Screen".toUpperCase(),
+        title: "Create UPC A Barcode Screen",
         icon: AppAssets.icScreens,
         onClick: () => Navigator.push(
             context,
@@ -472,7 +467,7 @@ class _ScreenListScreen extends State<ScreenListScreen> {
             })),
       ),
       ScreenListDataModel(
-        title: "Result - UPC A Screen".toUpperCase(),
+        title: "Result - UPC A Screen",
         icon: AppAssets.icScreens,
         onClick: () => Navigator.push(
             context,
@@ -483,7 +478,7 @@ class _ScreenListScreen extends State<ScreenListScreen> {
             })),
       ),
       ScreenListDataModel(
-        title: "Create Code 39 Barcode Screen".toUpperCase(),
+        title: "Create Code 39 Barcode Screen",
         icon: AppAssets.icScreens,
         onClick: () => Navigator.push(
             context,
@@ -494,7 +489,7 @@ class _ScreenListScreen extends State<ScreenListScreen> {
             })),
       ),
       ScreenListDataModel(
-        title: "Result - CODE 39 Screen".toUpperCase(),
+        title: "Result - CODE 39 Screen",
         icon: AppAssets.icScreens,
         onClick: () => Navigator.push(
             context,
@@ -505,7 +500,7 @@ class _ScreenListScreen extends State<ScreenListScreen> {
             })),
       ),
       ScreenListDataModel(
-        title: "Create CODE 93 Barcode Screen".toUpperCase(),
+        title: "Create CODE 93 Barcode Screen",
         icon: AppAssets.icScreens,
         onClick: () => Navigator.push(
             context,
@@ -516,7 +511,7 @@ class _ScreenListScreen extends State<ScreenListScreen> {
             })),
       ),
       ScreenListDataModel(
-        title: "Result - CODE 93 Screen".toUpperCase(),
+        title: "Result - CODE 93 Screen",
         icon: AppAssets.icScreens,
         onClick: () => Navigator.push(
             context,
@@ -527,7 +522,7 @@ class _ScreenListScreen extends State<ScreenListScreen> {
             })),
       ),
       ScreenListDataModel(
-        title: "Create CODE 128 Barcode Screen".toUpperCase(),
+        title: "Create CODE 128 Barcode Screen",
         icon: AppAssets.icScreens,
         onClick: () => Navigator.push(
             context,
@@ -538,7 +533,7 @@ class _ScreenListScreen extends State<ScreenListScreen> {
             })),
       ),
       ScreenListDataModel(
-        title: "Result - CODE 128 Screen".toUpperCase(),
+        title: "Result - CODE 128 Screen",
         icon: AppAssets.icScreens,
         onClick: () => Navigator.push(
             context,
@@ -549,7 +544,7 @@ class _ScreenListScreen extends State<ScreenListScreen> {
             })),
       ),
       ScreenListDataModel(
-        title: "Create ITF Barcode Screen".toUpperCase(),
+        title: "Create ITF Barcode Screen",
         icon: AppAssets.icScreens,
         onClick: () => Navigator.push(
             context,
@@ -560,7 +555,7 @@ class _ScreenListScreen extends State<ScreenListScreen> {
             })),
       ),
       ScreenListDataModel(
-        title: "Result - ITF Screen".toUpperCase(),
+        title: "Result - ITF Screen",
         icon: AppAssets.icScreens,
         onClick: () => Navigator.push(
             context,
@@ -571,7 +566,7 @@ class _ScreenListScreen extends State<ScreenListScreen> {
             })),
       ),
       ScreenListDataModel(
-        title: "Create PDF 417 Barcode Screen".toUpperCase(),
+        title: "Create PDF 417 Barcode Screen",
         icon: AppAssets.icScreens,
         onClick: () => Navigator.push(
             context,
@@ -582,7 +577,7 @@ class _ScreenListScreen extends State<ScreenListScreen> {
             })),
       ),
       ScreenListDataModel(
-        title: "Result - PDF 417 Screen".toUpperCase(),
+        title: "Result - PDF 417 Screen",
         icon: AppAssets.icScreens,
         onClick: () => Navigator.push(
             context,
@@ -593,7 +588,7 @@ class _ScreenListScreen extends State<ScreenListScreen> {
             })),
       ),
       ScreenListDataModel(
-        title: "Create CODABAR Barcode Screen".toUpperCase(),
+        title: "Create CODABAR Barcode Screen",
         icon: AppAssets.icScreens,
         onClick: () => Navigator.push(
             context,
@@ -604,7 +599,7 @@ class _ScreenListScreen extends State<ScreenListScreen> {
             })),
       ),
       ScreenListDataModel(
-        title: "Result - CODABAR Screen".toUpperCase(),
+        title: "Result - CODABAR Screen",
         icon: AppAssets.icScreens,
         onClick: () => Navigator.push(
             context,
@@ -615,7 +610,7 @@ class _ScreenListScreen extends State<ScreenListScreen> {
             })),
       ),
       ScreenListDataModel(
-        title: "Create DATAMATRIX Barcode Screen".toUpperCase(),
+        title: "Create DATAMATRIX Barcode Screen",
         icon: AppAssets.icScreens,
         onClick: () => Navigator.push(
             context,
@@ -626,7 +621,7 @@ class _ScreenListScreen extends State<ScreenListScreen> {
             })),
       ),
       ScreenListDataModel(
-        title: "Result - DATAMATRIX Screen".toUpperCase(),
+        title: "Result - DATAMATRIX Screen",
         icon: AppAssets.icScreens,
         onClick: () => Navigator.push(
             context,
@@ -637,7 +632,7 @@ class _ScreenListScreen extends State<ScreenListScreen> {
             })),
       ),
       ScreenListDataModel(
-        title: "Create AZTEC Barcode Screen".toUpperCase(),
+        title: "Create AZTEC Barcode Screen",
         icon: AppAssets.icScreens,
         onClick: () => Navigator.push(
             context,
@@ -648,7 +643,7 @@ class _ScreenListScreen extends State<ScreenListScreen> {
             })),
       ),
       ScreenListDataModel(
-        title: "Result - AZTEC Barcode Screen".toUpperCase(),
+        title: "Result - AZTEC Barcode Screen",
         icon: AppAssets.icScreens,
         onClick: () => Navigator.push(
             context,
@@ -659,40 +654,37 @@ class _ScreenListScreen extends State<ScreenListScreen> {
             })),
       ),
       ScreenListDataModel(
-        title: "History Screen".toUpperCase(),
+        title: "History Screen",
         icon: AppAssets.icScreens,
-        onClick: () =>
-            Navigator.push(context, DashboardScreen.route(currentIndex: 1)),
+        onClick: () => Navigator.push(context, DashboardScreen.route(currentIndex: 1)),
       ),
       ScreenListDataModel(
-        title: "Favourites Screen".toUpperCase(),
+        title: "Favourites Screen",
         icon: AppAssets.icScreens,
-        onClick: () =>
-            Navigator.push(context, DashboardScreen.route(currentIndex: 3)),
+        onClick: () => Navigator.push(context, DashboardScreen.route(currentIndex: 3)),
       ),
       ScreenListDataModel(
-        title: "Settings Screen".toUpperCase(),
+        title: "Settings Screen",
         icon: AppAssets.icScreens,
-        onClick: () =>
-            Navigator.push(context, DashboardScreen.route(currentIndex: 4)),
+        onClick: () => Navigator.push(context, DashboardScreen.route(currentIndex: 4)),
       ),
       ScreenListDataModel(
-        title: "Pro Version Screen".toUpperCase(),
+        title: "Pro Version Screen",
         icon: AppAssets.icScreens,
         onClick: () => Navigator.push(context, ProVersionScreen.route()),
       ),
       ScreenListDataModel(
-        title: "QR Code Settings Screen".toUpperCase(),
+        title: "QR Code Settings Screen",
         icon: AppAssets.icScreens,
         onClick: () => Navigator.push(context, QrCodeSettingScreen.route()),
       ),
       ScreenListDataModel(
-        title: "Languages Options Screen".toUpperCase(),
+        title: "Languages Options Screen",
         icon: AppAssets.icScreens,
         onClick: () => Navigator.push(context, LanguagesOptionsScreen.route()),
       ),
       ScreenListDataModel(
-        title: "Introduction Screen".toUpperCase(),
+        title: "Introduction Screen",
         icon: AppAssets.icScreens,
         onClick: () => Navigator.push(context, IntroductionScreen.route()),
       ),
@@ -711,18 +703,23 @@ class _ScreenListScreen extends State<ScreenListScreen> {
           backgroundColor: Colors.transparent,
           elevation: 0,
           leading: IconButton(
-            icon: Icon(
-              Icons.arrow_back,
-              color: CustomAppColor.of(context).white,
+            icon: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Icon(
+                Icons.arrow_back,
+                color: CustomAppColor.of(context).white,
+              ),
             ),
             onPressed: () {
               widget.onBack?.call();
             },
           ),
+          leadingWidth: 38.setWidth,
           title: CommonText(
             text: "Qr Scanner App",
             fontSize: 22.setFontSize,
             fontWeight: FontWeight.w700,
+            fontFamily: Constant.fontFamilyMontserratSemiBold,
             textColor: CustomAppColor.of(context).white,
           ),
         ),
@@ -774,6 +771,7 @@ class _ModeGridView extends StatelessWidget {
                 borderRadius: BorderRadius.circular(100),
               ),
             ),
+            SizedBox(height: 5.setHeight),
             Expanded(
               child: SingleChildScrollView(
                 child: Column(
@@ -782,9 +780,13 @@ class _ModeGridView extends StatelessWidget {
                       spacing: 10.setWidth,
                       runSpacing: 10.setHeight,
                       alignment: WrapAlignment.start,
-                      children: screenList.map((item) {
-                        return _itemList(context: context, item: item);
-                      }).toList(),
+                      children: List.generate(screenList.length, (index) {
+                        return _itemList(
+                          context: context,
+                          item: screenList[index],
+                          index: index + 1,
+                        );
+                      }),
                     ),
                     SizedBox(height: 20.setHeight),
                   ],
@@ -800,82 +802,70 @@ class _ModeGridView extends StatelessWidget {
   Widget _itemList({
     required BuildContext context,
     required ScreenListDataModel item,
+    required int index,
   }) {
     return InkWell(
       onTap: () {
         item.onClick?.call();
       },
-      child: Container(
-        margin: EdgeInsets.symmetric(
-          horizontal: 4.setWidth,
-          vertical: 4.setHeight,
-        ),
-        padding: EdgeInsets.symmetric(
-          horizontal: 14.setWidth,
-          vertical: 14.setHeight,
-        ),
-        width: (MediaQuery.of(context).size.width -
-                16.setWidth * 2 -
-                14.setWidth * 2) /
-            3,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(16),
-          color: CustomAppColor.of(context).listTileColorScreenList,
-          boxShadow: [
-            BoxShadow(
-              color: CustomAppColor.of(
-                context,
-              ).listTileShadow.withValues(alpha: .10),
-              offset: const Offset(0, 4),
-              blurRadius: 10,
-              spreadRadius: 1,
-            ),
-          ],
-        ),
-        child: Column(
-          // mainAxisSize: MainAxisSize.min,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            SizedBox(height: 6.setHeight),
-            Container(
-              padding: EdgeInsets.symmetric(
-                horizontal: 20.setWidth,
-                vertical: 15.setHeight,
+      child: Padding(
+        padding: EdgeInsets.only(left: 20.setWidth, right: 20.setWidth, top: 3.setHeight),
+        child: Container(
+          padding: EdgeInsets.symmetric(horizontal: 16.setWidth, vertical: 18.setHeight),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(16),
+            color: CustomAppColor.of(context).listTileColorScreenList,
+            boxShadow: [
+              BoxShadow(
+                color: CustomAppColor.of(
+                  context,
+                ).listTileShadow.withValues(alpha: .10),
+                offset: const Offset(0, 4),
+                blurRadius: 10,
+                spreadRadius: 1,
               ),
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  colors: [
-                    CustomAppColor.of(context).bgSkyBlue,
-                    CustomAppColor.of(context).bgDarkBlue,
+            ],
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Expanded(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    CommonText(
+                      text: "${index.toString()}.  ",
+                      fontSize: 15.setFontSize,
+                      fontFamily: Constant.fontFamilyMontserratSemiBold,
+                      fontWeight: FontWeight.w600,
+                      textColor: CustomAppColor.of(context).txtBlack,
+                    ),
+                    Expanded(
+                      child: CommonText(
+                        text: item.title,
+                        fontSize: 14.setFontSize,
+                        fontFamily: Constant.fontFamilyMontserratSemiBold,
+                        fontWeight: FontWeight.w600,
+                        textColor: CustomAppColor.of(context).txtBlack,
+                        textAlign: TextAlign.start,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ),
                   ],
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
                 ),
-                shape: BoxShape.circle,
               ),
-              child: Image.asset(
-                item.icon,
-                height: 32.setHeight,
-                width: 32.setHeight,
-                gaplessPlayback: true,
+              Padding(
+                padding: EdgeInsets.only(left: 20.setWidth),
+                child: Image.asset(
+                  item.icon,
+                  height: 20.setHeight,
+                  width: 20.setHeight,
+                  gaplessPlayback: true,
+                ),
               ),
-            ),
-            SizedBox(height: 10.setHeight),
-            Container(
-              constraints: BoxConstraints(minHeight: 37.setHeight),
-              alignment: Alignment.center,
-              child: CommonText(
-                text: item.title.toUpperCase(),
-                fontSize: 13.setFontSize,
-                fontWeight: FontWeight.w700,
-                textColor: CustomAppColor.of(context).txtBlack,
-                textAlign: TextAlign.center,
-                isAutoSize: true,
-                maxLines: 2,
-                height: 1.2,
-              ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
