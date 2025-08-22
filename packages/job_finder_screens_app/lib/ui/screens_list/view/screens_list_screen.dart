@@ -337,7 +337,7 @@ class _ModeGridView extends StatelessWidget {
         width: 0.screenWidth,
         margin: EdgeInsets.only(top: 10.setHeight),
         decoration: BoxDecoration(
-          color: CustomAppColor.of(context).txtWhite,
+          color: CustomAppColor.of(context).whiteBlackBg,
           borderRadius: const BorderRadius.vertical(top: Radius.circular(40)),
         ),
         child: Column(
