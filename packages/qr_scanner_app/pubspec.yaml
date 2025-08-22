@@ -45,7 +45,6 @@ flutter:
   assets:
     - assets/
     - assets/images/
-    - assets/dark_images/
     - assets/icons/
     - assets/dark_icons/
 
