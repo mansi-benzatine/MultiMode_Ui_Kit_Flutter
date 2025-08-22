@@ -14,6 +14,7 @@ import '../../news/view/news_screen.dart';
 
 class NewsDetailScreen extends StatefulWidget {
   final NewsItem newsItem;
+
   static Route<void> route({required NewsItem newsItem}) {
     return MaterialPageRoute(builder: (_) => NewsDetailScreen(newsItem: newsItem));
   }
@@ -46,6 +47,7 @@ class _NewsDetailScreenState extends State<NewsDetailScreen> implements TopBarCl
     PopularCarItem(carName: "Tesla Model  Y", carImage: AppAssets.imgTesla2, carPrice: "\$32,340", carDescription: "New Looks, Longer Range, And Faster Charging Rate"),
     PopularCarItem(carName: "Tesla Model  Y", carImage: AppAssets.imgMercedes, carPrice: "\$32,340", carDescription: "New Looks, Longer Range, And Faster Charging Rate"),
   ];
+  final Set<int> favoriteIndexes = {};
 
   @override
   Widget build(BuildContext context) {
@@ -146,7 +148,20 @@ class _NewsDetailScreenState extends State<NewsDetailScreen> implements TopBarCl
             padding: EdgeInsets.symmetric(horizontal: 20.setWidth),
             child: Row(
               children: List.generate(popularCars.length, (index) {
-                return CarItemWidget(car: popularCars[index], marginRight: 15.setWidth);
+                return CarItemWidget(
+                  isFavorite: favoriteIndexes.contains(index),
+                  onFavoriteToggle: () {
+                    setState(() {
+                      if (favoriteIndexes.contains(index)) {
+                        favoriteIndexes.remove(index);
+                      } else {
+                        favoriteIndexes.add(index);
+                      }
+                    });
+                  },
+                  car: popularCars[index],
+                  marginRight: 15.setWidth,
+                );
               }),
             ),
           ),

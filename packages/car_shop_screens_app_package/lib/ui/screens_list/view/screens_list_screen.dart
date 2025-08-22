@@ -336,7 +336,7 @@ class _ScreenListScreen extends State<ScreenListScreen> {
             },
           ),
           title: CommonText(
-            text: "Car Shop App",
+            text: "Cardex - Car Detail App",
             fontSize: 22.setFontSize,
             fontFamily: Constant.fontFamilyMontserratSemiBold,
             fontWeight: FontWeight.w600,

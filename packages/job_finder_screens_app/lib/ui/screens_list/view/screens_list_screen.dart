@@ -296,25 +296,29 @@ class _ScreenListScreenState extends State<ScreenListScreen> {
         title: CommonText(
           text: "Job Finder App",
           fontSize: 22.setFontSize,
+          fontFamily: Constant.fontFamilyMontserratSemiBold,
           textColor: CustomAppColor.of(context).white,
           fontWeight: FontWeight.w700,
         ),
       ),
-      body: Container(
-        width: double.infinity,
-        height: double.infinity,
-        padding: EdgeInsets.only(top: 20.setHeight),
-        decoration: const BoxDecoration(
-          image: DecorationImage(
-            image: AssetImage(AppAssets.imgBgHomeScreenPlain),
-            fit: BoxFit.cover,
+      body: SafeArea(
+        top: false,
+        child: Container(
+          width: double.infinity,
+          height: double.infinity,
+          padding: EdgeInsets.only(top: 20.setHeight),
+          decoration: const BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage(AppAssets.imgBgHomeScreenPlain),
+              fit: BoxFit.cover,
+            ),
           ),
-        ),
-        child: Column(
-          children: [
-            const SizedBox(height: kToolbarHeight + 26),
-            _ModeGridView(screenList: screenList),
-          ],
+          child: Column(
+            children: [
+              const SizedBox(height: kToolbarHeight + 26),
+              _ModeGridView(screenList: screenList),
+            ],
+          ),
         ),
       ),
     );

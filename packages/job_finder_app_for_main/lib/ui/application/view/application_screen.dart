@@ -26,23 +26,9 @@ class _ApplicationScreenState extends State<ApplicationScreen> {
   void fillData() {
     applicationsList = [
       JobDetailsModel(
-          jobProfileImagePath: AppAssets.icAvatarKickstarter,
-          jobName: "Product Designer",
-          companyName: "Kickstarter",
-          jobType: ["Full-Time"],
-          salary: "160,00",
-          city: "California",
-          state: " USA",
-          applicationStatus: "Reviewing"),
+          jobProfileImagePath: AppAssets.icAvatarKickstarter, jobName: "Product Designer", companyName: "Kickstarter", jobType: ["Full-Time"], salary: "160,00", city: "California", state: " USA", applicationStatus: "Reviewing"),
       JobDetailsModel(
-          jobProfileImagePath: AppAssets.icAvatarVkontakte,
-          jobName: "Web Designer",
-          companyName: "Vkontakte",
-          jobType: ["Part-Time"],
-          salary: "115,000",
-          city: "Los Angels",
-          state: " US",
-          applicationStatus: "Cancelled"),
+          jobProfileImagePath: AppAssets.icAvatarVkontakte, jobName: "Web Designer", companyName: "Vkontakte", jobType: ["Part-Time"], salary: "115,000", city: "Los Angels", state: " US", applicationStatus: "Cancelled"),
       JobDetailsModel(
         jobProfileImagePath: AppAssets.icAvatarMeetup,
         jobName: "Visual Designer",
@@ -67,8 +53,11 @@ class _ApplicationScreenState extends State<ApplicationScreen> {
           child: SingleChildScrollView(
             child: Column(
               children: [
-                ApplicationStatusList(applicationStatusList: applicationStatusList, selectedStatus: selectedValue),
-                ApplicationsList(applicationsList: applicationsList)
+                ApplicationStatusList(
+                  applicationStatusList: applicationStatusList,
+                  selectedStatus: selectedValue,
+                ),
+                ApplicationsList(applicationsList: applicationsList),
               ],
             ),
           ),
@@ -210,24 +199,24 @@ class ApplicationsList extends StatelessWidget {
       scrollDirection: Axis.vertical,
       itemCount: applicationsList.length,
       physics: const AlwaysScrollableScrollPhysics(),
-      padding: EdgeInsets.symmetric(horizontal: 20.setWidth, vertical: 14.setHeight),
+      padding: EdgeInsets.symmetric(horizontal: 24.setWidth, vertical: 14.setHeight),
       itemBuilder: (context, index) {
         final jobType = applicationsList[index];
 
         return Padding(
-          padding: EdgeInsets.symmetric(vertical: 5.setWidth),
+          padding: EdgeInsets.symmetric(vertical: 8.setWidth),
           child: GestureDetector(
             onTap: () => Navigator.push(context, AppliedJobDetailsScreen.route()),
             child: Container(
               width: 327.setWidth,
-              padding: EdgeInsets.symmetric(vertical: 20.setHeight, horizontal: 15.setWidth),
+              padding: EdgeInsets.symmetric(vertical: 15.setHeight, horizontal: 15.setWidth),
               decoration: BoxDecoration(
                 boxShadow: [
                   BoxShadow(
                     offset: const Offset(0, 4),
                     blurRadius: 20,
                     spreadRadius: 0,
-                    color: CustomAppColor.of(context).black.withOpacityPercent(0.03),
+                    color: CustomAppColor.of(context).black.withOpacityPercent(.1),
                   ),
                 ],
                 borderRadius: BorderRadius.circular(10),
@@ -246,7 +235,7 @@ class ApplicationsList extends StatelessWidget {
                         width: 44.setWidth,
                         fit: BoxFit.fill,
                       ),
-                      SizedBox(width: 20.setWidth),
+                      SizedBox(width: 12.setWidth),
                       Expanded(
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -274,7 +263,6 @@ class ApplicationsList extends StatelessWidget {
                                 ),
                               ],
                             ),
-                            SizedBox(height: 5.setHeight),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
@@ -310,7 +298,12 @@ class ApplicationsList extends StatelessWidget {
                       ),
                     ],
                   ),
-                  SizedBox(height: 20.setHeight),
+                  Padding(
+                    padding: EdgeInsets.symmetric(vertical: 6.setHeight),
+                    child: Divider(
+                      color: CustomAppColor.of(context).grey.withValues(alpha: 0.2),
+                    ),
+                  ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [

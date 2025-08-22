@@ -231,23 +231,20 @@ class _OverviewPageState extends State<OverviewPage> {
 
   Widget _buildCarDescription() {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 16.setWidth, vertical: 10.setHeight),
+      padding: EdgeInsets.only(left: 16.setWidth, right: 16.setWidth, bottom: 10.setHeight),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Expanded(
-                child: CommonText(
-                  text: "Tesla Model Y",
-                  fontSize: 16.setFontSize,
-                  fontWeight: FontWeight.w500,
-                  textColor: CustomAppColor.of(context).txtBlack,
-                  textAlign: TextAlign.start,
-                ),
+              CommonText(
+                text: "Tesla Model Y",
+                fontSize: 16.setFontSize,
+                fontWeight: FontWeight.w500,
+                textColor: CustomAppColor.of(context).txtBlack,
+                textAlign: TextAlign.start,
               ),
-              SizedBox(width: 5.setWidth),
+              SizedBox(width: 10.setWidth),
               CommonText(
                 text: "⭐ 4.9",
                 fontSize: 12.setFontSize,
@@ -256,7 +253,7 @@ class _OverviewPageState extends State<OverviewPage> {
               ),
             ],
           ),
-          SizedBox(height: 5.setHeight),
+          SizedBox(height: 2.setHeight),
           CommonText(
             text: "\$32,340",
             fontSize: 20.setFontSize,

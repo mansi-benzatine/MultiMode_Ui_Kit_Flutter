@@ -17,21 +17,23 @@ class IntrestedInOfferBottomSheet extends StatefulWidget {
 class _IntrestedInOfferBottomSheetState extends State<IntrestedInOfferBottomSheet> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      constraints: BoxConstraints(
-        maxHeight: MediaQuery.of(context).size.height * 0.6,
-      ),
-      decoration: BoxDecoration(
-        color: CustomAppColor.of(context).bgBottomSheet,
-        borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(20.setWidth),
-          topRight: Radius.circular(20.setWidth),
+    return SafeArea(
+      child: Container(
+        constraints: BoxConstraints(
+          maxHeight: MediaQuery.of(context).size.height * 0.6,
         ),
-      ),
-      child: Wrap(
-        children: [
-          _buildContent(),
-        ],
+        decoration: BoxDecoration(
+          color: CustomAppColor.of(context).bgBottomSheet,
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(20.setWidth),
+            topRight: Radius.circular(20.setWidth),
+          ),
+        ),
+        child: Wrap(
+          children: [
+            _buildContent(),
+          ],
+        ),
       ),
     );
   }

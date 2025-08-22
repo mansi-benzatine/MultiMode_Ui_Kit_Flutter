@@ -43,9 +43,7 @@ class _SavedJobsScreenState extends State<SavedJobsScreen> {
       if (query.isEmpty) {
         filteredJobsList = List.from(savedJobsList);
       } else {
-        filteredJobsList = savedJobsList
-            .where((job) => job.jobName.toLowerCase().contains(query.toLowerCase()) || job.companyName!.toLowerCase().contains(query.toLowerCase()))
-            .toList();
+        filteredJobsList = savedJobsList.where((job) => job.jobName.toLowerCase().contains(query.toLowerCase()) || job.companyName!.toLowerCase().contains(query.toLowerCase())).toList();
       }
     });
   }
@@ -194,14 +192,14 @@ class ApplicationsList extends StatelessWidget {
             onTap: () => Navigator.push(context, JobDetailsScreen.route()),
             child: Container(
               width: 327.setWidth,
-              padding: EdgeInsets.symmetric(vertical: 20.setHeight, horizontal: 20.setWidth),
+              padding: EdgeInsets.symmetric(vertical: 16.setHeight, horizontal: 20.setWidth),
               decoration: BoxDecoration(
                 boxShadow: [
                   BoxShadow(
                     offset: const Offset(0, 4),
                     blurRadius: 20,
                     spreadRadius: 0,
-                    color: CustomAppColor.of(context).black.withOpacityPercent(.03),
+                    color: CustomAppColor.of(context).black.withOpacityPercent(.1),
                   ),
                 ],
                 borderRadius: BorderRadius.circular(10),
@@ -220,7 +218,7 @@ class ApplicationsList extends StatelessWidget {
                         width: 44.setWidth,
                         fit: BoxFit.fill,
                       ),
-                      SizedBox(width: 20.setWidth),
+                      SizedBox(width: 12.setWidth),
                       Expanded(
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -248,7 +246,6 @@ class ApplicationsList extends StatelessWidget {
                                 ),
                               ],
                             ),
-                            SizedBox(height: 5.setHeight),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
@@ -284,7 +281,12 @@ class ApplicationsList extends StatelessWidget {
                       ),
                     ],
                   ),
-                  SizedBox(height: 22.setHeight),
+                  Padding(
+                    padding: EdgeInsets.symmetric(vertical: 4.setHeight),
+                    child: Divider(
+                      color: CustomAppColor.of(context).grey.withValues(alpha: 0.2),
+                    ),
+                  ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -296,8 +298,8 @@ class ApplicationsList extends StatelessWidget {
                       ),
                       Image.asset(
                         AppAssets.icBookmarkUnsaved,
-                        height: 28.setHeight,
-                        width: 28.setWidth,
+                        height: 24.setHeight,
+                        width: 24.setWidth,
                         color: CustomAppColor.of(context).icPrimary,
                       )
                     ],

@@ -105,7 +105,6 @@ class _ReviewPageState extends State<ReviewPage> {
                       fontWeight: FontWeight.w500,
                       textColor: CustomAppColor.of(context).txtBlack,
                     ),
-                    SizedBox(height: 8.setHeight),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: List.generate(5, (index) {
@@ -116,7 +115,7 @@ class _ReviewPageState extends State<ReviewPage> {
                         );
                       }),
                     ),
-                    SizedBox(height: 8.setHeight),
+                    SizedBox(height: 5.setHeight),
                     CommonText(
                       text: "4,487 Review",
                       fontSize: 14.setFontSize,

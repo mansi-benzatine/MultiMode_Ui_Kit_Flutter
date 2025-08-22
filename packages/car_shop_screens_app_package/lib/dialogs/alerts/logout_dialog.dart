@@ -1,12 +1,13 @@
 import 'dart:async';
 
+import 'package:car_shop_screens_app_package/widgets/button/common_button.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../../widgets/text/common_text.dart';
+import '../../localization/language/languages.dart';
 import '../../utils/app_assets.dart';
 import '../../utils/app_color.dart';
 import '../../utils/sizer_utils.dart';
-import '../../widgets/button/common_button.dart';
 
 class LogoutDialog extends StatefulWidget {
   final BuildContext dialogContext;
@@ -103,7 +104,7 @@ class _LogoutDialogState extends State<LogoutDialog> with TickerProviderStateMix
                     children: [
                       // Title
                       CommonText(
-                        text: "Logout",
+                        text: Languages.of(context).txtLogout,
                         fontSize: 20.setFontSize,
                         fontWeight: FontWeight.w700,
                         textColor: CustomAppColor.of(context).txtRed,
@@ -119,7 +120,7 @@ class _LogoutDialogState extends State<LogoutDialog> with TickerProviderStateMix
 
                       // Message
                       CommonText(
-                        text: "Are you sure you want to logout?",
+                        text: Languages.of(context).txtAreYouSureYouWantToLogout,
                         fontSize: 12.setFontSize,
                         fontWeight: FontWeight.w400,
                         textColor: CustomAppColor.of(context).txtDarkGray,
@@ -133,7 +134,7 @@ class _LogoutDialogState extends State<LogoutDialog> with TickerProviderStateMix
                           Expanded(
                             child: CommonButton(
                               height: 40.setHeight,
-                              text: "Cancel",
+                              text: Languages.of(context).txtCancel,
                               buttonTextColor: CustomAppColor.of(context).txtGray,
                               buttonTextWeight: FontWeight.w600,
                               buttonTextSize: 12.setFontSize,
@@ -151,7 +152,7 @@ class _LogoutDialogState extends State<LogoutDialog> with TickerProviderStateMix
                           Expanded(
                             child: CommonButton(
                               height: 40.setHeight,
-                              text: "logout",
+                              text: Languages.of(context).txtLogout,
                               buttonTextColor: CustomAppColor.of(context).txtWhite,
                               buttonGradient: LinearGradient(colors: [
                                 CustomAppColor.of(context).txtRed,
@@ -161,6 +162,7 @@ class _LogoutDialogState extends State<LogoutDialog> with TickerProviderStateMix
                               buttonTextSize: 12.setFontSize,
                               onTap: () {
                                 Navigator.pop(widget.dialogContext);
+
                                 // Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => const LoginScreen()), (route) => false);
                               },
                             ),

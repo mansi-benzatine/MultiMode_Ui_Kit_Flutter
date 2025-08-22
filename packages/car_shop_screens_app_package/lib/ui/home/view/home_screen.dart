@@ -802,7 +802,7 @@ class CarItemWidget extends StatelessWidget {
           },
       child: Container(
         width: width ?? 300.setWidth,
-        height: height ?? 240.setHeight,
+        height: height ?? 230.setHeight,
         margin: EdgeInsets.only(right: marginRight ?? 0.setWidth),
         child: Stack(
           children: [
@@ -874,7 +874,7 @@ class CarItemWidget extends StatelessWidget {
             Positioned(
               bottom: 0,
               right: 0.setWidth,
-              top: 100.setHeight,
+              top: 80.setHeight,
               child: Image.asset(
                 car.carImage,
                 fit: BoxFit.contain,
@@ -882,20 +882,20 @@ class CarItemWidget extends StatelessWidget {
             ),
             Positioned(
               top: 5.setHeight,
-              right: 15.setWidth,
+              right: 20.setWidth,
               child: GestureDetector(
                 behavior: HitTestBehavior.translucent,
                 onTap: () {
                   onFavoriteToggle?.call();
                 },
                 child: Container(
-                  width: 50.setWidth,
-                  height: 50.setHeight,
+                  width: 44.setWidth,
+                  height: 44.setHeight,
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
                     gradient: CustomAppColor.of(context).primaryGradient,
                   ),
-                  padding: EdgeInsets.all(15.setWidth),
+                  padding: EdgeInsets.all(13.setWidth),
                   child: Image.asset(
                     isFavorite ? AppAssets.icFilledFavourite : AppAssets.icTabFavourite,
                     height: 20.setHeight,

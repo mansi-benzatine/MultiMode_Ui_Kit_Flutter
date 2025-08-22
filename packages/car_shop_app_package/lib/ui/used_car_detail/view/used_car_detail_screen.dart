@@ -356,7 +356,7 @@ class _UsedCarDetailScreenState extends State<UsedCarDetailScreen> with TickerPr
                     SliverToBoxAdapter(
                       child: Container(
                         padding: EdgeInsets.all(16.setWidth),
-                        margin: EdgeInsets.only(bottom: 20.setHeight, left: 16.setWidth, right: 16.setWidth),
+                        margin: EdgeInsets.only(bottom: 40.setHeight, left: 16.setWidth, right: 16.setWidth),
                         decoration: BoxDecoration(
                           color: CustomAppColor.of(context).bgUsedCarOverview,
                         ),
@@ -396,7 +396,7 @@ class _UsedCarDetailScreenState extends State<UsedCarDetailScreen> with TickerPr
                   return Container(
                     height: 250.setHeight,
                     color: CustomAppColor.of(context).bgSearchBar,
-                    padding: EdgeInsets.symmetric(horizontal: 10.setWidth),
+                    padding: EdgeInsets.symmetric(horizontal: 40.setWidth),
                     child: Image.asset(
                       AppAssets.imgTeslaFull,
                       fit: BoxFit.contain,
@@ -485,20 +485,8 @@ class _UsedCarDetailScreenState extends State<UsedCarDetailScreen> with TickerPr
                         textAlign: TextAlign.center,
                         text: TextSpan(
                           children: [
-                            TextSpan(
-                                text: "10+",
-                                style: TextStyle(
-                                    fontSize: 12.setFontSize,
-                                    fontWeight: FontWeight.w500,
-                                    fontFamily: Constant.fontFamily,
-                                    color: CustomAppColor.of(context).white)),
-                            TextSpan(
-                                text: "\nImages",
-                                style: TextStyle(
-                                    fontSize: 8.setFontSize,
-                                    fontWeight: FontWeight.w500,
-                                    fontFamily: Constant.fontFamily,
-                                    color: CustomAppColor.of(context).white)),
+                            TextSpan(text: "10+", style: TextStyle(fontSize: 12.setFontSize, fontWeight: FontWeight.w500, fontFamily: Constant.fontFamily, color: CustomAppColor.of(context).white)),
+                            TextSpan(text: "\nImages", style: TextStyle(fontSize: 8.setFontSize, fontWeight: FontWeight.w500, fontFamily: Constant.fontFamily, color: CustomAppColor.of(context).white)),
                           ],
                         ),
                       ),
@@ -520,28 +508,23 @@ class _UsedCarDetailScreenState extends State<UsedCarDetailScreen> with TickerPr
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Expanded(
-                child: CommonText(
-                  text: "Tesla Model Y",
-                  fontSize: 18.setFontSize,
-                  fontWeight: FontWeight.w600,
-                  textColor: CustomAppColor.of(context).txtBlack,
-                  textAlign: TextAlign.start,
-                ),
+              CommonText(
+                text: "Tesla Model Y",
+                fontSize: 18.setFontSize,
+                fontWeight: FontWeight.w600,
+                textColor: CustomAppColor.of(context).txtBlack,
+                textAlign: TextAlign.start,
               ),
-              SizedBox(width: 5.setWidth),
+              SizedBox(width: 10.setWidth),
               CommonText(
                 text: "⭐ 4.9",
                 fontSize: 12.setFontSize,
                 fontWeight: FontWeight.w400,
                 textColor: CustomAppColor.of(context).txtDarkGray,
               ),
-              SizedBox(width: 5.setWidth),
             ],
           ),
-          SizedBox(height: 8.setHeight),
           CommonText(
             text: "\$32,340",
             fontSize: 24.setFontSize,
@@ -549,15 +532,14 @@ class _UsedCarDetailScreenState extends State<UsedCarDetailScreen> with TickerPr
             textColor: CustomAppColor.of(context).txtBlack,
             textAlign: TextAlign.start,
           ),
-          SizedBox(height: 8.setHeight),
           CommonText(
             text: "90,000 kms | petrol | 2018 | 1st owner",
             fontSize: 12.setFontSize,
-            fontWeight: FontWeight.w400,
+            fontWeight: FontWeight.w500,
             textColor: CustomAppColor.of(context).txtBlack,
             textAlign: TextAlign.start,
           ),
-          SizedBox(height: 8.setHeight),
+          SizedBox(height: 5.setHeight),
           Row(
             children: [
               Icon(
@@ -1110,6 +1092,7 @@ class _SliverAppBarDelegate extends SliverPersistentHeaderDelegate {
 
   @override
   double get minExtent => _tabBar.preferredSize.height;
+
   @override
   double get maxExtent => _tabBar.preferredSize.height;
 

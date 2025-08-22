@@ -157,7 +157,7 @@ class _FavouriteCarScreenState extends State<FavouriteCarScreen> with TickerProv
 
   Widget _buildCarList(List<PopularCarItem> cars) {
     return Padding(
-      padding: EdgeInsets.all(16.setWidth),
+      padding: EdgeInsets.only(left: 24.setWidth, top: 16.setHeight),
       child: cars.isEmpty
           ? Center(
               child: Text(
@@ -178,9 +178,7 @@ class _FavouriteCarScreenState extends State<FavouriteCarScreen> with TickerProv
                     car: cars[index],
                     width: 0.screenWidth,
                     isFavorite: true,
-                    height: 240.setHeight,
-                    favTop: 5.setHeight,
-                    favRight: 25.setWidth,
+                    marginRight: 24.setWidth,
                   ),
                 );
               },

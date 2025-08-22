@@ -144,7 +144,7 @@ class _CarShopScreensAppState extends State<CarShopScreensApp> {
               return supportedLocales.first;
             },
             home: ScreenListScreen(
-              title: "Car Shop App",
+              title: "Cardex - Car Detail App",
               onBack: () {
                 Navigator.pop(context);
               },

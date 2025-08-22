@@ -246,7 +246,7 @@ class _UsedCarScreenState extends State<UsedCarScreen> with TickerProviderStateM
       itemCount: carList.length,
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
-      padding: EdgeInsets.symmetric(horizontal: 16.setWidth, vertical: 10.setHeight),
+      padding: EdgeInsets.only(left: 24.setWidth, top: 16.setHeight),
       itemBuilder: (context, index) {
         return Padding(
           padding: EdgeInsets.only(bottom: 20.setHeight),
@@ -254,9 +254,9 @@ class _UsedCarScreenState extends State<UsedCarScreen> with TickerProviderStateM
             car: carList[index],
             isFavorite: favouriteIndexes.contains(index),
             width: 0.screenWidth,
-            height: 240.setHeight,
             favTop: 5.setHeight,
             favRight: 25.setWidth,
+            marginRight: 24.setWidth,
             onFavoriteToggle: () {
               setState(() {
                 if (favouriteIndexes.contains(index)) {

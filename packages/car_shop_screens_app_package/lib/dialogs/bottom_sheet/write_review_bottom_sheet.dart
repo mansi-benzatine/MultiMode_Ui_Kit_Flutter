@@ -27,22 +27,24 @@ class _WriteReviewBottomSheetState extends State<WriteReviewBottomSheet> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      constraints: BoxConstraints(
-        maxHeight: MediaQuery.of(context).size.height * 0.8,
-      ),
-      decoration: BoxDecoration(
-        color: CustomAppColor.of(context).bgBottomSheet,
-        borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(20.setWidth),
-          topRight: Radius.circular(20.setWidth),
+    return SafeArea(
+      child: Container(
+        constraints: BoxConstraints(
+          maxHeight: MediaQuery.of(context).size.height * 0.8,
         ),
-      ),
-      child: Wrap(
-        children: [
-          _buildHeader(),
-          _buildContent(),
-        ],
+        decoration: BoxDecoration(
+          color: CustomAppColor.of(context).bgBottomSheet,
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(20.setWidth),
+            topRight: Radius.circular(20.setWidth),
+          ),
+        ),
+        child: Wrap(
+          children: [
+            _buildHeader(),
+            _buildContent(),
+          ],
+        ),
       ),
     );
   }
