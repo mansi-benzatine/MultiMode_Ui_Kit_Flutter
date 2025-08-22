@@ -30,8 +30,7 @@ class SettingsScreen extends StatefulWidget {
   State<SettingsScreen> createState() => _SettingsScreenState();
 }
 
-class _SettingsScreenState extends State<SettingsScreen>
-    implements TopBarClickListener {
+class _SettingsScreenState extends State<SettingsScreen> implements TopBarClickListener {
   List<Map<String, dynamic>> settingsItems = [];
   ValueNotifier<bool> isDarkMode = ValueNotifier(false);
 
@@ -82,7 +81,7 @@ class _SettingsScreenState extends State<SettingsScreen>
           showDialog(
             barrierDismissible: false,
             context: context,
-            builder: (_) {
+            builder: (dialogContext) {
               return Padding(
                 padding: EdgeInsets.symmetric(horizontal: 20.setWidth),
                 child: CommonDialog(
@@ -93,8 +92,7 @@ class _SettingsScreenState extends State<SettingsScreen>
                     textColor: CustomAppColor.of(context).txtBlack,
                   ),
                   descriptionText: CommonText(
-                    text: Languages.of(context)
-                        .txtAreYouSureYouWantToDeleteYourAccount,
+                    text: Languages.of(context).txtAreYouSureYouWantToDeleteYourAccount,
                     fontSize: 14.setFontSize,
                     fontWeight: FontWeight.w400,
                     textColor: CustomAppColor.of(context).txtGray,
@@ -108,7 +106,7 @@ class _SettingsScreenState extends State<SettingsScreen>
                       Expanded(
                         child: CommonButton(
                           text: Languages.of(context).txtCancel,
-                          onTap: () => Navigator.pop(context),
+                          onTap: () => Navigator.pop(dialogContext),
                           buttonColor: CustomAppColor.of(context).transparent,
                           borderColor: CustomAppColor.of(context).txtGray,
                           buttonTextColor: CustomAppColor.of(context).txtGray,
@@ -120,7 +118,7 @@ class _SettingsScreenState extends State<SettingsScreen>
                       Expanded(
                         child: CommonButton(
                           text: Languages.of(context).txtDelete,
-                          onTap: () => Navigator.pop(context),
+                          onTap: () => Navigator.pop(dialogContext),
                           height: 45.setHeight,
                           borderColor: CustomAppColor.of(context).orange,
                           buttonColor: CustomAppColor.of(context).orange,
@@ -142,7 +140,7 @@ class _SettingsScreenState extends State<SettingsScreen>
           showDialog(
             barrierDismissible: false,
             context: context,
-            builder: (_) {
+            builder: (dialogContext) {
               return Padding(
                 padding: EdgeInsets.symmetric(horizontal: 16.setWidth),
                 child: CommonDialog(
@@ -167,7 +165,7 @@ class _SettingsScreenState extends State<SettingsScreen>
                       Expanded(
                         child: CommonButton(
                           text: Languages.of(context).txtCancel,
-                          onTap: () => Navigator.pop(context),
+                          onTap: () => Navigator.pop(dialogContext),
                           buttonColor: CustomAppColor.of(context).transparent,
                           borderColor: CustomAppColor.of(context).txtGray,
                           buttonTextColor: CustomAppColor.of(context).txtGray,
@@ -179,7 +177,7 @@ class _SettingsScreenState extends State<SettingsScreen>
                       Expanded(
                         child: CommonButton(
                           text: Languages.of(context).txtLogout,
-                          onTap: () => Navigator.pop(context),
+                          onTap: () => Navigator.pop(dialogContext),
                           height: 45.setHeight,
                           borderColor: CustomAppColor.of(context).orange,
                           buttonColor: CustomAppColor.of(context).orange,
@@ -205,10 +203,7 @@ class _SettingsScreenState extends State<SettingsScreen>
               padding: EdgeInsets.zero,
               shrinkWrap: true,
               itemCount: settingsItems.length,
-              separatorBuilder: (_, __) => Divider(
-                  color: CustomAppColor.of(context)
-                      .dividerColor
-                      .withValues(alpha: 0.1)),
+              separatorBuilder: (_, __) => Divider(color: CustomAppColor.of(context).dividerColor.withValues(alpha: 0.1)),
               itemBuilder: (_, index) {
                 final item = settingsItems[index];
                 if (item['isToggle'] == true) {
@@ -245,24 +240,17 @@ class _SettingsScreenState extends State<SettingsScreen>
         width: 22.setWidth,
         height: 22.setHeight,
         fit: BoxFit.contain,
-        color: (title == Languages.of(context).txtDeleteAccount ||
-                title == Languages.of(context).txtLogout)
-            ? CustomAppColor.of(context).red
-            : CustomAppColor.of(context).txtBlack,
+        color: (title == Languages.of(context).txtDeleteAccount || title == Languages.of(context).txtLogout) ? CustomAppColor.of(context).red : CustomAppColor.of(context).txtBlack,
       ),
       title: CommonText(
         text: title,
         fontSize: 16.setFontSize,
         fontWeight: FontWeight.w600,
         textAlign: TextAlign.start,
-        textColor: (title == Languages.of(context).txtDeleteAccount ||
-                title == Languages.of(context).txtLogout)
-            ? CustomAppColor.of(context).red
-            : CustomAppColor.of(context).txtBlack,
+        textColor: (title == Languages.of(context).txtDeleteAccount || title == Languages.of(context).txtLogout) ? CustomAppColor.of(context).red : CustomAppColor.of(context).txtBlack,
       ),
       trailing: Visibility(
-        visible: !(title == Languages.of(context).txtDeleteAccount ||
-            title == Languages.of(context).txtLogout),
+        visible: !(title == Languages.of(context).txtDeleteAccount || title == Languages.of(context).txtLogout),
         child: Icon(
           Icons.arrow_forward_ios,
           size: 16,
@@ -301,8 +289,7 @@ class _SettingToggleItemViewState extends State<SettingToggleItemView> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding:
-          EdgeInsets.symmetric(horizontal: 22.setWidth, vertical: 12.setHeight),
+      padding: EdgeInsets.symmetric(horizontal: 22.setWidth, vertical: 12.setHeight),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
@@ -335,13 +322,11 @@ class _SettingToggleItemViewState extends State<SettingToggleItemView> {
                         LocalStorageService.isLightTheme,
                         !newValue,
                       );
-                  final newTheme =
-                      newValue ? ThemeData.dark() : ThemeData.light();
+                  final newTheme = newValue ? ThemeData.dark() : ThemeData.light();
                   TaxiBookingRiderApp.changeTheme(context, newTheme);
                 },
                 activeColor: Colors.green,
-                inactiveColor:
-                    CustomAppColor.of(context).txtGray.withValues(alpha: 0.4),
+                inactiveColor: CustomAppColor.of(context).txtGray.withValues(alpha: 0.4),
                 activeToggleColor: CustomAppColor.of(context).white,
                 inactiveToggleColor: CustomAppColor.of(context).white,
                 width: 44.setWidth,

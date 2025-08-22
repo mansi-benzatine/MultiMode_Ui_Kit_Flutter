@@ -54,8 +54,7 @@ class _CreateTripStepScreenState extends State<CreateTripStepScreen> {
               right: 0,
               left: 0,
               child: Container(
-                padding: EdgeInsets.symmetric(
-                    horizontal: 22.setWidth, vertical: 25.setHeight),
+                padding: EdgeInsets.symmetric(horizontal: 22.setWidth, vertical: 25.setHeight),
                 decoration: BoxDecoration(
                   color: CustomAppColor.of(context).bgScreen,
                   borderRadius: const BorderRadius.only(
@@ -64,9 +63,7 @@ class _CreateTripStepScreenState extends State<CreateTripStepScreen> {
                   ),
                   boxShadow: [
                     BoxShadow(
-                      color: CustomAppColor.of(context)
-                          .black
-                          .withValues(alpha: 0.09),
+                      color: CustomAppColor.of(context).black.withValues(alpha: 0.09),
                       blurRadius: 10,
                       offset: const Offset(0, 10),
                     ),
@@ -110,33 +107,19 @@ class _CreateTripStepScreenState extends State<CreateTripStepScreen> {
                                   dashLength: 4,
                                   dashGapLength: 3,
                                   lineThickness: 1,
-                                  dashColor: isActive
-                                      ? const Color(0xFF2DBB54)
-                                      : CustomAppColor.of(context).btnBorder,
+                                  dashColor: isActive ? const Color(0xFF2DBB54) : CustomAppColor.of(context).btnBorder,
                                 ),
                               ),
                             Container(
                               decoration: BoxDecoration(
-                                  color: isActive
-                                      ? const Color(0xFF2DBB54)
-                                      : CustomAppColor.of(context)
-                                          .bgAlertDialog,
-                                  border: Border.all(
-                                      color: isActive
-                                          ? const Color(0xFF2DBB54)
-                                          : CustomAppColor.of(context)
-                                              .dividerColor),
-                                  borderRadius: const BorderRadius.all(
-                                      Radius.circular(10))),
-                              padding: EdgeInsets.symmetric(
-                                  vertical: 8.setHeight,
-                                  horizontal: 16.setWidth),
+                                  color: isActive ? const Color(0xFF2DBB54) : CustomAppColor.of(context).bgAlertDialog,
+                                  border: Border.all(color: isActive ? const Color(0xFF2DBB54) : CustomAppColor.of(context).dividerColor),
+                                  borderRadius: const BorderRadius.all(Radius.circular(10))),
+                              padding: EdgeInsets.symmetric(vertical: 8.setHeight, horizontal: 16.setWidth),
                               child: CommonText(
                                 text: '${index + 1}',
                                 fontSize: 16.setFontSize,
-                                textColor: isActive
-                                    ? CustomAppColor.of(context).white
-                                    : CustomAppColor.of(context).txtBlack,
+                                textColor: isActive ? CustomAppColor.of(context).white : CustomAppColor.of(context).txtBlack,
                                 fontWeight: FontWeight.w600,
                               ),
                             ),
@@ -197,8 +180,7 @@ class _StepOneViewState extends State<StepOneView> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding:
-          EdgeInsets.symmetric(horizontal: 22.setWidth, vertical: 25.setHeight),
+      padding: EdgeInsets.symmetric(horizontal: 22.setWidth, vertical: 25.setHeight),
       decoration: BoxDecoration(
         color: CustomAppColor.of(context).bgScreen,
         borderRadius: const BorderRadius.only(
@@ -224,8 +206,7 @@ class _StepOneViewState extends State<StepOneView> {
                 fontSize: 20.setFontSize,
               ),
               InkWell(
-                onTap: () =>
-                    Navigator.push(context, UpdateLocationScreen.route()),
+                onTap: () => Navigator.push(context, UpdateLocationScreen.route()),
                 child: CommonText(
                   text: Languages.of(context).txtChange.toUpperCase(),
                   fontWeight: FontWeight.w700,
@@ -240,8 +221,7 @@ class _StepOneViewState extends State<StepOneView> {
             children: [
               Column(
                 children: [
-                  Icon(Icons.radio_button_checked,
-                      size: 24, color: CustomAppColor.of(context).icBlackWhite),
+                  Icon(Icons.radio_button_checked, size: 24, color: CustomAppColor.of(context).icBlackWhite),
                   SizedBox(
                     height: 55.setHeight,
                     child: const DottedLine(
@@ -253,8 +233,7 @@ class _StepOneViewState extends State<StepOneView> {
                       dashColor: Colors.grey,
                     ),
                   ),
-                  const Icon(Icons.radio_button_checked,
-                      size: 24, color: Colors.green),
+                  const Icon(Icons.radio_button_checked, size: 24, color: Colors.green),
                 ],
               ),
               SizedBox(width: 20.setWidth),
@@ -304,8 +283,7 @@ class _StepOneViewState extends State<StepOneView> {
                   padding: const EdgeInsets.all(5),
                   decoration: BoxDecoration(
                     color: CustomAppColor.of(context).bgAlertDialog,
-                    border:
-                        Border.all(color: CustomAppColor.of(context).btnBorder),
+                    border: Border.all(color: CustomAppColor.of(context).btnBorder),
                     borderRadius: const BorderRadius.all(
                       Radius.circular(12),
                     ),
@@ -356,22 +334,16 @@ class _StepOneViewState extends State<StepOneView> {
                           ),
                           margin: EdgeInsets.only(right: 8.setWidth),
                           decoration: BoxDecoration(
-                            color: _selectedSeat == 1
-                                ? CustomAppColor.of(context).btnPrimary
-                                : CustomAppColor.of(context).bgAlertDialog,
+                            color: _selectedSeat == 1 ? CustomAppColor.of(context).btnPrimary : CustomAppColor.of(context).bgAlertDialog,
                             borderRadius: BorderRadius.circular(12),
                             border: Border.all(
-                              color: _selectedSeat == 1
-                                  ? Colors.black
-                                  : CustomAppColor.of(context).btnBorder,
+                              color: _selectedSeat == 1 ? Colors.black : CustomAppColor.of(context).btnBorder,
                             ),
                           ),
                           child: CommonText(
                             text: "1",
                             fontSize: 14.setFontSize,
-                            textColor: _selectedSeat == 1
-                                ? CustomAppColor.of(context).white
-                                : CustomAppColor.of(context).txtGray,
+                            textColor: _selectedSeat == 1 ? CustomAppColor.of(context).white : CustomAppColor.of(context).txtGray,
                             fontWeight: FontWeight.w600,
                           ),
                         ),
@@ -385,22 +357,16 @@ class _StepOneViewState extends State<StepOneView> {
                           ),
                           margin: EdgeInsets.only(right: 8.setWidth),
                           decoration: BoxDecoration(
-                            color: _selectedSeat == 2
-                                ? CustomAppColor.of(context).btnPrimary
-                                : CustomAppColor.of(context).bgAlertDialog,
+                            color: _selectedSeat == 2 ? CustomAppColor.of(context).btnPrimary : CustomAppColor.of(context).bgAlertDialog,
                             borderRadius: BorderRadius.circular(12),
                             border: Border.all(
-                              color: _selectedSeat == 2
-                                  ? Colors.black
-                                  : CustomAppColor.of(context).btnBorder,
+                              color: _selectedSeat == 2 ? Colors.black : CustomAppColor.of(context).btnBorder,
                             ),
                           ),
                           child: CommonText(
                             text: "2",
                             fontSize: 14.setFontSize,
-                            textColor: _selectedSeat == 2
-                                ? CustomAppColor.of(context).white
-                                : CustomAppColor.of(context).txtGray,
+                            textColor: _selectedSeat == 2 ? CustomAppColor.of(context).white : CustomAppColor.of(context).txtGray,
                             fontWeight: FontWeight.w600,
                           ),
                         ),
@@ -413,22 +379,16 @@ class _StepOneViewState extends State<StepOneView> {
                             vertical: 6.setHeight,
                           ),
                           decoration: BoxDecoration(
-                            color: _selectedSeat == 3
-                                ? CustomAppColor.of(context).btnPrimary
-                                : CustomAppColor.of(context).bgAlertDialog,
+                            color: _selectedSeat == 3 ? CustomAppColor.of(context).btnPrimary : CustomAppColor.of(context).bgAlertDialog,
                             borderRadius: BorderRadius.circular(12),
                             border: Border.all(
-                              color: _selectedSeat == 3
-                                  ? Colors.black
-                                  : CustomAppColor.of(context).btnBorder,
+                              color: _selectedSeat == 3 ? Colors.black : CustomAppColor.of(context).btnBorder,
                             ),
                           ),
                           child: CommonText(
                             text: "3",
                             fontSize: 14.setFontSize,
-                            textColor: _selectedSeat == 3
-                                ? CustomAppColor.of(context).white
-                                : CustomAppColor.of(context).txtGray,
+                            textColor: _selectedSeat == 3 ? CustomAppColor.of(context).white : CustomAppColor.of(context).txtGray,
                             fontWeight: FontWeight.w600,
                           ),
                         ),
@@ -461,22 +421,16 @@ class _StepOneViewState extends State<StepOneView> {
                             vertical: 8.setHeight,
                           ),
                           decoration: BoxDecoration(
-                            color: _isNow
-                                ? CustomAppColor.of(context).btnPrimary
-                                : CustomAppColor.of(context).bgAlertDialog,
+                            color: _isNow ? CustomAppColor.of(context).btnPrimary : CustomAppColor.of(context).bgAlertDialog,
                             borderRadius: BorderRadius.circular(12),
                             border: Border.all(
-                              color: _isNow
-                                  ? Colors.black
-                                  : CustomAppColor.of(context).btnBorder,
+                              color: _isNow ? Colors.black : CustomAppColor.of(context).btnBorder,
                             ),
                           ),
                           child: CommonText(
                             text: "Now",
                             fontSize: 12.setFontSize,
-                            textColor: _isNow
-                                ? CustomAppColor.of(context).white
-                                : CustomAppColor.of(context).txtGray,
+                            textColor: _isNow ? CustomAppColor.of(context).white : CustomAppColor.of(context).txtGray,
                             fontWeight: FontWeight.w400,
                           ),
                         ),
@@ -499,18 +453,13 @@ class _StepOneViewState extends State<StepOneView> {
                         child: Container(
                           padding: EdgeInsets.symmetric(
                             horizontal: 6.setWidth,
-                            vertical:
-                                _isTimeSelected ? 8.setHeight : 6.setHeight,
+                            vertical: _isTimeSelected ? 8.setHeight : 6.setHeight,
                           ),
                           decoration: BoxDecoration(
-                            color: !_isNow
-                                ? CustomAppColor.of(context).btnPrimary
-                                : CustomAppColor.of(context).bgAlertDialog,
+                            color: !_isNow ? CustomAppColor.of(context).btnPrimary : CustomAppColor.of(context).bgAlertDialog,
                             borderRadius: BorderRadius.circular(12),
                             border: Border.all(
-                              color: !_isNow
-                                  ? Colors.black
-                                  : CustomAppColor.of(context).btnBorder,
+                              color: !_isNow ? Colors.black : CustomAppColor.of(context).btnBorder,
                             ),
                           ),
                           child: _isTimeSelected
@@ -521,9 +470,7 @@ class _StepOneViewState extends State<StepOneView> {
                                 )
                               : Icon(
                                   Icons.watch_later,
-                                  color: !_isNow
-                                      ? CustomAppColor.of(context).white
-                                      : CustomAppColor.of(context).txtGray,
+                                  color: !_isNow ? CustomAppColor.of(context).white : CustomAppColor.of(context).txtGray,
                                 ),
                         ),
                       ),
@@ -539,9 +486,7 @@ class _StepOneViewState extends State<StepOneView> {
                       height: 48.setHeight,
                       onTap: () => Navigator.pop(context),
                       text: Languages.of(context).txtBack,
-                      borderColor: CustomAppColor.of(context)
-                          .btnBorder
-                          .withValues(alpha: 0.1),
+                      borderColor: CustomAppColor.of(context).btnBorder.withValues(alpha: 0.1),
                       buttonColor: CustomAppColor.of(context).bgAlertDialog,
                       buttonTextColor: CustomAppColor.of(context).txtBlack,
                       buttonTextSize: 16.setFontSize,
@@ -587,8 +532,7 @@ class _StepTwoViewState extends State<StepTwoView> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding:
-          EdgeInsets.symmetric(horizontal: 22.setWidth, vertical: 20.setHeight),
+      padding: EdgeInsets.symmetric(horizontal: 22.setWidth, vertical: 20.setHeight),
       decoration: BoxDecoration(
         color: CustomAppColor.of(context).bgScreen,
         borderRadius: const BorderRadius.only(
@@ -631,8 +575,7 @@ class _StepTwoViewState extends State<StepTwoView> {
             dashColor: CustomAppColor.of(context).dividerColor,
           ),
           Padding(
-            padding: EdgeInsets.symmetric(
-                horizontal: 22.setWidth, vertical: 20.setHeight),
+            padding: EdgeInsets.symmetric(horizontal: 22.setWidth, vertical: 20.setHeight),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -695,8 +638,7 @@ class _StepTwoViewState extends State<StepTwoView> {
             children: [
               Column(
                 children: [
-                  Icon(Icons.radio_button_checked,
-                      size: 22, color: CustomAppColor.of(context).icBlackWhite),
+                  Icon(Icons.radio_button_checked, size: 22, color: CustomAppColor.of(context).icBlackWhite),
                   SizedBox(
                     height: 60.setHeight,
                     child: const DottedLine(
@@ -708,8 +650,7 @@ class _StepTwoViewState extends State<StepTwoView> {
                       dashColor: Colors.grey,
                     ),
                   ),
-                  const Icon(Icons.radio_button_checked,
-                      size: 22, color: Colors.green),
+                  const Icon(Icons.radio_button_checked, size: 22, color: Colors.green),
                 ],
               ),
               SizedBox(width: 15.setWidth),
@@ -762,9 +703,7 @@ class _StepTwoViewState extends State<StepTwoView> {
                     );
                   },
                   text: Languages.of(context).txtBack,
-                  borderColor: CustomAppColor.of(context)
-                      .btnBorder
-                      .withValues(alpha: 0.1),
+                  borderColor: CustomAppColor.of(context).btnBorder.withValues(alpha: 0.1),
                   buttonColor: CustomAppColor.of(context).bgAlertDialog,
                   buttonTextColor: CustomAppColor.of(context).txtBlack,
                   buttonTextSize: 16.setFontSize,
@@ -806,14 +745,10 @@ class _StepTwoViewState extends State<StepTwoView> {
               width: 75.setWidth,
               height: 75.setHeight,
               decoration: BoxDecoration(
-                color: isSelected
-                    ? CustomAppColor.of(context).btnPrimary
-                    : const Color(0xFFF6F6F6),
+                color: isSelected ? CustomAppColor.of(context).btnPrimary : const Color(0xFFF6F6F6),
                 borderRadius: BorderRadius.circular(12),
                 border: Border.all(
-                  color: isSelected
-                      ? Colors.black
-                      : CustomAppColor.of(context).transparent,
+                  color: isSelected ? Colors.black : CustomAppColor.of(context).transparent,
                 ),
               ),
               child: Image.asset(
@@ -825,9 +760,7 @@ class _StepTwoViewState extends State<StepTwoView> {
             CommonText(
               text: carType,
               fontSize: 12.setFontSize,
-              textColor: isSelected
-                  ? CustomAppColor.of(context).txtBlack
-                  : CustomAppColor.of(context).txtGray,
+              textColor: isSelected ? CustomAppColor.of(context).txtBlack : CustomAppColor.of(context).txtGray,
               fontWeight: FontWeight.w500,
             ),
           ],
@@ -857,8 +790,7 @@ class _StepThreeViewState extends State<StepThreeView> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding:
-          EdgeInsets.symmetric(horizontal: 22.setWidth, vertical: 16.setHeight),
+      padding: EdgeInsets.symmetric(horizontal: 22.setWidth, vertical: 16.setHeight),
       decoration: BoxDecoration(
         color: CustomAppColor.of(context).bgScreen,
         borderRadius: const BorderRadius.only(
@@ -903,15 +835,13 @@ class _StepThreeViewState extends State<StepThreeView> {
                 Languages.of(context).txtCashPayment,
                 AppAssets.icCash,
                 cardNumber: "Default Method",
-                isSelected: _selectedPaymentMethod ==
-                    Languages.of(context).txtCashPayment,
+                isSelected: _selectedPaymentMethod == Languages.of(context).txtCashPayment,
               ),
               _buildPaymentOption(
                 Languages.of(context).txtDebitCard,
                 AppAssets.icCard,
                 cardNumber: "**** **** **** 8978",
-                isSelected: _selectedPaymentMethod ==
-                    Languages.of(context).txtDebitCard,
+                isSelected: _selectedPaymentMethod == Languages.of(context).txtDebitCard,
               ),
             ],
           ),
@@ -938,11 +868,8 @@ class _StepThreeViewState extends State<StepThreeView> {
               borderPadding: const EdgeInsets.all(1),
             ),
             child: Container(
-              padding: EdgeInsets.symmetric(
-                  horizontal: 20.setWidth, vertical: 20.setHeight),
-              decoration: BoxDecoration(
-                  color: CustomAppColor.of(context).bgPromoCode,
-                  borderRadius: const BorderRadius.all(Radius.circular(16))),
+              padding: EdgeInsets.symmetric(horizontal: 20.setWidth, vertical: 20.setHeight),
+              decoration: BoxDecoration(color: CustomAppColor.of(context).bgPromoCode, borderRadius: const BorderRadius.all(Radius.circular(16))),
               child: Row(
                 children: [
                   Expanded(
@@ -974,9 +901,7 @@ class _StepThreeViewState extends State<StepThreeView> {
                     );
                   },
                   text: Languages.of(context).txtBack,
-                  borderColor: CustomAppColor.of(context)
-                      .btnBorder
-                      .withValues(alpha: 0.1),
+                  borderColor: CustomAppColor.of(context).btnBorder.withValues(alpha: 0.1),
                   buttonColor: CustomAppColor.of(context).bgAlertDialog,
                   buttonTextColor: CustomAppColor.of(context).txtBlack,
                   buttonTextSize: 16.setFontSize,
@@ -1004,8 +929,7 @@ class _StepThreeViewState extends State<StepThreeView> {
     );
   }
 
-  Widget _buildPaymentOption(String method, String icon,
-      {String? cardNumber, bool isSelected = false}) {
+  Widget _buildPaymentOption(String method, String icon, {String? cardNumber, bool isSelected = false}) {
     return GestureDetector(
       onTap: () {
         setState(() {
@@ -1023,20 +947,15 @@ class _StepThreeViewState extends State<StepThreeView> {
           color: CustomAppColor.of(context).bgAlertDialog,
           borderRadius: BorderRadius.circular(12),
           border: Border.all(
-            color: isSelected
-                ? Colors.green
-                : CustomAppColor.of(context).dividerColor,
+            color: isSelected ? Colors.green : CustomAppColor.of(context).dividerColor,
           ),
         ),
         child: Row(
           children: [
             Container(
-              padding: EdgeInsets.symmetric(
-                  horizontal: 10.setWidth, vertical: 10.setHeight),
+              padding: EdgeInsets.symmetric(horizontal: 10.setWidth, vertical: 10.setHeight),
               decoration: BoxDecoration(
-                color: isSelected
-                    ? CustomAppColor.of(context).icBlackWhite
-                    : const Color(0xFF9EA2A7).withValues(alpha: 0.2),
+                color: isSelected ? CustomAppColor.of(context).icBlackWhite : const Color(0xFF9EA2A7).withValues(alpha: 0.2),
                 borderRadius: BorderRadius.circular(8),
               ),
               child: Image.asset(
@@ -1067,9 +986,7 @@ class _StepThreeViewState extends State<StepThreeView> {
             Icon(
               Icons.check_circle,
               size: 25.setFontSize,
-              color: isSelected
-                  ? CustomAppColor.of(context).icBlackWhite
-                  : CustomAppColor.of(context).dividerColor,
+              color: isSelected ? CustomAppColor.of(context).icBlackWhite : CustomAppColor.of(context).dividerColor,
             ),
           ],
         ),
@@ -1085,8 +1002,7 @@ class StepFourView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding:
-          EdgeInsets.symmetric(horizontal: 22.setWidth, vertical: 24.setHeight),
+      padding: EdgeInsets.symmetric(horizontal: 22.setWidth, vertical: 24.setHeight),
       decoration: BoxDecoration(
         color: CustomAppColor.of(context).bgScreen,
         borderRadius: const BorderRadius.only(
@@ -1138,16 +1054,13 @@ class StepFourView extends StatelessWidget {
                 ),
               ),
               Container(
-                padding: EdgeInsets.symmetric(
-                    horizontal: 7.setWidth, vertical: 3.setHeight),
+                padding: EdgeInsets.symmetric(horizontal: 7.setWidth, vertical: 3.setHeight),
                 decoration: BoxDecoration(
                     borderRadius: const BorderRadius.all(
                       Radius.circular(12),
                     ),
                     border: Border.all(
-                      color: CustomAppColor.of(context)
-                          .btnBorder
-                          .withValues(alpha: 0.1),
+                      color: CustomAppColor.of(context).btnBorder.withValues(alpha: 0.1),
                     ),
                     color: CustomAppColor.of(context).bgAlertDialog),
                 child: Row(
@@ -1176,8 +1089,7 @@ class StepFourView extends StatelessWidget {
             dashColor: CustomAppColor.of(context).dividerColor,
           ),
           Padding(
-            padding: EdgeInsets.symmetric(
-                horizontal: 22.setWidth, vertical: 17.setHeight),
+            padding: EdgeInsets.symmetric(horizontal: 22.setWidth, vertical: 17.setHeight),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -1278,12 +1190,9 @@ class StepFourView extends StatelessWidget {
                       onTap: () => Navigator.push(context, ChatScreen.route()),
                       child: Container(
                         decoration: BoxDecoration(
-                            borderRadius:
-                                const BorderRadius.all(Radius.circular(12)),
+                            borderRadius: const BorderRadius.all(Radius.circular(12)),
                             border: Border.all(
-                              color: CustomAppColor.of(context)
-                                  .dividerColor
-                                  .withValues(alpha: 0.1),
+                              color: CustomAppColor.of(context).dividerColor.withValues(alpha: 0.1),
                             ),
                             color: CustomAppColor.of(context).bgAlertDialog),
                         padding: const EdgeInsets.all(11),
@@ -1300,12 +1209,9 @@ class StepFourView extends StatelessWidget {
                       onTap: () => Navigator.push(context, CallScreen.route()),
                       child: Container(
                         decoration: BoxDecoration(
-                            borderRadius:
-                                const BorderRadius.all(Radius.circular(12)),
+                            borderRadius: const BorderRadius.all(Radius.circular(12)),
                             border: Border.all(
-                              color: CustomAppColor.of(context)
-                                  .dividerColor
-                                  .withValues(alpha: 0.1),
+                              color: CustomAppColor.of(context).dividerColor.withValues(alpha: 0.1),
                             ),
                             color: CustomAppColor.of(context).bgAlertDialog),
                         padding: const EdgeInsets.all(11),
@@ -1325,10 +1231,9 @@ class StepFourView extends StatelessWidget {
                     showDialog(
                       barrierDismissible: false,
                       context: context,
-                      builder: (_) {
+                      builder: (dialogContext) {
                         return Padding(
-                          padding:
-                              EdgeInsets.symmetric(horizontal: 28.setWidth),
+                          padding: EdgeInsets.symmetric(horizontal: 28.setWidth),
                           child: CommonDialog(
                             titleText: CommonText(
                               text: Languages.of(context).txtConfirmBooking,
@@ -1349,9 +1254,8 @@ class StepFourView extends StatelessWidget {
                             button: CommonButton(
                               text: Languages.of(context).txtDone,
                               onTap: () {
-                                Navigator.pop(context);
-                                Navigator.push(context,
-                                    HomeScreen.route(isFromRideBooked: true));
+                                Navigator.pop(dialogContext);
+                                Navigator.push(context, HomeScreen.route(isFromRideBooked: true));
                               },
                               height: 45.setHeight,
                               buttonTextSize: 16.setFontSize,
