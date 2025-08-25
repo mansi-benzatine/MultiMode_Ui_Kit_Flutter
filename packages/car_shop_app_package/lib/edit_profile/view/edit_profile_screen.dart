@@ -66,7 +66,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> implements TopBar
                           child: Row(
                             children: [
                               CountryCodePicker(
-                                initialSelection: 'IN',
+                                initialSelection: 'US',
                                 showCountryOnly: true,
                                 showOnlyCountryWhenClosed: true,
                                 showFlag: true,

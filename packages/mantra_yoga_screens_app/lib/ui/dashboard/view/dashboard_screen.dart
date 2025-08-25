@@ -92,8 +92,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
                           margin: EdgeInsets.only(bottom: MediaQuery.of(context).size.height * 0.03, right: 2.setWidth),
                           child: Image.asset(
                             _currentIndex.value == 2 ? AppAssets.icFloatingHistorySelected : AppAssets.icFloatingHistory,
-                            width: 52.setHeight,
-                            height: 52.setHeight,
+                            width: 46.setHeight,
+                            height: 46.setHeight,
                           ),
                         ),
                       ),

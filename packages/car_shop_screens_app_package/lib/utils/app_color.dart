@@ -66,6 +66,10 @@ class CustomAppColor {
     return (Theme.of(context).brightness == Brightness.light) ? const Color(0xffE3E3E4) : const Color(0xFFFFFFFF).withOpacityPercent(0.20);
   }
 
+  Color get divider {
+    return (Theme.of(context).brightness == Brightness.light) ? const Color(0xff000000).withOpacityPercent(0.20) : const Color(0xFFE2E2E2);
+  }
+
   Color get txtRed {
     return red;
   }

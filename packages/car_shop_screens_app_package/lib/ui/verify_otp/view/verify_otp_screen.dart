@@ -46,7 +46,7 @@ class _VerifyOtpScreenState extends State<VerifyOtpScreen> implements TopBarClic
                     SizedBox(
                       height: 250.setHeight,
                       width: double.infinity,
-                      child: Image.asset(AppAssets.imgVerifyOtp, fit: BoxFit.contain),
+                      child: Image.asset(AppAssets.imgResetPassword, fit: BoxFit.contain),
                     ),
                     SizedBox(height: 20.setHeight),
                     Align(

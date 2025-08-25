@@ -10,6 +10,7 @@ import '../../../utils/app_color.dart';
 import '../../../utils/constant.dart';
 import '../../../widgets/button/common_button.dart';
 import '../../../widgets/text/common_text.dart';
+import '../../car_detail/view/car_360_view_page.dart';
 import '../../search/view/search_screen.dart';
 import '../../view_seller_detail/view/view_seller_detail_screen.dart';
 
@@ -546,7 +547,7 @@ class _UsedCarDetailScreenState extends State<UsedCarDetailScreen> with TickerPr
             textAlign: TextAlign.start,
           ),
           CommonText(
-            text: "90,000 kms | petrol | 2018 | 1st owner",
+            text: "90,000 kms | Petrol | 2018 | 1st owner",
             fontSize: 12.setFontSize,
             fontWeight: FontWeight.w500,
             textColor: CustomAppColor.of(context).txtBlack,
@@ -1035,8 +1036,7 @@ class _UsedCarDetailScreenState extends State<UsedCarDetailScreen> with TickerPr
 
   Widget _build360ViewContent() {
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 16.setWidth, vertical: 16.setHeight),
-      margin: EdgeInsets.only(left: 16.setWidth, right: 16.setWidth, top: 20.setHeight, bottom: 20.setHeight),
+      margin: EdgeInsets.only(left: 16.setWidth, right: 16.setWidth, top: 20.setHeight, bottom: 0.setHeight),
       decoration: BoxDecoration(
         color: CustomAppColor.of(context).bgUsedCarCardg,
         borderRadius: BorderRadius.circular(14),
@@ -1048,40 +1048,24 @@ class _UsedCarDetailScreenState extends State<UsedCarDetailScreen> with TickerPr
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          CommonText(
-            text: Languages.of(context).txt360View,
-            fontSize: 14.setFontSize,
-            fontWeight: FontWeight.w600,
-            textColor: CustomAppColor.of(context).txtBlack,
+          Padding(
+            padding: EdgeInsets.only(left: 16.setWidth, top: 16.setHeight),
+            child: CommonText(
+              text: Languages.of(context).txt360View,
+              fontSize: 14.setFontSize,
+              fontWeight: FontWeight.w600,
+              textColor: CustomAppColor.of(context).txtBlack,
+            ),
           ),
           SizedBox(height: 10.setHeight),
           Container(
-            height: 300.setHeight,
-            width: double.infinity,
-            decoration: BoxDecoration(
-              color: CustomAppColor.of(context).bgSearchBar,
-              borderRadius: BorderRadius.circular(12),
-            ),
-            child: Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Icon(
-                    Icons.threed_rotation,
-                    size: 48.setFontSize,
-                    color: CustomAppColor.of(context).txtGray,
-                  ),
-                  SizedBox(height: 8.setHeight),
-                  CommonText(
-                    text: "360° Car View",
-                    fontSize: 16.setFontSize,
-                    fontWeight: FontWeight.w500,
-                    textColor: CustomAppColor.of(context).txtGray,
-                  ),
-                ],
+              height: 310.setHeight,
+              width: double.infinity,
+              decoration: BoxDecoration(
+                color: CustomAppColor.of(context).bgSearchBar,
+                borderRadius: BorderRadius.circular(12),
               ),
-            ),
-          ),
+              child: Car360ViewPage()),
         ],
       ),
     );

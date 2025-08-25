@@ -404,7 +404,7 @@ class _AnalysisScreenState extends State<AnalysisScreen> {
               );
             },
           ),
-          SizedBox(height: 15.setHeight),
+          SizedBox(height: 20.setHeight),
           _circularProgressView(),
         ],
       ),
@@ -445,8 +445,7 @@ class _AnalysisScreenState extends State<AnalysisScreen> {
               maxValue: 10000,
               color: CustomAppColor.of(context).kcalColor,
               label: Languages.of(context).txtKcal,
-              valueText:
-                  "${totalKcal.toInt().toString().replaceAllMapped(RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (Match m) => '${m[1]},')} ${Languages.of(context).txtKcal}",
+              valueText: "${totalKcal.toInt().toString().replaceAllMapped(RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (Match m) => '${m[1]},')} ${Languages.of(context).txtKcal}",
               icon: AppAssets.icKcalBurned,
             ),
           ],
@@ -472,8 +471,8 @@ class _AnalysisScreenState extends State<AnalysisScreen> {
             alignment: Alignment.center,
             children: [
               SizedBox(
-                width: 100.setHeight,
-                height: 100.setHeight,
+                width: 80.setHeight,
+                height: 80.setHeight,
                 child: SfCircularChart(
                   series: <CircularSeries>[
                     DoughnutSeries<ChartData, String>(
@@ -521,7 +520,7 @@ class _AnalysisScreenState extends State<AnalysisScreen> {
             text: valueText,
             fontSize: 14.setFontSize,
             fontWeight: FontWeight.w500,
-            fontFamily: Constant.fontFamilyMedium500,
+            fontFamily: Constant.fontFamilySemiBold600,
             textColor: CustomAppColor.of(context).txtBlack,
             textAlign: TextAlign.center,
           ),

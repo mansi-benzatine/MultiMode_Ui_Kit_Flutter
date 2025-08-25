@@ -150,7 +150,7 @@ class _FavouriteCarScreenState extends State<FavouriteCarScreen> with TickerProv
                     car: cars[index],
                     isFavorite: true,
                     width: 0.screenWidth,
-                    marginRight: 24.setWidth,
+                    marginRight: 30.setWidth,
                   ),
                 );
               },

@@ -22,8 +22,7 @@ class YourTripsScreen extends StatefulWidget {
   State<YourTripsScreen> createState() => _YourTripsScreenState();
 }
 
-class _YourTripsScreenState extends State<YourTripsScreen>
-    implements TopBarClickListener {
+class _YourTripsScreenState extends State<YourTripsScreen> implements TopBarClickListener {
   final List<Trip> trips = [
     Trip(
       userName: "Davin Jorje",
@@ -74,9 +73,7 @@ class _YourTripsScreenState extends State<YourTripsScreen>
                 padding: EdgeInsets.symmetric(vertical: 4.setHeight),
                 itemCount: trips.length,
                 separatorBuilder: (_, __) => Divider(
-                  color: CustomAppColor.of(context)
-                      .txtBlack
-                      .withValues(alpha: 0.1),
+                  color: CustomAppColor.of(context).txtBlack.withValues(alpha: 0.1),
                   thickness: 3,
                 ),
                 itemBuilder: (context, index) {
@@ -125,8 +122,7 @@ class TripCard extends StatelessWidget {
     }
 
     return Container(
-      padding:
-          EdgeInsets.symmetric(horizontal: 22.setWidth, vertical: 10.setHeight),
+      padding: EdgeInsets.symmetric(horizontal: 22.setWidth, vertical: 10.setHeight),
       child: Column(
         children: [
           Row(
@@ -156,8 +152,8 @@ class TripCard extends StatelessWidget {
                     CommonText(
                       text: trip.paymentMethod,
                       fontSize: 12.setFontSize,
-                      fontWeight: FontWeight.w500,
-                      textColor: Colors.grey.shade600,
+                      fontWeight: FontWeight.w400,
+                      textColor: CustomAppColor.of(context).txtGray,
                     ),
                   ],
                 ),
@@ -173,8 +169,8 @@ class TripCard extends StatelessWidget {
                   CommonText(
                     text: trip.duration,
                     fontSize: 12,
-                    fontWeight: FontWeight.w500,
-                    textColor: Colors.grey.shade600,
+                    fontWeight: FontWeight.w400,
+                    textColor: CustomAppColor.of(context).txtGray,
                   ),
                 ],
               ),
@@ -185,8 +181,7 @@ class TripCard extends StatelessWidget {
             children: [
               Column(
                 children: [
-                  Icon(Icons.radio_button_checked,
-                      size: 24, color: CustomAppColor.of(context).icBlackWhite),
+                  Icon(Icons.radio_button_checked, size: 24, color: CustomAppColor.of(context).icBlackWhite),
                   SizedBox(
                     height: 50.setHeight,
                     child: const DottedLine(
@@ -198,8 +193,7 @@ class TripCard extends StatelessWidget {
                       dashColor: Colors.grey,
                     ),
                   ),
-                  const Icon(Icons.radio_button_checked,
-                      size: 24, color: Colors.green),
+                  const Icon(Icons.radio_button_checked, size: 24, color: Colors.green),
                 ],
               ),
               SizedBox(width: 20.setWidth),
@@ -248,10 +242,7 @@ class TripCard extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              CommonText(
-                  text: "\$${trip.fare.toStringAsFixed(2)}",
-                  fontSize: 16.setFontSize,
-                  fontWeight: FontWeight.w700),
+              CommonText(text: "\$${trip.fare.toStringAsFixed(2)}", fontSize: 16.setFontSize, fontWeight: FontWeight.w700),
               CommonText(
                 text: statusText,
                 textColor: statusColor,

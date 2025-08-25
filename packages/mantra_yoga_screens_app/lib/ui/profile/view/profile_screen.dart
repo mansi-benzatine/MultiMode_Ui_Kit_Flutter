@@ -14,6 +14,7 @@ import '../../../utils/service_locator.dart';
 import '../../../widgets/text/common_text.dart';
 import '../../app/my_app.dart';
 import '../../help_center/view/help_center_screen.dart';
+import '../../invite_friends/view/invite_friends_screen.dart';
 import '../../languages/view/languages_screen.dart';
 import '../../notification_settings/view/notification_settings_screen.dart';
 import '../../payment_method/view/payment_method_screen.dart';
@@ -43,7 +44,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
         _topBarView(),
         Expanded(
           child: SingleChildScrollView(
-            padding: EdgeInsets.only(top: 20.setHeight, bottom: 30.setHeight, left: 15.setWidth, right: 15.setWidth),
+            padding: EdgeInsets.only(top: 20.setHeight, bottom: 30.setHeight, left: 20.setWidth, right: 20.setWidth),
             child: Column(
               children: [
                 _profileDetailsView(),
@@ -83,19 +84,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
         Stack(
           children: [
             Container(
-              width: 100.setWidth,
-              height: 100.setHeight,
-              decoration: BoxDecoration(
-                color: CustomAppColor.of(context).bgScreen,
-                shape: BoxShape.circle,
-                border: Border.all(color: CustomAppColor.of(context).borderColor),
-              ),
-              child: Icon(
-                Icons.person_rounded,
-                size: 80.setHeight,
-                color: CustomAppColor.of(context).txtBlack,
-              ),
-            ),
+                width: 100.setWidth,
+                height: 100.setHeight,
+                decoration: BoxDecoration(
+                  color: CustomAppColor.of(context).bgScreen,
+                  shape: BoxShape.circle,
+                  border: Border.all(color: CustomAppColor.of(context).borderColor),
+                ),
+                child: Image.asset(AppAssets.imgDummyProfile)),
             Positioned(
               bottom: 0,
               right: 0,
@@ -109,14 +105,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
         ),
         SizedBox(height: 15.setHeight),
         CommonText(
-          text: "John Doe",
+          text: "Kenneth",
           fontSize: 14.setFontSize,
           fontWeight: FontWeight.w700,
-          fontFamily: Constant.fontFamilyBold700,
+          fontFamily: Constant.fontFamilySemiBold600,
           textColor: CustomAppColor.of(context).txtBlack,
         ),
         CommonText(
-          text: "john.doe@example.com",
+          text: "kenneth3011@yourdomain.com",
           fontSize: 12.setFontSize,
           fontWeight: FontWeight.w400,
           fontFamily: Constant.fontFamilyRegular400,
@@ -181,6 +177,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   _listOfOptionsView() {
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         _itemOfOptionsView(
           title: Languages.of(context).txtPersonalInformation,
@@ -189,7 +186,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
           },
         ),
         _itemOfOptionsView(
-          title: Languages.of(context).txtNotification,
+          title: Languages.of(context).txtNotificationSettings,
           onTap: () {
             Navigator.push(context, NotificationSettingsScreen.route());
           },
@@ -208,7 +205,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
         ),
         _itemOfOptionsView(
           title: Languages.of(context).txtInviteFriends,
-          onTap: () {},
+          onTap: () {
+            Navigator.push(context, InviteFriendsScreen.route());
+          },
         ),
         _itemOfOptionsView(
           title: Languages.of(context).txtDarkMode,

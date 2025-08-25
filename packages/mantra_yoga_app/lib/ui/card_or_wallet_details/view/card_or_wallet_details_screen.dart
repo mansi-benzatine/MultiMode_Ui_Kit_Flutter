@@ -91,13 +91,13 @@ class _CardOrWalletDetailsScreenState extends State<CardOrWalletDetailsScreen> i
                         ),
                         SizedBox(height: 10.setHeight),
                         CommonTextFormField(
-                          controller: TextEditingController(),
+                          controller: TextEditingController(text: "Kenneth Stive"),
                           hintText: Languages.of(context).txtCardName,
                           keyboardType: TextInputType.name,
                         ),
                         SizedBox(height: 15.setHeight),
                         CommonTextFormField(
-                          controller: TextEditingController(),
+                          controller: TextEditingController(text: "7595 8690 8702"),
                           hintText: Languages.of(context).txtCardNumber,
                           keyboardType: TextInputType.name,
                         ),
@@ -106,7 +106,7 @@ class _CardOrWalletDetailsScreenState extends State<CardOrWalletDetailsScreen> i
                           children: [
                             Expanded(
                               child: CommonTextFormField(
-                                controller: TextEditingController(),
+                                controller: TextEditingController(text: "05/07/2028"),
                                 hintText: Languages.of(context).txtExpireDate,
                                 keyboardType: TextInputType.name,
                               ),
@@ -114,7 +114,7 @@ class _CardOrWalletDetailsScreenState extends State<CardOrWalletDetailsScreen> i
                             SizedBox(width: 10.setWidth),
                             Expanded(
                               child: CommonTextFormField(
-                                controller: TextEditingController(),
+                                controller: TextEditingController(text: "1636"),
                                 hintText: Languages.of(context).txtCVV,
                                 keyboardType: TextInputType.name,
                               ),
@@ -156,7 +156,7 @@ class _CardOrWalletDetailsScreenState extends State<CardOrWalletDetailsScreen> i
               SizedBox(width: 20.setWidth),
             ],
           ),
-          SizedBox(height: 30.setHeight),
+          SizedBox(height: 40.setHeight),
         ],
       ),
     );

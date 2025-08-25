@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mantra_yoga_app_package/ui/profile/view/profile_screen.dart';
 import 'package:mantra_yoga_app_package/utils/sizer_utils.dart';
+
 import '../../../localization/language/languages.dart';
 import '../../../utils/app_assets.dart';
 import '../../../utils/app_color.dart';
@@ -65,10 +66,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    _itemBottomBar(
-                        _currentIndex.value == 0, Languages.of(context).txtHome, AppAssets.icBottomHome, AppAssets.icBottomHomeSelected, 0),
-                    _itemBottomBar(_currentIndex.value == 1, Languages.of(context).txtDiscover, AppAssets.icBottomDiscover,
-                        AppAssets.icBottomDiscoverSelected, 1),
+                    _itemBottomBar(_currentIndex.value == 0, Languages.of(context).txtHome, AppAssets.icBottomHome, AppAssets.icBottomHomeSelected, 0),
+                    _itemBottomBar(_currentIndex.value == 1, Languages.of(context).txtDiscover, AppAssets.icBottomDiscover, AppAssets.icBottomDiscoverSelected, 1),
                     InkWell(
                       splashColor: CustomAppColor.of(context).transparent,
                       highlightColor: CustomAppColor.of(context).transparent,
@@ -79,15 +78,13 @@ class _DashboardScreenState extends State<DashboardScreen> {
                         margin: EdgeInsets.only(bottom: MediaQuery.of(context).size.height * 0.03, right: 2.setWidth),
                         child: Image.asset(
                           _currentIndex.value == 2 ? AppAssets.icFloatingHistorySelected : AppAssets.icFloatingHistory,
-                          width: 52.setHeight,
-                          height: 52.setHeight,
+                          width: 46.setHeight,
+                          height: 46.setHeight,
                         ),
                       ),
                     ),
-                    _itemBottomBar(_currentIndex.value == 3, Languages.of(context).txtAnalysis, AppAssets.icBottomAnalysis,
-                        AppAssets.icBottomAnalysisSelected, 3),
-                    _itemBottomBar(
-                        _currentIndex.value == 4, Languages.of(context).txtProfile, AppAssets.icBottomProfile, AppAssets.icBottomProfileSelected, 4),
+                    _itemBottomBar(_currentIndex.value == 3, Languages.of(context).txtAnalysis, AppAssets.icBottomAnalysis, AppAssets.icBottomAnalysisSelected, 3),
+                    _itemBottomBar(_currentIndex.value == 4, Languages.of(context).txtProfile, AppAssets.icBottomProfile, AppAssets.icBottomProfileSelected, 4),
                   ],
                 );
               },

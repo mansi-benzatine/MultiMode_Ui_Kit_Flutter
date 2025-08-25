@@ -152,8 +152,8 @@ class TripCard extends StatelessWidget {
                     CommonText(
                       text: trip.paymentMethod,
                       fontSize: 12.setFontSize,
-                      fontWeight: FontWeight.w500,
-                      textColor: Colors.grey.shade600,
+                      fontWeight: FontWeight.w400,
+                      textColor: CustomAppColor.of(context).txtGray,
                     ),
                   ],
                 ),
@@ -169,8 +169,8 @@ class TripCard extends StatelessWidget {
                   CommonText(
                     text: trip.duration,
                     fontSize: 12,
-                    fontWeight: FontWeight.w500,
-                    textColor: Colors.grey.shade600,
+                    fontWeight: FontWeight.w400,
+                    textColor: CustomAppColor.of(context).txtGray,
                   ),
                 ],
               ),

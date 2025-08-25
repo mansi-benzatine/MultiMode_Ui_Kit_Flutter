@@ -21,8 +21,7 @@ class NotificationScreen extends StatefulWidget {
   State<NotificationScreen> createState() => _NotificationScreenState();
 }
 
-class _NotificationScreenState extends State<NotificationScreen>
-    implements TopBarClickListener {
+class _NotificationScreenState extends State<NotificationScreen> implements TopBarClickListener {
   List<NotificationData> notificationList = [];
 
   _fillData() {
@@ -72,10 +71,7 @@ class _NotificationScreenState extends State<NotificationScreen>
     return Scaffold(
       backgroundColor: CustomAppColor.of(context).bgScreen,
       body: Column(
-        children: [
-          TopBar(this, title: Languages.of(context).txtNotifications),
-          NotificationListView(notificationList: notificationList)
-        ],
+        children: [TopBar(this, title: Languages.of(context).txtNotifications), NotificationListView(notificationList: notificationList)],
       ),
     );
   }
@@ -101,8 +97,7 @@ class NotificationListView extends StatelessWidget {
         itemBuilder: (context, index) {
           final item = notificationList[index];
           return Padding(
-            padding: EdgeInsets.symmetric(
-                horizontal: 22.setWidth, vertical: 8.setHeight),
+            padding: EdgeInsets.symmetric(horizontal: 22.setWidth, vertical: 8.setHeight),
             child: Row(
               children: [
                 Container(
@@ -128,7 +123,7 @@ class NotificationListView extends StatelessWidget {
                     children: [
                       CommonText(
                         text: item.notificationTitle,
-                        fontSize: 18.setFontSize,
+                        fontSize: 16.setFontSize,
                         fontWeight: FontWeight.w500,
                       ),
                       CommonText(
@@ -149,8 +144,7 @@ class NotificationListView extends StatelessWidget {
         },
         separatorBuilder: (context, index) {
           return Divider(
-            color:
-                CustomAppColor.of(context).dividerColor.withValues(alpha: 0.1),
+            color: CustomAppColor.of(context).dividerColor.withValues(alpha: 0.1),
           );
         },
         itemCount: notificationList.length);

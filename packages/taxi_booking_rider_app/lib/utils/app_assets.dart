@@ -13,10 +13,8 @@ class AppAssets {
   static String themeImages = _pImages;
 
   static void refreshAssets(ThemeData themeData) {
-    themeIcons =
-        themeData.brightness == Brightness.light ? _pIcons : _pDarkIcons;
-    themeImages =
-        themeData.brightness == Brightness.light ? _pImages : _pDarkImages;
+    themeIcons = themeData.brightness == Brightness.light ? _pIcons : _pDarkIcons;
+    themeImages = themeData.brightness == Brightness.light ? _pImages : _pDarkImages;
 
     Debug.printLog("refreshAssets --- $themeIcons $themeImages");
 
@@ -31,15 +29,14 @@ class AppAssets {
 
   /// IMAGES ===================================================================
   static String imgWelcome = "${_pImages}img_welcome.webp";
-  static String imgAppLogoWithName =
-      "${themeImages}img_app_logo_with_name.webp";
+  static String imgAppLogoWithName = "${themeImages}img_app_logo_with_name.webp";
   static String imgDummyProfile = "${_pImages}img_dummy_profile.webp";
-  static String imgDummyDriverProfile =
-      "${_pImages}img_dummy_driver_profile.webp";
+  static String imgDummyDriverProfile = "${_pImages}img_dummy_driver_profile.webp";
   static String imgMapHome = "${_pImages}img_map_home.webp";
   static String imgTrackMap = "${_pImages}img_track_map.webp";
   static String imgBgGift = "${_pImages}img_bg_gift.webp";
   static String imgEco = "${_pImages}img_eco.webp";
+  static String imgBike = "${_pImages}img_bike.webp";
   static String imgPremium = "${_pImages}img_premium.webp";
   static String imgRideGo = "${_pImages}img_ride_go.webp";
   static String imgRideGoAuto = "${_pImages}img_ride_go_auto.webp";

@@ -11,8 +11,7 @@ class LanguageEn extends Languages {
   String get txtContinueWithMobileNumber => "Continue with Mobile Number";
 
   @override
-  String get txtByContinuingYouAgreeToOur =>
-      "By continue, you agree that you have read and accept our";
+  String get txtByContinuingYouAgreeToOur => "By continue, you agree that you have read and accept our";
 
   @override
   String get txtAnd => "and";
@@ -27,8 +26,7 @@ class LanguageEn extends Languages {
   String get txtMobileNumber => "Mobile Number";
 
   @override
-  String get txtPleaseEnterYourPhoneNumberWeWillSendYou4DigitCodeToVerifyYourAccount =>
-      "Please enter your phone number, we will send you 4 digit code to verify your account";
+  String get txtPleaseEnterYourPhoneNumberWeWillSendYou4DigitCodeToVerifyYourAccount => "Please enter your phone number. We will send \nyou 4-digit code to verify your account.";
 
   @override
   String get txtCountry => "Country";
@@ -40,8 +38,7 @@ class LanguageEn extends Languages {
   String get txtOtpVerification => "OTP Verification";
 
   @override
-  String get txtEnter4DigitCodeWeHaveSentToYourPhoneNumber =>
-      "Enter 4-digit Code. We have sent to at";
+  String get txtEnter4DigitCodeWeHaveSentToYourPhoneNumber => "Enter 4-digit Code. We have sent to at";
 
   @override
   String get txtDidntReceiveCode => "Didn't receive the code?";
@@ -56,8 +53,7 @@ class LanguageEn extends Languages {
   String get txtAccountCreated => "Account Created";
 
   @override
-  String get txtYourAccountHasBeenCreatedSuccessfullyPressContinueToStartUsingApp =>
-      "Your account has been created successfully.\n Press continue to start using the app";
+  String get txtYourAccountHasBeenCreatedSuccessfullyPressContinueToStartUsingApp => "Your account has been created successfully.\n Press continue to start using the app";
 
   @override
   String get txtYourProfile => "Your Profile";
@@ -94,13 +90,11 @@ class LanguageEn extends Languages {
   @override
   String get txtCongratulations => "Congratulations!";
   @override
-  String get txtYourAccountHasBeenCreatedSuccessfullyPressCountinueToStartUsingApp =>
-      "Your account has been created successfully. \n Press continue to start using app.";
+  String get txtYourAccountHasBeenCreatedSuccessfullyPressCountinueToStartUsingApp => "Your account has been created successfully. \n Press continue to start using app.";
   @override
   String get txtEnableLocation => "Enable Locations";
   @override
-  String get txtWeNeedAccessToYourLocationToBeAbleToUseThisService =>
-      "We need access to your location to be able to use this service.";
+  String get txtWeNeedAccessToYourLocationToBeAbleToUseThisService => "We need access to your location to be able to use this service.";
   @override
   String get txtNotNow => "Not Now";
   @override
@@ -166,11 +160,9 @@ class LanguageEn extends Languages {
   @override
   String get txtLogout => "Log out";
   @override
-  String get txtInviteFriendsGet3CouponsEach =>
-      "Invite Friends\nGet 3 Coupons each!";
+  String get txtInviteFriendsGet3CouponsEach => "Invite Friends\nGet 3 Coupons each!";
   @override
-  String get txtWhenYourFriendSignUpWithYourReferralCodeYoullBothGet3Coupons =>
-      "When your friend sign up with your referral\ncode, you’ll both get 3.0 coupons";
+  String get txtWhenYourFriendSignUpWithYourReferralCodeYoullBothGet3Coupons => "When your friend sign up with your referral\ncode, you’ll both get 3.0 coupons";
 
   @override
   String get txtShareYourInviteCode => "Share Your Invite Code";
@@ -189,8 +181,7 @@ class LanguageEn extends Languages {
   @override
   String get txtAreYouSureYouWantToLogout => "Are you sure you want to logout?";
   @override
-  String get txtAreYouSureYouWantToDeleteYourAccount =>
-      "Are you sure you want to delete your account?";
+  String get txtAreYouSureYouWantToDeleteYourAccount => "Are you sure you want to delete your account?";
   @override
   String get txtCancel => "Cancel";
   @override
@@ -198,7 +189,7 @@ class LanguageEn extends Languages {
   @override
   String get txtCash => "Cash";
   @override
-  String get txtAddPaymentOrRedeemGiftCard => "Add payment or redeem gift card";
+  String get txtAddPaymentOrRedeemGiftCard => "Add Payment Or Redeem Gift Card";
   @override
   String get txtPromotions => "Promotions";
   @override
@@ -270,8 +261,7 @@ class LanguageEn extends Languages {
   @override
   String get txtConfirmBooking => "Confirm Booking";
   @override
-  String get txtConfirmBookingDesc =>
-      "Your ride has been created successfully.\nTap to finalize your ride.";
+  String get txtConfirmBookingDesc => "Your ride has been created successfully.\nTap to finalize your ride.";
   @override
   String get txtDone => "Done";
   @override
@@ -279,15 +269,13 @@ class LanguageEn extends Languages {
   @override
   String get txtHowWasYourTrip => "How Was Your Trip?";
   @override
-  String get txtYourFeedbackWillHelpImproveDrivingExperience =>
-      "Your feedback will help improve driving experience";
+  String get txtYourFeedbackWillHelpImproveDrivingExperience => "Your feedback will help improve driving experience";
   @override
   String get txtAdditionalComments => "Additional comments...";
   @override
   String get txtSubmitFeedback => "Submit Feedback";
   @override
-  String get txtDoYouWantToAnyAdditionalTipFor =>
-      "Do you want to any additional tip for ";
+  String get txtDoYouWantToAnyAdditionalTipFor => "Do you want to any additional tip for ";
   @override
   String get txtThankYou => "Thank You!";
   @override
@@ -301,16 +289,13 @@ class LanguageEn extends Languages {
   @override
   String get txtItIsSadToSeeYouCancel => "It's sad to see you cancel";
   @override
-  String get txtWeWillContinueToImproveOurServiceAndSatisfyYouOnTheNextTrip =>
-      "We will continue to improve our service & satisfy you on the next trip.";
+  String get txtWeWillContinueToImproveOurServiceAndSatisfyYouOnTheNextTrip => "We will continue to improve our service & satisfy you on the next trip.";
   @override
   String get txtOtherReason => "Other Reason";
   @override
-  String get txtPleaseSelectTheReasonForCancellation =>
-      "Please select the reason for cancellation:";
+  String get txtPleaseSelectTheReasonForCancellation => "Please select the reason for cancellation:";
   @override
-  String get txtManyThanksForYourValuableFeedbackAndTip =>
-      "Many thanks for your valuable feedback and tip.";
+  String get txtManyThanksForYourValuableFeedbackAndTip => "Many thanks for your valuable feedback and tip.";
   @override
   String get txtDebitCard => "Debit Card";
   @override

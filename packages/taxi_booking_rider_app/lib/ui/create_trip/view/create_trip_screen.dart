@@ -41,8 +41,7 @@ class _CreateTripScreenState extends State<CreateTripScreen> {
               right: 0,
               left: 0,
               child: Container(
-                padding: EdgeInsets.symmetric(
-                    horizontal: 22.setWidth, vertical: 25.setHeight),
+                padding: EdgeInsets.symmetric(horizontal: 22.setWidth, vertical: 25.setHeight),
                 decoration: BoxDecoration(
                   color: CustomAppColor.of(context).bgScreen,
                   borderRadius: const BorderRadius.only(
@@ -51,9 +50,7 @@ class _CreateTripScreenState extends State<CreateTripScreen> {
                   ),
                   boxShadow: [
                     BoxShadow(
-                      color: CustomAppColor.of(context)
-                          .black
-                          .withValues(alpha: 0.09),
+                      color: CustomAppColor.of(context).black.withValues(alpha: 0.09),
                       blurRadius: 10,
                       offset: const Offset(0, 10),
                     ),
@@ -83,9 +80,7 @@ class _CreateTripScreenState extends State<CreateTripScreen> {
                       children: [
                         Column(
                           children: [
-                            Icon(Icons.radio_button_checked,
-                                size: 24,
-                                color: CustomAppColor.of(context).icBlackWhite),
+                            Icon(Icons.radio_button_checked, size: 24, color: CustomAppColor.of(context).icBlackWhite),
                             SizedBox(
                               height: 55.setHeight,
                               child: const DottedLine(
@@ -97,15 +92,13 @@ class _CreateTripScreenState extends State<CreateTripScreen> {
                                 dashColor: Colors.grey,
                               ),
                             ),
-                            const Icon(Icons.radio_button_checked,
-                                size: 24, color: Colors.green),
+                            const Icon(Icons.radio_button_checked, size: 24, color: Colors.green),
                           ],
                         ),
                         SizedBox(width: 20.setWidth),
                         Expanded(
                           child: InkWell(
-                            onTap: () => Navigator.push(
-                                context, UpdateLocationScreen.route()),
+                            onTap: () => Navigator.push(context, UpdateLocationScreen.route()),
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
@@ -118,19 +111,18 @@ class _CreateTripScreenState extends State<CreateTripScreen> {
                                 CommonText(
                                   text: _pickupLocation,
                                   fontSize: 15.setFontSize,
-                                  fontWeight: FontWeight.w400,
+                                  fontWeight: FontWeight.w500,
                                 ),
                                 SizedBox(height: 4.setHeight),
                                 Divider(
                                   endIndent: 30,
-                                  color:
-                                      CustomAppColor.of(context).dividerColor,
+                                  color: CustomAppColor.of(context).dividerColor,
                                 ),
                                 SizedBox(height: 4.setHeight),
                                 CommonText(
                                   text: "Drop Off",
                                   fontSize: 12.setFontSize,
-                                  fontWeight: FontWeight.w400,
+                                  fontWeight: FontWeight.w500,
                                   textColor: CustomAppColor.of(context).txtGray,
                                 ),
                                 CommonText(
@@ -154,8 +146,7 @@ class _CreateTripScreenState extends State<CreateTripScreen> {
                             padding: const EdgeInsets.all(5),
                             decoration: BoxDecoration(
                               color: CustomAppColor.of(context).bgAlertDialog,
-                              border: Border.all(
-                                  color: CustomAppColor.of(context).btnBorder),
+                              border: Border.all(color: CustomAppColor.of(context).btnBorder),
                               borderRadius: const BorderRadius.all(
                                 Radius.circular(12),
                               ),
@@ -178,8 +169,7 @@ class _CreateTripScreenState extends State<CreateTripScreen> {
               left: 0,
               right: 0,
               child: Container(
-                padding: EdgeInsets.symmetric(
-                    horizontal: 22.setWidth, vertical: 30.setHeight),
+                padding: EdgeInsets.symmetric(horizontal: 22.setWidth, vertical: 30.setHeight),
                 decoration: BoxDecoration(
                   color: CustomAppColor.of(context).bgScreen,
                   borderRadius: const BorderRadius.only(
@@ -188,9 +178,7 @@ class _CreateTripScreenState extends State<CreateTripScreen> {
                   ),
                   boxShadow: [
                     BoxShadow(
-                      color: CustomAppColor.of(context)
-                          .black
-                          .withValues(alpha: 0.09),
+                      color: CustomAppColor.of(context).black.withValues(alpha: 0.09),
                       blurRadius: 10,
                       offset: const Offset(0, 10),
                     ),
@@ -201,8 +189,7 @@ class _CreateTripScreenState extends State<CreateTripScreen> {
                     Navigator.push(context, CreateTripStepScreen.route());
                   },
                   child: Container(
-                    padding: EdgeInsets.symmetric(
-                        vertical: 14.setHeight, horizontal: 10.setWidth),
+                    padding: EdgeInsets.symmetric(vertical: 14.setHeight, horizontal: 10.setWidth),
                     decoration: BoxDecoration(
                       color: CustomAppColor.of(context).btnPrimary,
                       borderRadius: const BorderRadius.all(Radius.circular(12)),

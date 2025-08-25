@@ -26,7 +26,17 @@ class PersonalInformationScreen extends StatefulWidget {
 }
 
 class _PersonalInformationScreenState extends State<PersonalInformationScreen> implements TopBarClickListener {
-  final ValueNotifier<String> selectedCountry = ValueNotifier('🇮🇳');
+  late final Country defaultCountry;
+  late final ValueNotifier<String> selectedCountry;
+
+  @override
+  void initState() {
+    super.initState();
+    defaultCountry = CountryParser.parseCountryCode('US');
+    selectedCountry = ValueNotifier(
+      defaultCountry.flagEmoji,
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -50,19 +60,19 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> i
               child: Column(
                 children: [
                   CommonTextFormFieldWithPrefix(
-                    controller: TextEditingController(),
+                    controller: TextEditingController(text: "Kenneth"),
                     hintText: Languages.of(context).txtName,
                     prefixIcon: AppAssets.icUsername,
                   ),
                   SizedBox(height: 15.setHeight),
                   CommonTextFormFieldWithPrefix(
-                    controller: TextEditingController(),
+                    controller: TextEditingController(text: "kenneth3011@yourdomain.com"),
                     hintText: Languages.of(context).txtEmail,
                     prefixIcon: AppAssets.icEmail,
                   ),
                   SizedBox(height: 15.setHeight),
                   CommonTextFormFieldWithPrefix(
-                    controller: TextEditingController(),
+                    controller: TextEditingController(text: "+1 76894 35087"),
                     hintText: Languages.of(context).txtPhone,
                     prefixIcon: AppAssets.icCall,
                   ),
@@ -159,7 +169,7 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> i
                       ),
                       Expanded(
                         child: CommonTextFormFieldWithPrefix(
-                          controller: TextEditingController(),
+                          controller: TextEditingController(text: "30/11/1999"),
                           hintText: Languages.of(context).txtDOB,
                           prefixIcon: AppAssets.icCalender,
                           keyboardType: TextInputType.datetime,
@@ -246,10 +256,11 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> i
                     menuItemStyleData: MenuItemStyleData(
                       padding: EdgeInsets.symmetric(horizontal: 15.setWidth),
                     ),
+                    value: "Male",
                   ),
                   SizedBox(height: 15.setHeight),
                   CommonTextFormFieldWithPrefix(
-                    controller: TextEditingController(),
+                    controller: TextEditingController(text: "268, Sunflower Park,Pc 457003"),
                     hintText: Languages.of(context).txtLocation,
                     prefixIcon: AppAssets.icLocation,
                     keyboardType: TextInputType.streetAddress,
@@ -376,6 +387,7 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> i
                     menuItemStyleData: MenuItemStyleData(
                       padding: EdgeInsets.symmetric(horizontal: 15.setWidth),
                     ),
+                    value: "26 years",
                   ),
                   SizedBox(height: 15.setHeight),
                   DropdownButtonFormField2<String>(
@@ -499,6 +511,7 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> i
                     menuItemStyleData: MenuItemStyleData(
                       padding: EdgeInsets.symmetric(horizontal: 15.setWidth),
                     ),
+                    value: "72 kg",
                   ),
                   SizedBox(height: 15.setHeight),
                   DropdownButtonFormField2<String>(
@@ -680,6 +693,7 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> i
                     menuItemStyleData: MenuItemStyleData(
                       padding: EdgeInsets.symmetric(horizontal: 15.setWidth),
                     ),
+                    value: '162 cm',
                   ),
                 ],
               ),

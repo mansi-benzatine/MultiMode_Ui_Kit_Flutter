@@ -76,36 +76,38 @@ class _CreateNewPinScreenState extends State<CreateNewPinScreen> implements TopB
                 Container(
                   color: CustomAppColor.of(context).bgScreen,
                   margin: EdgeInsets.symmetric(horizontal: 30.setWidth),
-                  child: OTPTextField(
-                    context: context,
-                    length: 4,
-                    width: 0.screenWidth - 40.setWidth,
-                    fieldWidth: 60.setWidth,
-                    fieldHeight: 60.setHeight,
-                    outlineBorderRadius: 16,
-                    fieldStyle: FieldStyle.box,
-                    style: TextStyle(
-                      fontSize: 24.setFontSize,
-                      fontWeight: FontWeight.w700,
-                      color: CustomAppColor.of(context).txtBlack,
-                      fontFamily: Constant.fontFamily,
-                    ),
-                    textFieldAlignment: MainAxisAlignment.spaceBetween,
-                    otpFieldStyle: OtpFieldStyle(
-                      backgroundColor: CustomAppColor.of(context).bgScreen,
-                      borderColor: CustomAppColor.of(context).borderTextFormField,
-                      focusBorderColor: CustomAppColor.of(context).primary,
-                      enabledBorderColor: CustomAppColor.of(context).dividerColor,
-                      disabledBorderColor: CustomAppColor.of(context).dividerColor,
-                      errorBorderColor: CustomAppColor.of(context).txtRed,
-                    ),
-                    onChanged: (value) {
-                      _otpValue.value = value;
-                    },
-                    onCompleted: (value) {
-                      _otpValue.value = value;
-                    },
-                  ),
+                  child: Builder(builder: (context) {
+                    return OTPTextField(
+                      context: context,
+                      length: 4,
+                      width: 0.screenWidth - 40.setWidth,
+                      fieldWidth: 60.setWidth,
+                      fieldHeight: 60.setHeight,
+                      outlineBorderRadius: 16,
+                      fieldStyle: FieldStyle.box,
+                      style: TextStyle(
+                        fontSize: 24.setFontSize,
+                        fontWeight: FontWeight.w700,
+                        color: CustomAppColor.of(context).txtBlack,
+                        fontFamily: Constant.fontFamily,
+                      ),
+                      textFieldAlignment: MainAxisAlignment.spaceBetween,
+                      otpFieldStyle: OtpFieldStyle(
+                        backgroundColor: CustomAppColor.of(context).transparent,
+                        borderColor: CustomAppColor.of(context).borderTextFormField,
+                        focusBorderColor: CustomAppColor.of(context).primary,
+                        enabledBorderColor: CustomAppColor.of(context).dividerColor,
+                        disabledBorderColor: CustomAppColor.of(context).dividerColor,
+                        errorBorderColor: CustomAppColor.of(context).txtRed,
+                      ),
+                      onChanged: (value) {
+                        _otpValue.value = value;
+                      },
+                      onCompleted: (value) {
+                        _otpValue.value = value;
+                      },
+                    );
+                  }),
                 ),
                 SizedBox(height: 20.setHeight),
                 Row(

@@ -121,7 +121,7 @@ class _ProfileSetupScreenState extends State<ProfileSetupScreen> implements TopB
                   builder: (context, value, child) {
                     return Expanded(
                       child: CommonButton(
-                        text: value == stepperLenght - 1 ? Languages.of(context).txtContinue : Languages.of(context).txtNext,
+                        text: Languages.of(context).txtContinue,
                         onTap: () {
                           if (value == stepperLenght - 1) {
                             ProfileSetupCongratulationDialog.show(context, onTap: () {

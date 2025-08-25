@@ -36,6 +36,7 @@ class AppAssets {
   static String imgTrackMap = "${_pImages}img_track_map.webp";
   static String imgBgGift = "${_pImages}img_bg_gift.webp";
   static String imgEco = "${_pImages}img_eco.webp";
+  static String imgBike = "${_pImages}img_bike.webp";
   static String imgPremium = "${_pImages}img_premium.webp";
   static String imgRideGo = "${_pImages}img_ride_go.webp";
   static String imgRideGoAuto = "${_pImages}img_ride_go_auto.webp";

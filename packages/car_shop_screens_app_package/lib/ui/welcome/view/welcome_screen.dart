@@ -122,14 +122,14 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                             children: [
                               Expanded(
                                 child: Divider(
-                                  color: CustomAppColor.of(context).txtGray,
+                                  color: CustomAppColor.of(context).divider,
                                   thickness: 1,
                                   height: 20.setHeight,
                                 ),
                               ),
                               SizedBox(width: 15.setWidth),
                               CommonText(
-                                text: "${Languages.of(context).txtOr} ${Languages.of(context).txtContinueWith}",
+                                text: "${Languages.of(context).txtOr} ${Languages.of(context).txtContinueWith}".toLowerCase(),
                                 fontSize: 12.setFontSize,
                                 fontWeight: FontWeight.w400,
                                 textColor: CustomAppColor.of(context).txtGray,
@@ -137,7 +137,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                               SizedBox(width: 15.setWidth),
                               Expanded(
                                 child: Divider(
-                                  color: CustomAppColor.of(context).txtGray,
+                                  color: CustomAppColor.of(context).divider,
                                   thickness: 1,
                                   height: 20.setHeight,
                                 ),

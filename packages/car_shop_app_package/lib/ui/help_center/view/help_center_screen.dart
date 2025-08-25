@@ -32,6 +32,12 @@ class _HelpCenterScreenState extends State<HelpCenterScreen> with TickerProvider
     super.initState();
     _tabController = TabController(length: 2, vsync: this);
     _tabControllerFaq = TabController(length: tabListFaq.length, vsync: this);
+
+    _tabController.addListener(
+      () {
+        setState(() {});
+      },
+    );
   }
 
   @override
@@ -70,11 +76,11 @@ class _HelpCenterScreenState extends State<HelpCenterScreen> with TickerProvider
                 fontFamily: Constant.fontFamily,
                 color: CustomAppColor.of(context).tabTxtColor2,
               ),
-              indicatorWeight: 2,
+              indicatorWeight: 1,
               indicatorSize: TabBarIndicatorSize.tab,
               indicatorColor: CustomAppColor.of(context).primary,
               indicatorPadding: EdgeInsets.only(
-                top: Platform.isAndroid ? 35.setHeight : 40.setHeight,
+                top: Platform.isAndroid ? 40.setHeight : 40.setHeight,
               ),
               padding: EdgeInsets.symmetric(horizontal: 16.setWidth),
               indicator: BoxDecoration(
@@ -82,8 +88,22 @@ class _HelpCenterScreenState extends State<HelpCenterScreen> with TickerProvider
                 borderRadius: BorderRadius.circular(10),
               ),
               tabs: [
-                Tab(text: Languages.of(context).txtFaq),
-                Tab(text: Languages.of(context).txtContactUs),
+                Tab(
+                  child: CommonText(
+                    text: Languages.of(context).txtFaq,
+                    fontSize: 14.setFontSize,
+                    fontWeight: _tabController.index == 0 ? FontWeight.w600 : FontWeight.w500,
+                    textColor: _tabController.index == 0 ? CustomAppColor.of(context).primary : CustomAppColor.of(context).txtBlack,
+                  ),
+                ),
+                Tab(
+                  child: CommonText(
+                    text: Languages.of(context).txtContactUs,
+                    fontSize: 14.setFontSize,
+                    fontWeight: _tabController.index == 1 ? FontWeight.w600 : FontWeight.w500,
+                    textColor: _tabController.index == 1 ? CustomAppColor.of(context).primary : CustomAppColor.of(context).txtBlack,
+                  ),
+                ),
               ],
             ),
             // Tab Bar View

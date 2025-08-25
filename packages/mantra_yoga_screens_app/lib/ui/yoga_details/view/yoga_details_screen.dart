@@ -127,7 +127,7 @@ class _YogaDetailsScreenState extends State<YogaDetailsScreen> with TickerProvid
   _sliverDetailsView() {
     return SliverToBoxAdapter(
       child: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 15.setWidth, vertical: 10.setHeight),
+        padding: EdgeInsets.symmetric(horizontal: 20.setWidth, vertical: 10.setHeight),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -173,7 +173,7 @@ class _YogaDetailsScreenState extends State<YogaDetailsScreen> with TickerProvid
               children: [
                 Expanded(
                   child: Container(
-                    padding: EdgeInsets.symmetric(vertical: 20.setHeight),
+                    padding: EdgeInsets.symmetric(vertical: 14.setHeight),
                     decoration: BoxDecoration(
                       color: CustomAppColor.of(context).bgScreen,
                       borderRadius: BorderRadius.circular(14),
@@ -195,7 +195,7 @@ class _YogaDetailsScreenState extends State<YogaDetailsScreen> with TickerProvid
                           textColor: CustomAppColor.of(context).txtDarkGray,
                           textAlign: TextAlign.center,
                         ),
-                        SizedBox(height: 3.setHeight),
+                        SizedBox(height: 6.setHeight),
                         CommonText(
                           text: "48",
                           fontSize: 16.setFontSize,
@@ -208,10 +208,10 @@ class _YogaDetailsScreenState extends State<YogaDetailsScreen> with TickerProvid
                     ),
                   ),
                 ),
-                SizedBox(width: 10.setWidth),
+                SizedBox(width: 16.setWidth),
                 Expanded(
                   child: Container(
-                    padding: EdgeInsets.symmetric(vertical: 20.setHeight),
+                    padding: EdgeInsets.symmetric(vertical: 14.setHeight),
                     decoration: BoxDecoration(
                       color: CustomAppColor.of(context).bgScreen,
                       borderRadius: BorderRadius.circular(14),
@@ -233,7 +233,7 @@ class _YogaDetailsScreenState extends State<YogaDetailsScreen> with TickerProvid
                           textColor: CustomAppColor.of(context).txtDarkGray,
                           textAlign: TextAlign.center,
                         ),
-                        SizedBox(height: 3.setHeight),
+                        SizedBox(height: 6.setHeight),
                         CommonText(
                           text: "2",
                           fontSize: 16.setFontSize,
@@ -246,10 +246,10 @@ class _YogaDetailsScreenState extends State<YogaDetailsScreen> with TickerProvid
                     ),
                   ),
                 ),
-                SizedBox(width: 10.setWidth),
+                SizedBox(width: 16.setWidth),
                 Expanded(
                   child: Container(
-                    padding: EdgeInsets.symmetric(vertical: 20.setHeight),
+                    padding: EdgeInsets.symmetric(vertical: 14.setHeight),
                     decoration: BoxDecoration(
                       color: CustomAppColor.of(context).bgScreen,
                       borderRadius: BorderRadius.circular(14),
@@ -271,7 +271,7 @@ class _YogaDetailsScreenState extends State<YogaDetailsScreen> with TickerProvid
                           textColor: CustomAppColor.of(context).txtDarkGray,
                           textAlign: TextAlign.center,
                         ),
-                        SizedBox(height: 3.setHeight),
+                        SizedBox(height: 6.setHeight),
                         CommonText(
                           text: "200",
                           fontSize: 16.setFontSize,
@@ -379,9 +379,10 @@ class _YogaDetailsScreenState extends State<YogaDetailsScreen> with TickerProvid
                       textColor: CustomAppColor.of(context).txtBlack,
                       textAlign: TextAlign.start,
                     ),
-                    SizedBox(height: 2.setHeight),
+                    SizedBox(height: 4.setHeight),
                     IntrinsicHeight(
                       child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Image.asset(
                             AppAssets.icClock,
@@ -566,14 +567,12 @@ class _SliverTabBarDelegate extends SliverPersistentHeaderDelegate {
                         ),
                       ),
                       child: Center(
-                        child: Text(
-                          Languages.of(context).txtVideo,
-                          style: TextStyle(
-                            fontSize: 14.setFontSize,
-                            fontWeight: isSelected ? FontWeight.w700 : FontWeight.w500,
-                            fontFamily: isSelected ? Constant.fontFamilyBold700 : Constant.fontFamilyMedium500,
-                            color: isSelected ? CustomAppColor.of(context).txtWhite : CustomAppColor.of(context).txtDarkGray,
-                          ),
+                        child: CommonText(
+                          text: Languages.of(context).txtVideo,
+                          fontSize: 14.setFontSize,
+                          fontWeight: isSelected ? FontWeight.w700 : FontWeight.w500,
+                          fontFamily: isSelected ? Constant.fontFamilyBold700 : Constant.fontFamilySemiBold600,
+                          textColor: isSelected ? CustomAppColor.of(context).txtWhite : CustomAppColor.of(context).txtDarkGray,
                         ),
                       ),
                     );
@@ -600,14 +599,12 @@ class _SliverTabBarDelegate extends SliverPersistentHeaderDelegate {
                         ),
                       ),
                       child: Center(
-                        child: Text(
-                          Languages.of(context).txtAnimation,
-                          style: TextStyle(
-                            fontSize: 14.setFontSize,
-                            fontWeight: isSelected ? FontWeight.w700 : FontWeight.w500,
-                            fontFamily: isSelected ? Constant.fontFamilyBold700 : Constant.fontFamilyMedium500,
-                            color: isSelected ? CustomAppColor.of(context).txtWhite : CustomAppColor.of(context).txtDarkGray,
-                          ),
+                        child: CommonText(
+                          text: Languages.of(context).txtAnimation,
+                          fontSize: 14.setFontSize,
+                          fontWeight: isSelected ? FontWeight.w700 : FontWeight.w500,
+                          fontFamily: isSelected ? Constant.fontFamilyBold700 : Constant.fontFamilySemiBold600,
+                          textColor: isSelected ? CustomAppColor.of(context).txtWhite : CustomAppColor.of(context).txtDarkGray,
                         ),
                       ),
                     );

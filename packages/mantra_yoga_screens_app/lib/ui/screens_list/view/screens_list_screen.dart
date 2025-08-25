@@ -4,6 +4,7 @@ import 'package:mantra_yoga_screens_app_package/ui/dashboard/view/dashboard_scre
 import 'package:mantra_yoga_screens_app_package/ui/filter/view/filter_screen.dart';
 import 'package:mantra_yoga_screens_app_package/ui/forgot_password/view/forgot_password_screen.dart';
 import 'package:mantra_yoga_screens_app_package/ui/help_center/view/help_center_screen.dart';
+import 'package:mantra_yoga_screens_app_package/ui/invite_friends/view/invite_friends_screen.dart';
 import 'package:mantra_yoga_screens_app_package/ui/notification_settings/view/notification_settings_screen.dart';
 import 'package:mantra_yoga_screens_app_package/ui/on_boarding/view/on_boarding_screen.dart';
 import 'package:mantra_yoga_screens_app_package/ui/upgrade_plan/view/upgrade_plan_screen.dart';
@@ -188,6 +189,11 @@ class _ScreenListScreen extends State<ScreenListScreen> {
       ScreenListDataModel(
         title: "Upgrade Plan",
         onClick: () => Navigator.push(context, UpgradePlanScreen.route()),
+        icon: AppAssets.icBlueNavigator,
+      ),
+      ScreenListDataModel(
+        title: "Invite Friends",
+        onClick: () => Navigator.push(context, InviteFriendsScreen.route()),
         icon: AppAssets.icBlueNavigator,
       ),
       ScreenListDataModel(

@@ -17,8 +17,7 @@ class OtpVerificationScreen extends StatefulWidget {
   const OtpVerificationScreen({super.key});
 
   static Route<void> route() {
-    return MaterialPageRoute(
-        builder: (context) => const OtpVerificationScreen());
+    return MaterialPageRoute(builder: (context) => const OtpVerificationScreen());
   }
 
   @override
@@ -58,8 +57,7 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
   @override
   Widget build(BuildContext context) {
     return AnnotatedRegion<SystemUiOverlayStyle>(
-      value:
-          const SystemUiOverlayStyle(statusBarIconBrightness: Brightness.light),
+      value: const SystemUiOverlayStyle(statusBarIconBrightness: Brightness.light),
       child: Scaffold(
         backgroundColor: CustomAppColor.of(context).bgScreen,
         body: SafeArea(
@@ -72,8 +70,7 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
                   width: 0.screenWidth,
                   decoration: BoxDecoration(
                     color: CustomAppColor.of(context).btnPrimary,
-                    borderRadius: const BorderRadius.vertical(
-                        bottom: Radius.circular(80)),
+                    borderRadius: const BorderRadius.vertical(bottom: Radius.circular(80)),
                   ),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -98,8 +95,7 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
                       Container(
                         padding: EdgeInsets.symmetric(horizontal: 20.setWidth),
                         child: CommonText(
-                          text: Languages.of(context)
-                              .txtEnter4DigitCodeWeHaveSentToYourPhoneNumber,
+                          text: Languages.of(context).txtEnter4DigitCodeWeHaveSentToYourPhoneNumber,
                           fontSize: 13.setFontSize,
                           fontWeight: FontWeight.w400,
                           textAlign: TextAlign.center,
@@ -121,39 +117,38 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
                 Container(
                   color: CustomAppColor.of(context).bgScreen,
                   margin: EdgeInsets.symmetric(horizontal: 30.setWidth),
-                  child: OTPTextField(
-                    context: context,
-                    length: 4,
-                    width: 0.screenWidth - 40.setWidth,
-                    fieldWidth: 60.setWidth,
-                    fieldHeight: 60.setHeight,
-                    outlineBorderRadius: 16,
-                    fieldStyle: FieldStyle.box,
-                    style: TextStyle(
-                      fontSize: 24.setFontSize,
-                      fontWeight: FontWeight.w700,
-                      color: CustomAppColor.of(context).txtBlack,
-                      fontFamily: Constant.fontFamily,
-                    ),
-                    textFieldAlignment: MainAxisAlignment.spaceBetween,
-                    otpFieldStyle: OtpFieldStyle(
-                      backgroundColor: CustomAppColor.of(context).bgScreen,
-                      borderColor:
-                          CustomAppColor.of(context).borderTextFormField,
-                      focusBorderColor: CustomAppColor.of(context).primary,
-                      enabledBorderColor:
-                          CustomAppColor.of(context).dividerColor,
-                      disabledBorderColor:
-                          CustomAppColor.of(context).dividerColor,
-                      errorBorderColor: CustomAppColor.of(context).txtRed,
-                    ),
-                    onChanged: (value) {
-                      _otpValue.value = value;
-                    },
-                    onCompleted: (value) {
-                      _otpValue.value = value;
-                    },
-                  ),
+                  child: Builder(builder: (context) {
+                    return OTPTextField(
+                      context: context,
+                      length: 4,
+                      width: 0.screenWidth - 40.setWidth,
+                      fieldWidth: 60.setWidth,
+                      fieldHeight: 60.setHeight,
+                      outlineBorderRadius: 16,
+                      fieldStyle: FieldStyle.box,
+                      style: TextStyle(
+                        fontSize: 24.setFontSize,
+                        fontWeight: FontWeight.w700,
+                        color: CustomAppColor.of(context).txtBlack,
+                        fontFamily: Constant.fontFamily,
+                      ),
+                      textFieldAlignment: MainAxisAlignment.spaceBetween,
+                      otpFieldStyle: OtpFieldStyle(
+                        backgroundColor: CustomAppColor.of(context).transparent,
+                        borderColor: CustomAppColor.of(context).borderTextFormField,
+                        focusBorderColor: CustomAppColor.of(context).primary,
+                        enabledBorderColor: CustomAppColor.of(context).dividerColor,
+                        disabledBorderColor: CustomAppColor.of(context).dividerColor,
+                        errorBorderColor: CustomAppColor.of(context).txtRed,
+                      ),
+                      onChanged: (value) {
+                        _otpValue.value = value;
+                      },
+                      onCompleted: (value) {
+                        _otpValue.value = value;
+                      },
+                    );
+                  }),
                 ),
                 SizedBox(height: 15.setHeight),
                 Row(
@@ -171,12 +166,10 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
                       builder: (context, value, child) {
                         return value > 0
                             ? CommonText(
-                                text:
-                                    "$value ${Languages.of(context).txtSeconds}",
+                                text: "$value ${Languages.of(context).txtSeconds}",
                                 fontSize: 14.setFontSize,
                                 fontWeight: FontWeight.w500,
-                                textColor:
-                                    CustomAppColor.of(context).txtPrimary,
+                                textColor: CustomAppColor.of(context).txtPrimary,
                               )
                             : InkWell(
                                 onTap: () {
@@ -186,8 +179,7 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
                                   text: Languages.of(context).txtResendOtp,
                                   fontSize: 15.setFontSize,
                                   fontWeight: FontWeight.w500,
-                                  textColor:
-                                      CustomAppColor.of(context).txtPrimary,
+                                  textColor: CustomAppColor.of(context).txtPrimary,
                                   textDecoration: TextDecoration.underline,
                                 ),
                               );
@@ -219,16 +211,13 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
                         color: CustomAppColor.of(context).txtGray,
                       ),
                       children: [
-                        TextSpan(
-                            text:
-                                "${Languages.of(context).txtByContinuingYouAgreeToOur} "),
+                        TextSpan(text: "${Languages.of(context).txtByContinuingYouAgreeToOur} "),
                         TextSpan(
                           text: Languages.of(context).txtTermsOfService,
                           style: TextStyle(
                             color: CustomAppColor.of(context).txtPrimary,
                             decoration: TextDecoration.underline,
-                            decorationColor:
-                                CustomAppColor.of(context).txtPrimary,
+                            decorationColor: CustomAppColor.of(context).txtPrimary,
                             decorationThickness: 1,
                             fontWeight: FontWeight.w500,
                             fontSize: 14.setFontSize,
@@ -240,8 +229,7 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
                           style: TextStyle(
                             color: CustomAppColor.of(context).txtPrimary,
                             decoration: TextDecoration.underline,
-                            decorationColor:
-                                CustomAppColor.of(context).txtPrimary,
+                            decorationColor: CustomAppColor.of(context).txtPrimary,
                             decorationThickness: 1,
                             fontWeight: FontWeight.w500,
                             fontSize: 14.setFontSize,

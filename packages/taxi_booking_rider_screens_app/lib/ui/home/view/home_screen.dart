@@ -676,7 +676,7 @@ class _ConfirmRideViewState extends State<ConfirmRideView> {
                       fontWeight: FontWeight.w600,
                     ),
                     CommonText(
-                      text: "Toyota Inova (CSR874-569)",
+                      text: "Toyota Innova (CSR874-569)",
                       fontWeight: FontWeight.w400,
                       fontSize: 12.setFontSize,
                       textColor: CustomAppColor.of(context).txtGray,
@@ -947,7 +947,7 @@ class _YouHaveArrivedViewState extends State<YouHaveArrivedView> {
                       fontSize: 17.setFontSize,
                     ),
                     CommonText(
-                      text: "Toyota Inova (CSR874-569)",
+                      text: "Toyota Innova (CSR874-569)",
                       fontWeight: FontWeight.w500,
                       fontSize: 13.setFontSize,
                       textColor: CustomAppColor.of(context).txtGray,
@@ -1104,7 +1104,7 @@ class _PayTipViewState extends State<PayTipView> {
                       fontSize: 17.setFontSize,
                     ),
                     CommonText(
-                      text: "Toyota Inova (CSR874-569)",
+                      text: "Toyota Innova (CSR874-569)",
                       fontWeight: FontWeight.w500,
                       fontSize: 13.setFontSize,
                       textColor: CustomAppColor.of(context).txtGray,

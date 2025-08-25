@@ -89,7 +89,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                     _mostSearchedCars(),
                     SizedBox(height: 10.setHeight),
                     _carsByBudget(),
-                    SizedBox(height: 10.setHeight),
+                    SizedBox(height: 20.setHeight),
                     _latestCars(),
                     SizedBox(height: 10.setHeight),
                   ],
@@ -163,8 +163,8 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
           Navigator.push(context, MaterialPageRoute(builder: (context) => const SearchScreen()));
         },
         child: Container(
-          padding: EdgeInsets.symmetric(horizontal: 20.setWidth, vertical: 10.setHeight),
-          margin: EdgeInsets.symmetric(vertical: 12.setHeight, horizontal: 20.setWidth),
+          padding: EdgeInsets.symmetric(horizontal: 20.setWidth, vertical: 0.setHeight),
+          margin: EdgeInsets.only(bottom: 10.setHeight, left: 20.setWidth, right: 20.setWidth, top: 5.setHeight),
           height: 40.setHeight,
           decoration: BoxDecoration(
             color: CustomAppColor.of(context).bgSearchBar,
@@ -798,7 +798,7 @@ class CarItemWidget extends StatelessWidget {
                 children: [
                   if (car.carType == Constant.strNewCar)
                     Container(
-                      padding: EdgeInsets.symmetric(horizontal: 8.setWidth, vertical: 5.setHeight),
+                      padding: EdgeInsets.symmetric(horizontal: 6.setWidth, vertical: 4.setHeight),
                       decoration: BoxDecoration(
                         color: CustomAppColor.of(context).bgNewCarChip,
                         borderRadius: BorderRadius.circular(4),
@@ -806,7 +806,7 @@ class CarItemWidget extends StatelessWidget {
                       margin: EdgeInsets.only(bottom: 5.setHeight),
                       child: CommonText(
                         text: Languages.of(context).txtNewCar,
-                        fontSize: 10.setFontSize,
+                        fontSize: 8.setFontSize,
                         fontWeight: FontWeight.w600,
                         textColor: CustomAppColor.of(context).txtWhite,
                         textAlign: TextAlign.start,
@@ -814,7 +814,7 @@ class CarItemWidget extends StatelessWidget {
                     ),
                   if (car.carType == Constant.strUsedCar)
                     Container(
-                      padding: EdgeInsets.symmetric(horizontal: 8.setWidth, vertical: 5.setHeight),
+                      padding: EdgeInsets.symmetric(horizontal: 6.setWidth, vertical: 4.setHeight),
                       decoration: BoxDecoration(
                         color: CustomAppColor.of(context).bgUsedCarChip,
                         borderRadius: BorderRadius.circular(4),
@@ -822,7 +822,7 @@ class CarItemWidget extends StatelessWidget {
                       margin: EdgeInsets.only(bottom: 5.setHeight),
                       child: CommonText(
                         text: Languages.of(context).txtUsedCar,
-                        fontSize: 10.setFontSize,
+                        fontSize: 8.setFontSize,
                         fontWeight: FontWeight.w600,
                         textColor: CustomAppColor.of(context).txtWhite,
                         textAlign: TextAlign.start,

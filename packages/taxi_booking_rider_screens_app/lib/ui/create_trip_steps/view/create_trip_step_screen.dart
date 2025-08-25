@@ -569,10 +569,10 @@ class _StepTwoViewState extends State<StepTwoView> {
             child: ListView(
               scrollDirection: Axis.horizontal,
               children: [
-                _buildCarOption("RideGo", AppAssets.imgRideGo),
-                _buildCarOption("Premium", AppAssets.imgPremium),
-                _buildCarOption("RideGoAuto", AppAssets.imgRideGoAuto),
-                _buildCarOption("Eco", AppAssets.imgEco),
+                _buildCarOption("Economy", AppAssets.imgRideGo),
+                _buildCarOption("Comfort", AppAssets.imgPremium),
+                _buildCarOption("Auto", AppAssets.imgRideGoAuto),
+                _buildCarOption("Bike", AppAssets.imgBike),
               ],
             ),
           ),
@@ -744,8 +744,8 @@ class _StepTwoViewState extends State<StepTwoView> {
     return GestureDetector(
       onTap: () => setState(() => _selectedCar = carType),
       child: Container(
-        padding: EdgeInsets.all(8.setHeight),
-        margin: EdgeInsets.only(right: 5.setWidth),
+        padding: EdgeInsets.all(6.setHeight),
+        margin: EdgeInsets.only(right: 0.setWidth),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
@@ -830,7 +830,7 @@ class _StepThreeViewState extends State<StepThreeView> {
                   onTap: () {},
                   child: CommonText(
                     text: Languages.of(context).txtAddNew.toUpperCase(),
-                    fontSize: 15.setFontSize,
+                    fontSize: 14.setFontSize,
                     fontWeight: FontWeight.w700,
                     textColor: Colors.green,
                   ),
@@ -1056,7 +1056,7 @@ class StepFourView extends StatelessWidget {
                       fontSize: 17.setFontSize,
                     ),
                     CommonText(
-                      text: "Toyota Inova (CSR874-569)",
+                      text: "Toyota Innova (CSR874-569)",
                       fontWeight: FontWeight.w500,
                       fontSize: 13.setFontSize,
                       textColor: CustomAppColor.of(context).txtGray,

@@ -123,7 +123,7 @@ class NotificationListView extends StatelessWidget {
                     children: [
                       CommonText(
                         text: item.notificationTitle,
-                        fontSize: 18.setFontSize,
+                        fontSize: 16.setFontSize,
                         fontWeight: FontWeight.w500,
                       ),
                       CommonText(

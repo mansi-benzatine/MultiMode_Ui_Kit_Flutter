@@ -1,12 +1,12 @@
 import 'dart:async';
 
+import 'package:car_shop_screens_app_package/widgets/button/common_button.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../../widgets/text/common_text.dart';
 import '../../utils/app_assets.dart';
 import '../../utils/app_color.dart';
 import '../../utils/sizer_utils.dart';
-import '../../widgets/button/common_button.dart';
 
 class LogoutDialog extends StatefulWidget {
   final BuildContext dialogContext;

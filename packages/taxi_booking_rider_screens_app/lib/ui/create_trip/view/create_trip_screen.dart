@@ -115,7 +115,7 @@ class _CreateTripScreenState extends State<CreateTripScreen> {
                                   CommonText(
                                     text: _pickupLocation,
                                     fontSize: 15.setFontSize,
-                                    fontWeight: FontWeight.w400,
+                                    fontWeight: FontWeight.w500,
                                   ),
                                   SizedBox(height: 4.setHeight),
                                   Divider(
@@ -126,7 +126,7 @@ class _CreateTripScreenState extends State<CreateTripScreen> {
                                   CommonText(
                                     text: "Drop Off",
                                     fontSize: 12.setFontSize,
-                                    fontWeight: FontWeight.w400,
+                                    fontWeight: FontWeight.w500,
                                     textColor: CustomAppColor.of(context).txtGray,
                                   ),
                                   CommonText(

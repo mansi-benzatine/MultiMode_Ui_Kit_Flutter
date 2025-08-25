@@ -68,6 +68,7 @@ class AppAssets {
   static String imgBgCardVisa = "${_pImages}img_bg_card_visa.webp";
   static String imgSubscriptionDone = "${_pImages}img_subscription_done.webp";
   static String imgLogout = "${_pImages}img_logout.webp";
+  static String imgDummyProfile = "${_pImages}img_dummy_profile.webp";
 
   /// ICONS ====================================================================
 

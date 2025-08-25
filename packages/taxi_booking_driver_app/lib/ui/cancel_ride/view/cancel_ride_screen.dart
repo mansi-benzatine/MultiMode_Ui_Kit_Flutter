@@ -28,7 +28,7 @@ class _CancelRideScreenState extends State<CancelRideScreen> implements TopBarCl
     CancelReason(title: "Personal issue"),
     CancelReason(title: "Customer behavior"),
     CancelReason(title: "Ride doesn't show up"),
-    CancelReason(title: "vehicle issue"),
+    CancelReason(title: "Vehicle issue"),
     CancelReason(title: "Many rider's"),
     CancelReason(title: "Nowhere to stop"),
   ];

@@ -404,7 +404,7 @@ class _AnalysisScreenState extends State<AnalysisScreen> {
               );
             },
           ),
-          SizedBox(height: 15.setHeight),
+          SizedBox(height: 20.setHeight),
           _circularProgressView(),
         ],
       ),
@@ -471,8 +471,8 @@ class _AnalysisScreenState extends State<AnalysisScreen> {
             alignment: Alignment.center,
             children: [
               SizedBox(
-                width: 100.setHeight,
-                height: 100.setHeight,
+                width: 80.setHeight,
+                height: 80.setHeight,
                 child: SfCircularChart(
                   series: <CircularSeries>[
                     DoughnutSeries<ChartData, String>(
@@ -520,7 +520,7 @@ class _AnalysisScreenState extends State<AnalysisScreen> {
             text: valueText,
             fontSize: 14.setFontSize,
             fontWeight: FontWeight.w500,
-            fontFamily: Constant.fontFamilyMedium500,
+            fontFamily: Constant.fontFamilySemiBold600,
             textColor: CustomAppColor.of(context).txtBlack,
             textAlign: TextAlign.center,
           ),

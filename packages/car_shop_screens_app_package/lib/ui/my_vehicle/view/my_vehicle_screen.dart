@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:car_shop_screens_app_package/utils/sizer_utils.dart';
 import 'package:flutter/material.dart';
 
@@ -68,6 +66,11 @@ class _MyVehicleScreenState extends State<MyVehicleScreen> with TickerProviderSt
   void initState() {
     super.initState();
     _tabController = TabController(length: 2, vsync: this);
+    _tabController.addListener(
+      () {
+        setState(() {});
+      },
+    );
   }
 
   @override
@@ -91,40 +94,39 @@ class _MyVehicleScreenState extends State<MyVehicleScreen> with TickerProviderSt
             // Tab Bar
             TabBar(
               controller: _tabController,
-              isScrollable: true,
-              labelColor: CustomAppColor.of(context).tabSelectedTxtColor2,
-              unselectedLabelColor: CustomAppColor.of(context).tabTxtColor2,
-              labelStyle: TextStyle(
-                fontSize: 12.setFontSize,
-                fontWeight: FontWeight.w600,
-                fontFamily: Constant.fontFamily,
-                color: CustomAppColor.of(context).tabSelectedTxtColor2,
-              ),
-              unselectedLabelStyle: TextStyle(
-                fontSize: 12.setFontSize,
-                fontWeight: FontWeight.w400,
-                fontFamily: Constant.fontFamily,
-                color: CustomAppColor.of(context).tabTxtColor2,
-              ),
-              indicatorWeight: 2,
-
-              dividerColor: Colors.transparent,
-              indicatorSize: TabBarIndicatorSize.tab,
-              padding: EdgeInsets.symmetric(horizontal: 20.setWidth),
               indicatorColor: CustomAppColor.of(context).primary,
-              indicatorPadding: EdgeInsets.only(
-                top: Platform.isAndroid ? 35.setHeight : 40.setHeight,
-              ),
-
-              // labelPadding: EdgeInsets.only(left: 15.setWidth, right: 15.setWidth),
+              indicatorWeight: 2,
+              indicatorSize: TabBarIndicatorSize.label,
+              dividerColor: Colors.transparent,
+              isScrollable: true,
+              labelPadding: const EdgeInsets.symmetric(horizontal: 10, vertical: 0),
+              padding: EdgeInsets.symmetric(horizontal: 16.setWidth),
               tabAlignment: TabAlignment.start,
-              indicator: BoxDecoration(
-                gradient: CustomAppColor.of(context).primaryGradient,
-                borderRadius: BorderRadius.circular(10),
+              indicator: UnderlineTabIndicator(
+                borderSide: BorderSide(
+                  color: CustomAppColor.of(context).primary,
+                  width: 3,
+                ),
+                borderRadius: BorderRadius.all(Radius.circular(12)),
+                insets: const EdgeInsets.only(bottom: 8),
               ),
-              tabs: const [
-                Tab(text: "Active"),
-                Tab(text: "In Active"),
+              tabs: [
+                Tab(
+                  child: CommonText(
+                    text: "Active",
+                    fontSize: 12.setFontSize,
+                    fontWeight: _tabController.index == 0 ? FontWeight.w600 : FontWeight.w500,
+                    textColor: _tabController.index == 0 ? CustomAppColor.of(context).primary : CustomAppColor.of(context).txtBlack,
+                  ),
+                ),
+                Tab(
+                  child: CommonText(
+                    text: "In Active",
+                    fontSize: 12.setFontSize,
+                    fontWeight: _tabController.index == 1 ? FontWeight.w600 : FontWeight.w500,
+                    textColor: _tabController.index == 1 ? CustomAppColor.of(context).primary : CustomAppColor.of(context).txtBlack,
+                  ),
+                ),
               ],
             ),
             // Tab Bar View

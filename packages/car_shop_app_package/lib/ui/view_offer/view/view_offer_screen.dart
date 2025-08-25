@@ -20,9 +20,9 @@ class ViewOfferScreen extends StatefulWidget {
 }
 
 class _ViewOfferScreenState extends State<ViewOfferScreen> implements TopBarClickListener {
-  final TextEditingController _nameController = TextEditingController();
-  final TextEditingController _phoneController = TextEditingController();
-  final TextEditingController _cityController = TextEditingController();
+  final TextEditingController _nameController = TextEditingController(text: "Mona Lisa");
+  final TextEditingController _phoneController = TextEditingController(text: "+1 12345 67890");
+  final TextEditingController _cityController = TextEditingController(text: "New York");
 
   String selectedPurchaseTime = "Within 15 Days";
   String selectedSellOldCar = "No";

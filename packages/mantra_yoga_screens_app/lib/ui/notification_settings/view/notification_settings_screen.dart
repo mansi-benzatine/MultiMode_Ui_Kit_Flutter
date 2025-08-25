@@ -128,9 +128,9 @@ class _NotificationSettingsScreenState extends State<NotificationSettingsScreen>
               Expanded(
                 child: CommonText(
                   text: title,
-                  fontSize: 14.setFontSize,
+                  fontSize: 16.setFontSize,
                   fontWeight: FontWeight.w500,
-                  fontFamily: Constant.fontFamilyMedium500,
+                  fontFamily: Constant.fontFamilySemiBold600,
                   textColor: CustomAppColor.of(context).txtBlack,
                   textAlign: TextAlign.start,
                 ),

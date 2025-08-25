@@ -18,7 +18,17 @@ class YourProfilePage extends StatefulWidget {
 }
 
 class _YourProfilePageState extends State<YourProfilePage> {
-  final ValueNotifier<String> selectedCountry = ValueNotifier('🇮🇳');
+  late final Country defaultCountry;
+  late final ValueNotifier<String> selectedCountry;
+
+  @override
+  void initState() {
+    super.initState();
+    defaultCountry = CountryParser.parseCountryCode('US');
+    selectedCountry = ValueNotifier(
+      defaultCountry.flagEmoji,
+    );
+  }
 
   @override
   Widget build(BuildContext context) {

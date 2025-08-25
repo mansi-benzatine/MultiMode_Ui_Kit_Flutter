@@ -76,13 +76,10 @@ class _FilterBottomSheetState extends State<FilterBottomSheet> {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.only(
-        bottom: MediaQuery.of(context).viewInsets.bottom,
-      ),
+    return SafeArea(
       child: Container(
         constraints: BoxConstraints(
-          maxHeight: MediaQuery.of(context).size.height * 0.7,
+          maxHeight: MediaQuery.of(context).size.height * 0.667,
         ),
         decoration: BoxDecoration(
           color: CustomAppColor.of(context).bgBottomSheet,
@@ -155,7 +152,7 @@ class _FilterBottomSheetState extends State<FilterBottomSheet> {
 
             // Bottom Buttons
             Container(
-              padding: EdgeInsets.only(left: 20.setWidth, right: 20.setWidth, bottom: 35.setHeight, top: 20.setHeight),
+              padding: EdgeInsets.only(left: 20.setWidth, right: 20.setWidth, bottom: 10.setHeight, top: 20.setHeight),
               decoration: BoxDecoration(
                 border: Border(
                   top: BorderSide(

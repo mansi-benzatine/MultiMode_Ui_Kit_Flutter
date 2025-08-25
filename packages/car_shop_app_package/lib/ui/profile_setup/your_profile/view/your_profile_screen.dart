@@ -20,9 +20,10 @@ class YourProfileScreen extends StatefulWidget {
 }
 
 class _YourProfileScreenState extends State<YourProfileScreen> implements TopBarClickListener {
-  final TextEditingController _nameController = TextEditingController();
-  final TextEditingController _emailController = TextEditingController();
-  final TextEditingController _addressController = TextEditingController();
+  final TextEditingController _nameController = TextEditingController(text: "Mona Lisa");
+  final TextEditingController _emailController = TextEditingController(text: "monalisa@yourdomain.com");
+  final TextEditingController _phoneController = TextEditingController(text: "+1 12345 67890");
+  final TextEditingController _addressController = TextEditingController(text: "1 E 2nd St, New York, NY 10003, USA");
 
   @override
   Widget build(BuildContext context) {
@@ -95,7 +96,7 @@ class _YourProfileScreenState extends State<YourProfileScreen> implements TopBar
                           child: Row(
                             children: [
                               CountryCodePicker(
-                                initialSelection: 'IN',
+                                initialSelection: 'US',
                                 showCountryOnly: true,
                                 showOnlyCountryWhenClosed: true,
                                 showFlag: true,
@@ -127,7 +128,7 @@ class _YourProfileScreenState extends State<YourProfileScreen> implements TopBar
                         SizedBox(width: 10.setWidth),
                         Expanded(
                           child: CommonTextFormField(
-                            controller: _addressController,
+                            controller: _phoneController,
                             hintText: Languages.of(context).txtEnterPhoneNumber,
                             labelText: Languages.of(context).txtPhoneNumber.toUpperCase(),
                           ),

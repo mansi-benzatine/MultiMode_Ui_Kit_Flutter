@@ -70,6 +70,7 @@ class AppAssets {
   static String imgLogout = "${_pImages}img_logout.webp";
   static String imgBgHomeScreenPlain = "${_pImages}img_bg_home_screen_plain.webp";
   static String imgSplash = "${_pImages}img_splash.webp";
+  static String imgDummyProfile = "${_pImages}img_dummy_profile.webp";
 
   /// ICONS ====================================================================
 

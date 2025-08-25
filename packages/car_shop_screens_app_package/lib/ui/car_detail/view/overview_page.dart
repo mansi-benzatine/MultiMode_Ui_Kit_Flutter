@@ -48,9 +48,9 @@ class _OverviewPageState extends State<OverviewPage> {
           },
           if (widget.isShowPriceList) ...{
             Divider(
-              color: CustomAppColor.of(context).containerBorder,
+              color: CustomAppColor.of(context).bgSearchBar,
               height: 7.setHeight,
-              thickness: 3,
+              thickness: 4,
             ),
             _buildPriceList(),
           },
@@ -231,7 +231,7 @@ class _OverviewPageState extends State<OverviewPage> {
 
   Widget _buildCarDescription() {
     return Padding(
-      padding: EdgeInsets.only(left: 16.setWidth, right: 16.setWidth, bottom: 10.setHeight),
+      padding: EdgeInsets.only(left: 20.setWidth, right: 20.setWidth, bottom: 10.setHeight),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -277,7 +277,7 @@ class _OverviewPageState extends State<OverviewPage> {
 
   Widget _buildCarFeatures() {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 16.setWidth, vertical: 10.setHeight),
+      padding: EdgeInsets.symmetric(horizontal: 20.setWidth, vertical: 10.setHeight),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -291,131 +291,23 @@ class _OverviewPageState extends State<OverviewPage> {
           IntrinsicHeight(
             child: Row(
               children: [
-                Expanded(
-                  child: Container(
-                    decoration: BoxDecoration(
-                      border: Border.all(color: CustomAppColor.of(context).containerBorder),
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    padding: EdgeInsets.symmetric(horizontal: 10.setWidth, vertical: 10.setHeight),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Container(
-                          decoration: BoxDecoration(
-                            color: CustomAppColor.of(context).bgSearchBar,
-                            shape: BoxShape.circle,
-                          ),
-                          padding: EdgeInsets.all(10.setWidth),
-                          child: Image.asset(
-                            AppAssets.icSeat,
-                            height: 20.setHeight,
-                            width: 20.setWidth,
-                            color: CustomAppColor.of(context).txtBlack,
-                          ),
-                        ),
-                        SizedBox(height: 13.setHeight),
-                        CommonText(
-                          text: Languages.of(context).txtTotalCapacity,
-                          fontSize: 12.setFontSize,
-                          fontWeight: FontWeight.w400,
-                          textColor: CustomAppColor.of(context).txtGray,
-                        ),
-                        SizedBox(height: 6.setHeight),
-                        CommonText(
-                          text: "6 Seats",
-                          fontSize: 15.setFontSize,
-                          fontWeight: FontWeight.w600,
-                          textColor: CustomAppColor.of(context).txtBlack,
-                        ),
-                      ],
-                    ),
-                  ),
+                InfoCard(
+                  icon: AppAssets.icSeat,
+                  label: Languages.of(context).txtTotalCapacity,
+                  value: "6 Seats",
                 ),
-                SizedBox(width: 10.setWidth),
-                Expanded(
-                  child: Container(
-                    decoration: BoxDecoration(
-                      border: Border.all(color: CustomAppColor.of(context).containerBorder),
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    padding: EdgeInsets.symmetric(horizontal: 10.setWidth, vertical: 10.setHeight),
-                    child: Column(
-                      children: [
-                        Container(
-                          decoration: BoxDecoration(
-                            color: CustomAppColor.of(context).bgSearchBar,
-                            shape: BoxShape.circle,
-                          ),
-                          padding: EdgeInsets.all(10.setWidth),
-                          child: Image.asset(
-                            AppAssets.icSpeed,
-                            height: 20.setHeight,
-                            width: 20.setWidth,
-                            color: CustomAppColor.of(context).txtBlack,
-                          ),
-                        ),
-                        SizedBox(height: 13.setHeight),
-                        Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 10.setWidth),
-                          child: CommonText(
-                            text: Languages.of(context).txtHigherSpeed,
-                            fontSize: 12.setFontSize,
-                            fontWeight: FontWeight.w400,
-                            textColor: CustomAppColor.of(context).txtGray,
-                          ),
-                        ),
-                        SizedBox(height: 6.setHeight),
-                        CommonText(
-                          text: "200 km/h",
-                          fontSize: 15.setFontSize,
-                          fontWeight: FontWeight.w600,
-                          textColor: CustomAppColor.of(context).txtBlack,
-                        ),
-                      ],
-                    ),
-                  ),
+                SizedBox(width: 15.setWidth),
+                InfoCard(
+                  icon: AppAssets.icSpeed,
+                  label: Languages.of(context).txtHigherSpeed,
+                  value: "200 km/h",
                 ),
-                SizedBox(width: 10.setWidth),
-                Expanded(
-                  child: Container(
-                    decoration: BoxDecoration(
-                      border: Border.all(color: CustomAppColor.of(context).containerBorder),
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    padding: EdgeInsets.symmetric(horizontal: 10.setWidth, vertical: 10.setHeight),
-                    child: Column(
-                      children: [
-                        Container(
-                          decoration: BoxDecoration(
-                            color: CustomAppColor.of(context).bgSearchBar,
-                            shape: BoxShape.circle,
-                          ),
-                          padding: EdgeInsets.all(10.setWidth),
-                          child: Image.asset(
-                            AppAssets.icEngine,
-                            height: 20.setHeight,
-                            width: 20.setWidth,
-                            color: CustomAppColor.of(context).txtBlack,
-                          ),
-                        ),
-                        SizedBox(height: 13.setHeight),
-                        CommonText(
-                          text: Languages.of(context).txtEngineOutput,
-                          fontSize: 12.setFontSize,
-                          fontWeight: FontWeight.w400,
-                          textColor: CustomAppColor.of(context).txtGray,
-                        ),
-                        SizedBox(height: 6.setHeight),
-                        CommonText(
-                          text: "500 HP",
-                          fontSize: 15.setFontSize,
-                          fontWeight: FontWeight.w600,
-                          textColor: CustomAppColor.of(context).txtBlack,
-                        ),
-                      ],
-                    ),
-                  ),
+                SizedBox(width: 15.setWidth),
+                InfoCard(
+                  icon: AppAssets.icEngine,
+                  label: Languages.of(context).txtEngineOutput,
+                  value: "500 HP",
+                  topSpacing: 13,
                 ),
               ],
             ),
@@ -834,6 +726,67 @@ class _OverviewPageState extends State<OverviewPage> {
           textColor: CustomAppColor.of(context).txtBlack,
         ),
       ],
+    );
+  }
+}
+
+class InfoCard extends StatelessWidget {
+  final String icon;
+  final String label;
+  final String value;
+  final double topSpacing;
+
+  const InfoCard({
+    super.key,
+    required this.icon,
+    required this.label,
+    required this.value,
+    this.topSpacing = 10, // default spacing
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Expanded(
+      child: Container(
+        decoration: BoxDecoration(
+          border: Border.all(color: CustomAppColor.of(context).containerBorder),
+          borderRadius: BorderRadius.circular(12),
+        ),
+        padding: EdgeInsets.symmetric(horizontal: 10.setWidth, vertical: 8.setHeight),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Container(
+              decoration: BoxDecoration(
+                color: CustomAppColor.of(context).bgSearchBar,
+                shape: BoxShape.circle,
+              ),
+              padding: EdgeInsets.all(10.setWidth),
+              child: Image.asset(
+                icon,
+                height: 20.setHeight,
+                width: 20.setWidth,
+                color: CustomAppColor.of(context).txtBlack,
+              ),
+            ),
+            SizedBox(height: topSpacing.setHeight),
+            CommonText(
+              text: label,
+              fontSize: 12.setFontSize,
+              fontWeight: FontWeight.w400,
+              textColor: CustomAppColor.of(context).txtGray,
+              textAlign: TextAlign.center,
+            ),
+            SizedBox(height: 5.setHeight),
+            CommonText(
+              text: value,
+              fontSize: 15.setFontSize,
+              fontWeight: FontWeight.w600,
+              textColor: CustomAppColor.of(context).txtBlack,
+            ),
+          ],
+        ),
+      ),
     );
   }
 }
