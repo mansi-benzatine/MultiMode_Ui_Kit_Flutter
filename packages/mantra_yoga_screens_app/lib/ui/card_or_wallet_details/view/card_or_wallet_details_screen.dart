@@ -158,7 +158,7 @@ class _CardOrWalletDetailsScreenState extends State<CardOrWalletDetailsScreen> i
                 SizedBox(width: 20.setWidth),
               ],
             ),
-            SizedBox(height: 40.setHeight),
+            SizedBox(height: 60.setHeight),
           ],
         ),
       ),

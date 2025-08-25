@@ -145,7 +145,6 @@ class _CancelRideScreenState extends State<CancelRideScreen> implements TopBarCl
                         );
                         return;
                       }
-
                       showDialog(
                         barrierDismissible: false,
                         context: context,
@@ -154,13 +153,13 @@ class _CancelRideScreenState extends State<CancelRideScreen> implements TopBarCl
                             padding: EdgeInsets.symmetric(horizontal: 22.setWidth),
                             child: CommonDialog(
                               titleText: CommonText(
-                                text: Languages.of(dialogContext).txtItIsSadToSeeYouCancel,
+                                text: "It's sad to see you cancel",
                                 fontWeight: FontWeight.w700,
                                 fontSize: 24.setFontSize,
                                 textColor: CustomAppColor.of(dialogContext).txtBlack,
                               ),
                               descriptionText: CommonText(
-                                text: Languages.of(dialogContext).txtWeWillContinueToImproveOurServiceAndSatisfyYouOnTheNextTrip,
+                                text: "We will continue to improve our service & satisfy you on the next trip.",
                                 fontSize: 13.setFontSize,
                                 fontWeight: FontWeight.w500,
                                 textColor: CustomAppColor.of(dialogContext).txtGray,
@@ -170,7 +169,7 @@ class _CancelRideScreenState extends State<CancelRideScreen> implements TopBarCl
                                 height: 110.setHeight,
                               ),
                               button: CommonButton(
-                                text: Languages.of(dialogContext).txtBackToHome,
+                                text: "Back To Home",
                                 onTap: () {
                                   Navigator.of(dialogContext, rootNavigator: true).pop('cancelled');
                                 },
