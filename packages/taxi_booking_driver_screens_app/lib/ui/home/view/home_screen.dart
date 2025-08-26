@@ -241,7 +241,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                                           child: Image.asset(
                                             AppAssets.imgDummyDriverProfile,
                                             alignment: Alignment.center,
-                                            width: 70.setWidth,
+                                            width: 70.setHeight,
                                             height: 70.setHeight,
                                             fit: BoxFit.cover,
                                           ),
@@ -291,7 +291,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                                                   ),
                                                   child: Image.asset(
                                                     AppAssets.icCalender,
-                                                    width: 24.setWidth,
+                                                    width: 24.setHeight,
                                                     height: 24.setHeight,
                                                   ),
                                                 ),
@@ -333,7 +333,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                                                   ),
                                                   child: Image.asset(
                                                     AppAssets.icFillDollar,
-                                                    width: 24.setWidth,
+                                                    width: 24.setHeight,
                                                     height: 24.setHeight,
                                                   ),
                                                 ),
@@ -627,10 +627,10 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
               fontWeight: FontWeight.w500,
             ),
             SizedBox(width: 8.setWidth),
-            const Icon(
+            Icon(
               Icons.radio_button_checked,
               color: Colors.green,
-              size: 18,
+              size: 18.setHeight,
             ),
           ],
         ),
@@ -673,10 +673,10 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
             fontWeight: FontWeight.w500,
           ),
           SizedBox(width: 8.setWidth),
-          const Icon(
+          Icon(
             Icons.radio_button_checked,
             color: Colors.green,
-            size: 18,
+            size: 18.setHeight,
           ),
         ],
       ),

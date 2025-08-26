@@ -246,9 +246,9 @@ class _HomeScreenState extends State<HomeScreen> {
                               borderRadius: BorderRadius.circular(14),
                               child: Image.asset(
                                 AppAssets.imgYogaDummy1,
-                                width: 130.setWidth,
+                                width: 130.setHeight,
                                 height: 130.setHeight,
-                                fit: BoxFit.fill,
+                                fit: BoxFit.cover,
                               ),
                             ),
                           ),
@@ -367,9 +367,9 @@ class _HomeScreenState extends State<HomeScreen> {
                           borderRadius: BorderRadius.circular(12),
                           child: Image.asset(
                             AppAssets.imgMeditationDummy1,
-                            width: 80.setWidth,
+                            width: 80.setHeight,
                             height: 80.setHeight,
-                            fit: BoxFit.fill,
+                            fit: BoxFit.cover,
                           ),
                         ),
                         SizedBox(width: 10.setWidth),

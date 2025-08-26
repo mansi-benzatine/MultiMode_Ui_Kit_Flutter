@@ -112,6 +112,7 @@ class _DashboardScreenState extends State<DashboardScreen> with SingleTickerProv
               return Padding(
                 padding: EdgeInsets.only(bottom: AppSizes.setHeight(12)),
                 child: Tab(
+                  height: AppSizes.setHeight(65),
                   icon: Padding(
                     padding: EdgeInsets.only(top: AppSizes.setHeight(12), bottom: AppSizes.setHeight(4)),
                     child: Image.asset(

@@ -276,7 +276,7 @@ class FindJobCardWidget extends StatelessWidget {
             ),
           ),
           Positioned(
-            left: 80.setWidth,
+            right: -20.setWidth,
             bottom: 0.setHeight,
             child: Image.asset(
               AppAssets.imgDummyFindJob,
@@ -337,7 +337,7 @@ class _BrowseByCategoryViewState extends State<BrowseByCategoryView> {
                 child: Padding(
                   padding: EdgeInsets.only(right: 12.setWidth),
                   child: Container(
-                    width: 100.setWidth,
+                    width: 100.setHeight,
                     decoration: BoxDecoration(
                       boxShadow: [
                         BoxShadow(
@@ -540,8 +540,7 @@ class SuggestedJobsView extends StatelessWidget {
                               alignment: Alignment.center,
                               width: 72.setWidth,
                               height: 24.setHeight,
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(6), color: CustomAppColor.of(context).white.withOpacityPercent(0.15)),
+                              decoration: BoxDecoration(borderRadius: BorderRadius.circular(6), color: CustomAppColor.of(context).white.withOpacityPercent(0.15)),
                               child: CommonText(
                                 text: "Apply Now",
                                 fontSize: 10.setFontSize,

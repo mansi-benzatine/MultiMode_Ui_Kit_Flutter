@@ -234,7 +234,7 @@ class ProfileCardSwiper extends StatelessWidget {
                     fit: BoxFit.cover,
                     alignment: Alignment.topCenter,
                     height: 295.setHeight,
-                    width: 295.setWidth,
+                    width: 295.setHeight,
                   ),
                 ),
                 Positioned(

@@ -119,7 +119,7 @@ class _HomeScreenState extends State<HomeScreen> {
           options: CarouselOptions(
             height: AppSizes.setHeight(140),
             autoPlay: false,
-            viewportFraction: 0.9,
+            viewportFraction: 0.65,
             onPageChanged: (index, reason) {
               setState(() {
                 currentIndex = index;
@@ -135,7 +135,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     borderRadius: BorderRadius.circular(12.0),
                     image: DecorationImage(
                       image: AssetImage(item.imagePath ?? ''),
-                      fit: BoxFit.cover,
+                      fit: BoxFit.fill,
                     ),
                   ),
                 );
@@ -188,15 +188,15 @@ class _HomeScreenState extends State<HomeScreen> {
               child: Column(
                 children: [
                   Container(
-                    padding: EdgeInsets.symmetric(horizontal: AppSizes.setWidth(20), vertical: AppSizes.setHeight(20)),
+                    padding: EdgeInsets.symmetric(horizontal: AppSizes.setWidth(15), vertical: AppSizes.setHeight(20)),
                     height: AppSizes.setHeight(84),
-                    width: AppSizes.setWidth(84),
+                    width: AppSizes.setHeight(84),
                     decoration: BoxDecoration(color: category.color, borderRadius: BorderRadius.circular(14)),
                     child: Image.asset(
                       category.imagePath ?? ' ',
                       height: AppSizes.setHeight(44),
-                      width: AppSizes.setWidth(44),
-                      fit: BoxFit.cover,
+                      width: AppSizes.setWidth(40),
+                      fit: BoxFit.fill,
                     ),
                   ),
                   Padding(
@@ -219,7 +219,6 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Widget trendingCard() {
     return Container(
-      padding: EdgeInsets.only(left: AppSizes.setWidth(10)),
       height: AppSizes.setHeight(220),
       child: ListView.builder(
         shrinkWrap: true,
@@ -248,8 +247,9 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                         ],
                       ),
+                      padding: EdgeInsets.symmetric(horizontal: AppSizes.setWidth(8)),
                       height: AppSizes.setHeight(220),
-                      width: AppSizes.setWidth(148),
+                      width: AppSizes.setHeight(148),
                       child: Column(
                         children: [
                           Padding(
@@ -266,7 +266,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 child: Image.asset(
                                   category.imagePath ?? ' ',
                                   height: AppSizes.setHeight(130),
-                                  width: AppSizes.setWidth(130),
+                                  width: AppSizes.setHeight(130),
                                   fit: BoxFit.fill,
                                 ),
                               ),
@@ -288,10 +288,11 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ),
               Positioned(
-                left: AppSizes.setWidth(50),
+                right: AppSizes.setWidth(30),
+                left: AppSizes.setWidth(30),
                 top: -AppSizes.setHeight(0),
                 child: Container(
-                  width: AppSizes.setWidth(70),
+                  width: AppSizes.setHeight(70),
                   height: AppSizes.setHeight(22),
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(25),
@@ -499,9 +500,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           horizontal: AppSizes.setWidth(12),
                         ),
                         decoration: BoxDecoration(
-                          color: selectedIndex == index
-                              ? CustomAppColor.of(context).bgFilter
-                              : CustomAppColor.of(context).bgContainerGrey.withOpacityPercent(0.2),
+                          color: selectedIndex == index ? CustomAppColor.of(context).bgFilter : CustomAppColor.of(context).bgContainerGrey.withOpacityPercent(0.2),
                           border: selectedIndex == index
                               ? Border(
                                   left: BorderSide(
@@ -582,8 +581,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   color: CustomAppColor.of(context).txtGrey,
                                 ),
                                 hintText: Languages.of(context).search,
-                                hintStyle: TextStyle(
-                                    fontWeight: FontWeight.w600, fontSize: AppSizes.setFontSize(15), color: CustomAppColor.of(context).txtGrey),
+                                hintStyle: TextStyle(fontWeight: FontWeight.w600, fontSize: AppSizes.setFontSize(15), color: CustomAppColor.of(context).txtGrey),
                               ),
                               Expanded(
                                 child: ListView.builder(
@@ -605,9 +603,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                           text: sizeList[index].label ?? '',
                                           fontSize: AppSizes.setFontSize(15),
                                           fontWeight: sizeList[index].isSelected ?? false ? FontWeight.w600 : FontWeight.w500,
-                                          textColor: sizeList[index].isSelected ?? false
-                                              ? CustomAppColor.of(context).txtBlack
-                                              : CustomAppColor.of(context).txtGrey,
+                                          textColor: sizeList[index].isSelected ?? false ? CustomAppColor.of(context).txtBlack : CustomAppColor.of(context).txtGrey,
                                         ),
                                       ],
                                     );
@@ -631,8 +627,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   color: CustomAppColor.of(context).txtGrey,
                                 ),
                                 hintText: Languages.of(context).search,
-                                hintStyle: TextStyle(
-                                    fontWeight: FontWeight.w600, fontSize: AppSizes.setFontSize(15), color: CustomAppColor.of(context).txtGrey),
+                                hintStyle: TextStyle(fontWeight: FontWeight.w600, fontSize: AppSizes.setFontSize(15), color: CustomAppColor.of(context).txtGrey),
                               ),
                               Expanded(
                                 child: ListView.builder(
@@ -655,9 +650,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                           text: filterCategoryList[index].label ?? '',
                                           fontSize: AppSizes.setFontSize(15),
                                           fontWeight: sizeList[index].isSelected ?? false ? FontWeight.w600 : FontWeight.w500,
-                                          textColor: sizeList[index].isSelected ?? false
-                                              ? CustomAppColor.of(context).txtBlack
-                                              : CustomAppColor.of(context).txtGrey,
+                                          textColor: sizeList[index].isSelected ?? false ? CustomAppColor.of(context).txtBlack : CustomAppColor.of(context).txtGrey,
                                         ),
                                       ],
                                     );
@@ -681,8 +674,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   color: CustomAppColor.of(context).txtGrey,
                                 ),
                                 hintText: Languages.of(context).search,
-                                hintStyle: TextStyle(
-                                    fontWeight: FontWeight.w600, fontSize: AppSizes.setFontSize(15), color: CustomAppColor.of(context).txtGrey),
+                                hintStyle: TextStyle(fontWeight: FontWeight.w600, fontSize: AppSizes.setFontSize(15), color: CustomAppColor.of(context).txtGrey),
                               ),
                               Expanded(
                                 child: ListView.builder(
@@ -704,9 +696,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                           text: fabricList[index].label ?? '',
                                           fontSize: AppSizes.setFontSize(15),
                                           fontWeight: fabricList[index].isSelected ?? false ? FontWeight.w600 : FontWeight.w500,
-                                          textColor: fabricList[index].isSelected ?? false
-                                              ? CustomAppColor.of(context).txtBlack
-                                              : CustomAppColor.of(context).txtGrey,
+                                          textColor: fabricList[index].isSelected ?? false ? CustomAppColor.of(context).txtBlack : CustomAppColor.of(context).txtGrey,
                                         ),
                                       ],
                                     );
@@ -737,9 +727,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     text: filterGenderList[index].label ?? '',
                                     fontSize: AppSizes.setFontSize(15),
                                     fontWeight: filterGenderList[index].isSelected ?? false ? FontWeight.w600 : FontWeight.w500,
-                                    textColor: filterGenderList[index].isSelected ?? false
-                                        ? CustomAppColor.of(context).txtBlack
-                                        : CustomAppColor.of(context).txtGrey,
+                                    textColor: filterGenderList[index].isSelected ?? false ? CustomAppColor.of(context).txtBlack : CustomAppColor.of(context).txtGrey,
                                   ),
                                 ],
                               );
@@ -787,9 +775,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     text: ratingList[index].label ?? '',
                                     fontSize: AppSizes.setFontSize(15),
                                     fontWeight: ratingList[index].isSelected ?? false ? FontWeight.w600 : FontWeight.w500,
-                                    textColor: ratingList[index].isSelected ?? false
-                                        ? CustomAppColor.of(context).txtBlack
-                                        : CustomAppColor.of(context).txtGrey,
+                                    textColor: ratingList[index].isSelected ?? false ? CustomAppColor.of(context).txtBlack : CustomAppColor.of(context).txtGrey,
                                   ),
                                 ],
                               );
@@ -817,9 +803,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     text: occasionList[index].label ?? '',
                                     fontSize: AppSizes.setFontSize(15),
                                     fontWeight: occasionList[index].isSelected ?? false ? FontWeight.w600 : FontWeight.w500,
-                                    textColor: occasionList[index].isSelected ?? false
-                                        ? CustomAppColor.of(context).txtBlack
-                                        : CustomAppColor.of(context).txtGrey,
+                                    textColor: occasionList[index].isSelected ?? false ? CustomAppColor.of(context).txtBlack : CustomAppColor.of(context).txtGrey,
                                   ),
                                 ],
                               );
@@ -847,9 +831,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     text: comboList[index].label ?? '',
                                     fontSize: AppSizes.setFontSize(15),
                                     fontWeight: comboList[index].isSelected ?? false ? FontWeight.w600 : FontWeight.w500,
-                                    textColor: comboList[index].isSelected ?? false
-                                        ? CustomAppColor.of(context).txtBlack
-                                        : CustomAppColor.of(context).txtGrey,
+                                    textColor: comboList[index].isSelected ?? false ? CustomAppColor.of(context).txtBlack : CustomAppColor.of(context).txtGrey,
                                   ),
                                 ],
                               );
@@ -903,9 +885,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     text: fitShapeList[index].label ?? '',
                                     fontSize: AppSizes.setFontSize(15),
                                     fontWeight: fitShapeList[index].isSelected ?? false ? FontWeight.w600 : FontWeight.w500,
-                                    textColor: fitShapeList[index].isSelected ?? false
-                                        ? CustomAppColor.of(context).txtBlack
-                                        : CustomAppColor.of(context).txtGrey,
+                                    textColor: fitShapeList[index].isSelected ?? false ? CustomAppColor.of(context).txtBlack : CustomAppColor.of(context).txtGrey,
                                   ),
                                 ],
                               );
@@ -933,9 +913,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     text: materialList[index].label ?? '',
                                     fontSize: AppSizes.setFontSize(15),
                                     fontWeight: materialList[index].isSelected ?? false ? FontWeight.w600 : FontWeight.w500,
-                                    textColor: materialList[index].isSelected ?? false
-                                        ? CustomAppColor.of(context).txtBlack
-                                        : CustomAppColor.of(context).txtGrey,
+                                    textColor: materialList[index].isSelected ?? false ? CustomAppColor.of(context).txtBlack : CustomAppColor.of(context).txtGrey,
                                   ),
                                 ],
                               );
@@ -963,9 +941,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     text: patternList[index].label ?? '',
                                     fontSize: AppSizes.setFontSize(15),
                                     fontWeight: patternList[index].isSelected ?? false ? FontWeight.w600 : FontWeight.w500,
-                                    textColor: patternList[index].isSelected ?? false
-                                        ? CustomAppColor.of(context).txtBlack
-                                        : CustomAppColor.of(context).txtGrey,
+                                    textColor: patternList[index].isSelected ?? false ? CustomAppColor.of(context).txtBlack : CustomAppColor.of(context).txtGrey,
                                   ),
                                 ],
                               );
@@ -993,9 +969,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     text: shadeList[index].label ?? '',
                                     fontSize: AppSizes.setFontSize(15),
                                     fontWeight: shadeList[index].isSelected ?? false ? FontWeight.w600 : FontWeight.w500,
-                                    textColor: shadeList[index].isSelected ?? false
-                                        ? CustomAppColor.of(context).txtBlack
-                                        : CustomAppColor.of(context).txtGrey,
+                                    textColor: shadeList[index].isSelected ?? false ? CustomAppColor.of(context).txtBlack : CustomAppColor.of(context).txtGrey,
                                   ),
                                 ],
                               );
@@ -1023,9 +997,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     text: typeOfSkinList[index].label ?? '',
                                     fontSize: AppSizes.setFontSize(15),
                                     fontWeight: typeOfSkinList[index].isSelected ?? false ? FontWeight.w600 : FontWeight.w500,
-                                    textColor: typeOfSkinList[index].isSelected ?? false
-                                        ? CustomAppColor.of(context).txtBlack
-                                        : CustomAppColor.of(context).txtGrey,
+                                    textColor: typeOfSkinList[index].isSelected ?? false ? CustomAppColor.of(context).txtBlack : CustomAppColor.of(context).txtGrey,
                                   ),
                                 ],
                               );
@@ -1053,9 +1025,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     text: concernList[index].label ?? '',
                                     fontSize: AppSizes.setFontSize(15),
                                     fontWeight: concernList[index].isSelected ?? false ? FontWeight.w600 : FontWeight.w500,
-                                    textColor: concernList[index].isSelected ?? false
-                                        ? CustomAppColor.of(context).txtBlack
-                                        : CustomAppColor.of(context).txtGrey,
+                                    textColor: concernList[index].isSelected ?? false ? CustomAppColor.of(context).txtBlack : CustomAppColor.of(context).txtGrey,
                                   ),
                                 ],
                               );
@@ -1122,9 +1092,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     text: warrantyList[index].label ?? '',
                                     fontSize: AppSizes.setFontSize(15),
                                     fontWeight: warrantyList[index].isSelected ?? false ? FontWeight.w600 : FontWeight.w500,
-                                    textColor: warrantyList[index].isSelected ?? false
-                                        ? CustomAppColor.of(context).txtBlack
-                                        : CustomAppColor.of(context).txtGrey,
+                                    textColor: warrantyList[index].isSelected ?? false ? CustomAppColor.of(context).txtBlack : CustomAppColor.of(context).txtGrey,
                                   ),
                                 ],
                               );
@@ -1152,9 +1120,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     text: topTypeList[index].label ?? '',
                                     fontSize: AppSizes.setFontSize(15),
                                     fontWeight: topTypeList[index].isSelected ?? false ? FontWeight.w600 : FontWeight.w500,
-                                    textColor: topTypeList[index].isSelected ?? false
-                                        ? CustomAppColor.of(context).txtBlack
-                                        : CustomAppColor.of(context).txtGrey,
+                                    textColor: topTypeList[index].isSelected ?? false ? CustomAppColor.of(context).txtBlack : CustomAppColor.of(context).txtGrey,
                                   ),
                                 ],
                               );
@@ -1182,9 +1148,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     text: backTypeList[index].label ?? '',
                                     fontSize: AppSizes.setFontSize(15),
                                     fontWeight: backTypeList[index].isSelected ?? false ? FontWeight.w600 : FontWeight.w500,
-                                    textColor: backTypeList[index].isSelected ?? false
-                                        ? CustomAppColor.of(context).txtBlack
-                                        : CustomAppColor.of(context).txtGrey,
+                                    textColor: backTypeList[index].isSelected ?? false ? CustomAppColor.of(context).txtBlack : CustomAppColor.of(context).txtGrey,
                                   ),
                                 ],
                               );
@@ -1212,9 +1176,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     text: borderList[index].label ?? '',
                                     fontSize: AppSizes.setFontSize(15),
                                     fontWeight: borderList[index].isSelected ?? false ? FontWeight.w600 : FontWeight.w500,
-                                    textColor: borderList[index].isSelected ?? false
-                                        ? CustomAppColor.of(context).txtBlack
-                                        : CustomAppColor.of(context).txtGrey,
+                                    textColor: borderList[index].isSelected ?? false ? CustomAppColor.of(context).txtBlack : CustomAppColor.of(context).txtGrey,
                                   ),
                                 ],
                               );
@@ -1242,9 +1204,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     text: bottomPatternTypeList[index].label ?? '',
                                     fontSize: AppSizes.setFontSize(15),
                                     fontWeight: bottomPatternTypeList[index].isSelected ?? false ? FontWeight.w600 : FontWeight.w500,
-                                    textColor: bottomPatternTypeList[index].isSelected ?? false
-                                        ? CustomAppColor.of(context).txtBlack
-                                        : CustomAppColor.of(context).txtGrey,
+                                    textColor: bottomPatternTypeList[index].isSelected ?? false ? CustomAppColor.of(context).txtBlack : CustomAppColor.of(context).txtGrey,
                                   ),
                                 ],
                               );
@@ -1272,9 +1232,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     text: bottomWearFabricList[index].label ?? '',
                                     fontSize: AppSizes.setFontSize(15),
                                     fontWeight: bottomWearFabricList[index].isSelected ?? false ? FontWeight.w600 : FontWeight.w500,
-                                    textColor: bottomWearFabricList[index].isSelected ?? false
-                                        ? CustomAppColor.of(context).txtBlack
-                                        : CustomAppColor.of(context).txtGrey,
+                                    textColor: bottomWearFabricList[index].isSelected ?? false ? CustomAppColor.of(context).txtBlack : CustomAppColor.of(context).txtGrey,
                                   ),
                                 ],
                               );

@@ -61,17 +61,17 @@ class _GoozzyECommerceScreenListScreen extends State<GoozzyECommerceScreenListSc
         onClick: () => Navigator.push(context, SplashScreen.route()),
       ),
       ScreenListDataModel(
-        title: "OnBoarding 1",
+        title: "Onboarding 1",
         icon: AppAssets.icScreens,
         onClick: () => Navigator.push(context, OnBoardingScreen.route(initialIndex: 0)),
       ),
       ScreenListDataModel(
-        title: "OnBoarding 2",
+        title: "Onboarding 2",
         icon: AppAssets.icScreens,
         onClick: () => Navigator.push(context, OnBoardingScreen.route(initialIndex: 1)),
       ),
       ScreenListDataModel(
-        title: "OnBoarding 3",
+        title: "Onboarding 3",
         icon: AppAssets.icScreens,
         onClick: () => Navigator.push(context, OnBoardingScreen.route(initialIndex: 2)),
       ),
@@ -91,22 +91,22 @@ class _GoozzyECommerceScreenListScreen extends State<GoozzyECommerceScreenListSc
         onClick: () => Navigator.push(context, AccountCreatedScreen.route()),
       ),
       ScreenListDataModel(
-        title: "Sign in with Social login",
+        title: "Sign In With Social Login",
         icon: AppAssets.icScreens,
         onClick: () => Navigator.push(context, SocialLoginScreen.route()),
       ),
       ScreenListDataModel(
-        title: "Create new Account",
+        title: "Create New Account",
         icon: AppAssets.icScreens,
         onClick: () => Navigator.push(context, CreateNewAccountScreen.route()),
       ),
       ScreenListDataModel(
-        title: "Log in to Your Account",
+        title: "Log In To Your Account",
         icon: AppAssets.icScreens,
         onClick: () => Navigator.push(context, LoginToYourAccountScreen.route()),
       ),
       ScreenListDataModel(
-        title: "Forgot Password with Email",
+        title: "Forgot Password With Email",
         icon: AppAssets.icScreens,
         onClick: () => Navigator.push(context, ForgotPasswordScreen.route(isFromEmail: true)),
       ),
@@ -116,7 +116,7 @@ class _GoozzyECommerceScreenListScreen extends State<GoozzyECommerceScreenListSc
         onClick: () => Navigator.push(context, CreateNewPasswordScreen.route()),
       ),
       ScreenListDataModel(
-        title: "Forgot Password with Phone Number",
+        title: "Forgot Password With Phone Number",
         icon: AppAssets.icScreens,
         onClick: () => Navigator.push(context, ForgotPasswordScreen.route(isFromEmail: false)),
       ),
@@ -143,7 +143,7 @@ class _GoozzyECommerceScreenListScreen extends State<GoozzyECommerceScreenListSc
         onClick: () => Navigator.push(context, ViewProductScreen.route()),
       ),
       ScreenListDataModel(
-        title: "View inner product",
+        title: "View Inner Product",
         icon: AppAssets.icScreens,
         onClick: () => Navigator.push(context, ViewInnerProductScreen.route()),
       ),

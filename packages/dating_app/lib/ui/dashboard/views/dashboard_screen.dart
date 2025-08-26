@@ -79,9 +79,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
                       children: [
                         Image.asset(
                           icon,
-                          width: 40.setWidth,
+                          width: 40.setHeight,
                           height: 40.setHeight,
-                          fit: BoxFit.fill,
+                          fit: BoxFit.cover,
                         ),
                         if (index == 2)
                           Positioned(

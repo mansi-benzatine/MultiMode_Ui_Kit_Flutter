@@ -204,9 +204,9 @@ class TopBar extends StatelessWidget {
                     decoration: BoxDecoration(shape: BoxShape.circle, color: CustomAppColor.of(context).white),
                     child: Image.asset(
                       AppAssets.icNotification,
-                      height: 28.setHeight,
-                      width: 24.setWidth,
-                      fit: BoxFit.fill,
+                      height: 24.setHeight,
+                      width: 20.setHeight,
+                      fit: BoxFit.contain,
                     ),
                   ),
                 ),

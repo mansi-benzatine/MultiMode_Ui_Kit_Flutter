@@ -192,7 +192,7 @@ class _TapToChatView extends StatelessWidget {
           CommonText(
             text: "How Can I Help You Today?",
             fontWeight: FontWeight.w600,
-            fontSize: 32.setFontSize,
+            fontSize: 26.setFontSize,
             textColor: CustomAppColor.of(context).txtBlack,
             height: 1.10,
             textAlign: TextAlign.start,

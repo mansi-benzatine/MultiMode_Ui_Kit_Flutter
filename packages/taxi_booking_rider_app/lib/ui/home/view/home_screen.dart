@@ -104,7 +104,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           icon: Image.asset(
                             AppAssets.icMenu,
                             height: 12.setHeight,
-                            width: 16.setWidth,
+                            width: 16.setHeight,
                             color: CustomAppColor.of(context).icBlackWhite,
                           ),
                         ),
@@ -336,7 +336,14 @@ class _HomeScreenState extends State<HomeScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Container(padding: const EdgeInsets.all(16), decoration: BoxDecoration(color: CustomAppColor.of(context).icBlackGreen, shape: BoxShape.circle), child: Icon(icon, color: Colors.white)),
+            Container(
+                padding: const EdgeInsets.all(16),
+                decoration: BoxDecoration(color: CustomAppColor.of(context).icBlackGreen, shape: BoxShape.circle),
+                child: Icon(
+                  icon,
+                  color: Colors.white,
+                  size: 22.setHeight,
+                )),
             SizedBox(height: 6.setHeight),
             CommonText(text: title, textColor: CustomAppColor.of(context).txtBlack, fontSize: 14.setFontSize, fontWeight: FontWeight.w500, textAlign: TextAlign.center),
             CommonText(text: subtitle, textColor: CustomAppColor.of(context).txtGray, fontSize: 12.setFontSize, textAlign: TextAlign.center),

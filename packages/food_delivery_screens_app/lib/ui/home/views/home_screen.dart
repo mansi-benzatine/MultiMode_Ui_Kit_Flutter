@@ -443,15 +443,16 @@ class _NewOfferCardViewState extends State<NewOfferCardView> {
               borderRadius: BorderRadius.circular(12),
               child: Image.asset(
                 imagePath,
+                width: double.infinity,
                 fit: BoxFit.fill,
               ),
             );
           }).toList(),
           options: CarouselOptions(
-            height: 130.setHeight,
+            height: 155.setHeight,
             autoPlay: true,
             enlargeCenterPage: true,
-            viewportFraction: 0.88,
+            viewportFraction: 0.75,
             onPageChanged: (index, reason) {
               setState(() {
                 _currentIndex = index;
@@ -556,7 +557,7 @@ class TopCategoriesView extends StatelessWidget {
                           padding: EdgeInsets.symmetric(horizontal: 22.setWidth, vertical: 22.setHeight),
                           child: Image.asset(
                             category.imageUrl,
-                            width: 44.setWidth,
+                            width: 44.setHeight,
                             height: 44.setHeight,
                           ),
                         ),
@@ -655,7 +656,7 @@ class NearYouView extends StatelessWidget {
                         child: Image.asset(
                           category.restaurantImage,
                           height: 218.setHeight,
-                          width: 272.setWidth,
+                          width: 272.setHeight,
                           fit: BoxFit.cover,
                         ),
                       ),
@@ -780,10 +781,7 @@ class PopularBrandsView extends StatelessWidget {
                     children: [
                       Container(
                         alignment: Alignment.center,
-                        decoration: BoxDecoration(
-                            color: CustomAppColor.of(context).bgScaffold,
-                            shape: BoxShape.circle,
-                            border: Border.all(color: CustomAppColor.of(context).containerBorder)),
+                        decoration: BoxDecoration(color: CustomAppColor.of(context).bgScaffold, shape: BoxShape.circle, border: Border.all(color: CustomAppColor.of(context).containerBorder)),
                         padding: EdgeInsets.symmetric(horizontal: 22.setWidth, vertical: 22.setHeight),
                         child: Image.asset(
                           category.brandImageUrl,

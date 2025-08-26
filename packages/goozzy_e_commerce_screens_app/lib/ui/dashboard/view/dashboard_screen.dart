@@ -177,6 +177,7 @@ class _DashboardScreenState extends State<DashboardScreen> with SingleTickerProv
               tabs: bottomNavigationBarList.map((item) {
                 int i = bottomNavigationBarList.indexOf(item);
                 return Tab(
+                  height: AppSizes.setHeight(65),
                   icon: Padding(
                     padding: EdgeInsets.only(top: AppSizes.setHeight(12), bottom: AppSizes.setHeight(4)),
                     child: Image.asset(

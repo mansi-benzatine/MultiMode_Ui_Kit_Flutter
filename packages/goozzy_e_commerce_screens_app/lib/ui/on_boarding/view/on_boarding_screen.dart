@@ -45,7 +45,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
               child: Column(
                 children: [
                   SizedBox(
-                    height: AppSizes.setHeight(680),
+                    height: AppSizes.setHeight(690),
                     child: PageView.builder(
                       physics: const NeverScrollableScrollPhysics(),
                       controller: _pageController,
@@ -60,11 +60,11 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                             Image.asset(
                               mData.image!,
                               height: AppSizes.setHeight(600),
-                              width: AppSizes.setWidth(488),
-                              fit: BoxFit.fill,
+                              width: AppSizes.setHeight(488),
+                              fit: BoxFit.cover,
                               gaplessPlayback: true,
                             ),
-                            SizedBox(height: AppSizes.setHeight(20)),
+                            SizedBox(height: AppSizes.setHeight(15)),
                             Padding(
                               padding: EdgeInsets.symmetric(vertical: AppSizes.setHeight(10)),
                               child: CommonText(
@@ -102,9 +102,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                             children: [
                               Expanded(
                                 child: CommonText(
-                                  text: currentIndex.value == onBoardingList(context).length - 1
-                                      ? Languages.of(context).getStarted
-                                      : Languages.of(context).next,
+                                  text: currentIndex.value == onBoardingList(context).length - 1 ? Languages.of(context).getStarted : Languages.of(context).next,
                                   fontWeight: FontWeight.w600,
                                   fontSize: AppSizes.setFontSize(18),
                                   textColor: CustomAppColor.of(context).white,

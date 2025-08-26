@@ -80,9 +80,44 @@ List<CategoryList> categoryList = [
     name: Languages.of(GoozzyECommerceMyApp.navigatorKey.currentState!.context).footwear,
     color: AppColor.containerOrange,
   ),
+  CategoryList(
+    imagePath: AppAssets.icDress,
+    name: Languages.of(GoozzyECommerceMyApp.navigatorKey.currentState!.context).women,
+    color: AppColor.containerGreen,
+  ),
+  CategoryList(
+    imagePath: AppAssets.icCoat,
+    name: Languages.of(GoozzyECommerceMyApp.navigatorKey.currentState!.context).men,
+    color: AppColor.containerBlue,
+  ),
+  CategoryList(
+    imagePath: AppAssets.icKids,
+    name: Languages.of(GoozzyECommerceMyApp.navigatorKey.currentState!.context).kids,
+    color: AppColor.containerPink,
+  ),
+  CategoryList(
+    imagePath: AppAssets.icFootwear,
+    name: Languages.of(GoozzyECommerceMyApp.navigatorKey.currentState!.context).footwear,
+    color: AppColor.containerOrange,
+  ),
 ];
 
 List<CategoryList> trendingDealsList = [
+  CategoryList(
+    imagePath: AppAssets.imgKurti,
+    name: Languages.of(GoozzyECommerceMyApp.navigatorKey.currentState!.context).kurti,
+    discount: 50,
+  ),
+  CategoryList(
+    imagePath: AppAssets.imgWomenTop,
+    name: Languages.of(GoozzyECommerceMyApp.navigatorKey.currentState!.context).womenTop,
+    discount: 70,
+  ),
+  CategoryList(
+    imagePath: AppAssets.imgJumpSuit,
+    name: Languages.of(GoozzyECommerceMyApp.navigatorKey.currentState!.context).womenTop,
+    discount: 50,
+  ),
   CategoryList(
     imagePath: AppAssets.imgKurti,
     name: Languages.of(GoozzyECommerceMyApp.navigatorKey.currentState!.context).kurti,
