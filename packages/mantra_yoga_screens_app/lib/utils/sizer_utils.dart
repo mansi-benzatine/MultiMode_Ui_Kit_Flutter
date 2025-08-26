@@ -4,7 +4,8 @@ extension SizeExtension on num {
   // ===================== FontSize =========================
 
   double get scaledText => ScreenUtil().scaleText;
-  double get setFontSize => ScreenUtil().setSp(this);
+  // double get setFontSize => ScreenUtil().setSp(this);
+  double get setFontSize => double.parse(toString());
   // Use ScreenUtil's setSp if needed: ScreenUtil().setSp(this);
 
   // ===================== Height =========================
