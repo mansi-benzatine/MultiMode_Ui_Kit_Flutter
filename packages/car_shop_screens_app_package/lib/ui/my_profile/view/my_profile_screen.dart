@@ -23,7 +23,8 @@ import '../../notification_setting/view/notification_setting.dart';
 import '../../privacy_policy/view/privacy_policy_screen.dart';
 
 class MyProfileScreen extends StatefulWidget {
-  const MyProfileScreen({super.key});
+  final bool isForLogoutAlert;
+  const MyProfileScreen({super.key, this.isForLogoutAlert = false});
 
   @override
   State<MyProfileScreen> createState() => _MyProfileScreenState();
@@ -40,6 +41,16 @@ class _MyProfileScreenState extends State<MyProfileScreen> implements TopBarClic
   void initState() {
     super.initState();
     _fillData();
+
+    if (widget.isForLogoutAlert) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        showDialog(
+          context: context,
+          barrierDismissible: false,
+          builder: (dialogContext) => LogoutDialog(dialogContext: dialogContext),
+        );
+      });
+    }
   }
 
   @override
@@ -220,17 +231,20 @@ class _MyProfileScreenState extends State<MyProfileScreen> implements TopBarClic
                         },
                       ),
                     ),
-                    _settingItem(
-                      title: Languages.of(context).txtLogout,
-                      icon: AppAssets.icLogout,
-                      textColor: CustomAppColor.of(context).txtRed,
-                      isLast: true,
-                      onTap: () {
-                        showDialog(
-                          context: context,
-                          builder: (dialogContext) => LogoutDialog(dialogContext: dialogContext),
-                        );
-                      },
+                    IgnorePointer(
+                      ignoring: true,
+                      child: _settingItem(
+                        title: Languages.of(context).txtLogout,
+                        icon: AppAssets.icLogout,
+                        textColor: CustomAppColor.of(context).txtRed,
+                        isLast: true,
+                        onTap: () {
+                          showDialog(
+                            context: context,
+                            builder: (dialogContext) => LogoutDialog(dialogContext: dialogContext),
+                          );
+                        },
+                      ),
                     ),
                   ],
                 ),

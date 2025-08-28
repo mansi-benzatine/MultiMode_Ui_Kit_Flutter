@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mantra_yoga_screens_app_package/utils/sizer_utils.dart';
 
+import '../../../dialogs/alerts/congratulation_dialog.dart';
 import '../../../interfaces/top_bar_click_listener.dart';
 import '../../../localization/language/languages.dart';
 import '../../../utils/app_assets.dart';
@@ -12,10 +13,14 @@ import '../../../widgets/text_field/text_form_field.dart';
 import '../../../widgets/top_bar/topbar.dart';
 
 class ResetPasswordScreen extends StatefulWidget {
-  const ResetPasswordScreen({super.key});
+  final bool isForAlert;
+  const ResetPasswordScreen({super.key, this.isForAlert = false});
 
-  static Route<void> route() {
-    return MaterialPageRoute(builder: (context) => const ResetPasswordScreen());
+  static Route<void> route({bool isForAlert = false}) {
+    return MaterialPageRoute(
+        builder: (context) => ResetPasswordScreen(
+              isForAlert: isForAlert,
+            ));
   }
 
   @override
@@ -25,6 +30,20 @@ class ResetPasswordScreen extends StatefulWidget {
 class _ResetPasswordScreenState extends State<ResetPasswordScreen> implements TopBarClickListener {
   ValueNotifier<bool> isPasswordVisible = ValueNotifier(true);
   ValueNotifier<bool> isConfirmPasswordVisible = ValueNotifier(true);
+
+  @override
+  void initState() {
+    super.initState();
+
+    if (widget.isForAlert) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        CongratulationDialog.show(
+          context,
+          onTap: () {},
+        );
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {

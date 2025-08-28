@@ -25,14 +25,20 @@ import '../../cancel_ride/view/cancel_ride_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   final bool isForRideRequest;
+  final bool isShownLocationAlert;
+  final bool isShownSideMenu;
 
-  static Route<void> route({bool isForRideRequest = false}) {
+  static Route<void> route({bool isForRideRequest = false, bool isShownLocationAlert = false, bool isShowSideMenu = false}) {
     return MaterialPageRoute(
-      builder: (_) => HomeScreen(isForRideRequest: isForRideRequest),
+      builder: (_) => HomeScreen(
+        isForRideRequest: isForRideRequest,
+        isShownLocationAlert: isShownLocationAlert,
+        isShownSideMenu: isShowSideMenu,
+      ),
     );
   }
 
-  const HomeScreen({super.key, this.isForRideRequest = false});
+  const HomeScreen({super.key, this.isForRideRequest = false, this.isShownLocationAlert = false, this.isShownSideMenu = false});
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -51,7 +57,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   @override
   void initState() {
     super.initState();
-    _checkFirstTime();
+    // _checkFirstTime();
 
     _resizableController = AnimationController(
       vsync: this,
@@ -79,6 +85,18 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
       showContainer = true;
       _resizableController.repeat(reverse: true);
     }
+
+    if (widget.isShownLocationAlert) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        _showEnableLocationDialog();
+      });
+    }
+
+    if (widget.isShownSideMenu) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        _scaffoldKey.currentState?.openDrawer();
+      });
+    }
   }
 
   @override
@@ -104,45 +122,57 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
       barrierDismissible: false,
       context: context,
       builder: (_) {
-        return Padding(
-          padding: EdgeInsets.symmetric(horizontal: 28.setWidth),
-          child: CommonDialog(
-            titleText: CommonText(
-              text: Languages.of(context).txtEnableLocation,
-              fontWeight: FontWeight.w700,
-              fontSize: 24.setFontSize,
-              textColor: CustomAppColor.of(context).txtBlack,
-            ),
-            descriptionText: CommonText(
-              text: Languages.of(context).txtWeNeedAccessToYourLocationToBeAbleToUseThisService,
-              fontSize: 14.setFontSize,
-              fontWeight: FontWeight.w400,
-              textColor: CustomAppColor.of(context).txtGray,
-            ),
-            icon: Image.asset(
-              AppAssets.imgEnableLocation,
-              height: 100.setHeight,
-            ),
-            button: Column(
-              children: [
-                CommonButton(
-                  text: Languages.of(context).txtEnableLocation,
-                  onTap: () => Navigator.pop(context),
-                  height: 45.setHeight,
-                  buttonColor: CustomAppColor.of(context).btnPrimary,
-                  buttonTextSize: 14.setFontSize,
+        return PopScope(
+          canPop: false,
+          onPopInvokedWithResult: (didPop, result) {
+            if (!didPop) {
+              Navigator.pop(context);
+              Navigator.pop(context);
+            }
+          },
+          child: Padding(
+            padding: EdgeInsets.symmetric(horizontal: 28.setWidth),
+            child: CommonDialog(
+              titleText: CommonText(
+                text: Languages.of(context).txtEnableLocation,
+                fontWeight: FontWeight.w700,
+                fontSize: 24.setFontSize,
+                textColor: CustomAppColor.of(context).txtBlack,
+              ),
+              descriptionText: CommonText(
+                text: Languages.of(context).txtWeNeedAccessToYourLocationToBeAbleToUseThisService,
+                fontSize: 14.setFontSize,
+                fontWeight: FontWeight.w400,
+                textColor: CustomAppColor.of(context).txtGray,
+              ),
+              icon: Image.asset(
+                AppAssets.imgEnableLocation,
+                height: 100.setHeight,
+              ),
+              button: IgnorePointer(
+                ignoring: true,
+                child: Column(
+                  children: [
+                    CommonButton(
+                      text: Languages.of(context).txtEnableLocation,
+                      onTap: () => Navigator.pop(context),
+                      height: 45.setHeight,
+                      buttonColor: CustomAppColor.of(context).btnPrimary,
+                      buttonTextSize: 14.setFontSize,
+                    ),
+                    SizedBox(height: 16.setHeight),
+                    CommonButton(
+                      text: Languages.of(context).txtNotNow,
+                      onTap: () => Navigator.pop(context),
+                      buttonColor: CustomAppColor.of(context).transparent,
+                      borderColor: CustomAppColor.of(context).btnBorder,
+                      buttonTextColor: CustomAppColor.of(context).txtBlack,
+                      height: 45.setHeight,
+                      buttonTextSize: 16.setFontSize,
+                    ),
+                  ],
                 ),
-                SizedBox(height: 16.setHeight),
-                CommonButton(
-                  text: Languages.of(context).txtNotNow,
-                  onTap: () => Navigator.pop(context),
-                  buttonColor: CustomAppColor.of(context).transparent,
-                  borderColor: CustomAppColor.of(context).btnBorder,
-                  buttonTextColor: CustomAppColor.of(context).txtBlack,
-                  height: 45.setHeight,
-                  buttonTextSize: 16.setFontSize,
-                ),
-              ],
+              ),
             ),
           ),
         );
@@ -154,220 +184,233 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   Widget build(BuildContext context) {
     return AnnotatedRegion<SystemUiOverlayStyle>(
       value: const SystemUiOverlayStyle(statusBarIconBrightness: Brightness.dark),
-      child: SafeArea(
-        top: false,
-        child: Scaffold(
-          key: _scaffoldKey,
-          drawer: _buildDrawer(),
-          body: Stack(
-            children: [
-              _buildMapBackground(),
-              SafeArea(
-                child: Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 16.setWidth, vertical: 12.setHeight),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Container(
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(20),
-                          color: CustomAppColor.of(context).bgScreen,
-                        ),
-                        child: IconButton(
-                          onPressed: () {
-                            _scaffoldKey.currentState?.openDrawer();
-                          },
-                          icon: Image.asset(
-                            AppAssets.icMenu,
-                            height: 12.setHeight,
-                            width: 16.setWidth,
-                            color: CustomAppColor.of(context).icBlackWhite,
+      child: PopScope(
+        canPop: widget.isShownSideMenu ? false : true,
+        onPopInvokedWithResult: (didPop, result) {
+          if (!didPop && widget.isShownSideMenu) {
+            Navigator.pop(context);
+            Navigator.pop(context);
+          }
+        },
+        child: SafeArea(
+          top: false,
+          child: Scaffold(
+            endDrawerEnableOpenDragGesture: false,
+            key: _scaffoldKey,
+            drawer: Container(color: Colors.transparent, child: Row(mainAxisAlignment: MainAxisAlignment.start, children: [SizedBox(width: 304, child: _buildDrawer())])),
+            body: Stack(
+              children: [
+                _buildMapBackground(),
+                SafeArea(
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 16.setWidth, vertical: 12.setHeight),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        IgnorePointer(
+                          ignoring: true,
+                          child: Container(
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(20),
+                              color: CustomAppColor.of(context).bgScreen,
+                            ),
+                            child: IconButton(
+                              onPressed: () {
+                                _scaffoldKey.currentState?.openDrawer();
+                              },
+                              icon: Image.asset(
+                                AppAssets.icMenu,
+                                height: 12.setHeight,
+                                width: 16.setWidth,
+                                color: CustomAppColor.of(context).icBlackWhite,
+                              ),
+                            ),
                           ),
                         ),
-                      ),
-                      InkWell(onTap: () {}, child: getContainer()),
-                    ],
+                        InkWell(onTap: () {}, child: getContainer()),
+                      ],
+                    ),
                   ),
                 ),
-              ),
-              Align(
-                alignment: Alignment.bottomCenter,
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: CustomAppColor.of(context).bgScreen,
-                    borderRadius: const BorderRadius.vertical(top: Radius.circular(39)),
-                  ),
-                  child: isShowRideRequest
-                      ? Column(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            ConfirmRideView(
-                              onClickCancelFeedback: () async {
-                                final result = await Navigator.push(context, CancelRideScreen.route());
-                                if (result == 'cancelled') {
-                                  setState(() {
-                                    isShowRideRequest = false;
-                                    showContainer = true;
-                                  });
-                                }
-                              },
-                            ),
-                          ],
-                        )
-                      : Column(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            SizedBox(height: 16.setHeight),
-                            Container(
-                              width: 42.setWidth,
-                              height: 4.setHeight,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(2),
-                                color: const Color(0xFF9EA2A7),
+                Align(
+                  alignment: Alignment.bottomCenter,
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: CustomAppColor.of(context).bgScreen,
+                      borderRadius: const BorderRadius.vertical(top: Radius.circular(39)),
+                    ),
+                    child: isShowRideRequest
+                        ? Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              ConfirmRideView(
+                                onClickCancelFeedback: () async {
+                                  final result = await Navigator.push(context, CancelRideScreen.route());
+                                  if (result == 'cancelled') {
+                                    setState(() {
+                                      isShowRideRequest = false;
+                                      showContainer = true;
+                                    });
+                                  }
+                                },
                               ),
-                            ),
-                            Align(
-                              alignment: Alignment.centerLeft,
-                              child: Padding(
-                                padding: EdgeInsets.symmetric(horizontal: 20.setWidth, vertical: 20.setHeight),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Row(
-                                      mainAxisAlignment: MainAxisAlignment.start,
-                                      children: [
-                                        ClipRRect(
-                                          borderRadius: const BorderRadiusGeometry.all(Radius.circular(12)),
-                                          child: Image.asset(
-                                            AppAssets.imgDummyDriverProfile,
-                                            alignment: Alignment.center,
-                                            width: 70.setHeight,
-                                            height: 70.setHeight,
-                                            fit: BoxFit.cover,
-                                          ),
-                                        ),
-                                        SizedBox(width: 16.setWidth),
-                                        Expanded(
-                                          child: Column(
-                                            crossAxisAlignment: CrossAxisAlignment.start,
-                                            children: [
-                                              CommonText(
-                                                text: "Devin Jorje",
-                                                fontSize: 17.setFontSize,
-                                                fontWeight: FontWeight.w600,
-                                              ),
-                                              CommonText(
-                                                text: "Toyota Inova (CSR874-569)",
-                                                fontWeight: FontWeight.w400,
-                                                fontSize: 12.setFontSize,
-                                                textColor: CustomAppColor.of(context).txtGray,
-                                              )
-                                            ],
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                    SizedBox(height: 22.setHeight),
-                                    Row(
-                                      children: [
-                                        Expanded(
-                                          child: Container(
-                                            decoration: BoxDecoration(
-                                              color: CustomAppColor.of(context).chatBubbleFromSender,
-                                              borderRadius: const BorderRadius.all(
-                                                Radius.circular(12),
-                                              ),
-                                            ),
-                                            padding: const EdgeInsets.all(12),
-                                            child: Row(
-                                              children: [
-                                                Container(
-                                                  padding: const EdgeInsets.all(12),
-                                                  decoration: BoxDecoration(
-                                                    color: CustomAppColor.of(context).btnPrimary,
-                                                    borderRadius: const BorderRadius.all(
-                                                      Radius.circular(12),
-                                                    ),
-                                                  ),
-                                                  child: Image.asset(
-                                                    AppAssets.icCalender,
-                                                    width: 24.setHeight,
-                                                    height: 24.setHeight,
-                                                  ),
-                                                ),
-                                                SizedBox(width: 10.setWidth),
-                                                Column(
-                                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                                  children: [
-                                                    CommonText(
-                                                      text: Languages.of(context).txtPreBooked,
-                                                      fontSize: 12.setFontSize,
-                                                      textColor: CustomAppColor.of(context).txtGray,
-                                                    ),
-                                                    CommonText(
-                                                      text: "8",
-                                                      fontSize: 20.setFontSize,
-                                                      fontWeight: FontWeight.w600,
-                                                    ),
-                                                  ],
-                                                )
-                                              ],
-                                            ),
-                                          ),
-                                        ),
-                                        SizedBox(width: 11.setWidth),
-                                        Expanded(
-                                          child: Container(
-                                            decoration: BoxDecoration(
-                                              color: CustomAppColor.of(context).chatBubbleFromSender,
-                                              borderRadius: const BorderRadius.all(Radius.circular(12)),
-                                            ),
-                                            padding: const EdgeInsets.all(12),
-                                            child: Row(
-                                              children: [
-                                                Container(
-                                                  padding: const EdgeInsets.all(12),
-                                                  decoration: BoxDecoration(
-                                                    color: CustomAppColor.of(context).btnPrimary,
-                                                    borderRadius: const BorderRadius.all(Radius.circular(12)),
-                                                  ),
-                                                  child: Image.asset(
-                                                    AppAssets.icFillDollar,
-                                                    width: 24.setHeight,
-                                                    height: 24.setHeight,
-                                                  ),
-                                                ),
-                                                SizedBox(width: 10.setWidth),
-                                                Column(
-                                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                                  children: [
-                                                    CommonText(
-                                                      text: Languages.of(context).txtTodayEarned,
-                                                      textColor: CustomAppColor.of(context).txtGray,
-                                                      fontSize: 12.setFontSize,
-                                                    ),
-                                                    CommonText(
-                                                      text: "\$650.00",
-                                                      fontSize: 20.setFontSize,
-                                                      fontWeight: FontWeight.w700,
-                                                    ),
-                                                  ],
-                                                )
-                                              ],
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    )
-                                  ],
+                            ],
+                          )
+                        : Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              SizedBox(height: 16.setHeight),
+                              Container(
+                                width: 42.setWidth,
+                                height: 4.setHeight,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(2),
+                                  color: const Color(0xFF9EA2A7),
                                 ),
                               ),
-                            ),
-                          ],
-                        ),
+                              Align(
+                                alignment: Alignment.centerLeft,
+                                child: Padding(
+                                  padding: EdgeInsets.symmetric(horizontal: 20.setWidth, vertical: 20.setHeight),
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Row(
+                                        mainAxisAlignment: MainAxisAlignment.start,
+                                        children: [
+                                          ClipRRect(
+                                            borderRadius: const BorderRadiusGeometry.all(Radius.circular(12)),
+                                            child: Image.asset(
+                                              AppAssets.imgDummyDriverProfile,
+                                              alignment: Alignment.center,
+                                              width: 70.setHeight,
+                                              height: 70.setHeight,
+                                              fit: BoxFit.cover,
+                                            ),
+                                          ),
+                                          SizedBox(width: 16.setWidth),
+                                          Expanded(
+                                            child: Column(
+                                              crossAxisAlignment: CrossAxisAlignment.start,
+                                              children: [
+                                                CommonText(
+                                                  text: "Devin Jorje",
+                                                  fontSize: 17.setFontSize,
+                                                  fontWeight: FontWeight.w600,
+                                                ),
+                                                CommonText(
+                                                  text: "Toyota Inova (CSR874-569)",
+                                                  fontWeight: FontWeight.w400,
+                                                  fontSize: 12.setFontSize,
+                                                  textColor: CustomAppColor.of(context).txtGray,
+                                                )
+                                              ],
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                      SizedBox(height: 22.setHeight),
+                                      Row(
+                                        children: [
+                                          Expanded(
+                                            child: Container(
+                                              decoration: BoxDecoration(
+                                                color: CustomAppColor.of(context).chatBubbleFromSender,
+                                                borderRadius: const BorderRadius.all(
+                                                  Radius.circular(12),
+                                                ),
+                                              ),
+                                              padding: const EdgeInsets.all(12),
+                                              child: Row(
+                                                children: [
+                                                  Container(
+                                                    padding: const EdgeInsets.all(12),
+                                                    decoration: BoxDecoration(
+                                                      color: CustomAppColor.of(context).btnPrimary,
+                                                      borderRadius: const BorderRadius.all(
+                                                        Radius.circular(12),
+                                                      ),
+                                                    ),
+                                                    child: Image.asset(
+                                                      AppAssets.icCalender,
+                                                      width: 24.setHeight,
+                                                      height: 24.setHeight,
+                                                    ),
+                                                  ),
+                                                  SizedBox(width: 10.setWidth),
+                                                  Column(
+                                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                                    children: [
+                                                      CommonText(
+                                                        text: Languages.of(context).txtPreBooked,
+                                                        fontSize: 12.setFontSize,
+                                                        textColor: CustomAppColor.of(context).txtGray,
+                                                      ),
+                                                      CommonText(
+                                                        text: "8",
+                                                        fontSize: 20.setFontSize,
+                                                        fontWeight: FontWeight.w600,
+                                                      ),
+                                                    ],
+                                                  )
+                                                ],
+                                              ),
+                                            ),
+                                          ),
+                                          SizedBox(width: 11.setWidth),
+                                          Expanded(
+                                            child: Container(
+                                              decoration: BoxDecoration(
+                                                color: CustomAppColor.of(context).chatBubbleFromSender,
+                                                borderRadius: const BorderRadius.all(Radius.circular(12)),
+                                              ),
+                                              padding: const EdgeInsets.all(12),
+                                              child: Row(
+                                                children: [
+                                                  Container(
+                                                    padding: const EdgeInsets.all(12),
+                                                    decoration: BoxDecoration(
+                                                      color: CustomAppColor.of(context).btnPrimary,
+                                                      borderRadius: const BorderRadius.all(Radius.circular(12)),
+                                                    ),
+                                                    child: Image.asset(
+                                                      AppAssets.icFillDollar,
+                                                      width: 24.setHeight,
+                                                      height: 24.setHeight,
+                                                    ),
+                                                  ),
+                                                  SizedBox(width: 10.setWidth),
+                                                  Column(
+                                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                                    children: [
+                                                      CommonText(
+                                                        text: Languages.of(context).txtTodayEarned,
+                                                        textColor: CustomAppColor.of(context).txtGray,
+                                                        fontSize: 12.setFontSize,
+                                                      ),
+                                                      CommonText(
+                                                        text: "\$650.00",
+                                                        fontSize: 20.setFontSize,
+                                                        fontWeight: FontWeight.w700,
+                                                      ),
+                                                    ],
+                                                  )
+                                                ],
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      )
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),

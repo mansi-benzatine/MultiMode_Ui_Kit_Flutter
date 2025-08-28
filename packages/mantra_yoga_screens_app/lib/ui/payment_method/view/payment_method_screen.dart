@@ -6,6 +6,7 @@ import '../../../localization/language/languages.dart';
 import '../../../utils/app_assets.dart';
 import '../../../utils/app_color.dart';
 import '../../../utils/constant.dart';
+import '../../../widgets/button/common_button.dart';
 import '../../../widgets/text/common_text.dart';
 import '../../../widgets/top_bar/topbar.dart';
 import '../../card_or_wallet_details/view/card_or_wallet_details_screen.dart';
@@ -34,7 +35,7 @@ class _PaymentMethodScreenState extends State<PaymentMethodScreen> implements To
         children: [
           TopBar(
             this,
-            title: widget.isFromSelection ? Languages.of(context).txtSelectPaymentMethod : Languages.of(context).txtPaymentMethod,
+            title: widget.isFromSelection ? Languages.of(context).txtPaymentMethod : Languages.of(context).txtSelectPaymentMethod,
           ),
           Expanded(
             child: SingleChildScrollView(
@@ -45,7 +46,7 @@ class _PaymentMethodScreenState extends State<PaymentMethodScreen> implements To
                 bottom: MediaQuery.of(context).padding.bottom + 10.setHeight,
               ),
               child: IgnorePointer(
-                ignoring: true,
+                ignoring: widget.isFromSelection ? false : true,
                 child: Column(
                   children: [
                     _itemOfOptionsView(
@@ -81,6 +82,21 @@ class _PaymentMethodScreenState extends State<PaymentMethodScreen> implements To
                   ],
                 ),
               ),
+            ),
+          ),
+          Visibility(
+            visible: widget.isFromSelection,
+            child: CommonButton(
+              text: "${Languages.of(context).txtContinue} - \$14.00",
+              onTap: () {},
+              buttonColor: CustomAppColor.of(context).primary,
+              borderColor: CustomAppColor.of(context).borderColor,
+              borderWidth: 4,
+              radius: 18,
+              mLeft: 20.setWidth,
+              mRight: 20.setWidth,
+              mBottom: MediaQuery.of(context).padding.bottom + 10.setHeight,
+              mTop: 20.setHeight,
             ),
           ),
         ],

@@ -74,11 +74,20 @@ class DashedBorderPainter extends CustomPainter {
 }
 
 class EnterCarDetailScreen extends StatefulWidget {
-  static Route<void> route() {
-    return MaterialPageRoute(builder: (_) => const EnterCarDetailScreen());
+  final int currentIndex;
+  final bool isForAlert;
+  final bool isShownZipCode;
+
+  static Route<void> route({bool isForAlert = false, int currentIndex = 0, bool isShownZipCode = false}) {
+    return MaterialPageRoute(
+        builder: (_) => EnterCarDetailScreen(
+              isForAlert: isForAlert,
+              currentIndex: currentIndex,
+              isShownZipCode: isShownZipCode,
+            ));
   }
 
-  const EnterCarDetailScreen({super.key});
+  const EnterCarDetailScreen({super.key, this.isForAlert = false, this.currentIndex = 0, this.isShownZipCode = false});
 
   @override
   State<EnterCarDetailScreen> createState() => _EnterCarDetailScreenState();
@@ -103,12 +112,26 @@ class _EnterCarDetailScreenState extends State<EnterCarDetailScreen> with Ticker
   @override
   initState() {
     super.initState();
-    _tabController = TabController(length: tabList.length, vsync: this);
+    _tabController = TabController(initialIndex: widget.currentIndex, length: tabList.length, vsync: this);
+
+    selectedIndex = widget.currentIndex;
     _tabController.addListener(() {
       setState(() {
-        selectedIndex = _tabController.index;
+        selectedIndex = widget.currentIndex;
       });
     });
+
+    if (widget.isForAlert) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        showModalBottomSheet(
+          isScrollControlled: false,
+          isDismissible: false,
+          enableDrag: false,
+          context: context,
+          builder: (dialogContext) => const SellCarDetailConfirmationBottomSheet(),
+        );
+      });
+    }
   }
 
   @override
@@ -124,50 +147,53 @@ class _EnterCarDetailScreenState extends State<EnterCarDetailScreen> with Ticker
               isShowBack: true,
             ),
             SizedBox(height: 10.setHeight),
-            TabBar(
-              controller: _tabController,
-              indicator: BoxDecoration(
-                borderRadius: BorderRadius.circular(25.setWidth),
-                color: CustomAppColor.of(context).transparent,
-              ),
-              indicatorSize: TabBarIndicatorSize.tab,
-              indicatorPadding: EdgeInsets.zero,
-              dividerColor: Colors.transparent,
-              tabAlignment: TabAlignment.start,
-              isScrollable: true,
-              labelPadding: EdgeInsets.only(right: 10.setWidth),
-              padding: EdgeInsets.only(
-                left: 16.setWidth,
-              ),
-              labelColor: CustomAppColor.of(context).txtWhite,
-              onTap: (index) {
-                setState(() {
-                  selectedIndex = index;
-                  _tabController.animateTo(index);
-                });
-              },
-              tabs: List.generate(
-                tabList.length,
-                (index) => Container(
-                  alignment: Alignment.center,
-                  decoration: BoxDecoration(
-                    color: (selectedIndex > index) ? CustomAppColor.of(context).primary.withOpacityPercent(0.1) : null,
-                    borderRadius: BorderRadius.circular(25.setWidth),
-                    gradient: selectedIndex == index ? CustomAppColor.of(context).primaryGradient : null,
-                    border: Border.all(
-                      color: (selectedIndex > index) ? CustomAppColor.of(context).primary : CustomAppColor.of(context).containerBorder,
-                      width: 0.5,
+            IgnorePointer(
+              ignoring: true,
+              child: TabBar(
+                controller: _tabController,
+                indicator: BoxDecoration(
+                  borderRadius: BorderRadius.circular(25.setWidth),
+                  color: CustomAppColor.of(context).transparent,
+                ),
+                indicatorSize: TabBarIndicatorSize.tab,
+                indicatorPadding: EdgeInsets.zero,
+                dividerColor: Colors.transparent,
+                tabAlignment: TabAlignment.start,
+                isScrollable: true,
+                labelPadding: EdgeInsets.only(right: 10.setWidth),
+                padding: EdgeInsets.only(
+                  left: 16.setWidth,
+                ),
+                labelColor: CustomAppColor.of(context).txtWhite,
+                onTap: (index) {
+                  setState(() {
+                    selectedIndex = index;
+                    _tabController.animateTo(index);
+                  });
+                },
+                tabs: List.generate(
+                  tabList.length,
+                  (index) => Container(
+                    alignment: Alignment.center,
+                    decoration: BoxDecoration(
+                      color: (selectedIndex > index) ? CustomAppColor.of(context).primary.withOpacityPercent(0.1) : null,
+                      borderRadius: BorderRadius.circular(25.setWidth),
+                      gradient: selectedIndex == index ? CustomAppColor.of(context).primaryGradient : null,
+                      border: Border.all(
+                        color: (selectedIndex > index) ? CustomAppColor.of(context).primary : CustomAppColor.of(context).containerBorder,
+                        width: 0.5,
+                      ),
                     ),
-                  ),
-                  height: 35.setHeight,
-                  padding: EdgeInsets.symmetric(
-                    horizontal: 20.setWidth,
-                  ),
-                  child: CommonText(
-                    text: tabList[index],
-                    textColor: selectedIndex == index ? CustomAppColor.of(context).tabSelectedTxtColor : CustomAppColor.of(context).tabTxtColor,
-                    fontSize: 14.setFontSize,
-                    fontWeight: FontWeight.w400,
+                    height: 35.setHeight,
+                    padding: EdgeInsets.symmetric(
+                      horizontal: 20.setWidth,
+                    ),
+                    child: CommonText(
+                      text: tabList[index],
+                      textColor: selectedIndex == index ? CustomAppColor.of(context).tabSelectedTxtColor : CustomAppColor.of(context).tabTxtColor,
+                      fontSize: 14.setFontSize,
+                      fontWeight: FontWeight.w400,
+                    ),
                   ),
                 ),
               ),
@@ -197,7 +223,7 @@ class _EnterCarDetailScreenState extends State<EnterCarDetailScreen> with Ticker
 
   Widget _brandSelection() {
     return BrandSelection(onBrandSelected: (brand) {
-      _tabController.animateTo(1);
+      // _tabController.animateTo(1);
       selectedBrand = brand.brandName;
     });
   }
@@ -228,7 +254,7 @@ class _EnterCarDetailScreenState extends State<EnterCarDetailScreen> with Ticker
                   // Handle year selection
                   selectedYear = year.toString();
                   Future.delayed(const Duration(milliseconds: 200), () {
-                    _tabController.animateTo(2);
+                    // _tabController.animateTo(2);
                   });
                   // Move to next tab (Model)
                 },
@@ -266,7 +292,7 @@ class _EnterCarDetailScreenState extends State<EnterCarDetailScreen> with Ticker
   Widget _modelSelection() {
     return ModelSelection(
         onModelSelected: (model) {
-          _tabController.animateTo(3);
+          // _tabController.animateTo(3);
           selectedModel = model;
           // Move to next tab (Variant)
         },
@@ -275,35 +301,38 @@ class _EnterCarDetailScreenState extends State<EnterCarDetailScreen> with Ticker
 
   Widget _variantSelection() {
     return VariantSelection(onVariantSelected: (variant) {
-      _tabController.animateTo(4); // Move to next tab (State)
+      // _tabController.animateTo(4); // Move to next tab (State)
       selectedVariant = variant;
     });
   }
 
   Widget _stateSelection() {
-    return StateSelection(onStateSelected: (state) {
-      _tabController.animateTo(5); // Move to next tab (kms driven)
-      selectedState = state;
-    });
+    return StateSelection(
+      onStateSelected: (state) {
+        // _tabController.animateTo(5); // Move to next tab (kms driven)
+        selectedState = state;
+      },
+      isShowZipCodes: widget.isShownZipCode,
+    );
   }
 
   Widget _kmsDrivenSelection() {
     return KmsDrivenSelection(onKmsDrivenSelected: (kmsDriven) {
-      _tabController.animateTo(6); // Move to next tab (Location)
+      // _tabController.animateTo(6); // Move to next tab (Location)
       selectedKmsDriven = kmsDriven;
     });
   }
 
   Widget _locationSelection() {
     return LocationSelection(onLocationSelected: (location) {
-      _tabController.animateTo(7); // Move to next tab (Price)
+      // _tabController.animateTo(7); // Move to next tab (Price)
       selectedLocation = location;
     });
   }
 
   Widget _priceSelection() {
     return PriceSelection(onPriceSelected: (price) {
-      _tabController.animateTo(8); // Move to next tab (Photos)
+      // _tabController.animateTo(8); // Move to next tab (Photos)
       selectedPrice = price;
     });
   }
@@ -312,7 +341,7 @@ class _EnterCarDetailScreenState extends State<EnterCarDetailScreen> with Ticker
     return PhotosSelection(onPhotosSelected: (photos) {
       // Final step - photos uploaded
       // selectedPhotos = photos;
-      showModalBottomSheet(context: context, builder: (dialogContext) => const SellCarDetailConfirmationBottomSheet());
+      // showModalBottomSheet(context: context, builder: (dialogContext) => const SellCarDetailConfirmationBottomSheet());
     });
   }
 
@@ -802,7 +831,8 @@ class _VariantSelectionState extends State<VariantSelection> with TickerProvider
 
 class StateSelection extends StatefulWidget {
   final Function(String) onStateSelected;
-  const StateSelection({super.key, required this.onStateSelected});
+  final bool isShowZipCodes;
+  const StateSelection({super.key, required this.onStateSelected, this.isShowZipCodes = false});
 
   @override
   State<StateSelection> createState() => _StateSelectionState();
@@ -894,6 +924,11 @@ class _StateSelectionState extends State<StateSelection> {
   void initState() {
     super.initState();
     filteredStates = allStates;
+    if (widget.isShowZipCodes) {
+      selectedState = "New York"; // you can pass default or handle dynamically
+      showZipCodes = true;
+      filteredZipCodes = zipCodesByState[selectedState] ?? [];
+    }
   }
 
   void _filterStates(String query) {
@@ -956,19 +991,22 @@ class _StateSelectionState extends State<StateSelection> {
                       textAlign: TextAlign.start,
                     ),
                   ),
-                  GestureDetector(
-                    onTap: () {
-                      setState(() {
-                        showZipCodes = false;
-                        selectedState = "";
-                        _searchController.clear();
-                        filteredStates = allStates;
-                      });
-                    },
-                    child: Icon(
-                      Icons.edit,
-                      color: CustomAppColor.of(context).compareBtnText,
-                      size: 18.setWidth,
+                  IgnorePointer(
+                    ignoring: true,
+                    child: GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          showZipCodes = false;
+                          selectedState = "";
+                          _searchController.clear();
+                          filteredStates = allStates;
+                        });
+                      },
+                      child: Icon(
+                        Icons.edit,
+                        color: CustomAppColor.of(context).compareBtnText,
+                        size: 18.setWidth,
+                      ),
                     ),
                   ),
                 ],
@@ -1160,32 +1198,35 @@ class _StateSelectionState extends State<StateSelection> {
                     String state = filteredStates[index];
                     bool isSelected = state == selectedState;
 
-                    return GestureDetector(
-                      onTap: () {
-                        _selectState(state);
-                      },
-                      child: Container(
-                        margin: EdgeInsets.only(bottom: 1.setHeight),
-                        padding: EdgeInsets.symmetric(
-                          horizontal: 12.setWidth,
-                          vertical: 12.setHeight,
-                        ),
-                        width: double.infinity,
-                        decoration: BoxDecoration(
-                          color: isSelected ? CustomAppColor.of(context).primary.withValues(alpha: 0.1) : null,
-                          border: Border(
-                            bottom: BorderSide(
-                              color: CustomAppColor.of(context).containerBorder,
-                              width: 0.5,
+                    return IgnorePointer(
+                      ignoring: true,
+                      child: GestureDetector(
+                        onTap: () {
+                          _selectState(state);
+                        },
+                        child: Container(
+                          margin: EdgeInsets.only(bottom: 1.setHeight),
+                          padding: EdgeInsets.symmetric(
+                            horizontal: 12.setWidth,
+                            vertical: 12.setHeight,
+                          ),
+                          width: double.infinity,
+                          decoration: BoxDecoration(
+                            color: isSelected ? CustomAppColor.of(context).primary.withValues(alpha: 0.1) : null,
+                            border: Border(
+                              bottom: BorderSide(
+                                color: CustomAppColor.of(context).containerBorder,
+                                width: 0.5,
+                              ),
                             ),
                           ),
-                        ),
-                        child: CommonText(
-                          text: state,
-                          fontSize: 12.setFontSize,
-                          fontWeight: FontWeight.w400,
-                          textColor: isSelected ? CustomAppColor.of(context).primary : CustomAppColor.of(context).txtBlack,
-                          textAlign: TextAlign.start,
+                          child: CommonText(
+                            text: state,
+                            fontSize: 12.setFontSize,
+                            fontWeight: FontWeight.w400,
+                            textColor: isSelected ? CustomAppColor.of(context).primary : CustomAppColor.of(context).txtBlack,
+                            textAlign: TextAlign.start,
+                          ),
                         ),
                       ),
                     );
@@ -1518,14 +1559,17 @@ class _PriceSelectionState extends State<PriceSelection> {
           Expanded(child: Container()),
 
           // Confirm Button
-          CommonButton(
-            text: Languages.of(context).txtConfirm,
-            onTap: () {
-              if (_priceController.text.isNotEmpty) {
-                FocusScope.of(context).unfocus();
-                widget.onPriceSelected(_priceController.text);
-              }
-            },
+          IgnorePointer(
+            ignoring: true,
+            child: CommonButton(
+              text: Languages.of(context).txtConfirm,
+              onTap: () {
+                if (_priceController.text.isNotEmpty) {
+                  FocusScope.of(context).unfocus();
+                  widget.onPriceSelected(_priceController.text);
+                }
+              },
+            ),
           ),
 
           SizedBox(height: 20.setHeight),

@@ -13,17 +13,39 @@ import '../../../../widgets/otp_field/otp_field_style.dart';
 import '../../../../widgets/top_bar/topbar.dart';
 
 class CreateNewPinScreen extends StatefulWidget {
-  static Route<void> route() {
-    return MaterialPageRoute(builder: (_) => const CreateNewPinScreen());
+  final bool isForAlert;
+
+  static Route<void> route({bool isForAlert = false}) {
+    return MaterialPageRoute(builder: (_) => CreateNewPinScreen(isForAlert: isForAlert));
   }
 
-  const CreateNewPinScreen({super.key});
+  const CreateNewPinScreen({super.key, this.isForAlert = false});
 
   @override
   State<CreateNewPinScreen> createState() => _CreateNewPinScreenState();
 }
 
 class _CreateNewPinScreenState extends State<CreateNewPinScreen> implements TopBarClickListener {
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    if (widget.isForAlert) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        showDialog(
+          barrierDismissible: false,
+          context: context,
+          builder: (dialogContext) => CongratulationsDialog(
+            onComplete: () {
+              Navigator.pop(dialogContext);
+              Navigator.pop(context);
+            },
+          ),
+        );
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -82,26 +104,29 @@ class _CreateNewPinScreenState extends State<CreateNewPinScreen> implements TopB
             ),
           ),
           SizedBox(height: 20.setHeight),
-          CommonButton(
-              text: Languages.of(context).txtContinue,
-              mLeft: 30.setWidth,
-              mRight: 30.setWidth,
-              onTap: () {
-                showDialog(
-                  context: context,
-                  builder: (dialogContext) => CongratulationsDialog(
-                    onComplete: () {
-                      Navigator.pop(dialogContext);
-                      /*Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const DashboardScreen(),
-                        ),
-                      );*/
-                    },
-                  ),
-                );
-              }),
+          IgnorePointer(
+            ignoring: true,
+            child: CommonButton(
+                text: Languages.of(context).txtContinue,
+                mLeft: 30.setWidth,
+                mRight: 30.setWidth,
+                onTap: () {
+                  showDialog(
+                    context: context,
+                    builder: (dialogContext) => CongratulationsDialog(
+                      onComplete: () {
+                        Navigator.pop(dialogContext);
+                        /*Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const DashboardScreen(),
+                          ),
+                        );*/
+                      },
+                    ),
+                  );
+                }),
+          ),
           SizedBox(height: 50.setHeight),
         ],
       ),

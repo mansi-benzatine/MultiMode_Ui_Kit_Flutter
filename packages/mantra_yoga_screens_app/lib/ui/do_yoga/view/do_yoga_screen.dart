@@ -17,12 +17,55 @@ import '../../../widgets/top_bar/topbar.dart';
 
 class DoYogaScreen extends StatefulWidget {
   final int isVideoSelected;
+  final bool isAnimationPlay;
+  final bool isVideoPlay;
+  final bool isAnimationFullScreen;
+  final bool isVideoFullScreen;
+  final bool isAnimationWaiting;
+  final bool isVideoWaiting;
+  final bool isForSessionCompleteAlert;
+  final bool isForYourMoodAfterSessionAlert;
+  final bool isForGiveReviewAndRateAlert;
 
-  const DoYogaScreen({super.key, required this.isVideoSelected});
+  const DoYogaScreen(
+      {super.key,
+      required this.isVideoSelected,
+      this.isAnimationPlay = false,
+      this.isVideoPlay = false,
+      this.isAnimationFullScreen = false,
+      this.isVideoFullScreen = false,
+      this.isAnimationWaiting = false,
+      this.isVideoWaiting = false,
+      this.isForGiveReviewAndRateAlert = false,
+      this.isForSessionCompleteAlert = false,
+      this.isForYourMoodAfterSessionAlert = false});
 
-  static Route<dynamic> route({int isVideoSelected = 0}) {
+  static Route<dynamic> route({
+    int isVideoSelected = 0,
+    bool isAnimationPlay = false,
+    bool isVideoPlay = false,
+    bool isAnimationFullScreen = false,
+    bool isVideoFullScreen = false,
+    bool isAnimationWaiting = false,
+    bool isVideoWaiting = false,
+    bool isForAlert = false,
+    bool isForGiveReviewAndRateAlert = false,
+    bool isForSessionCompleteAlert = false,
+    bool isForYourMoodAfterSessionAlert = false,
+  }) {
     return MaterialPageRoute(
-      builder: (context) => DoYogaScreen(isVideoSelected: isVideoSelected),
+      builder: (context) => DoYogaScreen(
+        isVideoSelected: isVideoSelected,
+        isAnimationFullScreen: isAnimationFullScreen,
+        isAnimationPlay: isAnimationPlay,
+        isAnimationWaiting: isAnimationWaiting,
+        isVideoWaiting: isVideoWaiting,
+        isVideoFullScreen: isVideoFullScreen,
+        isVideoPlay: isVideoPlay,
+        isForGiveReviewAndRateAlert: isForGiveReviewAndRateAlert,
+        isForSessionCompleteAlert: isForSessionCompleteAlert,
+        isForYourMoodAfterSessionAlert: isForYourMoodAfterSessionAlert,
+      ),
     );
   }
 
@@ -45,10 +88,46 @@ class _DoYogaScreenState extends State<DoYogaScreen> implements TopBarClickListe
     videoController = VideoPlayerController.asset(AppAssets.videoYoga)
       ..initialize().then((_) {
         videoController.setLooping(true);
-        if (isVideoSelected.value == 0) {
+
+        if (widget.isVideoPlay) {
           videoController.play();
+          isPlay.value = true;
+        } else {
+          videoController.pause();
+          isPlay.value = false;
         }
+
+        // make sure widget rebuilds after init
+        setState(() {});
       });
+    isFullScreen.value = widget.isVideoFullScreen || widget.isAnimationFullScreen;
+
+    if (widget.isAnimationPlay) {
+      isPlay.value = true;
+    } else {
+      isPlay.value = false;
+    }
+
+    isWaiting.value = widget.isVideoWaiting || widget.isAnimationWaiting;
+    if (isWaiting.value) {
+      isPlay.value = false;
+      videoController.pause();
+    }
+    if (widget.isForSessionCompleteAlert) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        CompletedDialog.show(context, onTap: () {});
+      });
+    }
+    if (widget.isForYourMoodAfterSessionAlert) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        MoodDialog.show(context, onTap: () {});
+      });
+    }
+    if (widget.isForGiveReviewAndRateAlert) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        ReviewDialog.show(context, onTap: () {});
+      });
+    }
   }
 
   @override
@@ -111,76 +190,82 @@ class _DoYogaScreenState extends State<DoYogaScreen> implements TopBarClickListe
           child: Row(
             children: [
               Expanded(
-                child: GestureDetector(
-                  onTap: () {
-                    isVideoSelected.value = 0;
-                    Future.delayed(const Duration(milliseconds: 100), () {
-                      if (videoController.value.isInitialized && !videoController.value.isPlaying && isPlay.value) {
-                        videoController.play();
-                      }
-                    });
-                  },
-                  child: AnimatedBuilder(
-                    animation: isVideoSelected,
-                    builder: (context, child) {
-                      bool isSelected = isVideoSelected.value == 0;
-                      return Container(
-                        height: 48.setHeight,
-                        decoration: BoxDecoration(
-                          color: isSelected ? CustomAppColor.of(context).primary : CustomAppColor.of(context).transparent,
-                          borderRadius: BorderRadius.circular(18),
-                          border: Border.all(
-                            color: isSelected ? CustomAppColor.of(context).borderColor : CustomAppColor.of(context).txtBlack.withValues(alpha: 0.1),
-                            width: isSelected ? 3 : 1,
-                          ),
-                        ),
-                        child: Center(
-                          child: Text(
-                            Languages.of(context).txtVideo,
-                            style: TextStyle(
-                              fontSize: 14.setFontSize,
-                              fontWeight: isSelected ? FontWeight.w700 : FontWeight.w500,
-                              fontFamily: isSelected ? Constant.fontFamilyBold700 : Constant.fontFamilyMedium500,
-                              color: isSelected ? CustomAppColor.of(context).txtWhite : CustomAppColor.of(context).txtDarkGray,
+                child: IgnorePointer(
+                  ignoring: true,
+                  child: GestureDetector(
+                    onTap: () {
+                      isVideoSelected.value = 0;
+                      Future.delayed(const Duration(milliseconds: 100), () {
+                        if (videoController.value.isInitialized && !videoController.value.isPlaying && isPlay.value) {
+                          videoController.play();
+                        }
+                      });
+                    },
+                    child: AnimatedBuilder(
+                      animation: isVideoSelected,
+                      builder: (context, child) {
+                        bool isSelected = isVideoSelected.value == 0;
+                        return Container(
+                          height: 48.setHeight,
+                          decoration: BoxDecoration(
+                            color: isSelected ? CustomAppColor.of(context).primary : CustomAppColor.of(context).transparent,
+                            borderRadius: BorderRadius.circular(18),
+                            border: Border.all(
+                              color: isSelected ? CustomAppColor.of(context).borderColor : CustomAppColor.of(context).txtBlack.withValues(alpha: 0.1),
+                              width: isSelected ? 3 : 1,
                             ),
                           ),
-                        ),
-                      );
-                    },
+                          child: Center(
+                            child: Text(
+                              Languages.of(context).txtVideo,
+                              style: TextStyle(
+                                fontSize: 14.setFontSize,
+                                fontWeight: isSelected ? FontWeight.w700 : FontWeight.w500,
+                                fontFamily: isSelected ? Constant.fontFamilyBold700 : Constant.fontFamilyMedium500,
+                                color: isSelected ? CustomAppColor.of(context).txtWhite : CustomAppColor.of(context).txtDarkGray,
+                              ),
+                            ),
+                          ),
+                        );
+                      },
+                    ),
                   ),
                 ),
               ),
               SizedBox(width: 10.setWidth),
               Expanded(
-                child: GestureDetector(
-                  onTap: () => isVideoSelected.value = 1,
-                  child: AnimatedBuilder(
-                    animation: isVideoSelected,
-                    builder: (context, child) {
-                      bool isSelected = isVideoSelected.value == 1;
-                      return Container(
-                        height: 48.setHeight,
-                        decoration: BoxDecoration(
-                          color: isSelected ? CustomAppColor.of(context).primary : CustomAppColor.of(context).transparent,
-                          borderRadius: BorderRadius.circular(18),
-                          border: Border.all(
-                            color: isSelected ? CustomAppColor.of(context).borderColor : CustomAppColor.of(context).txtBlack.withValues(alpha: 0.1),
-                            width: isSelected ? 3 : 1,
-                          ),
-                        ),
-                        child: Center(
-                          child: Text(
-                            Languages.of(context).txtAnimation,
-                            style: TextStyle(
-                              fontSize: 14.setFontSize,
-                              fontWeight: isSelected ? FontWeight.w700 : FontWeight.w500,
-                              fontFamily: isSelected ? Constant.fontFamilyBold700 : Constant.fontFamilyMedium500,
-                              color: isSelected ? CustomAppColor.of(context).txtWhite : CustomAppColor.of(context).txtDarkGray,
+                child: IgnorePointer(
+                  ignoring: true,
+                  child: GestureDetector(
+                    onTap: () => isVideoSelected.value = 1,
+                    child: AnimatedBuilder(
+                      animation: isVideoSelected,
+                      builder: (context, child) {
+                        bool isSelected = isVideoSelected.value == 1;
+                        return Container(
+                          height: 48.setHeight,
+                          decoration: BoxDecoration(
+                            color: isSelected ? CustomAppColor.of(context).primary : CustomAppColor.of(context).transparent,
+                            borderRadius: BorderRadius.circular(18),
+                            border: Border.all(
+                              color: isSelected ? CustomAppColor.of(context).borderColor : CustomAppColor.of(context).txtBlack.withValues(alpha: 0.1),
+                              width: isSelected ? 3 : 1,
                             ),
                           ),
-                        ),
-                      );
-                    },
+                          child: Center(
+                            child: Text(
+                              Languages.of(context).txtAnimation,
+                              style: TextStyle(
+                                fontSize: 14.setFontSize,
+                                fontWeight: isSelected ? FontWeight.w700 : FontWeight.w500,
+                                fontFamily: isSelected ? Constant.fontFamilyBold700 : Constant.fontFamilyMedium500,
+                                color: isSelected ? CustomAppColor.of(context).txtWhite : CustomAppColor.of(context).txtDarkGray,
+                              ),
+                            ),
+                          ),
+                        );
+                      },
+                    ),
                   ),
                 ),
               ),
@@ -263,40 +348,46 @@ class _DoYogaScreenState extends State<DoYogaScreen> implements TopBarClickListe
                 fontFamily: Constant.fontFamilySemiBold600,
                 textColor: CustomAppColor.of(context).txtBlack,
               ),
-              CommonButton(
-                text: Languages.of(context).txtResume,
-                onTap: () {
-                  isWaiting.value = false;
-                  isPlay.value = true;
-                  videoController.play();
-                },
-                buttonColor: CustomAppColor.of(context).primary,
-                borderColor: CustomAppColor.of(context).borderColor,
-                borderWidth: 4,
-                radius: 18,
-                mLeft: 25.setWidth,
-                mRight: 25.setWidth,
-                mBottom: 10.setHeight,
-                mTop: 10.setHeight,
+              IgnorePointer(
+                ignoring: true,
+                child: CommonButton(
+                  text: Languages.of(context).txtResume,
+                  onTap: () {
+                    isWaiting.value = false;
+                    isPlay.value = true;
+                    videoController.play();
+                  },
+                  buttonColor: CustomAppColor.of(context).primary,
+                  borderColor: CustomAppColor.of(context).borderColor,
+                  borderWidth: 4,
+                  radius: 18,
+                  mLeft: 25.setWidth,
+                  mRight: 25.setWidth,
+                  mBottom: 10.setHeight,
+                  mTop: 10.setHeight,
+                ),
               ),
-              CommonButton(
-                text: Languages.of(context).txtRestart,
-                onTap: () {
-                  CompletedDialog.show(context, onTap: () {
-                    MoodDialog.show(context, onTap: () {
-                      ReviewDialog.show(context, onTap: () {});
+              IgnorePointer(
+                ignoring: true,
+                child: CommonButton(
+                  text: Languages.of(context).txtRestart,
+                  onTap: () {
+                    CompletedDialog.show(context, onTap: () {
+                      MoodDialog.show(context, onTap: () {
+                        ReviewDialog.show(context, onTap: () {});
+                      });
                     });
-                  });
-                },
-                buttonColor: CustomAppColor.of(context).bgScreen,
-                borderColor: CustomAppColor.of(context).txtBlack,
-                buttonTextColor: CustomAppColor.of(context).txtBlack,
-                buttonFontFamily: Constant.fontFamilySemiBold600,
-                buttonTextWeight: FontWeight.w600,
-                borderWidth: 1,
-                radius: 18,
-                mLeft: 25.setWidth,
-                mRight: 25.setWidth,
+                  },
+                  buttonColor: CustomAppColor.of(context).bgScreen,
+                  borderColor: CustomAppColor.of(context).txtBlack,
+                  buttonTextColor: CustomAppColor.of(context).txtBlack,
+                  buttonFontFamily: Constant.fontFamilySemiBold600,
+                  buttonTextWeight: FontWeight.w600,
+                  borderWidth: 1,
+                  radius: 18,
+                  mLeft: 25.setWidth,
+                  mRight: 25.setWidth,
+                ),
               ),
             ],
             if (!isWaitingValue) ...[
@@ -346,30 +437,33 @@ class _DoYogaScreenState extends State<DoYogaScreen> implements TopBarClickListe
                     color: CustomAppColor.of(context).txtBlack,
                   ),
                   SizedBox(width: 10.setWidth),
-                  GestureDetector(
-                    onTap: () {
-                      isWaiting.value = true;
-                      isPlay.value = false;
-                      isFullScreen.value = false;
-                      videoController.pause();
-                    },
-                    child: Container(
-                      height: 45.setHeight,
-                      width: 45.setHeight,
-                      decoration: BoxDecoration(
-                        color: CustomAppColor.of(context).containerFillBgScreenAndBlack,
-                        borderRadius: BorderRadius.circular(14),
-                        border: Border.all(
-                          color: CustomAppColor.of(context).txtBlack.withValues(alpha: 0.1),
-                          width: 1,
+                  IgnorePointer(
+                    ignoring: true,
+                    child: GestureDetector(
+                      onTap: () {
+                        isWaiting.value = true;
+                        isPlay.value = false;
+                        isFullScreen.value = false;
+                        videoController.pause();
+                      },
+                      child: Container(
+                        height: 45.setHeight,
+                        width: 45.setHeight,
+                        decoration: BoxDecoration(
+                          color: CustomAppColor.of(context).containerFillBgScreenAndBlack,
+                          borderRadius: BorderRadius.circular(14),
+                          border: Border.all(
+                            color: CustomAppColor.of(context).txtBlack.withValues(alpha: 0.1),
+                            width: 1,
+                          ),
                         ),
-                      ),
-                      alignment: Alignment.center,
-                      padding: EdgeInsets.all(10.setWidth),
-                      child: Image.asset(
-                        AppAssets.icPrevious,
-                        gaplessPlayback: true,
-                        color: CustomAppColor.of(context).txtBlack,
+                        alignment: Alignment.center,
+                        padding: EdgeInsets.all(10.setWidth),
+                        child: Image.asset(
+                          AppAssets.icPrevious,
+                          gaplessPlayback: true,
+                          color: CustomAppColor.of(context).txtBlack,
+                        ),
                       ),
                     ),
                   ),
@@ -377,51 +471,57 @@ class _DoYogaScreenState extends State<DoYogaScreen> implements TopBarClickListe
                   ValueListenableBuilder(
                     valueListenable: isPlay,
                     builder: (context, value, child) {
-                      return InkWell(
-                        splashColor: CustomAppColor.of(context).transparent,
-                        highlightColor: CustomAppColor.of(context).transparent,
-                        onTap: () {
-                          isPlay.value = !isPlay.value;
-                          if (isPlay.value) {
-                            videoController.play();
-                          } else {
-                            videoController.pause();
-                          }
-                        },
-                        child: Image.asset(
-                          value ? AppAssets.icPause : AppAssets.icPlay,
-                          height: 60.setHeight,
-                          width: 60.setHeight,
-                          gaplessPlayback: true,
+                      return IgnorePointer(
+                        ignoring: true,
+                        child: InkWell(
+                          splashColor: CustomAppColor.of(context).transparent,
+                          highlightColor: CustomAppColor.of(context).transparent,
+                          onTap: () {
+                            isPlay.value = !isPlay.value;
+                            if (isPlay.value) {
+                              videoController.play();
+                            } else {
+                              videoController.pause();
+                            }
+                          },
+                          child: Image.asset(
+                            value ? AppAssets.icPause : AppAssets.icPlay,
+                            height: 60.setHeight,
+                            width: 60.setHeight,
+                            gaplessPlayback: true,
+                          ),
                         ),
                       );
                     },
                   ),
                   SizedBox(width: 10.setWidth),
-                  GestureDetector(
-                    onTap: () {
-                      isWaiting.value = true;
-                      isPlay.value = false;
-                      isFullScreen.value = false;
-                      videoController.pause();
-                    },
-                    child: Container(
-                      height: 45.setHeight,
-                      width: 45.setHeight,
-                      decoration: BoxDecoration(
-                        color: CustomAppColor.of(context).containerFillBgScreenAndBlack,
-                        borderRadius: BorderRadius.circular(14),
-                        border: Border.all(
-                          color: CustomAppColor.of(context).txtBlack.withValues(alpha: 0.1),
-                          width: 1,
+                  IgnorePointer(
+                    ignoring: true,
+                    child: GestureDetector(
+                      onTap: () {
+                        isWaiting.value = true;
+                        isPlay.value = false;
+                        isFullScreen.value = false;
+                        videoController.pause();
+                      },
+                      child: Container(
+                        height: 45.setHeight,
+                        width: 45.setHeight,
+                        decoration: BoxDecoration(
+                          color: CustomAppColor.of(context).containerFillBgScreenAndBlack,
+                          borderRadius: BorderRadius.circular(14),
+                          border: Border.all(
+                            color: CustomAppColor.of(context).txtBlack.withValues(alpha: 0.1),
+                            width: 1,
+                          ),
                         ),
-                      ),
-                      alignment: Alignment.center,
-                      padding: EdgeInsets.all(10.setWidth),
-                      child: Image.asset(
-                        AppAssets.icNext,
-                        gaplessPlayback: true,
-                        color: CustomAppColor.of(context).txtBlack,
+                        alignment: Alignment.center,
+                        padding: EdgeInsets.all(10.setWidth),
+                        child: Image.asset(
+                          AppAssets.icNext,
+                          gaplessPlayback: true,
+                          color: CustomAppColor.of(context).txtBlack,
+                        ),
                       ),
                     ),
                   ),
@@ -429,23 +529,26 @@ class _DoYogaScreenState extends State<DoYogaScreen> implements TopBarClickListe
                   ValueListenableBuilder(
                     valueListenable: isFullScreen,
                     builder: (context, value, child) {
-                      return InkWell(
-                        onTap: () {
-                          isFullScreen.value = !isFullScreen.value;
-                          Future.delayed(const Duration(milliseconds: 100), () {
-                            if (videoController.value.isInitialized && !videoController.value.isPlaying && isPlay.value) {
-                              videoController.play();
-                            }
-                          });
-                        },
-                        splashColor: CustomAppColor.of(context).transparent,
-                        highlightColor: CustomAppColor.of(context).transparent,
-                        child: Image.asset(
-                          value ? AppAssets.icMinimize : AppAssets.icMaximize,
-                          height: 24.setHeight,
-                          width: 24.setHeight,
-                          gaplessPlayback: true,
-                          color: CustomAppColor.of(context).txtBlack,
+                      return IgnorePointer(
+                        ignoring: true,
+                        child: InkWell(
+                          onTap: () {
+                            isFullScreen.value = !isFullScreen.value;
+                            Future.delayed(const Duration(milliseconds: 100), () {
+                              if (videoController.value.isInitialized && !videoController.value.isPlaying && isPlay.value) {
+                                videoController.play();
+                              }
+                            });
+                          },
+                          splashColor: CustomAppColor.of(context).transparent,
+                          highlightColor: CustomAppColor.of(context).transparent,
+                          child: Image.asset(
+                            value ? AppAssets.icMinimize : AppAssets.icMaximize,
+                            height: 24.setHeight,
+                            width: 24.setHeight,
+                            gaplessPlayback: true,
+                            color: CustomAppColor.of(context).txtBlack,
+                          ),
                         ),
                       );
                     },

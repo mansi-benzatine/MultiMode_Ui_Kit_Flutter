@@ -10,10 +10,11 @@ import '../../../widgets/text/common_text.dart';
 import '../../do_yoga/view/do_yoga_screen.dart';
 
 class YogaDetailsScreen extends StatefulWidget {
-  const YogaDetailsScreen({super.key});
+  final int currentIndex;
+  const YogaDetailsScreen({super.key, this.currentIndex = 0});
 
-  static Route<dynamic> route() {
-    return MaterialPageRoute(builder: (context) => const YogaDetailsScreen());
+  static Route<dynamic> route({int currentIndex = 0}) {
+    return MaterialPageRoute(builder: (context) => YogaDetailsScreen(currentIndex: currentIndex));
   }
 
   @override
@@ -26,7 +27,7 @@ class _YogaDetailsScreenState extends State<YogaDetailsScreen> with TickerProvid
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(length: 2, vsync: this);
+    _tabController = TabController(initialIndex: widget.currentIndex, length: 2, vsync: this);
   }
 
   @override
@@ -556,23 +557,26 @@ class _SliverTabBarDelegate extends SliverPersistentHeaderDelegate {
                   animation: tabController,
                   builder: (context, child) {
                     bool isSelected = tabController.index == 0;
-                    return Container(
-                      height: 48.setHeight,
-                      decoration: BoxDecoration(
-                        color: isSelected ? CustomAppColor.of(context).primary : CustomAppColor.of(context).transparent,
-                        borderRadius: BorderRadius.circular(18),
-                        border: Border.all(
-                          color: isSelected ? CustomAppColor.of(context).borderColor : CustomAppColor.of(context).txtBlack.withValues(alpha: 0.1),
-                          width: isSelected ? 3 : 1,
+                    return IgnorePointer(
+                      ignoring: true,
+                      child: Container(
+                        height: 48.setHeight,
+                        decoration: BoxDecoration(
+                          color: isSelected ? CustomAppColor.of(context).primary : CustomAppColor.of(context).transparent,
+                          borderRadius: BorderRadius.circular(18),
+                          border: Border.all(
+                            color: isSelected ? CustomAppColor.of(context).borderColor : CustomAppColor.of(context).txtBlack.withValues(alpha: 0.1),
+                            width: isSelected ? 3 : 1,
+                          ),
                         ),
-                      ),
-                      child: Center(
-                        child: CommonText(
-                          text: Languages.of(context).txtVideo,
-                          fontSize: 14.setFontSize,
-                          fontWeight: isSelected ? FontWeight.w700 : FontWeight.w500,
-                          fontFamily: isSelected ? Constant.fontFamilyBold700 : Constant.fontFamilySemiBold600,
-                          textColor: isSelected ? CustomAppColor.of(context).txtWhite : CustomAppColor.of(context).txtDarkGray,
+                        child: Center(
+                          child: CommonText(
+                            text: Languages.of(context).txtVideo,
+                            fontSize: 14.setFontSize,
+                            fontWeight: isSelected ? FontWeight.w700 : FontWeight.w500,
+                            fontFamily: isSelected ? Constant.fontFamilyBold700 : Constant.fontFamilySemiBold600,
+                            textColor: isSelected ? CustomAppColor.of(context).txtWhite : CustomAppColor.of(context).txtDarkGray,
+                          ),
                         ),
                       ),
                     );
@@ -588,23 +592,26 @@ class _SliverTabBarDelegate extends SliverPersistentHeaderDelegate {
                   animation: tabController,
                   builder: (context, child) {
                     bool isSelected = tabController.index == 1;
-                    return Container(
-                      height: 48.setHeight,
-                      decoration: BoxDecoration(
-                        color: isSelected ? CustomAppColor.of(context).primary : CustomAppColor.of(context).transparent,
-                        borderRadius: BorderRadius.circular(18),
-                        border: Border.all(
-                          color: isSelected ? CustomAppColor.of(context).borderColor : CustomAppColor.of(context).txtBlack.withValues(alpha: 0.1),
-                          width: isSelected ? 3 : 1,
+                    return IgnorePointer(
+                      ignoring: true,
+                      child: Container(
+                        height: 48.setHeight,
+                        decoration: BoxDecoration(
+                          color: isSelected ? CustomAppColor.of(context).primary : CustomAppColor.of(context).transparent,
+                          borderRadius: BorderRadius.circular(18),
+                          border: Border.all(
+                            color: isSelected ? CustomAppColor.of(context).borderColor : CustomAppColor.of(context).txtBlack.withValues(alpha: 0.1),
+                            width: isSelected ? 3 : 1,
+                          ),
                         ),
-                      ),
-                      child: Center(
-                        child: CommonText(
-                          text: Languages.of(context).txtAnimation,
-                          fontSize: 14.setFontSize,
-                          fontWeight: isSelected ? FontWeight.w700 : FontWeight.w500,
-                          fontFamily: isSelected ? Constant.fontFamilyBold700 : Constant.fontFamilySemiBold600,
-                          textColor: isSelected ? CustomAppColor.of(context).txtWhite : CustomAppColor.of(context).txtDarkGray,
+                        child: Center(
+                          child: CommonText(
+                            text: Languages.of(context).txtAnimation,
+                            fontSize: 14.setFontSize,
+                            fontWeight: isSelected ? FontWeight.w700 : FontWeight.w500,
+                            fontFamily: isSelected ? Constant.fontFamilyBold700 : Constant.fontFamilySemiBold600,
+                            textColor: isSelected ? CustomAppColor.of(context).txtWhite : CustomAppColor.of(context).txtDarkGray,
+                          ),
                         ),
                       ),
                     );

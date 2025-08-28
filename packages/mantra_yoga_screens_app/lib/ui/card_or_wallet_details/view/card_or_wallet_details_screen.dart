@@ -12,12 +12,17 @@ import '../../../widgets/text/common_text.dart';
 import '../../../widgets/top_bar/topbar.dart';
 
 class CardOrWalletDetailsScreen extends StatefulWidget {
-  const CardOrWalletDetailsScreen({super.key, required this.isFromCard});
+  const CardOrWalletDetailsScreen({super.key, required this.isFromCard, this.isFromAddCard = false});
 
   final bool isFromCard;
+  final bool isFromAddCard;
 
-  static Route<dynamic> route({bool isFromCard = false}) {
-    return MaterialPageRoute(builder: (context) => CardOrWalletDetailsScreen(isFromCard: isFromCard));
+  static Route<dynamic> route({bool isFromCard = false, bool isFromAddCard = false}) {
+    return MaterialPageRoute(
+        builder: (context) => CardOrWalletDetailsScreen(
+              isFromCard: isFromCard,
+              isFromAddCard: isFromAddCard,
+            ));
   }
 
   @override
@@ -36,7 +41,11 @@ class _CardOrWalletDetailsScreenState extends State<CardOrWalletDetailsScreen> i
           children: [
             TopBar(
               this,
-              title: widget.isFromCard ? Languages.of(context).txtVisa : Languages.of(context).txtMyWallet,
+              title: widget.isFromCard
+                  ? Languages.of(context).txtVisa
+                  : widget.isFromAddCard
+                      ? "Add Card"
+                      : Languages.of(context).txtMyWallet,
             ),
             Expanded(
               child: SingleChildScrollView(
@@ -93,13 +102,13 @@ class _CardOrWalletDetailsScreenState extends State<CardOrWalletDetailsScreen> i
                           ),
                           SizedBox(height: 10.setHeight),
                           CommonTextFormField(
-                            controller: TextEditingController(text: "Kenneth Stive"),
+                            controller: TextEditingController(text: widget.isFromAddCard ? "" : "Kenneth Stive"),
                             hintText: Languages.of(context).txtCardName,
                             keyboardType: TextInputType.name,
                           ),
                           SizedBox(height: 15.setHeight),
                           CommonTextFormField(
-                            controller: TextEditingController(text: "7595 8690 8702"),
+                            controller: TextEditingController(text: widget.isFromAddCard ? "" : "7595 8690 8702"),
                             hintText: Languages.of(context).txtCardNumber,
                             keyboardType: TextInputType.name,
                           ),
@@ -108,7 +117,7 @@ class _CardOrWalletDetailsScreenState extends State<CardOrWalletDetailsScreen> i
                             children: [
                               Expanded(
                                 child: CommonTextFormField(
-                                  controller: TextEditingController(text: "05/07/2028"),
+                                  controller: TextEditingController(text: widget.isFromAddCard ? "" : "05/07/2028"),
                                   hintText: Languages.of(context).txtExpireDate,
                                   keyboardType: TextInputType.name,
                                 ),
@@ -116,7 +125,7 @@ class _CardOrWalletDetailsScreenState extends State<CardOrWalletDetailsScreen> i
                               SizedBox(width: 10.setWidth),
                               Expanded(
                                 child: CommonTextFormField(
-                                  controller: TextEditingController(text: "1636"),
+                                  controller: TextEditingController(text: widget.isFromAddCard ? "" : "1636"),
                                   hintText: Languages.of(context).txtCVV,
                                   keyboardType: TextInputType.name,
                                 ),

@@ -11,22 +11,33 @@ class SellCarDetailConfirmationBottomSheet extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      constraints: BoxConstraints(
-        maxHeight: MediaQuery.of(context).size.height * 0.8,
-      ),
-      decoration: BoxDecoration(
-        color: CustomAppColor.of(context).bgBottomSheet,
-        borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(20.setWidth),
-          topRight: Radius.circular(20.setWidth),
+    return PopScope(
+      canPop: false,
+      onPopInvokedWithResult: (didPop, result) {
+        if (!didPop) {
+          Navigator.pop(context);
+          Navigator.pop(context);
+        }
+      },
+      child: SafeArea(
+        child: Container(
+          constraints: BoxConstraints(
+            maxHeight: MediaQuery.of(context).size.height * 0.8,
+          ),
+          decoration: BoxDecoration(
+            color: CustomAppColor.of(context).bgBottomSheet,
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(20.setWidth),
+              topRight: Radius.circular(20.setWidth),
+            ),
+          ),
+          child: Wrap(
+            children: [
+              _buildHeader(context),
+              _buildContent(context),
+            ],
+          ),
         ),
-      ),
-      child: Wrap(
-        children: [
-          _buildHeader(context),
-          _buildContent(context),
-        ],
       ),
     );
   }
@@ -38,22 +49,25 @@ class SellCarDetailConfirmationBottomSheet extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           const Spacer(),
-          GestureDetector(
-            onTap: () {
-              Navigator.pop(context);
-            },
-            child: Container(
-              decoration: BoxDecoration(
-                color: CustomAppColor.of(context).bgSearchBar,
-                borderRadius: BorderRadius.circular(8.setWidth),
-              ),
-              height: 30.setHeight,
-              width: 30.setWidth,
-              child: Center(
-                child: Icon(
-                  Icons.close,
-                  size: 20.setWidth,
-                  color: CustomAppColor.of(context).txtBlack,
+          IgnorePointer(
+            ignoring: true,
+            child: GestureDetector(
+              onTap: () {
+                Navigator.pop(context);
+              },
+              child: Container(
+                decoration: BoxDecoration(
+                  color: CustomAppColor.of(context).bgSearchBar,
+                  borderRadius: BorderRadius.circular(8.setWidth),
+                ),
+                height: 30.setHeight,
+                width: 30.setWidth,
+                child: Center(
+                  child: Icon(
+                    Icons.close,
+                    size: 20.setWidth,
+                    color: CustomAppColor.of(context).txtBlack,
+                  ),
                 ),
               ),
             ),
@@ -75,27 +89,33 @@ class SellCarDetailConfirmationBottomSheet extends StatelessWidget {
             textColor: CustomAppColor.of(context).txtBlack,
           ),
           SizedBox(height: 30.setHeight),
-          CommonButton(
-            text: Languages.of(context).txtEditDetails,
-            buttonTextColor: CustomAppColor.of(context).compareBtnText,
-            buttonTextWeight: FontWeight.w500,
-            buttonGradient: LinearGradient(colors: [
-              CustomAppColor.of(context).transparent,
-              CustomAppColor.of(context).transparent,
-            ]),
-            borderColor: CustomAppColor.of(context).compareBtnBorder,
-            width: double.infinity,
-            onTap: () {
-              Navigator.pop(context);
-            },
+          IgnorePointer(
+            ignoring: true,
+            child: CommonButton(
+              text: Languages.of(context).txtEditDetails,
+              buttonTextColor: CustomAppColor.of(context).compareBtnText,
+              buttonTextWeight: FontWeight.w500,
+              buttonGradient: LinearGradient(colors: [
+                CustomAppColor.of(context).transparent,
+                CustomAppColor.of(context).transparent,
+              ]),
+              borderColor: CustomAppColor.of(context).compareBtnBorder,
+              width: double.infinity,
+              onTap: () {
+                Navigator.pop(context);
+              },
+            ),
           ),
           SizedBox(height: 10.setHeight),
-          CommonButton(
-            text: Languages.of(context).txtSubmit,
-            onTap: () {
-              Navigator.pop(context);
-              // Navigator.pop(context);
-            },
+          IgnorePointer(
+            ignoring: true,
+            child: CommonButton(
+              text: Languages.of(context).txtSubmit,
+              onTap: () {
+                Navigator.pop(context);
+                // Navigator.pop(context);
+              },
+            ),
           ),
           SizedBox(height: 20.setHeight),
         ],

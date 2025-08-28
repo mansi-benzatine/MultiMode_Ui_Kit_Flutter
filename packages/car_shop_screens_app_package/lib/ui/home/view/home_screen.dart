@@ -895,7 +895,7 @@ class CarItemWidget extends StatelessWidget {
                     shape: BoxShape.circle,
                     gradient: CustomAppColor.of(context).primaryGradient,
                   ),
-                  padding: EdgeInsets.all(18),
+                  padding: EdgeInsets.all(14),
                   child: Image.asset(
                     isFavorite ? AppAssets.icFilledFavourite : AppAssets.icTabFavourite,
                     color: CustomAppColor.of(context).white,

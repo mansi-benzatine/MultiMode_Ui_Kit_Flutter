@@ -15,12 +15,17 @@ import '../../../widgets/top_bar/topbar.dart';
 import '../../profile_setup/view/profile_setup_screen.dart';
 
 class SignInAndSignUpScreen extends StatefulWidget {
-  const SignInAndSignUpScreen({super.key, required this.isSignIn});
+  final int currentIndex;
+  const SignInAndSignUpScreen({super.key, required this.isSignIn, this.currentIndex = 0});
 
   final bool isSignIn;
 
-  static Route<void> route(bool isSignIn) {
-    return MaterialPageRoute(builder: (context) => SignInAndSignUpScreen(isSignIn: isSignIn));
+  static Route<void> route(bool isSignIn, int currentIndex) {
+    return MaterialPageRoute(
+        builder: (context) => SignInAndSignUpScreen(
+              isSignIn: isSignIn,
+              currentIndex: currentIndex,
+            ));
   }
 
   @override
@@ -65,36 +70,42 @@ class _SignInAndSignUpScreenState extends State<SignInAndSignUpScreen> implement
                       return Row(
                         children: [
                           Expanded(
-                            child: CommonButton(
-                              text: Languages.of(context).txtSignIn,
-                              onTap: () {
-                                isSignIn.value = true;
-                              },
-                              buttonColor: value ? CustomAppColor.of(context).primary : CustomAppColor.of(context).bgScreen,
-                              borderColor: value ? CustomAppColor.of(context).borderColor : CustomAppColor.of(context).txtDarkGray.withValues(alpha: 0.2),
-                              borderWidth: value ? 3 : 2,
-                              height: 45.setHeight,
-                              radius: 18,
-                              buttonTextColor: value ? CustomAppColor.of(context).txtWhite : CustomAppColor.of(context).txtDarkGray,
-                              buttonTextWeight: value ? FontWeight.w700 : FontWeight.w500,
-                              buttonFontFamily: value ? Constant.fontFamilyBold700 : Constant.fontFamilyMedium500,
+                            child: IgnorePointer(
+                              ignoring: true,
+                              child: CommonButton(
+                                text: Languages.of(context).txtSignIn,
+                                onTap: () {
+                                  isSignIn.value = true;
+                                },
+                                buttonColor: value ? CustomAppColor.of(context).primary : CustomAppColor.of(context).bgScreen,
+                                borderColor: value ? CustomAppColor.of(context).borderColor : CustomAppColor.of(context).txtDarkGray.withValues(alpha: 0.2),
+                                borderWidth: value ? 3 : 2,
+                                height: 45.setHeight,
+                                radius: 18,
+                                buttonTextColor: value ? CustomAppColor.of(context).txtWhite : CustomAppColor.of(context).txtDarkGray,
+                                buttonTextWeight: value ? FontWeight.w700 : FontWeight.w500,
+                                buttonFontFamily: value ? Constant.fontFamilyBold700 : Constant.fontFamilyMedium500,
+                              ),
                             ),
                           ),
                           SizedBox(width: 12.setWidth),
                           Expanded(
-                            child: CommonButton(
-                              text: Languages.of(context).txtSignUp,
-                              onTap: () {
-                                isSignIn.value = false;
-                              },
-                              buttonColor: value ? CustomAppColor.of(context).bgScreen : CustomAppColor.of(context).primary,
-                              borderColor: value ? CustomAppColor.of(context).txtDarkGray.withValues(alpha: 0.2) : CustomAppColor.of(context).borderColor,
-                              borderWidth: value ? 2 : 3,
-                              height: 45.setHeight,
-                              radius: 18,
-                              buttonTextColor: value ? CustomAppColor.of(context).txtDarkGray : CustomAppColor.of(context).txtWhite,
-                              buttonTextWeight: value ? FontWeight.w500 : FontWeight.w700,
-                              buttonFontFamily: Constant.fontFamilyMedium500,
+                            child: IgnorePointer(
+                              ignoring: true,
+                              child: CommonButton(
+                                text: Languages.of(context).txtSignUp,
+                                onTap: () {
+                                  isSignIn.value = false;
+                                },
+                                buttonColor: value ? CustomAppColor.of(context).bgScreen : CustomAppColor.of(context).primary,
+                                borderColor: value ? CustomAppColor.of(context).txtDarkGray.withValues(alpha: 0.2) : CustomAppColor.of(context).borderColor,
+                                borderWidth: value ? 2 : 3,
+                                height: 45.setHeight,
+                                radius: 18,
+                                buttonTextColor: value ? CustomAppColor.of(context).txtDarkGray : CustomAppColor.of(context).txtWhite,
+                                buttonTextWeight: value ? FontWeight.w500 : FontWeight.w700,
+                                buttonFontFamily: Constant.fontFamilyMedium500,
+                              ),
                             ),
                           ),
                         ],

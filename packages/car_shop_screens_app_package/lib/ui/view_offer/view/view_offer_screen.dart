@@ -13,11 +13,12 @@ import '../../../widgets/text_field/text_form_field.dart';
 import '../../../widgets/top_bar/topbar.dart';
 
 class ViewOfferScreen extends StatefulWidget {
-  static Route<void> route() {
-    return MaterialPageRoute(builder: (_) => const ViewOfferScreen());
+  final bool isForAlert;
+  static Route<void> route({bool isForAlert = false}) {
+    return MaterialPageRoute(builder: (_) => ViewOfferScreen(isForAlert: isForAlert));
   }
 
-  const ViewOfferScreen({super.key});
+  const ViewOfferScreen({super.key, this.isForAlert = false});
 
   @override
   State<ViewOfferScreen> createState() => _ViewOfferScreenState();
@@ -38,6 +39,29 @@ class _ViewOfferScreenState extends State<ViewOfferScreen> implements TopBarClic
     _phoneController.dispose();
     _cityController.dispose();
     super.dispose();
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+
+    if (widget.isForAlert) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        showModalBottomSheet(
+          context: context,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(16.setWidth),
+              topRight: Radius.circular(16.setWidth),
+            ),
+          ),
+          builder: (dialogContext) => const IntrestedInOfferBottomSheet(),
+          isScrollControlled: true,
+          backgroundColor: CustomAppColor.of(context).bgScreen,
+        );
+      });
+    }
   }
 
   @override
@@ -253,45 +277,48 @@ class _ViewOfferScreenState extends State<ViewOfferScreen> implements TopBarClic
   }
 
   Widget _buildContinueButton() {
-    return Container(
-      margin: EdgeInsets.symmetric(horizontal: 20.setWidth, vertical: 20.setHeight),
-      child: CommonButton(
-        text: Languages.of(context).txtContinueToViewOffers,
-        onTap: () {
-          // Handle continue action
-          if (_nameController.text.isNotEmpty && _phoneController.text.isNotEmpty && _cityController.text.isNotEmpty) {
-            // Navigate to offers or show success
-            showModalBottomSheet(
-              context: context,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(16.setWidth),
-                  topRight: Radius.circular(16.setWidth),
+    return IgnorePointer(
+      ignoring: true,
+      child: Container(
+        margin: EdgeInsets.symmetric(horizontal: 20.setWidth, vertical: 20.setHeight),
+        child: CommonButton(
+          text: Languages.of(context).txtContinueToViewOffers,
+          onTap: () {
+            // Handle continue action
+            if (_nameController.text.isNotEmpty && _phoneController.text.isNotEmpty && _cityController.text.isNotEmpty) {
+              // Navigate to offers or show success
+              showModalBottomSheet(
+                context: context,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(16.setWidth),
+                    topRight: Radius.circular(16.setWidth),
+                  ),
                 ),
-              ),
-              builder: (dialogContext) => const IntrestedInOfferBottomSheet(),
-              isScrollControlled: true,
-              backgroundColor: CustomAppColor.of(context).bgScreen,
-            );
-          } else {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                content: CommonText(
-                  text: Languages.of(context).txtPleaseFillAllRequiredFields,
-                  fontSize: 14.setFontSize,
-                  fontWeight: FontWeight.w400,
-                  textColor: Colors.white,
+                builder: (dialogContext) => const IntrestedInOfferBottomSheet(),
+                isScrollControlled: true,
+                backgroundColor: CustomAppColor.of(context).bgScreen,
+              );
+            } else {
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: CommonText(
+                    text: Languages.of(context).txtPleaseFillAllRequiredFields,
+                    fontSize: 14.setFontSize,
+                    fontWeight: FontWeight.w400,
+                    textColor: Colors.white,
+                  ),
+                  backgroundColor: Colors.red,
                 ),
-                backgroundColor: Colors.red,
-              ),
-            );
-          }
-        },
-        width: double.infinity,
-        height: 50.setHeight,
-        buttonGradient: CustomAppColor.of(context).primaryGradient,
-        buttonTextColor: Colors.white,
-        radius: 25.setWidth,
+              );
+            }
+          },
+          width: double.infinity,
+          height: 50.setHeight,
+          buttonGradient: CustomAppColor.of(context).primaryGradient,
+          buttonTextColor: Colors.white,
+          radius: 25.setWidth,
+        ),
       ),
     );
   }

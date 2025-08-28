@@ -12,11 +12,12 @@ import '../../../widgets/text/common_text.dart';
 import '../../../widgets/top_bar/topbar.dart';
 
 class HelpCenterScreen extends StatefulWidget {
-  static Route<void> route() {
-    return MaterialPageRoute(builder: (_) => const HelpCenterScreen());
+  final int currentIndex;
+  static Route<void> route({int currentIndex = 0}) {
+    return MaterialPageRoute(builder: (_) => HelpCenterScreen(currentIndex: currentIndex));
   }
 
-  const HelpCenterScreen({super.key});
+  const HelpCenterScreen({super.key, this.currentIndex = 0});
 
   @override
   State<HelpCenterScreen> createState() => _HelpCenterScreenState();
@@ -33,7 +34,7 @@ class _HelpCenterScreenState extends State<HelpCenterScreen> with TickerProvider
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(length: 2, vsync: this);
+    _tabController = TabController(initialIndex: widget.currentIndex, length: 2, vsync: this);
     _tabControllerFaq = TabController(length: tabListFaq.length, vsync: this);
     _tabController.addListener(
       () {
@@ -61,56 +62,60 @@ class _HelpCenterScreenState extends State<HelpCenterScreen> with TickerProvider
               isShowBack: true,
             ),
             // Tab Bar
-            TabBar(
-              controller: _tabController,
-              isScrollable: false,
-              labelColor: CustomAppColor.of(context).tabSelectedTxtColor2,
-              unselectedLabelColor: CustomAppColor.of(context).tabTxtColor2,
-              labelStyle: TextStyle(
-                fontSize: 16.setFontSize,
-                fontWeight: FontWeight.w600,
-                fontFamily: Constant.fontFamily,
-                color: CustomAppColor.of(context).tabSelectedTxtColor2,
-              ),
-              unselectedLabelStyle: TextStyle(
-                fontSize: 16.setFontSize,
-                fontWeight: FontWeight.w400,
-                fontFamily: Constant.fontFamily,
-                color: CustomAppColor.of(context).tabTxtColor2,
-              ),
-              indicatorWeight: 1,
-              indicatorSize: TabBarIndicatorSize.tab,
-              indicatorColor: CustomAppColor.of(context).primary,
-              indicatorPadding: EdgeInsets.only(
-                top: Platform.isAndroid ? 40.setHeight : 40.setHeight,
-              ),
-              padding: EdgeInsets.symmetric(horizontal: 16.setWidth),
-              indicator: BoxDecoration(
-                gradient: CustomAppColor.of(context).primaryGradient,
-                borderRadius: BorderRadius.circular(10),
-              ),
-              tabs: [
-                Tab(
-                  child: CommonText(
-                    text: Languages.of(context).txtFaq,
-                    fontSize: 14.setFontSize,
-                    fontWeight: _tabController.index == 0 ? FontWeight.w600 : FontWeight.w500,
-                    textColor: _tabController.index == 0 ? CustomAppColor.of(context).primary : CustomAppColor.of(context).txtBlack,
-                  ),
+            IgnorePointer(
+              ignoring: true,
+              child: TabBar(
+                controller: _tabController,
+                isScrollable: false,
+                labelColor: CustomAppColor.of(context).tabSelectedTxtColor2,
+                unselectedLabelColor: CustomAppColor.of(context).tabTxtColor2,
+                labelStyle: TextStyle(
+                  fontSize: 16.setFontSize,
+                  fontWeight: FontWeight.w600,
+                  fontFamily: Constant.fontFamily,
+                  color: CustomAppColor.of(context).tabSelectedTxtColor2,
                 ),
-                Tab(
-                  child: CommonText(
-                    text: Languages.of(context).txtContactUs,
-                    fontSize: 14.setFontSize,
-                    fontWeight: _tabController.index == 1 ? FontWeight.w600 : FontWeight.w500,
-                    textColor: _tabController.index == 1 ? CustomAppColor.of(context).primary : CustomAppColor.of(context).txtBlack,
-                  ),
+                unselectedLabelStyle: TextStyle(
+                  fontSize: 16.setFontSize,
+                  fontWeight: FontWeight.w400,
+                  fontFamily: Constant.fontFamily,
+                  color: CustomAppColor.of(context).tabTxtColor2,
                 ),
-              ],
+                indicatorWeight: 1,
+                indicatorSize: TabBarIndicatorSize.tab,
+                indicatorColor: CustomAppColor.of(context).primary,
+                indicatorPadding: EdgeInsets.only(
+                  top: Platform.isAndroid ? 40.setHeight : 40.setHeight,
+                ),
+                padding: EdgeInsets.symmetric(horizontal: 16.setWidth),
+                indicator: BoxDecoration(
+                  gradient: CustomAppColor.of(context).primaryGradient,
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                tabs: [
+                  Tab(
+                    child: CommonText(
+                      text: Languages.of(context).txtFaq,
+                      fontSize: 14.setFontSize,
+                      fontWeight: _tabController.index == 0 ? FontWeight.w600 : FontWeight.w500,
+                      textColor: _tabController.index == 0 ? CustomAppColor.of(context).primary : CustomAppColor.of(context).txtBlack,
+                    ),
+                  ),
+                  Tab(
+                    child: CommonText(
+                      text: Languages.of(context).txtContactUs,
+                      fontSize: 14.setFontSize,
+                      fontWeight: _tabController.index == 1 ? FontWeight.w600 : FontWeight.w500,
+                      textColor: _tabController.index == 1 ? CustomAppColor.of(context).primary : CustomAppColor.of(context).txtBlack,
+                    ),
+                  ),
+                ],
+              ),
             ),
             // Tab Bar View
             Expanded(
               child: TabBarView(
+                physics: NeverScrollableScrollPhysics(),
                 controller: _tabController,
                 children: [
                   _buildFaqList(),

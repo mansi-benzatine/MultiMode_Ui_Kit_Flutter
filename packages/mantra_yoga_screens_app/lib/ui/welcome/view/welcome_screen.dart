@@ -72,7 +72,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                         child: CommonButton(
                           text: Languages.of(context).txtSignIn,
                           onTap: () {
-                            Navigator.push(context, SignInAndSignUpScreen.route(true));
+                            Navigator.push(context, SignInAndSignUpScreen.route(true, 0));
                           },
                           buttonColor: CustomAppColor.of(context).primary,
                           borderColor: CustomAppColor.of(context).borderColor,
@@ -86,7 +86,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                         child: CommonButton(
                           text: Languages.of(context).txtSignUp,
                           onTap: () {
-                            Navigator.push(context, SignInAndSignUpScreen.route(false));
+                            Navigator.push(context, SignInAndSignUpScreen.route(false, 1));
                           },
                           buttonColor: CustomAppColor.of(context).bgScreen,
                           borderColor: CustomAppColor.of(context).txtDarkGray.withValues(alpha: 0.2),

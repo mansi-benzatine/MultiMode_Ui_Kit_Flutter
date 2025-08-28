@@ -22,7 +22,8 @@ import '../../personal_information/view/personal_information_screen.dart';
 import '../../upgrade_plan/view/upgrade_plan_screen.dart';
 
 class ProfileScreen extends StatefulWidget {
-  const ProfileScreen({super.key});
+  final bool isForLogoutAlert;
+  const ProfileScreen({super.key, this.isForLogoutAlert = false});
 
   @override
   State<ProfileScreen> createState() => _ProfileScreenState();
@@ -35,6 +36,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
   void initState() {
     super.initState();
     isDarkMode.value = !getIt.get<LocalStorageService>().getBool(LocalStorageService.isLightTheme, optionalValue: false);
+
+    if (widget.isForLogoutAlert) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        LogoutDialog.show(context);
+      });
+    }
   }
 
   @override

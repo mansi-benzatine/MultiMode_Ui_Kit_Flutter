@@ -16,6 +16,7 @@ class MoodDialog extends StatefulWidget {
 
   static Future<void> show(BuildContext context, {Function? onTap}) async {
     return showDialog(
+      barrierDismissible: false,
       context: context,
       builder: (_) => MoodDialog(
         onTap: onTap,
@@ -46,78 +47,90 @@ class _MoodDialogState extends State<MoodDialog> {
   Widget build(BuildContext context) {
     final parentContext = widget.parentContext;
 
-    return Dialog(
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(34)),
-      backgroundColor: CustomAppColor.of(parentContext).bgScreen,
-      insetPadding: EdgeInsets.symmetric(horizontal: 20.setWidth, vertical: 20.setHeight),
-      child: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 20.setWidth, vertical: 20.setHeight),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            CommonText(
-              text: Languages.of(parentContext).txtHowWasYourMoodAfterLesson,
-              fontSize: 22.setFontSize,
-              fontWeight: FontWeight.w700,
-              fontFamily: Constant.fontFamilyBold700,
-              textColor: CustomAppColor.of(parentContext).txtBlack,
-              textAlign: TextAlign.center,
-            ),
-            Divider(
-              color: CustomAppColor.of(parentContext).txtBlack.withValues(alpha: 0.5),
-              thickness: 1,
-              height: 25.setHeight,
-            ),
-            ValueListenableBuilder<int>(
-              valueListenable: selectedIndex,
-              builder: (context, value, child) {
-                return GridView.builder(
-                  itemCount: emojiList.length,
-                  shrinkWrap: true,
-                  physics: const NeverScrollableScrollPhysics(),
-                  padding: EdgeInsets.only(top: 5.setHeight, bottom: 15.setHeight),
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 4,
-                    mainAxisExtent: 80.setHeight,
-                  ),
-                  itemBuilder: (context, index) {
-                    return InkWell(
-                      splashColor: Colors.transparent,
-                      highlightColor: Colors.transparent,
-                      onTap: () => selectedIndex.value = index,
-                      child: Container(
-                        margin: EdgeInsets.all(4.setWidth),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(18),
-                          border: Border.all(
-                            color: value == index ? CustomAppColor.of(parentContext).primary : Colors.transparent,
-                            width: 2,
+    return PopScope(
+      canPop: false,
+      onPopInvokedWithResult: (didPop, result) {
+        if (!didPop) {
+          Navigator.pop(context);
+          Navigator.pop(context);
+        }
+      },
+      child: Dialog(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(34)),
+        backgroundColor: CustomAppColor.of(parentContext).bgScreen,
+        insetPadding: EdgeInsets.symmetric(horizontal: 20.setWidth, vertical: 20.setHeight),
+        child: Padding(
+          padding: EdgeInsets.symmetric(horizontal: 20.setWidth, vertical: 20.setHeight),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              CommonText(
+                text: Languages.of(parentContext).txtHowWasYourMoodAfterLesson,
+                fontSize: 22.setFontSize,
+                fontWeight: FontWeight.w700,
+                fontFamily: Constant.fontFamilyBold700,
+                textColor: CustomAppColor.of(parentContext).txtBlack,
+                textAlign: TextAlign.center,
+              ),
+              Divider(
+                color: CustomAppColor.of(parentContext).txtBlack.withValues(alpha: 0.5),
+                thickness: 1,
+                height: 25.setHeight,
+              ),
+              ValueListenableBuilder<int>(
+                valueListenable: selectedIndex,
+                builder: (context, value, child) {
+                  return GridView.builder(
+                    itemCount: emojiList.length,
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    padding: EdgeInsets.only(top: 5.setHeight, bottom: 15.setHeight),
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 4,
+                      mainAxisExtent: 80.setHeight,
+                    ),
+                    itemBuilder: (context, index) {
+                      return InkWell(
+                        splashColor: Colors.transparent,
+                        highlightColor: Colors.transparent,
+                        onTap: () => selectedIndex.value = index,
+                        child: Container(
+                          margin: EdgeInsets.all(4.setWidth),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(18),
+                            border: Border.all(
+                              color: value == index ? CustomAppColor.of(parentContext).primary : Colors.transparent,
+                              width: 2,
+                            ),
+                          ),
+                          child: Image.asset(
+                            emojiList[index],
+                            width: 80.setWidth,
+                            height: 80.setHeight,
                           ),
                         ),
-                        child: Image.asset(
-                          emojiList[index],
-                          width: 80.setWidth,
-                          height: 80.setHeight,
-                        ),
-                      ),
-                    );
+                      );
+                    },
+                  );
+                },
+              ),
+              IgnorePointer(
+                ignoring: true,
+                child: CommonButton(
+                  text: Languages.of(parentContext).txtContinue,
+                  onTap: () {
+                    Navigator.of(context, rootNavigator: true).pop();
+                    widget.onTap?.call();
                   },
-                );
-              },
-            ),
-            CommonButton(
-              text: Languages.of(parentContext).txtContinue,
-              onTap: () {
-                Navigator.of(context, rootNavigator: true).pop();
-                widget.onTap?.call();
-              },
-              buttonColor: CustomAppColor.of(parentContext).primary,
-              borderColor: CustomAppColor.of(parentContext).borderColor,
-              borderWidth: 3,
-              height: 55.setHeight,
-              radius: 18,
-            ),
-          ],
+                  buttonColor: CustomAppColor.of(parentContext).primary,
+                  borderColor: CustomAppColor.of(parentContext).borderColor,
+                  borderWidth: 3,
+                  height: 55.setHeight,
+                  radius: 18,
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

@@ -112,6 +112,16 @@ class _ScreenListScreen extends State<ScreenListScreen> {
         icon: AppAssets.icBlueNavigator,
       ),
       ScreenListDataModel(
+        title: "Document Submitted",
+        onClick: () => Navigator.push(context, RequiredDocumentsScreen.route(isShownAlert: true)),
+        icon: AppAssets.icBlueNavigator,
+      ),
+      ScreenListDataModel(
+        title: "Enable Location",
+        onClick: () => Navigator.push(context, HomeScreen.route(isForRideRequest: false, isShownLocationAlert: true)),
+        icon: AppAssets.icBlueNavigator,
+      ),
+      ScreenListDataModel(
         title: "Home",
         onClick: () => Navigator.push(context, HomeScreen.route(isForRideRequest: false)),
         icon: AppAssets.icBlueNavigator,
@@ -174,6 +184,11 @@ class _ScreenListScreen extends State<ScreenListScreen> {
       ScreenListDataModel(
         title: "Verify OTP & End Ride",
         onClick: () => Navigator.push(context, RideOtpVerificationScreen.route(isFromCollectCashScreen: true)),
+        icon: AppAssets.icBlueNavigator,
+      ),
+      ScreenListDataModel(
+        title: "Side Menu",
+        onClick: () => Navigator.push(context, HomeScreen.route(isShowSideMenu: true)),
         icon: AppAssets.icBlueNavigator,
       ),
       ScreenListDataModel(
@@ -251,6 +266,16 @@ class _ScreenListScreen extends State<ScreenListScreen> {
         onClick: () => Navigator.push(context, TermsAndConditionsScreen.route()),
         icon: AppAssets.icBlueNavigator,
       ),
+      ScreenListDataModel(
+        title: "Delete Account",
+        onClick: () => Navigator.push(context, SettingsScreen.route(isForDeleteAccountAlert: true)),
+        icon: AppAssets.icBlueNavigator,
+      ),
+      ScreenListDataModel(
+        title: "Logout",
+        onClick: () => Navigator.push(context, SettingsScreen.route(isForLogoutAlert: true)),
+        icon: AppAssets.icBlueNavigator,
+      ),
     ];
   }
 
@@ -279,7 +304,7 @@ class _ScreenListScreen extends State<ScreenListScreen> {
           ),
           title: CommonText(
             text: "Taxi Booking App - Driver",
-            fontSize: 22.setFontSize,
+            fontSize: 18.setFontSize,
             fontFamily: Constant.fontFamilyMontserratSemiBold,
             fontWeight: FontWeight.w600,
             textColor: CustomAppColor.of(context).white,

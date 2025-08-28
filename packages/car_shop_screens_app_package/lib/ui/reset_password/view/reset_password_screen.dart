@@ -13,11 +13,12 @@ import '../../../widgets/text_field/text_form_field.dart';
 import '../../../widgets/top_bar/topbar.dart';
 
 class ResetPasswordScreen extends StatefulWidget {
-  static Route<void> route() {
-    return MaterialPageRoute(builder: (_) => const ResetPasswordScreen());
+  final bool isForAlert;
+  static Route<void> route({bool isForAlert = false}) {
+    return MaterialPageRoute(builder: (_) => ResetPasswordScreen(isForAlert: isForAlert));
   }
 
-  const ResetPasswordScreen({super.key});
+  const ResetPasswordScreen({super.key, this.isForAlert = false});
 
   @override
   State<ResetPasswordScreen> createState() => _ResetPasswordScreenState();
@@ -30,6 +31,28 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> implements To
 
   final ValueNotifier<bool> isShowPassword = ValueNotifier(false);
   final ValueNotifier<bool> isShowConfirmPassword = ValueNotifier(false);
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    if (widget.isForAlert) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        showDialog(
+          barrierDismissible: false,
+          context: context,
+          builder: (dialogContext) => CongratulationsDialog(
+            title: Languages.of(context).txtCongratulations,
+            message: Languages.of(context).txtYourAccountIsReadyToUse,
+            onComplete: () {
+              Navigator.pop(dialogContext);
+              Navigator.pop(context);
+            },
+          ),
+        );
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -108,20 +131,23 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> implements To
                       },
                     ),
                     SizedBox(height: 30.setHeight),
-                    CommonButton(
-                      text: Languages.of(context).txtResetPassword,
-                      onTap: () {
-                        showDialog(
-                          context: context,
-                          builder: (dialogContext) => CongratulationsDialog(
-                            title: Languages.of(context).txtCongratulations,
-                            message: Languages.of(context).txtYourAccountIsReadyToUse,
-                            onComplete: () {
-                              Navigator.pop(dialogContext);
-                            },
-                          ),
-                        );
-                      },
+                    IgnorePointer(
+                      ignoring: true,
+                      child: CommonButton(
+                        text: Languages.of(context).txtResetPassword,
+                        onTap: () {
+                          showDialog(
+                            context: context,
+                            builder: (dialogContext) => CongratulationsDialog(
+                              title: Languages.of(context).txtCongratulations,
+                              message: Languages.of(context).txtYourAccountIsReadyToUse,
+                              onComplete: () {
+                                Navigator.pop(dialogContext);
+                              },
+                            ),
+                          );
+                        },
+                      ),
                     ),
                   ],
                 ),

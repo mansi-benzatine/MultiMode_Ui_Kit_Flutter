@@ -17,22 +17,31 @@ class IntrestedInOfferBottomSheet extends StatefulWidget {
 class _IntrestedInOfferBottomSheetState extends State<IntrestedInOfferBottomSheet> {
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Container(
-        constraints: BoxConstraints(
-          maxHeight: MediaQuery.of(context).size.height * 0.6,
-        ),
-        decoration: BoxDecoration(
-          color: CustomAppColor.of(context).bgBottomSheet,
-          borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(20.setWidth),
-            topRight: Radius.circular(20.setWidth),
+    return PopScope(
+      canPop: false,
+      onPopInvokedWithResult: (didPop, result) {
+        if (!didPop) {
+          Navigator.pop(context);
+          Navigator.pop(context);
+        }
+      },
+      child: SafeArea(
+        child: Container(
+          constraints: BoxConstraints(
+            maxHeight: MediaQuery.of(context).size.height * 0.6,
           ),
-        ),
-        child: Wrap(
-          children: [
-            _buildContent(),
-          ],
+          decoration: BoxDecoration(
+            color: CustomAppColor.of(context).bgBottomSheet,
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(20.setWidth),
+              topRight: Radius.circular(20.setWidth),
+            ),
+          ),
+          child: Wrap(
+            children: [
+              _buildContent(),
+            ],
+          ),
         ),
       ),
     );
@@ -100,40 +109,46 @@ class _IntrestedInOfferBottomSheetState extends State<IntrestedInOfferBottomShee
   }
 
   Widget _buildViewSimilarOffersButton() {
-    return CommonButton(
-      text: Languages.of(context).txtViewSimilarOffers,
-      onTap: () {
-        Navigator.pop(context);
-        /* Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => const SimilarOfferScreen()),
-        );*/
-      },
-      buttonGradient: LinearGradient(
-        colors: [
-          CustomAppColor.of(context).transparent,
-          CustomAppColor.of(context).transparent,
-        ],
+    return IgnorePointer(
+      ignoring: true,
+      child: CommonButton(
+        text: Languages.of(context).txtViewSimilarOffers,
+        onTap: () {
+          Navigator.pop(context);
+          /* Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => const SimilarOfferScreen()),
+          );*/
+        },
+        buttonGradient: LinearGradient(
+          colors: [
+            CustomAppColor.of(context).transparent,
+            CustomAppColor.of(context).transparent,
+          ],
+        ),
+        buttonTextSize: 14.setFontSize,
+        buttonTextWeight: FontWeight.w500,
+        buttonTextColor: CustomAppColor.of(context).compareBtnText,
+        borderColor: CustomAppColor.of(context).compareBtnBorder,
       ),
-      buttonTextSize: 14.setFontSize,
-      buttonTextWeight: FontWeight.w500,
-      buttonTextColor: CustomAppColor.of(context).compareBtnText,
-      borderColor: CustomAppColor.of(context).compareBtnBorder,
     );
   }
 
   Widget _buildBackToHomeButton() {
-    return CommonButton(
-      text: Languages.of(context).txtBackToHome,
-      onTap: () {
-        Navigator.pop(context);
-        // Navigate back to home
-        /*  Navigator.of(context).popUntil((route) => route.isFirst);*/
-      },
-      width: double.infinity,
-      buttonGradient: CustomAppColor.of(context).primaryGradient,
-      buttonTextSize: 14.setFontSize,
-      buttonTextWeight: FontWeight.w500,
+    return IgnorePointer(
+      ignoring: true,
+      child: CommonButton(
+        text: Languages.of(context).txtBackToHome,
+        onTap: () {
+          Navigator.pop(context);
+          // Navigate back to home
+          /*  Navigator.of(context).popUntil((route) => route.isFirst);*/
+        },
+        width: double.infinity,
+        buttonGradient: CustomAppColor.of(context).primaryGradient,
+        buttonTextSize: 14.setFontSize,
+        buttonTextWeight: FontWeight.w500,
+      ),
     );
   }
 }

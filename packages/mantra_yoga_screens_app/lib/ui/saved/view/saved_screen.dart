@@ -12,10 +12,14 @@ import '../../meditation_details/view/meditation_details_screen.dart';
 import '../../yoga_details/view/yoga_details_screen.dart';
 
 class SavedScreen extends StatefulWidget {
-  const SavedScreen({super.key});
+  final int currentIndex;
+  const SavedScreen({super.key, this.currentIndex = 0});
 
-  static Route<dynamic> route() {
-    return MaterialPageRoute(builder: (context) => const SavedScreen());
+  static Route<dynamic> route({int currentIndex = 0}) {
+    return MaterialPageRoute(
+        builder: (context) => SavedScreen(
+              currentIndex: currentIndex,
+            ));
   }
 
   @override
@@ -28,7 +32,12 @@ class _SavedScreenState extends State<SavedScreen> with TickerProviderStateMixin
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(length: 2, vsync: this);
+    _tabController = TabController(initialIndex: widget.currentIndex, length: 2, vsync: this);
+    _tabController.addListener(
+      () {
+        setState(() {});
+      },
+    );
   }
 
   @override
@@ -49,37 +58,43 @@ class _SavedScreenState extends State<SavedScreen> with TickerProviderStateMixin
   }
 
   _tabBarView() {
-    return TabBar(
-      controller: _tabController,
-      padding: EdgeInsets.only(left: 15.setWidth, right: 15.setWidth),
-      dividerHeight: 1,
-      dividerColor: CustomAppColor.of(context).txtBlack.withValues(alpha: 0.1),
-      indicatorSize: TabBarIndicatorSize.tab,
-      indicatorColor: CustomAppColor.of(context).primary,
-      indicatorWeight: 3,
-      labelStyle: TextStyle(
-        fontSize: 14.setFontSize,
-        fontWeight: FontWeight.w700,
-        fontFamily: Constant.fontFamilyBold700,
-        color: CustomAppColor.of(context).txtPrimary,
+    return IgnorePointer(
+      ignoring: true,
+      child: TabBar(
+        controller: _tabController,
+        padding: EdgeInsets.only(left: 15.setWidth, right: 15.setWidth),
+        dividerHeight: 1,
+        dividerColor: CustomAppColor.of(context).txtBlack.withValues(alpha: 0.1),
+        indicatorSize: TabBarIndicatorSize.tab,
+        indicatorColor: CustomAppColor.of(context).primary,
+        indicatorWeight: 3,
+        overlayColor: WidgetStateProperty.all(CustomAppColor.of(context).transparent),
+        tabs: [
+          Tab(
+            child: CommonText(
+              text: Languages.of(context).txtYoga,
+              fontSize: 16.setFontSize,
+              fontFamily: _tabController.index == 0 ? Constant.fontFamilyBold700 : Constant.fontFamilySemiBold600,
+              textColor: _tabController.index == 0 ? CustomAppColor.of(context).txtPrimary : CustomAppColor.of(context).txtBlack,
+            ),
+          ),
+          Tab(
+            child: CommonText(
+              text: Languages.of(context).txtMeditation,
+              fontSize: 16.setFontSize,
+              fontFamily: _tabController.index == 1 ? Constant.fontFamilyBold700 : Constant.fontFamilySemiBold600,
+              textColor: _tabController.index == 1 ? CustomAppColor.of(context).txtPrimary : CustomAppColor.of(context).txtBlack,
+            ),
+          ),
+        ],
       ),
-      unselectedLabelStyle: TextStyle(
-        fontSize: 14.setFontSize,
-        fontWeight: FontWeight.w500,
-        fontFamily: Constant.fontFamilyMedium500,
-        color: CustomAppColor.of(context).txtBlack,
-      ),
-      overlayColor: WidgetStateProperty.all(CustomAppColor.of(context).transparent),
-      tabs: [
-        Tab(text: Languages.of(context).txtYoga),
-        Tab(text: Languages.of(context).txtMeditation),
-      ],
     );
   }
 
   _tabsView() {
     return Expanded(
       child: TabBarView(
+        physics: NeverScrollableScrollPhysics(),
         controller: _tabController,
         children: [
           _buildYogaList(),

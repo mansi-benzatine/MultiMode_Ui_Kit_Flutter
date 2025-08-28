@@ -11,12 +11,17 @@ import '../../news/view/news_screen.dart';
 
 class DashboardScreen extends StatefulWidget {
   final int selectedIndex;
+  final bool isForLogoutAlert;
 
-  static Route<void> route({required int selectedIndex}) {
-    return MaterialPageRoute(builder: (_) => DashboardScreen(selectedIndex: selectedIndex));
+  static Route<void> route({required int selectedIndex, bool isForLogoutAlert = false}) {
+    return MaterialPageRoute(
+        builder: (_) => DashboardScreen(
+              selectedIndex: selectedIndex,
+              isForLogoutAlert: isForLogoutAlert,
+            ));
   }
 
-  const DashboardScreen({super.key, required this.selectedIndex});
+  const DashboardScreen({super.key, required this.selectedIndex, this.isForLogoutAlert = false});
 
   @override
   State<DashboardScreen> createState() => _DashboardScreenState();
@@ -43,7 +48,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
       ),
       const NewsScreen(),
       const FavouriteCarScreen(),
-      const MyProfileScreen(),
+      MyProfileScreen(isForLogoutAlert: widget.isForLogoutAlert),
     ];
   }
 

@@ -38,51 +38,63 @@ class _CongratulationDialogState extends State<CongratulationDialog> {
     final lang = Languages.of(widget.parentContext);
     final colors = CustomAppColor.of(widget.parentContext);
 
-    return AlertDialog(
-      backgroundColor: colors.bgScreen,
-      contentPadding: EdgeInsets.symmetric(
-        horizontal: 20.setWidth,
-        vertical: 20.setHeight,
-      ),
-      content: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Image.asset(
-            AppAssets.imgCongratulation,
-            width: 200.setHeight,
-            height: 200.setHeight,
-          ),
-          SizedBox(height: 15.setHeight),
-          CommonText(
-            text: "${lang.txtCongratulations}!",
-            fontSize: 28.setFontSize,
-            fontWeight: FontWeight.w700,
-            fontFamily: Constant.fontFamilyBold700,
-            textColor: colors.txtBlack,
-          ),
-          SizedBox(height: 10.setHeight),
-          CommonText(
-            text: lang.txtLoremIpsum,
-            fontSize: 12.setFontSize,
-            fontWeight: FontWeight.w400,
-            fontFamily: Constant.fontFamilyRegular400,
-            textColor: colors.txtDarkGray,
-          ),
-          SizedBox(height: 20.setHeight),
-          CommonButton(
-            text: lang.txtDone,
-            onTap: () {
-              Navigator.pop(context);
-              widget.onTap?.call();
-            },
-            buttonColor: colors.primary,
-            borderColor: colors.borderColor,
-            borderWidth: 3,
-            height: 55.setHeight,
-            width: 180.setWidth,
-            radius: 18,
-          ),
-        ],
+    return PopScope(
+      canPop: false,
+      onPopInvokedWithResult: (didPop, result) {
+        if (!didPop) {
+          Navigator.pop(context);
+          Navigator.pop(context);
+        }
+      },
+      child: AlertDialog(
+        backgroundColor: colors.bgScreen,
+        contentPadding: EdgeInsets.symmetric(
+          horizontal: 20.setWidth,
+          vertical: 20.setHeight,
+        ),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Image.asset(
+              AppAssets.imgCongratulation,
+              width: 200.setHeight,
+              height: 200.setHeight,
+            ),
+            SizedBox(height: 15.setHeight),
+            CommonText(
+              text: "${lang.txtCongratulations}!",
+              fontSize: 28.setFontSize,
+              fontWeight: FontWeight.w700,
+              fontFamily: Constant.fontFamilyBold700,
+              textColor: colors.txtBlack,
+            ),
+            SizedBox(height: 10.setHeight),
+            CommonText(
+              text: lang.txtLoremIpsum,
+              fontSize: 12.setFontSize,
+              fontWeight: FontWeight.w400,
+              fontFamily: Constant.fontFamilyRegular400,
+              textColor: colors.txtDarkGray,
+            ),
+            SizedBox(height: 20.setHeight),
+            IgnorePointer(
+              ignoring: true,
+              child: CommonButton(
+                text: lang.txtDone,
+                onTap: () {
+                  Navigator.pop(context);
+                  widget.onTap?.call();
+                },
+                buttonColor: colors.primary,
+                borderColor: colors.borderColor,
+                borderWidth: 3,
+                height: 55.setHeight,
+                width: 180.setWidth,
+                radius: 18,
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

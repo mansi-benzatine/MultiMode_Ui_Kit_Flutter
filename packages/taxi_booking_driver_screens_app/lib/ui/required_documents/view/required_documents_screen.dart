@@ -15,11 +15,12 @@ import 'package:taxi_booking_driver_screens_app_package/widgets/top_bar/topbar.d
 import '../../../widgets/alert_dialog/common_alert_dialog.dart';
 
 class RequiredDocumentsScreen extends StatefulWidget {
-  static Route<void> route() {
-    return MaterialPageRoute(builder: (_) => const RequiredDocumentsScreen());
+  final bool isShownAlert;
+  static Route<void> route({bool isShownAlert = false}) {
+    return MaterialPageRoute(builder: (_) => RequiredDocumentsScreen(isShownAlert: isShownAlert));
   }
 
-  const RequiredDocumentsScreen({super.key});
+  const RequiredDocumentsScreen({super.key, this.isShownAlert = false});
 
   @override
   State<RequiredDocumentsScreen> createState() => _RequiredDocumentsScreenState();
@@ -52,6 +53,66 @@ class _RequiredDocumentsScreenState extends State<RequiredDocumentsScreen> imple
         }
       },
     ];
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    if (widget.isShownAlert) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        showDialog(
+          barrierDismissible: false,
+          context: context,
+          builder: (dialogContext) {
+            return PopScope(
+              canPop: false,
+              onPopInvokedWithResult: (didPop, result) {
+                if (!didPop) {
+                  Navigator.pop(context);
+                  Navigator.pop(context);
+                }
+              },
+              child: Padding(
+                padding: EdgeInsets.symmetric(horizontal: 25.setWidth),
+                child: CommonDialog(
+                  titleText: CommonText(
+                    text: Languages.of(context).txtDocumentSubmitted,
+                    fontWeight: FontWeight.w700,
+                    fontSize: 24.setFontSize,
+                    textColor: CustomAppColor.of(context).txtBlack,
+                  ),
+                  descriptionText: CommonText(
+                    text: Languages.of(context).txtYourAccountHasBeenCreatedSuccessfullyPressContinueToStartUsingApp,
+                    fontSize: 13.setFontSize,
+                    fontWeight: FontWeight.w400,
+                    textColor: CustomAppColor.of(context).txtGray,
+                  ),
+                  icon: Image.asset(
+                    AppAssets.icGreyThumbUp,
+                    height: 110.setHeight,
+                  ),
+                  button: IgnorePointer(
+                    ignoring: true,
+                    child: GestureDetector(
+                      onTap: () {
+                        Navigator.pop(dialogContext);
+                        // Navigator.push(context, HomeScreen.route(isFromRideBooked: false));
+                      },
+                      child: Image.asset(
+                        AppAssets.icGoToNext,
+                        height: 55.setHeight,
+                        width: 55.setHeight,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            );
+          },
+        );
+      });
+    }
   }
 
   @override
@@ -98,50 +159,53 @@ class _RequiredDocumentsScreenState extends State<RequiredDocumentsScreen> imple
                   },
                   itemCount: documentsList.length),
             ),
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 22.setWidth, vertical: 20.setHeight),
-              child: CommonButton(
-                text: Languages.of(context).txtContinue,
-                onTap: () {
-                  showDialog(
-                    barrierDismissible: false,
-                    context: context,
-                    builder: (dialogContext) {
-                      return Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 25.setWidth),
-                        child: CommonDialog(
-                          titleText: CommonText(
-                            text: Languages.of(context).txtDocumentSubmitted,
-                            fontWeight: FontWeight.w700,
-                            fontSize: 24.setFontSize,
-                            textColor: CustomAppColor.of(context).txtBlack,
-                          ),
-                          descriptionText: CommonText(
-                            text: Languages.of(context).txtYourAccountHasBeenCreatedSuccessfullyPressContinueToStartUsingApp,
-                            fontSize: 13.setFontSize,
-                            fontWeight: FontWeight.w400,
-                            textColor: CustomAppColor.of(context).txtGray,
-                          ),
-                          icon: Image.asset(
-                            AppAssets.icGreyThumbUp,
-                            height: 110.setHeight,
-                          ),
-                          button: GestureDetector(
-                            onTap: () {
-                              Navigator.pop(dialogContext);
-                              // Navigator.push(context, HomeScreen.route(isFromRideBooked: false));
-                            },
-                            child: Image.asset(
-                              AppAssets.icGoToNext,
-                              height: 55.setHeight,
-                              width: 55.setHeight,
+            IgnorePointer(
+              ignoring: true,
+              child: Padding(
+                padding: EdgeInsets.symmetric(horizontal: 22.setWidth, vertical: 20.setHeight),
+                child: CommonButton(
+                  text: Languages.of(context).txtContinue,
+                  onTap: () {
+                    showDialog(
+                      barrierDismissible: false,
+                      context: context,
+                      builder: (dialogContext) {
+                        return Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 25.setWidth),
+                          child: CommonDialog(
+                            titleText: CommonText(
+                              text: Languages.of(context).txtDocumentSubmitted,
+                              fontWeight: FontWeight.w700,
+                              fontSize: 24.setFontSize,
+                              textColor: CustomAppColor.of(context).txtBlack,
+                            ),
+                            descriptionText: CommonText(
+                              text: Languages.of(context).txtYourAccountHasBeenCreatedSuccessfullyPressContinueToStartUsingApp,
+                              fontSize: 13.setFontSize,
+                              fontWeight: FontWeight.w400,
+                              textColor: CustomAppColor.of(context).txtGray,
+                            ),
+                            icon: Image.asset(
+                              AppAssets.icGreyThumbUp,
+                              height: 110.setHeight,
+                            ),
+                            button: GestureDetector(
+                              onTap: () {
+                                Navigator.pop(dialogContext);
+                                // Navigator.push(context, HomeScreen.route(isFromRideBooked: false));
+                              },
+                              child: Image.asset(
+                                AppAssets.icGoToNext,
+                                height: 55.setHeight,
+                                width: 55.setHeight,
+                              ),
                             ),
                           ),
-                        ),
-                      );
-                    },
-                  );
-                },
+                        );
+                      },
+                    );
+                  },
+                ),
               ),
             )
           ],

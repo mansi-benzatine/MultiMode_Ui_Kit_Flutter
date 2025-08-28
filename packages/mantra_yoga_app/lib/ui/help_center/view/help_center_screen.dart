@@ -151,6 +151,11 @@ class _HelpCenterScreenState extends State<HelpCenterScreen> with TickerProvider
   void initState() {
     super.initState();
     _tabController = TabController(length: 2, vsync: this);
+    _tabController.addListener(
+      () {
+        setState(() {});
+      },
+    );
   }
 
   @override
@@ -183,22 +188,24 @@ class _HelpCenterScreenState extends State<HelpCenterScreen> with TickerProvider
       indicatorSize: TabBarIndicatorSize.tab,
       indicatorColor: CustomAppColor.of(context).primary,
       indicatorWeight: 3,
-      labelStyle: TextStyle(
-        fontSize: 14.setFontSize,
-        fontWeight: FontWeight.w700,
-        fontFamily: Constant.fontFamilyBold700,
-        color: CustomAppColor.of(context).txtPrimary,
-      ),
-      unselectedLabelStyle: TextStyle(
-        fontSize: 14.setFontSize,
-        fontWeight: FontWeight.w500,
-        fontFamily: Constant.fontFamilyMedium500,
-        color: CustomAppColor.of(context).txtBlack,
-      ),
       overlayColor: WidgetStateProperty.all(CustomAppColor.of(context).transparent),
       tabs: [
-        Tab(text: Languages.of(context).txtFAQ),
-        Tab(text: Languages.of(context).txtContactUs),
+        Tab(
+          child: CommonText(
+            text: Languages.of(context).txtFAQ,
+            fontSize: 16.setFontSize,
+            fontFamily: _tabController.index == 0 ? Constant.fontFamilyBold700 : Constant.fontFamilySemiBold600,
+            textColor: _tabController.index == 0 ? CustomAppColor.of(context).txtPrimary : CustomAppColor.of(context).txtBlack,
+          ),
+        ),
+        Tab(
+          child: CommonText(
+            text: Languages.of(context).txtContactUs,
+            fontSize: 16.setFontSize,
+            fontFamily: _tabController.index == 1 ? Constant.fontFamilyBold700 : Constant.fontFamilySemiBold600,
+            textColor: _tabController.index == 1 ? CustomAppColor.of(context).txtPrimary : CustomAppColor.of(context).txtBlack,
+          ),
+        ),
       ],
     );
   }

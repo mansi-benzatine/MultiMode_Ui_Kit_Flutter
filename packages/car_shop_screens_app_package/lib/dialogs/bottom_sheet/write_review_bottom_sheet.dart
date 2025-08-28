@@ -27,23 +27,35 @@ class _WriteReviewBottomSheetState extends State<WriteReviewBottomSheet> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Container(
-        constraints: BoxConstraints(
-          maxHeight: MediaQuery.of(context).size.height * 0.8,
-        ),
-        decoration: BoxDecoration(
-          color: CustomAppColor.of(context).bgBottomSheet,
-          borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(20.setWidth),
-            topRight: Radius.circular(20.setWidth),
+    return PopScope(
+      canPop: false,
+      onPopInvokedWithResult: (didPop, result) {
+        if (!didPop) {
+          Navigator.pop(context);
+          Navigator.pop(context);
+        }
+      },
+      child: SafeArea(
+        child: Container(
+          padding: EdgeInsets.only(
+            bottom: MediaQuery.of(context).viewInsets.bottom,
           ),
-        ),
-        child: Wrap(
-          children: [
-            _buildHeader(),
-            _buildContent(),
-          ],
+          constraints: BoxConstraints(
+            maxHeight: MediaQuery.of(context).size.height * 0.8,
+          ),
+          decoration: BoxDecoration(
+            color: CustomAppColor.of(context).bgBottomSheet,
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(20.setWidth),
+              topRight: Radius.circular(20.setWidth),
+            ),
+          ),
+          child: Wrap(
+            children: [
+              _buildHeader(),
+              _buildContent(),
+            ],
+          ),
         ),
       ),
     );
@@ -61,22 +73,25 @@ class _WriteReviewBottomSheetState extends State<WriteReviewBottomSheet> {
             fontWeight: FontWeight.w600,
             textColor: CustomAppColor.of(context).txtBlack,
           ),
-          GestureDetector(
-            onTap: () {
-              Navigator.pop(context);
-            },
-            child: Container(
-              decoration: BoxDecoration(
-                color: CustomAppColor.of(context).bgSearchBar,
-                borderRadius: BorderRadius.circular(8.setWidth),
-              ),
-              height: 30.setHeight,
-              width: 30.setWidth,
-              child: Center(
-                child: Icon(
-                  Icons.close,
-                  size: 20.setWidth,
-                  color: CustomAppColor.of(context).txtBlack,
+          IgnorePointer(
+            ignoring: true,
+            child: GestureDetector(
+              onTap: () {
+                Navigator.pop(context);
+              },
+              child: Container(
+                decoration: BoxDecoration(
+                  color: CustomAppColor.of(context).bgSearchBar,
+                  borderRadius: BorderRadius.circular(8.setWidth),
+                ),
+                height: 30.setHeight,
+                width: 30.setWidth,
+                child: Center(
+                  child: Icon(
+                    Icons.close,
+                    size: 20.setWidth,
+                    color: CustomAppColor.of(context).txtBlack,
+                  ),
                 ),
               ),
             ),
@@ -174,34 +189,37 @@ class _WriteReviewBottomSheetState extends State<WriteReviewBottomSheet> {
   }
 
   Widget _buildSubmitButton() {
-    return CommonButton(
-      text: Languages.of(context).txtSubmit,
-      mTop: 16.setHeight,
-      mLeft: 16.setWidth,
-      mRight: 16.setWidth,
-      mBottom: 16.setHeight,
-      onTap: () {
-        if (selectedRating > 0) {
-          // Handle submit logic here
-          Navigator.pop(context, {
-            'rating': selectedRating,
-            'review': _reviewController.text,
-          });
-        } else {
-          // Show error - rating required
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: CommonText(
-                text: Languages.of(context).txtPleaseSelectRating,
-                fontSize: 14.setFontSize,
-                fontWeight: FontWeight.w400,
-                textColor: CustomAppColor.of(context).txtWhite,
+    return IgnorePointer(
+      ignoring: true,
+      child: CommonButton(
+        text: Languages.of(context).txtSubmit,
+        mTop: 16.setHeight,
+        mLeft: 16.setWidth,
+        mRight: 16.setWidth,
+        mBottom: 16.setHeight,
+        onTap: () {
+          if (selectedRating > 0) {
+            // Handle submit logic here
+            Navigator.pop(context, {
+              'rating': selectedRating,
+              'review': _reviewController.text,
+            });
+          } else {
+            // Show error - rating required
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: CommonText(
+                  text: Languages.of(context).txtPleaseSelectRating,
+                  fontSize: 14.setFontSize,
+                  fontWeight: FontWeight.w400,
+                  textColor: CustomAppColor.of(context).txtWhite,
+                ),
+                backgroundColor: CustomAppColor.of(context).txtRed,
               ),
-              backgroundColor: CustomAppColor.of(context).txtRed,
-            ),
-          );
-        }
-      },
+            );
+          }
+        },
+      ),
     );
   }
 }

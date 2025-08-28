@@ -114,130 +114,139 @@ class _CongratulationsDialogState extends State<CongratulationsDialog> with Tick
 
   @override
   Widget build(BuildContext context) {
-    return Dialog(
-      backgroundColor: Colors.transparent,
-      child: ScaleTransition(
-        scale: _scaleAnimation,
-        child: Stack(
-          clipBehavior: Clip.none,
-          alignment: Alignment.topCenter,
-          children: [
-            // Main dialog with notch
-            Container(
-              margin: EdgeInsets.only(top: 40.setHeight),
-              child: ClipPath(
-                clipper: NotchClipper(notchRadius: 90), // Increased to match circle size
-                child: Container(
-                  width: 320.setWidth,
-                  padding: EdgeInsets.fromLTRB(16.setWidth, 60.setHeight, 16.setWidth, 20.setHeight),
-                  decoration: BoxDecoration(
-                    color: CustomAppColor.of(context).bgBottomSheet,
-                    borderRadius: BorderRadius.circular(30),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black.withValues(alpha: 0.15),
-                        blurRadius: 25,
-                        offset: const Offset(0, 10),
-                        spreadRadius: 0,
-                      ),
-                    ],
-                  ),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      // Title
-                      CommonText(
-                        text: widget.title,
-                        fontSize: 24.setFontSize,
-                        fontWeight: FontWeight.w700,
-                        textColor: CustomAppColor.of(context).txtBlack,
-                        textAlign: TextAlign.center,
-                      ),
-
-                      SizedBox(height: 25.setHeight),
-
-                      // Message
-                      CommonText(
-                        text: widget.message,
-                        fontSize: 12.setFontSize,
-                        fontWeight: FontWeight.w400,
-                        textColor: CustomAppColor.of(context).txtGray,
-                        textAlign: TextAlign.center,
-                      ),
-
-                      SizedBox(height: 25.setHeight),
-
-                      // Progress indicator
-
-                      SizedBox(
-                        width: 60.setWidth,
-                        height: 60.setHeight,
-                        child: CircularPercentIndicator(
-                          radius: 30.0,
-                          lineWidth: 5.setWidth,
-                          animation: true,
-                          percent: 1,
-                          animationDuration: 2000,
-                          backgroundWidth: 1.setWidth,
-                          backgroundColor: CustomAppColor.of(context).txtGray,
-                          center: CommonText(
-                            text: "85.0%",
-                            fontSize: 12.setFontSize,
-                            fontWeight: FontWeight.w500,
-                            textColor: CustomAppColor.of(context).txtSeeAll,
-                          ),
-                          circularStrokeCap: CircularStrokeCap.round,
-                          linearGradient: CustomAppColor.of(context).primaryGradient,
-                          onAnimationEnd: () {
-                            if (widget.onComplete != null) {
-                              widget.onComplete!();
-                            }
-                          },
+    return PopScope(
+      canPop: false,
+      onPopInvokedWithResult: (didPop, result) {
+        if (!didPop) {
+          Navigator.pop(context);
+          Navigator.pop(context);
+        }
+      },
+      child: Dialog(
+        backgroundColor: Colors.transparent,
+        child: ScaleTransition(
+          scale: _scaleAnimation,
+          child: Stack(
+            clipBehavior: Clip.none,
+            alignment: Alignment.topCenter,
+            children: [
+              // Main dialog with notch
+              Container(
+                margin: EdgeInsets.only(top: 40.setHeight),
+                child: ClipPath(
+                  clipper: NotchClipper(notchRadius: 90), // Increased to match circle size
+                  child: Container(
+                    width: 320.setWidth,
+                    padding: EdgeInsets.fromLTRB(16.setWidth, 60.setHeight, 16.setWidth, 20.setHeight),
+                    decoration: BoxDecoration(
+                      color: CustomAppColor.of(context).bgBottomSheet,
+                      borderRadius: BorderRadius.circular(30),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withValues(alpha: 0.15),
+                          blurRadius: 25,
+                          offset: const Offset(0, 10),
+                          spreadRadius: 0,
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        // Title
+                        CommonText(
+                          text: widget.title,
+                          fontSize: 24.setFontSize,
+                          fontWeight: FontWeight.w700,
+                          textColor: CustomAppColor.of(context).txtBlack,
+                          textAlign: TextAlign.center,
+                        ),
+
+                        SizedBox(height: 25.setHeight),
+
+                        // Message
+                        CommonText(
+                          text: widget.message,
+                          fontSize: 12.setFontSize,
+                          fontWeight: FontWeight.w400,
+                          textColor: CustomAppColor.of(context).txtGray,
+                          textAlign: TextAlign.center,
+                        ),
+
+                        SizedBox(height: 25.setHeight),
+
+                        // Progress indicator
+
+                        SizedBox(
+                          width: 60.setWidth,
+                          height: 60.setHeight,
+                          child: CircularPercentIndicator(
+                            radius: 30.0,
+                            lineWidth: 5.setWidth,
+                            animation: true,
+                            percent: 1,
+                            animationDuration: 2000,
+                            backgroundWidth: 1.setWidth,
+                            backgroundColor: CustomAppColor.of(context).txtGray,
+                            center: CommonText(
+                              text: "85.0%",
+                              fontSize: 12.setFontSize,
+                              fontWeight: FontWeight.w500,
+                              textColor: CustomAppColor.of(context).txtSeeAll,
+                            ),
+                            circularStrokeCap: CircularStrokeCap.round,
+                            linearGradient: CustomAppColor.of(context).primaryGradient,
+                            onAnimationEnd: () {
+                              if (widget.onComplete != null) {
+                                widget.onComplete!();
+                              }
+                            },
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
-            ),
 
-            // Checkmark circle positioned in the notch with gradient
-            Positioned(
-              top: 0, // Adjust to sit properly in the deep notch
-              child: AnimatedBuilder(
-                animation: _checkmarkAnimation,
-                builder: (context, child) {
-                  return Transform.scale(
-                    scale: _checkmarkAnimation.value,
-                    child: Container(
-                      width: 72.setWidth,
-                      height: 72.setHeight,
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        gradient: CustomAppColor.of(context).primaryGradient,
-                        border: Border.all(
-                          color: CustomAppColor.of(context).white,
-                          width: 2.setWidth, // Thicker white border
-                        ),
-                        boxShadow: [
-                          BoxShadow(
-                            color: CustomAppColor.of(context).txtWhite.withValues(alpha: 0.3),
-                            blurRadius: 15,
-                            offset: const Offset(0, 5),
+              // Checkmark circle positioned in the notch with gradient
+              Positioned(
+                top: 0, // Adjust to sit properly in the deep notch
+                child: AnimatedBuilder(
+                  animation: _checkmarkAnimation,
+                  builder: (context, child) {
+                    return Transform.scale(
+                      scale: _checkmarkAnimation.value,
+                      child: Container(
+                        width: 72.setWidth,
+                        height: 72.setHeight,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          gradient: CustomAppColor.of(context).primaryGradient,
+                          border: Border.all(
+                            color: CustomAppColor.of(context).white,
+                            width: 2.setWidth, // Thicker white border
                           ),
-                        ],
+                          boxShadow: [
+                            BoxShadow(
+                              color: CustomAppColor.of(context).txtWhite.withValues(alpha: 0.3),
+                              blurRadius: 15,
+                              offset: const Offset(0, 5),
+                            ),
+                          ],
+                        ),
+                        child: Icon(
+                          Icons.check_rounded,
+                          color: CustomAppColor.of(context).white,
+                          size: 30.setHeight,
+                        ),
                       ),
-                      child: Icon(
-                        Icons.check_rounded,
-                        color: CustomAppColor.of(context).white,
-                        size: 30.setHeight,
-                      ),
-                    ),
-                  );
-                },
+                    );
+                  },
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

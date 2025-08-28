@@ -23,11 +23,18 @@ import 'review_page.dart';
 
 class CarDetailScreen extends StatefulWidget {
   final PopularCarItem car;
-  static Route<void> route({required PopularCarItem car}) {
-    return MaterialPageRoute(builder: (_) => CarDetailScreen(car: car));
+  final int currentIndex;
+  final bool isForAlert;
+  static Route<void> route({required PopularCarItem car, int currentIndex = 0, bool isForAlert = false}) {
+    return MaterialPageRoute(
+        builder: (_) => CarDetailScreen(
+              car: car,
+              currentIndex: currentIndex,
+              isForAlert: isForAlert,
+            ));
   }
 
-  const CarDetailScreen({super.key, required this.car});
+  const CarDetailScreen({super.key, required this.car, this.currentIndex = 0, this.isForAlert = false});
 
   @override
   State<CarDetailScreen> createState() => _CarDetailScreenState();
@@ -50,7 +57,7 @@ class _CarDetailScreenState extends State<CarDetailScreen> with TickerProviderSt
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(length: 7, vsync: this);
+    _tabController = TabController(initialIndex: widget.currentIndex, length: 7, vsync: this);
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       _tabs = [
         Languages.of(context).txtOverview,
@@ -69,6 +76,24 @@ class _CarDetailScreenState extends State<CarDetailScreen> with TickerProviderSt
 
       setState(() {});
     });
+
+    if (widget.isForAlert) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        showModalBottomSheet(
+          context: context,
+          useSafeArea: true,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(16.setWidth),
+              topRight: Radius.circular(16.setWidth),
+            ),
+          ),
+          builder: (dialogContext) => const WriteReviewBottomSheet(),
+          isScrollControlled: true,
+          backgroundColor: CustomAppColor.of(context).bgScreen,
+        );
+      });
+    }
   }
 
   @override
@@ -88,35 +113,38 @@ class _CarDetailScreenState extends State<CarDetailScreen> with TickerProviderSt
               AnimatedBuilder(
                 animation: _tabController,
                 builder: (context, _) {
-                  return TabBar(
-                    controller: _tabController,
-                    indicatorColor: CustomAppColor.of(context).primary,
-                    indicatorWeight: 1,
-                    indicatorSize: TabBarIndicatorSize.label,
-                    dividerColor: Colors.transparent,
-                    isScrollable: true,
-                    padding: EdgeInsets.symmetric(horizontal: 10.setWidth),
-                    tabAlignment: TabAlignment.start,
-                    indicator: BoxDecoration(
-                      gradient: CustomAppColor.of(context).primaryGradient,
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    indicatorPadding: EdgeInsets.only(
-                      top: Platform.isAndroid ? 40.setHeight : 41.setHeight,
-                    ),
-                    tabs: List.generate(
-                      _tabs.length,
-                      (index) {
-                        final isSelected = _tabController.index == index;
-                        return Tab(
-                          child: CommonText(
-                            text: _tabs[index],
-                            fontSize: 12.setFontSize,
-                            fontWeight: isSelected ? FontWeight.w700 : FontWeight.w600,
-                            textColor: isSelected ? CustomAppColor.of(context).primary : CustomAppColor.of(context).txtGray,
-                          ),
-                        );
-                      },
+                  return IgnorePointer(
+                    ignoring: true,
+                    child: TabBar(
+                      controller: _tabController,
+                      indicatorColor: CustomAppColor.of(context).primary,
+                      indicatorWeight: 1,
+                      indicatorSize: TabBarIndicatorSize.label,
+                      dividerColor: Colors.transparent,
+                      isScrollable: true,
+                      padding: EdgeInsets.symmetric(horizontal: 10.setWidth),
+                      tabAlignment: TabAlignment.start,
+                      indicator: BoxDecoration(
+                        gradient: CustomAppColor.of(context).primaryGradient,
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      indicatorPadding: EdgeInsets.only(
+                        top: Platform.isAndroid ? 40.setHeight : 41.setHeight,
+                      ),
+                      tabs: List.generate(
+                        _tabs.length,
+                        (index) {
+                          final isSelected = _tabController.index == index;
+                          return Tab(
+                            child: CommonText(
+                              text: _tabs[index],
+                              fontSize: 12.setFontSize,
+                              fontWeight: isSelected ? FontWeight.w700 : FontWeight.w600,
+                              textColor: isSelected ? CustomAppColor.of(context).primary : CustomAppColor.of(context).txtGray,
+                            ),
+                          );
+                        },
+                      ),
                     ),
                   );
                 },
@@ -124,6 +152,7 @@ class _CarDetailScreenState extends State<CarDetailScreen> with TickerProviderSt
               Expanded(
                 child: TabBarView(
                   controller: _tabController,
+                  physics: NeverScrollableScrollPhysics(),
                   children: List.generate(
                     _tabs.length,
                     (index) => (_pages.length > index)
@@ -159,25 +188,28 @@ class _CarDetailScreenState extends State<CarDetailScreen> with TickerProviderSt
                 ),
               ],
               if (selectedIndex == 6) ...[
-                CommonButton(
-                  text: Languages.of(context).txtWriteReview,
-                  mLeft: 16.setWidth,
-                  mRight: 16.setWidth,
-                  onTap: () {
-                    showModalBottomSheet(
-                      context: context,
-                      useSafeArea: true,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(16.setWidth),
-                          topRight: Radius.circular(16.setWidth),
+                IgnorePointer(
+                  ignoring: true,
+                  child: CommonButton(
+                    text: Languages.of(context).txtWriteReview,
+                    mLeft: 16.setWidth,
+                    mRight: 16.setWidth,
+                    onTap: () {
+                      showModalBottomSheet(
+                        context: context,
+                        useSafeArea: true,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(16.setWidth),
+                            topRight: Radius.circular(16.setWidth),
+                          ),
                         ),
-                      ),
-                      builder: (dialogContext) => const WriteReviewBottomSheet(),
-                      isScrollControlled: true,
-                      backgroundColor: CustomAppColor.of(context).bgScreen,
-                    );
-                  },
+                        builder: (dialogContext) => const WriteReviewBottomSheet(),
+                        isScrollControlled: true,
+                        backgroundColor: CustomAppColor.of(context).bgScreen,
+                      );
+                    },
+                  ),
                 ),
               ],
               SizedBox(height: 16.setHeight)

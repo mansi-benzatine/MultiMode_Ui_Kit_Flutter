@@ -13,11 +13,12 @@ import '../../../widgets/top_bar/topbar.dart';
 import '../../payment_method/view/payment_method_screen.dart';
 
 class UpgradePlanScreen extends StatefulWidget {
-  const UpgradePlanScreen({super.key});
+  final bool isForAlert;
+  const UpgradePlanScreen({super.key, this.isForAlert = false});
 
-  static Route<dynamic> route() {
+  static Route<dynamic> route({bool isForAlert = false}) {
     return MaterialPageRoute(
-      builder: (context) => const UpgradePlanScreen(),
+      builder: (context) => UpgradePlanScreen(isForAlert: isForAlert),
     );
   }
 
@@ -27,6 +28,18 @@ class UpgradePlanScreen extends StatefulWidget {
 
 class _UpgradePlanScreenState extends State<UpgradePlanScreen> implements TopBarClickListener {
   ValueNotifier<int> isMonthly = ValueNotifier(0);
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+
+    if (widget.isForAlert) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        SubscriptionCongratulationDialog.show(context);
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -61,19 +74,22 @@ class _UpgradePlanScreenState extends State<UpgradePlanScreen> implements TopBar
                   ),
                 ),
               ),
-              CommonButton(
-                text: "${Languages.of(context).txtContinue} - \$100.00",
-                onTap: () {
-                  SubscriptionCongratulationDialog.show(context);
-                },
-                buttonColor: CustomAppColor.of(context).primary,
-                borderColor: CustomAppColor.of(context).borderColor,
-                borderWidth: 4,
-                radius: 18,
-                mLeft: 20.setWidth,
-                mRight: 20.setWidth,
-                mBottom: MediaQuery.of(context).padding.bottom + 10.setHeight,
-                mTop: 20.setHeight,
+              IgnorePointer(
+                ignoring: true,
+                child: CommonButton(
+                  text: "${Languages.of(context).txtContinue} - \$100.00",
+                  onTap: () {
+                    SubscriptionCongratulationDialog.show(context);
+                  },
+                  buttonColor: CustomAppColor.of(context).primary,
+                  borderColor: CustomAppColor.of(context).borderColor,
+                  borderWidth: 4,
+                  radius: 18,
+                  mLeft: 20.setWidth,
+                  mRight: 20.setWidth,
+                  mBottom: MediaQuery.of(context).padding.bottom + 10.setHeight,
+                  mTop: 20.setHeight,
+                ),
               ),
             ],
           ),

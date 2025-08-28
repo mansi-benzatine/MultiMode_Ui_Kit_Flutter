@@ -38,7 +38,7 @@ class _NotificationSettingState extends State<NotificationSetting> implements To
       body: SafeArea(
         child: Column(
           children: [
-            TopBar(this, title: Languages.of(context).txtNotification, isShowBack: true),
+            TopBar(this, title: "Notification Settings", isShowBack: true),
             Expanded(
               child: SingleChildScrollView(
                 padding: EdgeInsets.symmetric(horizontal: 20.setWidth, vertical: 20.setHeight),

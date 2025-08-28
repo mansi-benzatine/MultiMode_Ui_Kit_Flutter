@@ -16,11 +16,20 @@ import '../../profile_setup/your_fav_brand/view/your_fav_brand_screen.dart';
 import '../../search/view/search_screen.dart';
 
 class UsedCarScreen extends StatefulWidget {
-  static Route<void> route() {
-    return MaterialPageRoute(builder: (_) => const UsedCarScreen());
+  final bool isForFilterAlert;
+  final bool isForSortAlert;
+  final int selectedIndexForFilterBS;
+
+  static Route<void> route({bool isForFilterAlert = false, bool isForSortAlert = false, int selectedIndexForFilterBS = 0}) {
+    return MaterialPageRoute(
+        builder: (_) => UsedCarScreen(
+              isForFilterAlert: isForFilterAlert,
+              isForSortAlert: isForSortAlert,
+              selectedIndexForFilterBS: selectedIndexForFilterBS,
+            ));
   }
 
-  const UsedCarScreen({super.key});
+  const UsedCarScreen({super.key, this.isForFilterAlert = false, this.isForSortAlert = false, this.selectedIndexForFilterBS = 0});
 
   @override
   State<UsedCarScreen> createState() => _UsedCarScreenState();
@@ -65,6 +74,38 @@ class _UsedCarScreenState extends State<UsedCarScreen> with TickerProviderStateM
     _tabController.addListener(() {
       setState(() {});
     });
+
+    if (widget.isForFilterAlert) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        showModalBottomSheet(
+          context: context,
+          isScrollControlled: false,
+          isDismissible: false,
+          enableDrag: false,
+          scrollControlDisabledMaxHeightRatio: 0.8,
+          backgroundColor: CustomAppColor.of(context).txtWhite,
+          useSafeArea: true,
+          shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+          ),
+          builder: (context) => FilterBottomSheet(selectedIndex: widget.selectedIndexForFilterBS),
+        );
+      });
+    }
+    if (widget.isForSortAlert) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        showModalBottomSheet(
+          context: context,
+          isScrollControlled: false,
+          isDismissible: false,
+          enableDrag: false,
+          backgroundColor: CustomAppColor.of(context).txtWhite,
+          useSafeArea: true,
+          shape: const RoundedRectangleBorder(borderRadius: BorderRadius.vertical(top: Radius.circular(20))),
+          builder: (context) => const SortBottomSheet(),
+        );
+      });
+    }
   }
 
   @override
@@ -106,84 +147,87 @@ class _UsedCarScreenState extends State<UsedCarScreen> with TickerProviderStateM
 
   Widget _buildFilesSorting() {
     return IntrinsicHeight(
-      child: Row(
-        children: [
-          Expanded(
-            child: InkWell(
-              onTap: () {
-                showModalBottomSheet(
-                  context: context,
-                  isScrollControlled: true,
-                  isDismissible: true,
-                  backgroundColor: CustomAppColor.of(context).txtWhite,
-                  useSafeArea: true,
-                  shape: const RoundedRectangleBorder(
-                    borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
-                  ),
-                  builder: (context) => const FilterBottomSheet(),
-                );
-              },
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Image.asset(
-                    AppAssets.icFilter,
-                    width: 20.setWidth,
-                    height: 20.setHeight,
-                    fit: BoxFit.contain,
-                    color: CustomAppColor.of(context).txtBlack,
-                  ),
-                  SizedBox(width: 8.setWidth),
-                  CommonText(
-                    text: Languages.of(context).txtFilter,
-                    fontSize: 16.setFontSize,
-                    fontWeight: FontWeight.w600,
-                    textColor: CustomAppColor.of(context).txtBlack,
-                  ),
-                ],
+      child: IgnorePointer(
+        ignoring: true,
+        child: Row(
+          children: [
+            Expanded(
+              child: InkWell(
+                onTap: () {
+                  showModalBottomSheet(
+                    context: context,
+                    isScrollControlled: true,
+                    isDismissible: true,
+                    backgroundColor: CustomAppColor.of(context).txtWhite,
+                    useSafeArea: true,
+                    shape: const RoundedRectangleBorder(
+                      borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+                    ),
+                    builder: (context) => const FilterBottomSheet(),
+                  );
+                },
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Image.asset(
+                      AppAssets.icFilter,
+                      width: 20.setWidth,
+                      height: 20.setHeight,
+                      fit: BoxFit.contain,
+                      color: CustomAppColor.of(context).txtBlack,
+                    ),
+                    SizedBox(width: 8.setWidth),
+                    CommonText(
+                      text: Languages.of(context).txtFilter,
+                      fontSize: 16.setFontSize,
+                      fontWeight: FontWeight.w600,
+                      textColor: CustomAppColor.of(context).txtBlack,
+                    ),
+                  ],
+                ),
               ),
             ),
-          ),
-          VerticalDivider(
-            color: CustomAppColor.of(context).containerBorder,
-          ),
-          Expanded(
-            child: InkWell(
-              onTap: () {
-                showModalBottomSheet(
-                  context: context,
-                  isScrollControlled: true,
-                  isDismissible: true,
-                  backgroundColor: CustomAppColor.of(context).txtWhite,
-                  useSafeArea: true,
-                  shape: const RoundedRectangleBorder(borderRadius: BorderRadius.vertical(top: Radius.circular(20))),
-                  builder: (context) => const SortBottomSheet(),
-                );
-              },
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Image.asset(
-                    AppAssets.icSort,
-                    width: 20.setWidth,
-                    height: 20.setHeight,
-                    fit: BoxFit.contain,
-                    color: CustomAppColor.of(context).txtBlack,
-                  ),
-                  SizedBox(width: 8.setWidth),
-                  CommonText(
-                    text: Languages.of(context).txtSort,
-                    fontSize: 16.setFontSize,
-                    fontWeight: FontWeight.w600,
-                    textColor: CustomAppColor.of(context).txtBlack,
-                  ),
-                ],
+            VerticalDivider(
+              color: CustomAppColor.of(context).containerBorder,
+            ),
+            Expanded(
+              child: InkWell(
+                onTap: () {
+                  showModalBottomSheet(
+                    context: context,
+                    isScrollControlled: true,
+                    isDismissible: true,
+                    backgroundColor: CustomAppColor.of(context).txtWhite,
+                    useSafeArea: true,
+                    shape: const RoundedRectangleBorder(borderRadius: BorderRadius.vertical(top: Radius.circular(20))),
+                    builder: (context) => const SortBottomSheet(),
+                  );
+                },
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Image.asset(
+                      AppAssets.icSort,
+                      width: 20.setWidth,
+                      height: 20.setHeight,
+                      fit: BoxFit.contain,
+                      color: CustomAppColor.of(context).txtBlack,
+                    ),
+                    SizedBox(width: 8.setWidth),
+                    CommonText(
+                      text: Languages.of(context).txtSort,
+                      fontSize: 16.setFontSize,
+                      fontWeight: FontWeight.w600,
+                      textColor: CustomAppColor.of(context).txtBlack,
+                    ),
+                  ],
+                ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

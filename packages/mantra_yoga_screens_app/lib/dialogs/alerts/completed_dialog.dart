@@ -20,6 +20,7 @@ class CompletedDialog extends StatefulWidget {
 
   static Future<void> show(BuildContext context, {Function? onTap}) async {
     return showDialog(
+      barrierDismissible: false,
       context: context,
       builder: (_) => CompletedDialog(
         parentContext: context,
@@ -37,51 +38,63 @@ class _CompletedDialogState extends State<CompletedDialog> {
   Widget build(BuildContext context) {
     final parentContext = widget.parentContext;
 
-    return AlertDialog(
-      backgroundColor: CustomAppColor.of(parentContext).bgScreen,
-      contentPadding: EdgeInsets.symmetric(
-        horizontal: 20.setWidth,
-        vertical: 20.setHeight,
-      ),
-      content: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Image.asset(
-            AppAssets.icCompleted,
-            width: 120.setHeight,
-            height: 120.setHeight,
-          ),
-          SizedBox(height: 15.setHeight),
-          CommonText(
-            text: "${Languages.of(parentContext).txtCompleted}!",
-            fontSize: 28.setFontSize,
-            fontWeight: FontWeight.w700,
-            fontFamily: Constant.fontFamilyBold700,
-            textColor: CustomAppColor.of(parentContext).txtBlack,
-          ),
-          SizedBox(height: 10.setHeight),
-          CommonText(
-            text: Languages.of(parentContext).txtLoremIpsum,
-            fontSize: 12.setFontSize,
-            fontWeight: FontWeight.w400,
-            fontFamily: Constant.fontFamilyRegular400,
-            textColor: CustomAppColor.of(parentContext).txtDarkGray,
-          ),
-          SizedBox(height: 20.setHeight),
-          CommonButton(
-            text: Languages.of(parentContext).txtContinue,
-            onTap: () {
-              Navigator.pop(context);
-              widget.onTap?.call();
-            },
-            buttonColor: CustomAppColor.of(parentContext).primary,
-            borderColor: CustomAppColor.of(parentContext).borderColor,
-            borderWidth: 3,
-            height: 55.setHeight,
-            width: 180.setWidth,
-            radius: 18,
-          ),
-        ],
+    return PopScope(
+      canPop: false,
+      onPopInvokedWithResult: (didPop, result) {
+        if (!didPop) {
+          Navigator.pop(context);
+          Navigator.pop(context);
+        }
+      },
+      child: AlertDialog(
+        backgroundColor: CustomAppColor.of(parentContext).bgScreen,
+        contentPadding: EdgeInsets.symmetric(
+          horizontal: 20.setWidth,
+          vertical: 20.setHeight,
+        ),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Image.asset(
+              AppAssets.icCompleted,
+              width: 120.setHeight,
+              height: 120.setHeight,
+            ),
+            SizedBox(height: 15.setHeight),
+            CommonText(
+              text: "${Languages.of(parentContext).txtCompleted}!",
+              fontSize: 28.setFontSize,
+              fontWeight: FontWeight.w700,
+              fontFamily: Constant.fontFamilyBold700,
+              textColor: CustomAppColor.of(parentContext).txtBlack,
+            ),
+            SizedBox(height: 10.setHeight),
+            CommonText(
+              text: Languages.of(parentContext).txtLoremIpsum,
+              fontSize: 12.setFontSize,
+              fontWeight: FontWeight.w400,
+              fontFamily: Constant.fontFamilyRegular400,
+              textColor: CustomAppColor.of(parentContext).txtDarkGray,
+            ),
+            SizedBox(height: 20.setHeight),
+            IgnorePointer(
+              ignoring: true,
+              child: CommonButton(
+                text: Languages.of(parentContext).txtContinue,
+                onTap: () {
+                  Navigator.pop(context);
+                  widget.onTap?.call();
+                },
+                buttonColor: CustomAppColor.of(parentContext).primary,
+                borderColor: CustomAppColor.of(parentContext).borderColor,
+                borderWidth: 3,
+                height: 55.setHeight,
+                width: 180.setWidth,
+                radius: 18,
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

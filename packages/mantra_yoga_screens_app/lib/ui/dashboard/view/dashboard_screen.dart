@@ -15,11 +15,18 @@ import '../../home/view/home_screen.dart';
 
 class DashboardScreen extends StatefulWidget {
   final int currentIndex;
+  final int discoverScreenIndex;
+  final bool isForLogOutAlert;
 
-  const DashboardScreen({super.key, required this.currentIndex});
+  const DashboardScreen({super.key, required this.currentIndex, this.discoverScreenIndex = 0, this.isForLogOutAlert = false});
 
-  static Route<dynamic> route({required int currentIndex}) {
-    return MaterialPageRoute(builder: (context) => DashboardScreen(currentIndex: currentIndex));
+  static Route<dynamic> route({required int currentIndex, int discoverScreenIndex = 0, bool isForLogoutAlert = false}) {
+    return MaterialPageRoute(
+        builder: (context) => DashboardScreen(
+              currentIndex: currentIndex,
+              discoverScreenIndex: discoverScreenIndex,
+              isForLogOutAlert: isForLogoutAlert,
+            ));
   }
 
   @override
@@ -52,12 +59,12 @@ class _DashboardScreenState extends State<DashboardScreen> {
           onPageChanged: (index) {
             _currentIndex.value = index;
           },
-          children: const [
+          children: [
             HomeScreen(),
-            DiscoverScreen(),
+            DiscoverScreen(currentIndex: widget.discoverScreenIndex),
             HistoryScreen(),
             AnalysisScreen(),
-            ProfileScreen(),
+            ProfileScreen(isForLogoutAlert: widget.isForLogOutAlert,),
           ],
         ),
       ),

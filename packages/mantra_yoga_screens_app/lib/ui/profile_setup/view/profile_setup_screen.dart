@@ -19,10 +19,17 @@ import '../pages/your_weight_page.dart';
 import '../pages/your_yoga_level_page.dart';
 
 class ProfileSetupScreen extends StatefulWidget {
-  const ProfileSetupScreen({super.key});
+  final bool isForAlert;
+  final int currentPage;
+  const ProfileSetupScreen({super.key, this.isForAlert = false, this.currentPage = 0});
 
-  static Route<dynamic> route() {
-    return MaterialPageRoute(builder: (context) => const ProfileSetupScreen());
+  static Route<void> route({bool isForAlert = false, int currentPage = 1}) {
+    return MaterialPageRoute(
+      builder: (context) => ProfileSetupScreen(
+        isForAlert: isForAlert,
+        currentPage: currentPage,
+      ),
+    );
   }
 
   @override
@@ -30,9 +37,9 @@ class ProfileSetupScreen extends StatefulWidget {
 }
 
 class _ProfileSetupScreenState extends State<ProfileSetupScreen> implements TopBarClickListener {
-  final PageController _pageController = PageController();
+  late PageController _pageController;
 
-  final ValueNotifier<int> currentPage = ValueNotifier(0);
+  late ValueNotifier<int> currentPage;
 
   final int stepperLenght = 8;
 
@@ -55,6 +62,23 @@ class _ProfileSetupScreenState extends State<ProfileSetupScreen> implements TopB
       return Languages.of(context).txtYourHeight;
     } else {
       return "";
+    }
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    currentPage = ValueNotifier(widget.currentPage);
+    _pageController = PageController(initialPage: currentPage.value);
+
+    if (widget.isForAlert) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        ProfileSetupCongratulationDialog.show(
+          context,
+          onTap: () {},
+        );
+      });
     }
   }
 
@@ -122,22 +146,25 @@ class _ProfileSetupScreenState extends State<ProfileSetupScreen> implements TopB
                   valueListenable: currentPage,
                   builder: (context, value, child) {
                     return Expanded(
-                      child: CommonButton(
-                        text: Languages.of(context).txtContinue,
-                        onTap: () {
-                          if (value == stepperLenght - 1) {
-                            ProfileSetupCongratulationDialog.show(context, onTap: () {
-                              // Navigator.pushAndRemoveUntil(context, DashboardScreen.route(), (route) => false);
-                            });
-                          } else {
-                            _pageController.nextPage(duration: const Duration(milliseconds: 300), curve: Curves.easeInOut);
-                          }
-                        },
-                        buttonColor: CustomAppColor.of(context).primary,
-                        borderColor: CustomAppColor.of(context).borderColor,
-                        borderWidth: 3,
-                        height: 45.setHeight,
-                        radius: 18,
+                      child: IgnorePointer(
+                        ignoring: true,
+                        child: CommonButton(
+                          text: Languages.of(context).txtContinue,
+                          onTap: () {
+                            if (value == stepperLenght - 1) {
+                              ProfileSetupCongratulationDialog.show(context, onTap: () {
+                                // Navigator.pushAndRemoveUntil(context, DashboardScreen.route(), (route) => false);
+                              });
+                            } else {
+                              _pageController.nextPage(duration: const Duration(milliseconds: 300), curve: Curves.easeInOut);
+                            }
+                          },
+                          buttonColor: CustomAppColor.of(context).primary,
+                          borderColor: CustomAppColor.of(context).borderColor,
+                          borderWidth: 3,
+                          height: 45.setHeight,
+                          radius: 18,
+                        ),
                       ),
                     );
                   },

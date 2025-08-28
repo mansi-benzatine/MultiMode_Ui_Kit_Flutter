@@ -1,3 +1,4 @@
+import 'package:car_shop_app_package/ui/login/view/login_screen.dart';
 import 'package:car_shop_app_package/utils/sizer_utils.dart';
 import 'package:flutter/material.dart';
 
@@ -114,6 +115,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> implements To
                             message: Languages.of(context).txtYourAccountIsReadyToUse,
                             onComplete: () {
                               Navigator.pop(dialogContext);
+                              Navigator.push(context, MaterialPageRoute(builder: (context) => const LoginScreen()));
                             },
                           ),
                         );

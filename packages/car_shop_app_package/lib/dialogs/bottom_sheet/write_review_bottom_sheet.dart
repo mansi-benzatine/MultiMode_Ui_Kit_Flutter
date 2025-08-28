@@ -29,6 +29,9 @@ class _WriteReviewBottomSheetState extends State<WriteReviewBottomSheet> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Container(
+        padding: EdgeInsets.only(
+          bottom: MediaQuery.of(context).viewInsets.bottom,
+        ),
         constraints: BoxConstraints(
           maxHeight: MediaQuery.of(context).size.height * 0.8,
         ),

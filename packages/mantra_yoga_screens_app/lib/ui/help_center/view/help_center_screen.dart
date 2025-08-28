@@ -10,11 +10,12 @@ import '../../../widgets/text/common_text.dart';
 import '../../../widgets/top_bar/topbar.dart';
 
 class HelpCenterScreen extends StatefulWidget {
-  const HelpCenterScreen({super.key});
+  final int currentIndex;
+  const HelpCenterScreen({super.key, this.currentIndex = 0});
 
-  static Route<dynamic> route() {
+  static Route<dynamic> route({int currentInex = 0}) {
     return MaterialPageRoute(
-      builder: (context) => const HelpCenterScreen(),
+      builder: (context) => HelpCenterScreen(currentIndex: currentInex),
     );
   }
 
@@ -150,7 +151,7 @@ class _HelpCenterScreenState extends State<HelpCenterScreen> with TickerProvider
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(length: 2, vsync: this);
+    _tabController = TabController(initialIndex: widget.currentIndex, length: 2, vsync: this);
   }
 
   @override
@@ -175,37 +176,43 @@ class _HelpCenterScreenState extends State<HelpCenterScreen> with TickerProvider
   }
 
   _tabBarView() {
-    return TabBar(
-      controller: _tabController,
-      padding: EdgeInsets.only(left: 15.setWidth, right: 15.setWidth),
-      dividerHeight: 1,
-      dividerColor: CustomAppColor.of(context).txtBlack.withValues(alpha: 0.1),
-      indicatorSize: TabBarIndicatorSize.tab,
-      indicatorColor: CustomAppColor.of(context).primary,
-      indicatorWeight: 3,
-      labelStyle: TextStyle(
-        fontSize: 14.setFontSize,
-        fontWeight: FontWeight.w700,
-        fontFamily: Constant.fontFamilyBold700,
-        color: CustomAppColor.of(context).txtPrimary,
+    return IgnorePointer(
+      ignoring: true,
+      child: TabBar(
+        controller: _tabController,
+        padding: EdgeInsets.only(left: 15.setWidth, right: 15.setWidth),
+        dividerHeight: 1,
+        dividerColor: CustomAppColor.of(context).txtBlack.withValues(alpha: 0.1),
+        indicatorSize: TabBarIndicatorSize.tab,
+        indicatorColor: CustomAppColor.of(context).primary,
+        indicatorWeight: 3,
+        overlayColor: WidgetStateProperty.all(CustomAppColor.of(context).transparent),
+        tabs: [
+          Tab(
+            child: CommonText(
+              text: Languages.of(context).txtFAQ,
+              fontSize: 16.setFontSize,
+              fontFamily: _tabController.index == 0 ? Constant.fontFamilyBold700 : Constant.fontFamilySemiBold600,
+              textColor: _tabController.index == 0 ? CustomAppColor.of(context).txtPrimary : CustomAppColor.of(context).txtBlack,
+            ),
+          ),
+          Tab(
+            child: CommonText(
+              text: Languages.of(context).txtContactUs,
+              fontSize: 16.setFontSize,
+              fontFamily: _tabController.index == 1 ? Constant.fontFamilyBold700 : Constant.fontFamilySemiBold600,
+              textColor: _tabController.index == 1 ? CustomAppColor.of(context).txtPrimary : CustomAppColor.of(context).txtBlack,
+            ),
+          ),
+        ],
       ),
-      unselectedLabelStyle: TextStyle(
-        fontSize: 14.setFontSize,
-        fontWeight: FontWeight.w500,
-        fontFamily: Constant.fontFamilyMedium500,
-        color: CustomAppColor.of(context).txtBlack,
-      ),
-      overlayColor: WidgetStateProperty.all(CustomAppColor.of(context).transparent),
-      tabs: [
-        Tab(text: Languages.of(context).txtFAQ),
-        Tab(text: Languages.of(context).txtContactUs),
-      ],
     );
   }
 
   _tabsView() {
     return Expanded(
       child: TabBarView(
+        physics: NeverScrollableScrollPhysics(),
         controller: _tabController,
         children: [
           SingleChildScrollView(

@@ -12,7 +12,7 @@ import '../datamodels/friends_data.dart';
 
 class InviteFriendsScreen extends StatefulWidget {
   static Route<void> route() {
-    return MaterialPageRoute(builder: (_) => InviteFriendsScreen());
+    return MaterialPageRoute(builder: (_) => const InviteFriendsScreen());
   }
 
   const InviteFriendsScreen({super.key});

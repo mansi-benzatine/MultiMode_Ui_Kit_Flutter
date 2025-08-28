@@ -24,76 +24,88 @@ class _SortBottomSheetState extends State<SortBottomSheet> {
   ];
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.only(
-        bottom: MediaQuery.of(context).viewInsets.bottom,
-      ),
-      child: Container(
-        constraints: BoxConstraints(
-          maxHeight: MediaQuery.of(context).size.height * 0.38,
+    return PopScope(
+      canPop: false,
+      onPopInvokedWithResult: (didPop, result) {
+        if (!didPop) {
+          Navigator.pop(context);
+          Navigator.pop(context);
+        }
+      },
+      child: Padding(
+        padding: EdgeInsets.only(
+          bottom: MediaQuery.of(context).viewInsets.bottom,
         ),
-        decoration: BoxDecoration(
-          color: CustomAppColor.of(context).bgBottomSheet,
-          borderRadius: const BorderRadius.vertical(top: Radius.circular(20)),
-        ),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            // Header
-            Container(
-              padding: EdgeInsets.symmetric(horizontal: 20.setWidth, vertical: 10.setHeight),
-              decoration: BoxDecoration(
-                border: Border(
-                  bottom: BorderSide(
-                    color: CustomAppColor.of(context).containerBorder,
-                    width: 1,
+        child: Container(
+          constraints: BoxConstraints(
+            maxHeight: MediaQuery.of(context).size.height * 0.38,
+          ),
+          decoration: BoxDecoration(
+            color: CustomAppColor.of(context).bgBottomSheet,
+            borderRadius: const BorderRadius.vertical(top: Radius.circular(20)),
+          ),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              // Header
+              Container(
+                padding: EdgeInsets.symmetric(horizontal: 20.setWidth, vertical: 10.setHeight),
+                decoration: BoxDecoration(
+                  border: Border(
+                    bottom: BorderSide(
+                      color: CustomAppColor.of(context).containerBorder,
+                      width: 1,
+                    ),
                   ),
                 ),
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  CommonText(
-                    text: Languages.of(context).txtSortBy,
-                    fontSize: 16.setFontSize,
-                    fontWeight: FontWeight.w600,
-                    textColor: CustomAppColor.of(context).txtBlack,
-                  ),
-                  GestureDetector(
-                    onTap: () {
-                      Navigator.pop(context);
-                    },
-                    child: Container(
-                      decoration: BoxDecoration(
-                        color: CustomAppColor.of(context).bgSearchBar,
-                        borderRadius: BorderRadius.circular(8.setWidth),
-                      ),
-                      height: 30.setHeight,
-                      width: 30.setWidth,
-                      child: Center(
-                        child: Icon(
-                          Icons.close,
-                          size: 20.setWidth,
-                          color: CustomAppColor.of(context).txtBlack,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    CommonText(
+                      text: Languages.of(context).txtSortBy,
+                      fontSize: 16.setFontSize,
+                      fontWeight: FontWeight.w600,
+                      textColor: CustomAppColor.of(context).txtBlack,
+                    ),
+                    IgnorePointer(
+                      ignoring: true,
+                      child: GestureDetector(
+                        onTap: () {
+                          Navigator.pop(context);
+                        },
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color: CustomAppColor.of(context).bgSearchBar,
+                            borderRadius: BorderRadius.circular(8.setWidth),
+                          ),
+                          height: 30.setHeight,
+                          width: 30.setWidth,
+                          child: Center(
+                            child: Icon(
+                              Icons.close,
+                              size: 20.setWidth,
+                              color: CustomAppColor.of(context).txtBlack,
+                            ),
+                          ),
                         ),
                       ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
-            ),
-            SizedBox(height: 20.setHeight),
-            // Content
-            Expanded(
-              child: Column(
-                children: [
-                  ...List.generate(sortByLabels.length, (index) {
-                    return _buildSortByCheckbox(sortByLabels[index], index);
-                  }),
-                ],
+              SizedBox(height: 20.setHeight),
+              // Content
+              Expanded(
+                child: Column(
+                  children: [
+                    ...List.generate(sortByLabels.length, (index) {
+                      return _buildSortByCheckbox(sortByLabels[index], index);
+                    }),
+                  ],
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

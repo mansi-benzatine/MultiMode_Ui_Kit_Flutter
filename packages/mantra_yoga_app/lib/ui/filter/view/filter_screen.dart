@@ -96,6 +96,11 @@ class _FilterScreenState extends State<FilterScreen> with TickerProviderStateMix
   void initState() {
     super.initState();
     _tabController = TabController(length: 2, vsync: this);
+    _tabController.addListener(
+      () {
+        setState(() {});
+      },
+    );
   }
 
   @override
@@ -158,22 +163,24 @@ class _FilterScreenState extends State<FilterScreen> with TickerProviderStateMix
       indicatorSize: TabBarIndicatorSize.tab,
       indicatorColor: CustomAppColor.of(context).primary,
       indicatorWeight: 3,
-      labelStyle: TextStyle(
-        fontSize: 14.setFontSize,
-        fontWeight: FontWeight.w700,
-        fontFamily: Constant.fontFamilyBold700,
-        color: CustomAppColor.of(context).txtPrimary,
-      ),
-      unselectedLabelStyle: TextStyle(
-        fontSize: 14.setFontSize,
-        fontWeight: FontWeight.w500,
-        fontFamily: Constant.fontFamilyMedium500,
-        color: CustomAppColor.of(context).txtBlack,
-      ),
       overlayColor: WidgetStateProperty.all(CustomAppColor.of(context).transparent),
       tabs: [
-        Tab(text: Languages.of(context).txtYoga),
-        Tab(text: Languages.of(context).txtMeditation),
+        Tab(
+          child: CommonText(
+            text: Languages.of(context).txtYoga,
+            fontSize: 16.setFontSize,
+            fontFamily: _tabController.index == 0 ? Constant.fontFamilyBold700 : Constant.fontFamilySemiBold600,
+            textColor: _tabController.index == 0 ? CustomAppColor.of(context).txtPrimary : CustomAppColor.of(context).txtBlack,
+          ),
+        ),
+        Tab(
+          child: CommonText(
+            text: Languages.of(context).txtMeditation,
+            fontSize: 16.setFontSize,
+            fontFamily: _tabController.index == 1 ? Constant.fontFamilyBold700 : Constant.fontFamilySemiBold600,
+            textColor: _tabController.index == 1 ? CustomAppColor.of(context).txtPrimary : CustomAppColor.of(context).txtBlack,
+          ),
+        ),
       ],
     );
   }

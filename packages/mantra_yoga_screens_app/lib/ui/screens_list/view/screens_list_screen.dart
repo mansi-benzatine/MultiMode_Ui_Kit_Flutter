@@ -4,7 +4,6 @@ import 'package:mantra_yoga_screens_app_package/ui/dashboard/view/dashboard_scre
 import 'package:mantra_yoga_screens_app_package/ui/filter/view/filter_screen.dart';
 import 'package:mantra_yoga_screens_app_package/ui/forgot_password/view/forgot_password_screen.dart';
 import 'package:mantra_yoga_screens_app_package/ui/help_center/view/help_center_screen.dart';
-import 'package:mantra_yoga_screens_app_package/ui/invite_friends/view/invite_friends_screen.dart';
 import 'package:mantra_yoga_screens_app_package/ui/notification_settings/view/notification_settings_screen.dart';
 import 'package:mantra_yoga_screens_app_package/ui/on_boarding/view/on_boarding_screen.dart';
 import 'package:mantra_yoga_screens_app_package/ui/upgrade_plan/view/upgrade_plan_screen.dart';
@@ -18,6 +17,7 @@ import '../../../widgets/text/common_text.dart';
 import '../../do_meditation/view/do_meditation_screen.dart';
 import '../../do_yoga/view/do_yoga_screen.dart';
 import '../../enter_otp/view/enter_otp_screen.dart';
+import '../../invite_friends/view/invite_friends_screen.dart';
 import '../../languages/view/languages_screen.dart';
 import '../../meditation_details/view/meditation_details_screen.dart';
 import '../../notification/view/notification_screen.dart';
@@ -38,7 +38,7 @@ class ScreenListScreen extends StatefulWidget {
   const ScreenListScreen({super.key, required this.title, this.onBack});
 
   static Route<void> route({required String title}) {
-    return MaterialPageRoute<void>(
+    return MaterialPageRoute(
       builder: (_) => ScreenListScreen(title: title),
     );
   }
@@ -77,8 +77,13 @@ class _ScreenListScreen extends State<ScreenListScreen> {
         icon: AppAssets.icBlueNavigator,
       ),
       ScreenListDataModel(
-        title: "Sign In & Sign Up",
-        onClick: () => Navigator.push(context, SignInAndSignUpScreen.route(true)),
+        title: "Sign In",
+        onClick: () => Navigator.push(context, SignInAndSignUpScreen.route(true, 0)),
+        icon: AppAssets.icBlueNavigator,
+      ),
+      ScreenListDataModel(
+        title: "Sign Up",
+        onClick: () => Navigator.push(context, SignInAndSignUpScreen.route(true, 1)),
         icon: AppAssets.icBlueNavigator,
       ),
       ScreenListDataModel(
@@ -97,8 +102,53 @@ class _ScreenListScreen extends State<ScreenListScreen> {
         icon: AppAssets.icBlueNavigator,
       ),
       ScreenListDataModel(
-        title: "Fill Up Your Details",
-        onClick: () => Navigator.push(context, ProfileSetupScreen.route()),
+        title: "Reset Password Successfully",
+        onClick: () => Navigator.push(context, ResetPasswordScreen.route(isForAlert: true)),
+        icon: AppAssets.icBlueNavigator,
+      ),
+      ScreenListDataModel(
+        title: "Choose Your Gender",
+        onClick: () => Navigator.push(context, ProfileSetupScreen.route(currentPage: 0)),
+        icon: AppAssets.icBlueNavigator,
+      ),
+      ScreenListDataModel(
+        title: "Your Profile",
+        onClick: () => Navigator.push(context, ProfileSetupScreen.route(currentPage: 1)),
+        icon: AppAssets.icBlueNavigator,
+      ),
+      ScreenListDataModel(
+        title: "Choose Your Yoga Level",
+        onClick: () => Navigator.push(context, ProfileSetupScreen.route(currentPage: 2)),
+        icon: AppAssets.icBlueNavigator,
+      ),
+      ScreenListDataModel(
+        title: "Choose Your Goals",
+        onClick: () => Navigator.push(context, ProfileSetupScreen.route(currentPage: 3)),
+        icon: AppAssets.icBlueNavigator,
+      ),
+      ScreenListDataModel(
+        title: "Choose Your Age",
+        onClick: () => Navigator.push(context, ProfileSetupScreen.route(currentPage: 4)),
+        icon: AppAssets.icBlueNavigator,
+      ),
+      ScreenListDataModel(
+        title: "Choose Your Weight",
+        onClick: () => Navigator.push(context, ProfileSetupScreen.route(currentPage: 5)),
+        icon: AppAssets.icBlueNavigator,
+      ),
+      ScreenListDataModel(
+        title: "Choose Your Targeted Weight",
+        onClick: () => Navigator.push(context, ProfileSetupScreen.route(currentPage: 6)),
+        icon: AppAssets.icBlueNavigator,
+      ),
+      ScreenListDataModel(
+        title: "Choose Your Height",
+        onClick: () => Navigator.push(context, ProfileSetupScreen.route(currentPage: 7)),
+        icon: AppAssets.icBlueNavigator,
+      ),
+      ScreenListDataModel(
+        title: "Your Profile Set Successful",
+        onClick: () => Navigator.push(context, ProfileSetupScreen.route(isForAlert: true)),
         icon: AppAssets.icBlueNavigator,
       ),
       ScreenListDataModel(
@@ -107,8 +157,23 @@ class _ScreenListScreen extends State<ScreenListScreen> {
         icon: AppAssets.icBlueNavigator,
       ),
       ScreenListDataModel(
-        title: "Filter",
-        onClick: () => Navigator.push(context, FilterScreen.route()),
+        title: "Discover Yoga",
+        onClick: () => Navigator.push(context, DashboardScreen.route(currentIndex: 1, discoverScreenIndex: 0)),
+        icon: AppAssets.icBlueNavigator,
+      ),
+      ScreenListDataModel(
+        title: "Discover Meditation",
+        onClick: () => Navigator.push(context, DashboardScreen.route(currentIndex: 1, discoverScreenIndex: 1)),
+        icon: AppAssets.icBlueNavigator,
+      ),
+      ScreenListDataModel(
+        title: "Filters Yoga",
+        onClick: () => Navigator.push(context, FilterScreen.route(currentIndex: 0)),
+        icon: AppAssets.icBlueNavigator,
+      ),
+      ScreenListDataModel(
+        title: "Filters Meditation",
+        onClick: () => Navigator.push(context, FilterScreen.route(currentIndex: 1)),
         icon: AppAssets.icBlueNavigator,
       ),
       ScreenListDataModel(
@@ -117,13 +182,13 @@ class _ScreenListScreen extends State<ScreenListScreen> {
         icon: AppAssets.icBlueNavigator,
       ),
       ScreenListDataModel(
-        title: "Saved",
+        title: "Saved Yoga",
         onClick: () => Navigator.push(context, SavedScreen.route()),
         icon: AppAssets.icBlueNavigator,
       ),
       ScreenListDataModel(
-        title: "Discover",
-        onClick: () => Navigator.push(context, DashboardScreen.route(currentIndex: 1)),
+        title: "Saved Meditation",
+        onClick: () => Navigator.push(context, SavedScreen.route()),
         icon: AppAssets.icBlueNavigator,
       ),
       ScreenListDataModel(
@@ -137,13 +202,68 @@ class _ScreenListScreen extends State<ScreenListScreen> {
         icon: AppAssets.icBlueNavigator,
       ),
       ScreenListDataModel(
-        title: "Yoga Details",
-        onClick: () => Navigator.push(context, YogaDetailsScreen.route()),
+        title: "Yoga Details Video",
+        onClick: () => Navigator.push(context, YogaDetailsScreen.route(currentIndex: 0)),
         icon: AppAssets.icBlueNavigator,
       ),
       ScreenListDataModel(
-        title: "Yoga Video & Animation",
-        onClick: () => Navigator.push(context, DoYogaScreen.route(isVideoSelected: 0)),
+        title: "Yoga Details Animation",
+        onClick: () => Navigator.push(context, YogaDetailsScreen.route(currentIndex: 1)),
+        icon: AppAssets.icBlueNavigator,
+      ),
+      ScreenListDataModel(
+        title: "Animation Play",
+        onClick: () => Navigator.push(context, DoYogaScreen.route(isVideoSelected: 1, isAnimationPlay: true)),
+        icon: AppAssets.icBlueNavigator,
+      ),
+      ScreenListDataModel(
+        title: "Animation Full Screen",
+        onClick: () => Navigator.push(context, DoYogaScreen.route(isVideoSelected: 1, isAnimationFullScreen: true)),
+        icon: AppAssets.icBlueNavigator,
+      ),
+      ScreenListDataModel(
+        title: "Animation Pause",
+        onClick: () => Navigator.push(context, DoYogaScreen.route(isVideoSelected: 1, isAnimationPlay: false)),
+        icon: AppAssets.icBlueNavigator,
+      ),
+      ScreenListDataModel(
+        title: "Animation Resume",
+        onClick: () => Navigator.push(context, DoYogaScreen.route(isVideoSelected: 1, isAnimationWaiting: true)),
+        icon: AppAssets.icBlueNavigator,
+      ),
+      ScreenListDataModel(
+        title: "Video Play",
+        onClick: () => Navigator.push(context, DoYogaScreen.route(isVideoSelected: 0, isVideoPlay: true)),
+        icon: AppAssets.icBlueNavigator,
+      ),
+      ScreenListDataModel(
+        title: "Video Full Screen",
+        onClick: () => Navigator.push(context, DoYogaScreen.route(isVideoSelected: 0, isVideoFullScreen: true)),
+        icon: AppAssets.icBlueNavigator,
+      ),
+      ScreenListDataModel(
+        title: "Video Pause",
+        onClick: () => Navigator.push(context, DoYogaScreen.route(isVideoSelected: 0, isVideoPlay: false)),
+        icon: AppAssets.icBlueNavigator,
+      ),
+      ScreenListDataModel(
+        title: "Video Resume",
+        onClick: () => Navigator.push(context, DoYogaScreen.route(isVideoSelected: 0, isVideoWaiting: true)),
+        icon: AppAssets.icBlueNavigator,
+      ),
+      ScreenListDataModel(
+        title: "Session Completed",
+        onClick: () => Navigator.push(context, DoYogaScreen.route(isForSessionCompleteAlert: true)),
+        icon: AppAssets.icBlueNavigator,
+      ),
+      ScreenListDataModel(
+        title: "Your Mood After Session?",
+        onClick: () => Navigator.push(context, DoYogaScreen.route(isForYourMoodAfterSessionAlert: true)),
+        icon: AppAssets.icBlueNavigator,
+      ),
+      ScreenListDataModel(
+        title: "Give Review & Rate",
+        onClick: () => Navigator.push(context, DoYogaScreen.route(isForGiveReviewAndRateAlert: true)),
         icon: AppAssets.icBlueNavigator,
       ),
       ScreenListDataModel(
@@ -154,6 +274,11 @@ class _ScreenListScreen extends State<ScreenListScreen> {
       ScreenListDataModel(
         title: "Meditation Video",
         onClick: () => Navigator.push(context, DoMeditationScreen.route()),
+        icon: AppAssets.icBlueNavigator,
+      ),
+      ScreenListDataModel(
+        title: "Meditation Video Full Screen",
+        onClick: () => Navigator.push(context, DoMeditationScreen.route(isForFullScreen: true)),
         icon: AppAssets.icBlueNavigator,
       ),
       ScreenListDataModel(
@@ -178,6 +303,11 @@ class _ScreenListScreen extends State<ScreenListScreen> {
       ),
       ScreenListDataModel(
         title: "Add Card",
+        onClick: () => Navigator.push(context, CardOrWalletDetailsScreen.route(isFromAddCard: true)),
+        icon: AppAssets.icBlueNavigator,
+      ),
+      ScreenListDataModel(
+        title: "Edit Card",
         onClick: () => Navigator.push(context, CardOrWalletDetailsScreen.route()),
         icon: AppAssets.icBlueNavigator,
       ),
@@ -187,18 +317,38 @@ class _ScreenListScreen extends State<ScreenListScreen> {
         icon: AppAssets.icBlueNavigator,
       ),
       ScreenListDataModel(
-        title: "Upgrade Plan",
-        onClick: () => Navigator.push(context, UpgradePlanScreen.route()),
-        icon: AppAssets.icBlueNavigator,
-      ),
-      ScreenListDataModel(
         title: "Invite Friends",
         onClick: () => Navigator.push(context, InviteFriendsScreen.route()),
         icon: AppAssets.icBlueNavigator,
       ),
       ScreenListDataModel(
-        title: "Help Center",
-        onClick: () => Navigator.push(context, HelpCenterScreen.route()),
+        title: "Upgrade Plan",
+        onClick: () => Navigator.push(context, UpgradePlanScreen.route()),
+        icon: AppAssets.icBlueNavigator,
+      ),
+      ScreenListDataModel(
+        title: "Choose Payment Method",
+        onClick: () => Navigator.push(context, PaymentMethodScreen.route(isFromSelection: true)),
+        icon: AppAssets.icBlueNavigator,
+      ),
+      ScreenListDataModel(
+        title: "Upgrade Plan Successfully",
+        onClick: () => Navigator.push(context, UpgradePlanScreen.route(isForAlert: true)),
+        icon: AppAssets.icBlueNavigator,
+      ),
+      ScreenListDataModel(
+        title: "Help Center : FAQ",
+        onClick: () => Navigator.push(context, HelpCenterScreen.route(currentInex: 0)),
+        icon: AppAssets.icBlueNavigator,
+      ),
+      ScreenListDataModel(
+        title: "Help Center : Contact Us",
+        onClick: () => Navigator.push(context, HelpCenterScreen.route(currentInex: 1)),
+        icon: AppAssets.icBlueNavigator,
+      ),
+      ScreenListDataModel(
+        title: "Logout",
+        onClick: () => Navigator.push(context, DashboardScreen.route(currentIndex: 4, isForLogoutAlert: true)),
         icon: AppAssets.icBlueNavigator,
       ),
     ];

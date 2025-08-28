@@ -115,6 +115,11 @@ class _ScreenListScreen extends State<ScreenListScreen> {
         icon: AppAssets.icBlueNavigator,
       ),
       ScreenListDataModel(
+        title: "Reset Successfully",
+        onClick: () => Navigator.push(context, ResetPasswordScreen.route(isForAlert: true)),
+        icon: AppAssets.icBlueNavigator,
+      ),
+      ScreenListDataModel(
         title: "Select Favorite Brands",
         onClick: () => Navigator.push(context, YourFavBrandScreen.route()),
         icon: AppAssets.icBlueNavigator,
@@ -127,6 +132,11 @@ class _ScreenListScreen extends State<ScreenListScreen> {
       ScreenListDataModel(
         title: "Create New Pin",
         onClick: () => Navigator.push(context, CreateNewPinScreen.route()),
+        icon: AppAssets.icBlueNavigator,
+      ),
+      ScreenListDataModel(
+        title: "All Set",
+        onClick: () => Navigator.push(context, CreateNewPinScreen.route(isForAlert: true)),
         icon: AppAssets.icBlueNavigator,
       ),
       ScreenListDataModel(
@@ -190,10 +200,124 @@ class _ScreenListScreen extends State<ScreenListScreen> {
         icon: AppAssets.icBlueNavigator,
       ),
       ScreenListDataModel(
-        title: "Car All Details",
+        title: "Car Overview",
         onClick: () => Navigator.push(
           context,
           CarDetailScreen.route(
+            currentIndex: 0,
+            car: PopularCarItem(
+              carName: "Tesla Model  Y",
+              carImage: AppAssets.imgTesla,
+              carPrice: "\$32,340",
+              carDescription: "New Looks, Longer Range, And Faster Charging Rate",
+            ),
+          ),
+        ),
+        icon: AppAssets.icBlueNavigator,
+      ),
+      ScreenListDataModel(
+        title: "Car Price",
+        onClick: () => Navigator.push(
+          context,
+          CarDetailScreen.route(
+            currentIndex: 1,
+            car: PopularCarItem(
+              carName: "Tesla Model  Y",
+              carImage: AppAssets.imgTesla,
+              carPrice: "\$32,340",
+              carDescription: "New Looks, Longer Range, And Faster Charging Rate",
+            ),
+          ),
+        ),
+        icon: AppAssets.icBlueNavigator,
+      ),
+      ScreenListDataModel(
+        title: "Car Colors",
+        onClick: () => Navigator.push(
+          context,
+          CarDetailScreen.route(
+            currentIndex: 2,
+            car: PopularCarItem(
+              carName: "Tesla Model  Y",
+              carImage: AppAssets.imgTesla,
+              carPrice: "\$32,340",
+              carDescription: "New Looks, Longer Range, And Faster Charging Rate",
+            ),
+          ),
+        ),
+        icon: AppAssets.icBlueNavigator,
+      ),
+      ScreenListDataModel(
+        title: "Car Images",
+        onClick: () => Navigator.push(
+          context,
+          CarDetailScreen.route(
+            currentIndex: 3,
+            car: PopularCarItem(
+              carName: "Tesla Model  Y",
+              carImage: AppAssets.imgTesla,
+              carPrice: "\$32,340",
+              carDescription: "New Looks, Longer Range, And Faster Charging Rate",
+            ),
+          ),
+        ),
+        icon: AppAssets.icBlueNavigator,
+      ),
+      ScreenListDataModel(
+        title: "Car Compare",
+        onClick: () => Navigator.push(
+          context,
+          CarDetailScreen.route(
+            currentIndex: 4,
+            car: PopularCarItem(
+              carName: "Tesla Model  Y",
+              carImage: AppAssets.imgTesla,
+              carPrice: "\$32,340",
+              carDescription: "New Looks, Longer Range, And Faster Charging Rate",
+            ),
+          ),
+        ),
+        icon: AppAssets.icBlueNavigator,
+      ),
+      ScreenListDataModel(
+        title: "Car 360 View",
+        onClick: () => Navigator.push(
+          context,
+          CarDetailScreen.route(
+            currentIndex: 5,
+            car: PopularCarItem(
+              carName: "Tesla Model  Y",
+              carImage: AppAssets.imgTesla,
+              carPrice: "\$32,340",
+              carDescription: "New Looks, Longer Range, And Faster Charging Rate",
+            ),
+          ),
+        ),
+        icon: AppAssets.icBlueNavigator,
+      ),
+      ScreenListDataModel(
+        title: "Car Review",
+        onClick: () => Navigator.push(
+          context,
+          CarDetailScreen.route(
+            currentIndex: 6,
+            car: PopularCarItem(
+              carName: "Tesla Model  Y",
+              carImage: AppAssets.imgTesla,
+              carPrice: "\$32,340",
+              carDescription: "New Looks, Longer Range, And Faster Charging Rate",
+            ),
+          ),
+        ),
+        icon: AppAssets.icBlueNavigator,
+      ),
+      ScreenListDataModel(
+        title: "Write A Review",
+        onClick: () => Navigator.push(
+          context,
+          CarDetailScreen.route(
+            currentIndex: 6,
+            isForAlert: true,
             car: PopularCarItem(
               carName: "Tesla Model  Y",
               carImage: AppAssets.imgTesla,
@@ -210,6 +334,11 @@ class _ScreenListScreen extends State<ScreenListScreen> {
         icon: AppAssets.icBlueNavigator,
       ),
       ScreenListDataModel(
+        title: "Continue To View Offers",
+        onClick: () => Navigator.push(context, ViewOfferScreen.route(isForAlert: true)),
+        icon: AppAssets.icBlueNavigator,
+      ),
+      ScreenListDataModel(
         title: "View Similar Offers",
         onClick: () => Navigator.push(context, SimilarOfferScreen.route()),
         icon: AppAssets.icBlueNavigator,
@@ -217,6 +346,26 @@ class _ScreenListScreen extends State<ScreenListScreen> {
       ScreenListDataModel(
         title: "Used Car",
         onClick: () => Navigator.push(context, UsedCarScreen.route()),
+        icon: AppAssets.icBlueNavigator,
+      ),
+      ScreenListDataModel(
+        title: "Filter Budget",
+        onClick: () => Navigator.push(context, UsedCarScreen.route(isForFilterAlert: true, selectedIndexForFilterBS: 0)),
+        icon: AppAssets.icBlueNavigator,
+      ),
+      ScreenListDataModel(
+        title: "Filter Brand",
+        onClick: () => Navigator.push(context, UsedCarScreen.route(isForFilterAlert: true, selectedIndexForFilterBS: 1)),
+        icon: AppAssets.icBlueNavigator,
+      ),
+      ScreenListDataModel(
+        title: "Filter Model Year",
+        onClick: () => Navigator.push(context, UsedCarScreen.route(isForFilterAlert: true, selectedIndexForFilterBS: 2)),
+        icon: AppAssets.icBlueNavigator,
+      ),
+      ScreenListDataModel(
+        title: "Sort",
+        onClick: () => Navigator.push(context, UsedCarScreen.route(isForSortAlert: true)),
         icon: AppAssets.icBlueNavigator,
       ),
       ScreenListDataModel(
@@ -240,8 +389,58 @@ class _ScreenListScreen extends State<ScreenListScreen> {
         icon: AppAssets.icBlueNavigator,
       ),
       ScreenListDataModel(
-        title: "Select Required Car Detail",
-        onClick: () => Navigator.push(context, EnterCarDetailScreen.route()),
+        title: "Select Car Brand",
+        onClick: () => Navigator.push(context, EnterCarDetailScreen.route(currentIndex: 0)),
+        icon: AppAssets.icBlueNavigator,
+      ),
+      ScreenListDataModel(
+        title: "Select Car Registration Year",
+        onClick: () => Navigator.push(context, EnterCarDetailScreen.route(currentIndex: 1)),
+        icon: AppAssets.icBlueNavigator,
+      ),
+      ScreenListDataModel(
+        title: "Select Car Model",
+        onClick: () => Navigator.push(context, EnterCarDetailScreen.route(currentIndex: 2)),
+        icon: AppAssets.icBlueNavigator,
+      ),
+      ScreenListDataModel(
+        title: "Select Car Variant",
+        onClick: () => Navigator.push(context, EnterCarDetailScreen.route(currentIndex: 3)),
+        icon: AppAssets.icBlueNavigator,
+      ),
+      ScreenListDataModel(
+        title: "Select Car Registration State",
+        onClick: () => Navigator.push(context, EnterCarDetailScreen.route(currentIndex: 4)),
+        icon: AppAssets.icBlueNavigator,
+      ),
+      ScreenListDataModel(
+        title: "Select State Zip Code",
+        onClick: () => Navigator.push(context, EnterCarDetailScreen.route(currentIndex: 4, isShownZipCode: true)),
+        icon: AppAssets.icBlueNavigator,
+      ),
+      ScreenListDataModel(
+        title: "Select Kms Driven",
+        onClick: () => Navigator.push(context, EnterCarDetailScreen.route(currentIndex: 5)),
+        icon: AppAssets.icBlueNavigator,
+      ),
+      ScreenListDataModel(
+        title: "Select Your Car Location",
+        onClick: () => Navigator.push(context, EnterCarDetailScreen.route(currentIndex: 6)),
+        icon: AppAssets.icBlueNavigator,
+      ),
+      ScreenListDataModel(
+        title: "Select Car Price",
+        onClick: () => Navigator.push(context, EnterCarDetailScreen.route(currentIndex: 7)),
+        icon: AppAssets.icBlueNavigator,
+      ),
+      ScreenListDataModel(
+        title: "Select Car Photos",
+        onClick: () => Navigator.push(context, EnterCarDetailScreen.route(currentIndex: 8)),
+        icon: AppAssets.icBlueNavigator,
+      ),
+      ScreenListDataModel(
+        title: "Submit Details",
+        onClick: () => Navigator.push(context, EnterCarDetailScreen.route(currentIndex: 8, isForAlert: true)),
         icon: AppAssets.icBlueNavigator,
       ),
       ScreenListDataModel(
@@ -295,8 +494,13 @@ class _ScreenListScreen extends State<ScreenListScreen> {
         icon: AppAssets.icBlueNavigator,
       ),
       ScreenListDataModel(
-        title: "Help Center",
-        onClick: () => Navigator.push(context, HelpCenterScreen.route()),
+        title: "Help Center : FAQ",
+        onClick: () => Navigator.push(context, HelpCenterScreen.route(currentIndex: 0)),
+        icon: AppAssets.icBlueNavigator,
+      ),
+      ScreenListDataModel(
+        title: "Help Center : Contact Us",
+        onClick: () => Navigator.push(context, HelpCenterScreen.route(currentIndex: 1)),
         icon: AppAssets.icBlueNavigator,
       ),
       ScreenListDataModel(
@@ -307,6 +511,11 @@ class _ScreenListScreen extends State<ScreenListScreen> {
       ScreenListDataModel(
         title: "Call",
         onClick: () => Navigator.push(context, CallScreen.route()),
+        icon: AppAssets.icBlueNavigator,
+      ),
+      ScreenListDataModel(
+        title: "Logout",
+        onClick: () => Navigator.push(context, DashboardScreen.route(selectedIndex: 3, isForLogoutAlert: true)),
         icon: AppAssets.icBlueNavigator,
       ),
     ];
