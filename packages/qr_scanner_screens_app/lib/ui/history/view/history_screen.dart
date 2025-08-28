@@ -125,8 +125,8 @@ class _HistoryScreenState extends State<HistoryScreen> implements TopBarClickLis
     showDialog(
         barrierDismissible: false,
         context: context,
-        builder: (buildContext) => HistoryDeleteConfirmationDialog(
-              parentContext: buildContext,
+        builder: (_) => HistoryDeleteConfirmationDialog(
+              parentContext: context,
             )).then((_) {
       if (_isDialogOpen) {
         print('LogoutDialog dismissed: Popping MyProfileScreen');
@@ -343,7 +343,11 @@ class _HistoryScreenState extends State<HistoryScreen> implements TopBarClickLis
   }
 
   void showDeleteDialog() {
-    showDialog(context: context, builder: (buildContext) =>  HistoryDeleteConfirmationDialog(parentContext:buildContext ,)).then((value) {
+    showDialog(
+        context: context,
+        builder: (buildContext) => HistoryDeleteConfirmationDialog(
+              parentContext: buildContext,
+            )).then((value) {
       if (value == true) {
         historyList?.removeWhere((element) => element['isSelected'] == true);
         isDeleteMode.value = false;

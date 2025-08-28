@@ -56,8 +56,8 @@ class _SettingScreenState extends State<SettingScreen> implements TopBarClickLis
     showDialog(
         barrierDismissible: false,
         context: context,
-        builder: (buildContext) => ChangeThemeDialog(
-              parentContext: buildContext,
+        builder: (_) => ChangeThemeDialog(
+              parentContext: context,
             )).then((_) {
       if (_isDialogOpen) {
         print('LogoutDialog dismissed: Popping MyProfileScreen');
@@ -76,8 +76,8 @@ class _SettingScreenState extends State<SettingScreen> implements TopBarClickLis
     showDialog(
         context: context,
         barrierDismissible: false,
-        builder: (buildContext) => ChangeCameraTypeDialog(
-              parentContext: buildContext,
+        builder: (_) => ChangeCameraTypeDialog(
+              parentContext: context,
             )).then((_) {
       if (_isDialogOpen) {
         print('LogoutDialog dismissed: Popping MyProfileScreen');

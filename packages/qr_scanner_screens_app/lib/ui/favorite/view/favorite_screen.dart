@@ -90,8 +90,8 @@ class _FavoriteScreenState extends State<FavoriteScreen> implements TopBarClickL
     showDialog(
         barrierDismissible: false,
         context: context,
-        builder: (buildContext) => FavoriteDeleteConfirmationDialog(
-              parentContext: buildContext,
+        builder: (_) => FavoriteDeleteConfirmationDialog(
+              parentContext: context,
             )).then((_) {
       if (_isDialogOpen) {
         print('LogoutDialog dismissed: Popping MyProfileScreen');

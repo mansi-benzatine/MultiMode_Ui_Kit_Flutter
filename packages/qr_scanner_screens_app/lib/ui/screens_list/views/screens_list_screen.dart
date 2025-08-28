@@ -725,17 +725,7 @@ class _ScreenListScreen extends State<ScreenListScreen> {
         onClick: () => Navigator.push(context, QrCodeSettingScreen.route()),
       ),
       ScreenListDataModel(
-        title: "QR Code Primary Color Settings ",
-        icon: AppAssets.icScreens,
-        onClick: () => Navigator.push(context, QrCodeSettingScreen.route(isColorBottomSheetShown: true)),
-      ),
-      ScreenListDataModel(
-        title: "QR Code Accent Color Settings ",
-        icon: AppAssets.icScreens,
-        onClick: () => Navigator.push(context, QrCodeSettingScreen.route(isColorBottomSheetShown: true)),
-      ),
-      ScreenListDataModel(
-        title: "QR Code Black & White Color Settings ",
+        title: "QR Code Color Settings ",
         icon: AppAssets.icScreens,
         onClick: () => Navigator.push(context, QrCodeSettingScreen.route(isColorBottomSheetShown: true)),
       ),
