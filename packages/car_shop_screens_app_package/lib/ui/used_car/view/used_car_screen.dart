@@ -88,7 +88,10 @@ class _UsedCarScreenState extends State<UsedCarScreen> with TickerProviderStateM
           shape: const RoundedRectangleBorder(
             borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
           ),
-          builder: (context) => FilterBottomSheet(selectedIndex: widget.selectedIndexForFilterBS),
+          builder: (context) => FilterBottomSheet(
+            selectedIndex: widget.selectedIndexForFilterBS,
+            parentContext: context,
+          ),
         );
       });
     }
@@ -102,7 +105,9 @@ class _UsedCarScreenState extends State<UsedCarScreen> with TickerProviderStateM
           backgroundColor: CustomAppColor.of(context).txtWhite,
           useSafeArea: true,
           shape: const RoundedRectangleBorder(borderRadius: BorderRadius.vertical(top: Radius.circular(20))),
-          builder: (context) => const SortBottomSheet(),
+          builder: (context) => SortBottomSheet(
+            parentContext: context,
+          ),
         );
       });
     }
@@ -163,7 +168,9 @@ class _UsedCarScreenState extends State<UsedCarScreen> with TickerProviderStateM
                     shape: const RoundedRectangleBorder(
                       borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
                     ),
-                    builder: (context) => const FilterBottomSheet(),
+                    builder: (context) => FilterBottomSheet(
+                      parentContext: context,
+                    ),
                   );
                 },
                 child: Row(
@@ -201,7 +208,9 @@ class _UsedCarScreenState extends State<UsedCarScreen> with TickerProviderStateM
                     backgroundColor: CustomAppColor.of(context).txtWhite,
                     useSafeArea: true,
                     shape: const RoundedRectangleBorder(borderRadius: BorderRadius.vertical(top: Radius.circular(20))),
-                    builder: (context) => const SortBottomSheet(),
+                    builder: (context) => SortBottomSheet(
+                      parentContext: context,
+                    ),
                   );
                 },
                 child: Row(

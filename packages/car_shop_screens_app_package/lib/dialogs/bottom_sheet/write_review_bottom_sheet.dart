@@ -9,7 +9,12 @@ import '../../widgets/text/common_text.dart';
 import '../../widgets/text_field/text_form_field.dart';
 
 class WriteReviewBottomSheet extends StatefulWidget {
-  const WriteReviewBottomSheet({super.key});
+  final BuildContext parentContext;
+
+  const WriteReviewBottomSheet({
+    super.key,
+    required this.parentContext,
+  });
 
   @override
   State<WriteReviewBottomSheet> createState() => _WriteReviewBottomSheetState();
@@ -31,7 +36,7 @@ class _WriteReviewBottomSheetState extends State<WriteReviewBottomSheet> {
       canPop: false,
       onPopInvokedWithResult: (didPop, result) {
         if (!didPop) {
-          Navigator.pop(context);
+          Navigator.pop(widget.parentContext);
           Navigator.pop(context);
         }
       },

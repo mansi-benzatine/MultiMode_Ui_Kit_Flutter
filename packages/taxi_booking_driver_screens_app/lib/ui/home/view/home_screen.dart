@@ -121,12 +121,12 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     showDialog(
       barrierDismissible: false,
       context: context,
-      builder: (_) {
+      builder: (dialogContext) {
         return PopScope(
           canPop: false,
           onPopInvokedWithResult: (didPop, result) {
             if (!didPop) {
-              Navigator.pop(context);
+              Navigator.pop(dialogContext);
               Navigator.pop(context);
             }
           },

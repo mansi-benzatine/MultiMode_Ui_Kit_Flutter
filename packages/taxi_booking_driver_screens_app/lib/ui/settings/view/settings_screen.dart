@@ -56,7 +56,7 @@ class _SettingsScreenState extends State<SettingsScreen> implements TopBarClickL
               canPop: false,
               onPopInvokedWithResult: (didPop, result) {
                 if (!didPop) {
-                  Navigator.pop(context);
+                  Navigator.pop(dialogContext);
                   Navigator.pop(context);
                 }
               },
@@ -125,7 +125,7 @@ class _SettingsScreenState extends State<SettingsScreen> implements TopBarClickL
               canPop: false,
               onPopInvokedWithResult: (didPop, result) {
                 if (!didPop) {
-                  Navigator.pop(context);
+                  Navigator.pop(dialogContext);
                   Navigator.pop(context);
                 }
               },

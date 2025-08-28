@@ -128,7 +128,7 @@ class _EnterCarDetailScreenState extends State<EnterCarDetailScreen> with Ticker
           isDismissible: false,
           enableDrag: false,
           context: context,
-          builder: (dialogContext) => const SellCarDetailConfirmationBottomSheet(),
+          builder: (dialogContext) =>  SellCarDetailConfirmationBottomSheet(parentContext: dialogContext,),
         );
       });
     }

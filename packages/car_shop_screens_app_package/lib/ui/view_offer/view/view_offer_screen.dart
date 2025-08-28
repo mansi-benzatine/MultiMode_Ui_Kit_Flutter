@@ -56,7 +56,7 @@ class _ViewOfferScreenState extends State<ViewOfferScreen> implements TopBarClic
               topRight: Radius.circular(16.setWidth),
             ),
           ),
-          builder: (dialogContext) => const IntrestedInOfferBottomSheet(),
+          builder: (dialogContext) =>  IntrestedInOfferBottomSheet(parentContext: dialogContext,),
           isScrollControlled: true,
           backgroundColor: CustomAppColor.of(context).bgScreen,
         );
@@ -295,7 +295,7 @@ class _ViewOfferScreenState extends State<ViewOfferScreen> implements TopBarClic
                     topRight: Radius.circular(16.setWidth),
                   ),
                 ),
-                builder: (dialogContext) => const IntrestedInOfferBottomSheet(),
+                builder: (dialogContext) =>  IntrestedInOfferBottomSheet(parentContext: dialogContext,),
                 isScrollControlled: true,
                 backgroundColor: CustomAppColor.of(context).bgScreen,
               );

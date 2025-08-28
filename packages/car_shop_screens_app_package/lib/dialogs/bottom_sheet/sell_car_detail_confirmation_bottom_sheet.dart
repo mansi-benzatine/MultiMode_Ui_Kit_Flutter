@@ -7,7 +7,12 @@ import '../../localization/language/languages.dart';
 import '../../widgets/text/common_text.dart';
 
 class SellCarDetailConfirmationBottomSheet extends StatelessWidget {
-  const SellCarDetailConfirmationBottomSheet({super.key});
+  final BuildContext parentContext;
+
+  const SellCarDetailConfirmationBottomSheet({
+    super.key,
+    required this.parentContext,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +20,7 @@ class SellCarDetailConfirmationBottomSheet extends StatelessWidget {
       canPop: false,
       onPopInvokedWithResult: (didPop, result) {
         if (!didPop) {
-          Navigator.pop(context);
+          Navigator.pop(parentContext);
           Navigator.pop(context);
         }
       },

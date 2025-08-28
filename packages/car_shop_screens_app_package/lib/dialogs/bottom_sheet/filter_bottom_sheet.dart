@@ -11,7 +11,13 @@ import '../../widgets/text_field/text_form_field.dart';
 
 class FilterBottomSheet extends StatefulWidget {
   final int selectedIndex;
-  const FilterBottomSheet({super.key, this.selectedIndex = 0});
+  final BuildContext parentContext;
+
+  const FilterBottomSheet({
+    super.key,
+    this.selectedIndex = 0,
+    required this.parentContext,
+  });
 
   @override
   State<FilterBottomSheet> createState() => _FilterBottomSheetState();
@@ -82,7 +88,7 @@ class _FilterBottomSheetState extends State<FilterBottomSheet> {
       canPop: false,
       onPopInvokedWithResult: (didPop, result) {
         if (!didPop) {
-          Navigator.pop(context);
+          Navigator.pop(widget.parentContext);
           Navigator.pop(context);
         }
       },

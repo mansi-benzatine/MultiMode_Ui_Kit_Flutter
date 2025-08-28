@@ -8,7 +8,12 @@ import '../../widgets/button/common_button.dart';
 import '../../widgets/text/common_text.dart';
 
 class IntrestedInOfferBottomSheet extends StatefulWidget {
-  const IntrestedInOfferBottomSheet({super.key});
+  final BuildContext parentContext;
+
+  const IntrestedInOfferBottomSheet({
+    super.key,
+    required this.parentContext,
+  });
 
   @override
   State<IntrestedInOfferBottomSheet> createState() => _IntrestedInOfferBottomSheetState();
@@ -21,7 +26,7 @@ class _IntrestedInOfferBottomSheetState extends State<IntrestedInOfferBottomShee
       canPop: false,
       onPopInvokedWithResult: (didPop, result) {
         if (!didPop) {
-          Navigator.pop(context);
+          Navigator.pop(widget.parentContext);
           Navigator.pop(context);
         }
       },

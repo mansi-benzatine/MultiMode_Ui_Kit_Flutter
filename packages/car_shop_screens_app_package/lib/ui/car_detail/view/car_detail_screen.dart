@@ -88,7 +88,9 @@ class _CarDetailScreenState extends State<CarDetailScreen> with TickerProviderSt
               topRight: Radius.circular(16.setWidth),
             ),
           ),
-          builder: (dialogContext) => const WriteReviewBottomSheet(),
+          builder: (dialogContext) => WriteReviewBottomSheet(
+            parentContext: dialogContext,
+          ),
           isScrollControlled: true,
           backgroundColor: CustomAppColor.of(context).bgScreen,
         );
@@ -204,7 +206,9 @@ class _CarDetailScreenState extends State<CarDetailScreen> with TickerProviderSt
                             topRight: Radius.circular(16.setWidth),
                           ),
                         ),
-                        builder: (dialogContext) => const WriteReviewBottomSheet(),
+                        builder: (dialogContext) => WriteReviewBottomSheet(
+                          parentContext: dialogContext,
+                        ),
                         isScrollControlled: true,
                         backgroundColor: CustomAppColor.of(context).bgScreen,
                       );

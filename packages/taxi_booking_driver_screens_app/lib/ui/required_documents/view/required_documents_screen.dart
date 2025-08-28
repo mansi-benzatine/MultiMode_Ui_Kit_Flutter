@@ -69,7 +69,7 @@ class _RequiredDocumentsScreenState extends State<RequiredDocumentsScreen> imple
               canPop: false,
               onPopInvokedWithResult: (didPop, result) {
                 if (!didPop) {
-                  Navigator.pop(context);
+                  Navigator.pop(dialogContext);
                   Navigator.pop(context);
                 }
               },

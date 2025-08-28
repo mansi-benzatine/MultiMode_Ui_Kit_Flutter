@@ -46,7 +46,7 @@ class _CreateNewPinScreenState extends State<CreateNewPinScreen> implements TopB
               canPop: false,
               onPopInvokedWithResult: (didPop, result) {
                 if (!didPop) {
-                  Navigator.pop(context);
+                  Navigator.pop(dialogContext);
                   Navigator.pop(context);
                 }
               },

@@ -6,7 +6,12 @@ import '../../utils/app_color.dart';
 import '../../widgets/text/common_text.dart';
 
 class SortBottomSheet extends StatefulWidget {
-  const SortBottomSheet({super.key});
+  final BuildContext parentContext;
+
+  const SortBottomSheet({
+    super.key,
+    required this.parentContext,
+  });
 
   @override
   State<SortBottomSheet> createState() => _SortBottomSheetState();
@@ -28,7 +33,7 @@ class _SortBottomSheetState extends State<SortBottomSheet> {
       canPop: false,
       onPopInvokedWithResult: (didPop, result) {
         if (!didPop) {
-          Navigator.pop(context);
+          Navigator.pop(widget.parentContext);
           Navigator.pop(context);
         }
       },
