@@ -43,6 +43,7 @@ class _CongratulationDialogState extends State<CongratulationDialog> {
       onPopInvokedWithResult: (didPop, result) {
         if (!didPop) {
           Navigator.pop(context);
+          Navigator.pop(context);
         }
       },
       child: AlertDialog(

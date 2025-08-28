@@ -48,6 +48,7 @@ class _ReviewDialogState extends State<ReviewDialog> {
       onPopInvokedWithResult: (didPop, result) {
         if (!didPop) {
           Navigator.pop(context);
+          Navigator.pop(context);
         }
       },
       child: Container(

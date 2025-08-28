@@ -43,6 +43,7 @@ class _ProfileSetupCongratulationDialogState extends State<ProfileSetupCongratul
       onPopInvokedWithResult: (didPop, result) {
         if (!didPop) {
           Navigator.pop(context);
+          Navigator.pop(context);
         }
       },
       child: AlertDialog(

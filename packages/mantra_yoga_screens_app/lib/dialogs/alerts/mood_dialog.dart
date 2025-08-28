@@ -52,6 +52,7 @@ class _MoodDialogState extends State<MoodDialog> {
       onPopInvokedWithResult: (didPop, result) {
         if (!didPop) {
           Navigator.pop(context);
+          Navigator.pop(context);
         }
       },
       child: Dialog(
