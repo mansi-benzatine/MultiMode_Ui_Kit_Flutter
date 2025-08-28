@@ -78,6 +78,7 @@ class _HomeScreenState extends State<HomeScreen> {
     } else if (widget.isForPayTipView && widget.isShownThankYouAlert) {
       _showPayTipView = true;
       _isFromRideBooked = true;
+
       WidgetsBinding.instance.addPostFrameCallback((_) {
         showDialog(
           barrierDismissible: false,
@@ -154,7 +155,7 @@ class _HomeScreenState extends State<HomeScreen> {
               canPop: false,
               onPopInvokedWithResult: (didPop, result) {
                 if (!didPop) {
-                  Navigator.pop(context);
+                  Navigator.pop(dialogContext);
                   Navigator.pop(context);
                 }
               },
