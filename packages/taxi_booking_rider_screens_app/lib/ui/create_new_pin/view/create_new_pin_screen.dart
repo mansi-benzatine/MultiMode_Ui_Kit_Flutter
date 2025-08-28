@@ -16,11 +16,12 @@ import '../../../widgets/otp_field/otp_field_style.dart';
 import '../../../widgets/text/common_text.dart';
 
 class CreateNewPinScreen extends StatefulWidget {
-  static Route<void> route() {
-    return MaterialPageRoute(builder: (_) => const CreateNewPinScreen());
+  final bool isShownAlert;
+  static Route<void> route({bool isShownAlert = false}) {
+    return MaterialPageRoute(builder: (_) => CreateNewPinScreen(isShownAlert: isShownAlert));
   }
 
-  const CreateNewPinScreen({super.key});
+  const CreateNewPinScreen({super.key, this.isShownAlert = false});
 
   @override
   State<CreateNewPinScreen> createState() => _CreateNewPinScreenState();
@@ -35,6 +36,60 @@ class _CreateNewPinScreenState extends State<CreateNewPinScreen> implements TopB
   @override
   void initState() {
     super.initState();
+    if (widget.isShownAlert) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        showDialog(
+          barrierDismissible: false,
+          context: context,
+          builder: (dialogContext) {
+            return PopScope(
+              canPop: false,
+              onPopInvokedWithResult: (didPop, result) {
+                if (!didPop) {
+                  Navigator.pop(context);
+                  Navigator.pop(context);
+                }
+              },
+              child: Padding(
+                padding: EdgeInsets.symmetric(horizontal: 28.setWidth),
+                child: CommonDialog(
+                  titleText: CommonText(
+                    text: Languages.of(context).txtCongratulations,
+                    fontWeight: FontWeight.w700,
+                    fontSize: 24.setFontSize,
+                    textColor: CustomAppColor.of(context).txtBlack,
+                  ),
+                  descriptionText: CommonText(
+                    text: Languages.of(context).txtYourAccountHasBeenCreatedSuccessfullyPressContinueToStartUsingApp,
+                    fontSize: 13.setFontSize,
+                    fontWeight: FontWeight.w400,
+                    textColor: CustomAppColor.of(context).txtGray,
+                  ),
+                  icon: Image.asset(
+                    AppAssets.icGreyThumbUp,
+                    height: 110.setHeight,
+                  ),
+                  button: IgnorePointer(
+                    ignoring: true,
+                    child: GestureDetector(
+                      onTap: () {
+                        Navigator.pop(dialogContext);
+                        // Navigator.push(context, HomeScreen.route(isFromRideBooked: false));
+                      },
+                      child: Image.asset(
+                        AppAssets.icGoToNext,
+                        height: 60.setHeight,
+                        width: 60.setHeight,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            );
+          },
+        );
+      });
+    }
   }
 
   @override
@@ -150,48 +205,51 @@ class _CreateNewPinScreenState extends State<CreateNewPinScreen> implements TopB
             alignment: Alignment.bottomCenter,
             child: Padding(
               padding: EdgeInsets.symmetric(horizontal: 22.setWidth, vertical: 22.setHeight),
-              child: CommonButton(
-                  text: Languages.of(context).txtContinue,
-                  onTap: () {
-                    showDialog(
-                      barrierDismissible: false,
-                      context: context,
-                      builder: (dialogContext) {
-                        return Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 28.setWidth),
-                          child: CommonDialog(
-                            titleText: CommonText(
-                              text: Languages.of(context).txtCongratulations,
-                              fontWeight: FontWeight.w700,
-                              fontSize: 24.setFontSize,
-                              textColor: CustomAppColor.of(context).txtBlack,
-                            ),
-                            descriptionText: CommonText(
-                              text: Languages.of(context).txtYourAccountHasBeenCreatedSuccessfullyPressContinueToStartUsingApp,
-                              fontSize: 13.setFontSize,
-                              fontWeight: FontWeight.w400,
-                              textColor: CustomAppColor.of(context).txtGray,
-                            ),
-                            icon: Image.asset(
-                              AppAssets.icGreyThumbUp,
-                              height: 110.setHeight,
-                            ),
-                            button: GestureDetector(
-                              onTap: () {
-                                Navigator.pop(dialogContext);
-                                // Navigator.push(context, HomeScreen.route(isFromRideBooked: false));
-                              },
-                              child: Image.asset(
-                                AppAssets.icGoToNext,
-                                height: 60.setHeight,
-                                width: 60.setHeight,
+              child: IgnorePointer(
+                ignoring: true,
+                child: CommonButton(
+                    text: Languages.of(context).txtContinue,
+                    onTap: () {
+                      showDialog(
+                        barrierDismissible: false,
+                        context: context,
+                        builder: (dialogContext) {
+                          return Padding(
+                            padding: EdgeInsets.symmetric(horizontal: 28.setWidth),
+                            child: CommonDialog(
+                              titleText: CommonText(
+                                text: Languages.of(context).txtCongratulations,
+                                fontWeight: FontWeight.w700,
+                                fontSize: 24.setFontSize,
+                                textColor: CustomAppColor.of(context).txtBlack,
+                              ),
+                              descriptionText: CommonText(
+                                text: Languages.of(context).txtYourAccountHasBeenCreatedSuccessfullyPressContinueToStartUsingApp,
+                                fontSize: 13.setFontSize,
+                                fontWeight: FontWeight.w400,
+                                textColor: CustomAppColor.of(context).txtGray,
+                              ),
+                              icon: Image.asset(
+                                AppAssets.icGreyThumbUp,
+                                height: 110.setHeight,
+                              ),
+                              button: GestureDetector(
+                                onTap: () {
+                                  Navigator.pop(dialogContext);
+                                  // Navigator.push(context, HomeScreen.route(isFromRideBooked: false));
+                                },
+                                child: Image.asset(
+                                  AppAssets.icGoToNext,
+                                  height: 60.setHeight,
+                                  width: 60.setHeight,
+                                ),
                               ),
                             ),
-                          ),
-                        );
-                      },
-                    );
-                  }),
+                          );
+                        },
+                      );
+                    }),
+              ),
             ),
           )
         ],

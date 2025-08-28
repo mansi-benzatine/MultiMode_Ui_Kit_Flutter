@@ -91,12 +91,22 @@ class _ScreenListScreen extends State<ScreenListScreen> {
         icon: AppAssets.icBlueNavigator,
       ),
       ScreenListDataModel(
+        title: "Created New Pin Successfully",
+        onClick: () => Navigator.push(context, CreateNewPinScreen.route(isShownAlert: true)),
+        icon: AppAssets.icBlueNavigator,
+      ),
+      ScreenListDataModel(
+        title: "Enable Location",
+        onClick: () => Navigator.push(context, HomeScreen.route(isFromRideBooked: false, isShownLocationAlert: true)),
+        icon: AppAssets.icBlueNavigator,
+      ),
+      ScreenListDataModel(
         title: "Home",
         onClick: () => Navigator.push(context, HomeScreen.route(isFromRideBooked: false)),
         icon: AppAssets.icBlueNavigator,
       ),
       ScreenListDataModel(
-        title: "Create New Trip",
+        title: "Add Address",
         onClick: () => Navigator.push(context, CreateTripScreen.route()),
         icon: AppAssets.icBlueNavigator,
       ),
@@ -106,8 +116,28 @@ class _ScreenListScreen extends State<ScreenListScreen> {
         icon: AppAssets.icBlueNavigator,
       ),
       ScreenListDataModel(
-        title: "Create New Trip Steps",
-        onClick: () => Navigator.push(context, CreateTripStepScreen.route()),
+        title: "Create New Trip ",
+        onClick: () => Navigator.push(context, CreateTripStepScreen.route(currentIndex: 0)),
+        icon: AppAssets.icBlueNavigator,
+      ),
+      ScreenListDataModel(
+        title: "Select Car",
+        onClick: () => Navigator.push(context, CreateTripStepScreen.route(currentIndex: 1)),
+        icon: AppAssets.icBlueNavigator,
+      ),
+      ScreenListDataModel(
+        title: "Select Payment",
+        onClick: () => Navigator.push(context, CreateTripStepScreen.route(currentIndex: 2)),
+        icon: AppAssets.icBlueNavigator,
+      ),
+      ScreenListDataModel(
+        title: "Ride Confirmed",
+        onClick: () => Navigator.push(context, CreateTripStepScreen.route(currentIndex: 3)),
+        icon: AppAssets.icBlueNavigator,
+      ),
+      ScreenListDataModel(
+        title: "Confirm Booking",
+        onClick: () => Navigator.push(context, CreateTripStepScreen.route(currentIndex: 3, isForAlert: true)),
         icon: AppAssets.icBlueNavigator,
       ),
       ScreenListDataModel(
@@ -131,6 +161,11 @@ class _ScreenListScreen extends State<ScreenListScreen> {
         icon: AppAssets.icBlueNavigator,
       ),
       ScreenListDataModel(
+        title: "Request Cancel Successfully",
+        onClick: () => Navigator.push(context, CancelRideScreen.route(isForAlert: true)),
+        icon: AppAssets.icBlueNavigator,
+      ),
+      ScreenListDataModel(
         title: "Driver Feedback",
         onClick: () => Navigator.push(context, HomeScreen.route(isFromRideBooked: true, isForArrivedView: true)),
         icon: AppAssets.icBlueNavigator,
@@ -138,6 +173,16 @@ class _ScreenListScreen extends State<ScreenListScreen> {
       ScreenListDataModel(
         title: "Tip For Driver",
         onClick: () => Navigator.push(context, HomeScreen.route(isFromRideBooked: true, isForPayTipView: true)),
+        icon: AppAssets.icBlueNavigator,
+      ),
+      ScreenListDataModel(
+        title: "Thank You For Feedback",
+        onClick: () => Navigator.push(context, HomeScreen.route(isFromRideBooked: true, isForPayTipView: true, isShownThankYouAlert: true)),
+        icon: AppAssets.icBlueNavigator,
+      ),
+      ScreenListDataModel(
+        title: "Side Menu",
+        onClick: () => Navigator.push(context, HomeScreen.route(isFromRideBooked: false, isShownSideMenu: true)),
         icon: AppAssets.icBlueNavigator,
       ),
       ScreenListDataModel(
@@ -208,6 +253,16 @@ class _ScreenListScreen extends State<ScreenListScreen> {
       ScreenListDataModel(
         title: "Terms & Conditions",
         onClick: () => Navigator.push(context, TermsAndConditionsScreen.route()),
+        icon: AppAssets.icBlueNavigator,
+      ),
+      ScreenListDataModel(
+        title: "Delete Account",
+        onClick: () => Navigator.push(context, SettingsScreen.route(isShownDeleteAlert: true)),
+        icon: AppAssets.icBlueNavigator,
+      ),
+      ScreenListDataModel(
+        title: "Logout",
+        onClick: () => Navigator.push(context, SettingsScreen.route(isShownLogoutAlert: true)),
         icon: AppAssets.icBlueNavigator,
       ),
     ];

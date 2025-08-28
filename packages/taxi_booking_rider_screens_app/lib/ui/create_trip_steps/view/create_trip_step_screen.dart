@@ -14,19 +14,86 @@ import '../../../widgets/alert_dialog/common_alert_dialog.dart';
 import '../../../widgets/text/common_text.dart';
 
 class CreateTripStepScreen extends StatefulWidget {
-  static Route<void> route() {
-    return MaterialPageRoute(builder: (_) => const CreateTripStepScreen());
+  final int currentIndex;
+  final bool isForAlert;
+  static Route<void> route({int currentIndex = 0, bool isForAlert = false}) {
+    return MaterialPageRoute(
+        builder: (_) => CreateTripStepScreen(
+              currentIndex: currentIndex,
+              isForAlert: isForAlert,
+            ));
   }
 
-  const CreateTripStepScreen({super.key});
+  const CreateTripStepScreen({super.key, this.currentIndex = 0, this.isForAlert = false});
 
   @override
   State<CreateTripStepScreen> createState() => _CreateTripStepScreenState();
 }
 
 class _CreateTripStepScreenState extends State<CreateTripStepScreen> {
-  final PageController _pageController = PageController();
+  late PageController _pageController;
   int _currentPage = 0;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+
+    _currentPage = widget.currentIndex;
+    _pageController = PageController(initialPage: widget.currentIndex);
+    if (widget.isForAlert) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        showDialog(
+          barrierDismissible: false,
+          context: context,
+          builder: (dialogContext) {
+            return PopScope(
+              canPop: false,
+              onPopInvokedWithResult: (didPop, result) {
+                if (!didPop) {
+                  Navigator.pop(dialogContext);
+                  Navigator.pop(context);
+                }
+              },
+              child: Padding(
+                padding: EdgeInsets.symmetric(horizontal: 28.setWidth),
+                child: CommonDialog(
+                  titleText: CommonText(
+                    text: Languages.of(context).txtConfirmBooking,
+                    fontWeight: FontWeight.w700,
+                    fontSize: 24.setFontSize,
+                    textColor: CustomAppColor.of(context).txtBlack,
+                  ),
+                  descriptionText: CommonText(
+                    text: Languages.of(context).txtConfirmBookingDesc,
+                    fontSize: 13.setFontSize,
+                    fontWeight: FontWeight.w500,
+                    textColor: CustomAppColor.of(context).txtGray,
+                  ),
+                  icon: Image.asset(
+                    AppAssets.imgThankYou,
+                    height: 110.setHeight,
+                  ),
+                  button: IgnorePointer(
+                    ignoring: true,
+                    child: CommonButton(
+                      text: Languages.of(context).txtDone,
+                      onTap: () {
+                        Navigator.pop(dialogContext);
+                        // Navigator.push(context, HomeScreen.route(isFromRideBooked: true));
+                      },
+                      height: 45.setHeight,
+                      buttonTextSize: 16.setFontSize,
+                    ),
+                  ),
+                ),
+              ),
+            );
+          },
+        );
+      });
+    }
+  }
 
   @override
   void dispose() {
@@ -141,6 +208,7 @@ class _CreateTripStepScreenState extends State<CreateTripStepScreen> {
                 height: 450.setHeight,
                 child: PageView(
                   controller: _pageController,
+                  physics: NeverScrollableScrollPhysics(),
                   onPageChanged: (index) {
                     setState(() {
                       _currentPage = index;
@@ -503,16 +571,19 @@ class _StepOneViewState extends State<StepOneView> {
                   SizedBox(width: 12.setWidth),
                   Expanded(
                     flex: 3,
-                    child: CommonButton(
-                      height: 48.setHeight,
-                      buttonTextSize: 16.setFontSize,
-                      onTap: () {
-                        widget.pageController.nextPage(
-                          duration: const Duration(milliseconds: 300),
-                          curve: Curves.easeInOut,
-                        );
-                      },
-                      text: Languages.of(context).txtContinue,
+                    child: IgnorePointer(
+                      ignoring: true,
+                      child: CommonButton(
+                        height: 48.setHeight,
+                        buttonTextSize: 16.setFontSize,
+                        onTap: () {
+                          widget.pageController.nextPage(
+                            duration: const Duration(milliseconds: 300),
+                            curve: Curves.easeInOut,
+                          );
+                        },
+                        text: Languages.of(context).txtContinue,
+                      ),
                     ),
                   ),
                 ],
@@ -702,34 +773,40 @@ class _StepTwoViewState extends State<StepTwoView> {
           Row(
             children: [
               Expanded(
-                child: CommonButton(
-                  height: 48.setHeight,
-                  onTap: () {
-                    widget.pageController.previousPage(
-                      duration: const Duration(milliseconds: 500),
-                      curve: Curves.easeOutBack,
-                    );
-                  },
-                  text: Languages.of(context).txtBack,
-                  borderColor: CustomAppColor.of(context).btnBorder.withValues(alpha: 0.1),
-                  buttonColor: CustomAppColor.of(context).bgAlertDialog,
-                  buttonTextColor: CustomAppColor.of(context).txtBlack,
-                  buttonTextSize: 16.setFontSize,
+                child: IgnorePointer(
+                  ignoring: true,
+                  child: CommonButton(
+                    height: 48.setHeight,
+                    onTap: () {
+                      widget.pageController.previousPage(
+                        duration: const Duration(milliseconds: 500),
+                        curve: Curves.easeOutBack,
+                      );
+                    },
+                    text: Languages.of(context).txtBack,
+                    borderColor: CustomAppColor.of(context).btnBorder.withValues(alpha: 0.1),
+                    buttonColor: CustomAppColor.of(context).bgAlertDialog,
+                    buttonTextColor: CustomAppColor.of(context).txtBlack,
+                    buttonTextSize: 16.setFontSize,
+                  ),
                 ),
               ),
               SizedBox(width: 12.setWidth),
               Expanded(
                 flex: 3,
-                child: CommonButton(
-                  height: 48.setHeight,
-                  buttonTextSize: 16.setFontSize,
-                  onTap: () {
-                    widget.pageController.nextPage(
-                      duration: const Duration(milliseconds: 300),
-                      curve: Curves.easeInOut,
-                    );
-                  },
-                  text: Languages.of(context).txtBookPremium,
+                child: IgnorePointer(
+                  ignoring: true,
+                  child: CommonButton(
+                    height: 48.setHeight,
+                    buttonTextSize: 16.setFontSize,
+                    onTap: () {
+                      widget.pageController.nextPage(
+                        duration: const Duration(milliseconds: 300),
+                        curve: Curves.easeInOut,
+                      );
+                    },
+                    text: Languages.of(context).txtBookPremium,
+                  ),
                 ),
               ),
             ],
@@ -903,34 +980,40 @@ class _StepThreeViewState extends State<StepThreeView> {
           Row(
             children: [
               Expanded(
-                child: CommonButton(
-                  height: 48.setHeight,
-                  onTap: () {
-                    widget.pageController.previousPage(
-                      duration: const Duration(milliseconds: 300),
-                      curve: Curves.easeInOut,
-                    );
-                  },
-                  text: Languages.of(context).txtBack,
-                  borderColor: CustomAppColor.of(context).btnBorder.withValues(alpha: 0.1),
-                  buttonColor: CustomAppColor.of(context).bgAlertDialog,
-                  buttonTextColor: CustomAppColor.of(context).txtBlack,
-                  buttonTextSize: 16.setFontSize,
+                child: IgnorePointer(
+                  ignoring: true,
+                  child: CommonButton(
+                    height: 48.setHeight,
+                    onTap: () {
+                      widget.pageController.previousPage(
+                        duration: const Duration(milliseconds: 300),
+                        curve: Curves.easeInOut,
+                      );
+                    },
+                    text: Languages.of(context).txtBack,
+                    borderColor: CustomAppColor.of(context).btnBorder.withValues(alpha: 0.1),
+                    buttonColor: CustomAppColor.of(context).bgAlertDialog,
+                    buttonTextColor: CustomAppColor.of(context).txtBlack,
+                    buttonTextSize: 16.setFontSize,
+                  ),
                 ),
               ),
               SizedBox(width: 12.setWidth),
               Expanded(
                 flex: 3,
-                child: CommonButton(
-                  height: 48.setHeight,
-                  buttonTextSize: 16.setFontSize,
-                  onTap: () {
-                    widget.pageController.nextPage(
-                      duration: const Duration(milliseconds: 300),
-                      curve: Curves.easeInOut,
-                    );
-                  },
-                  text: Languages.of(context).txtRequestATrip,
+                child: IgnorePointer(
+                  ignoring: true,
+                  child: CommonButton(
+                    height: 48.setHeight,
+                    buttonTextSize: 16.setFontSize,
+                    onTap: () {
+                      widget.pageController.nextPage(
+                        duration: const Duration(milliseconds: 300),
+                        curve: Curves.easeInOut,
+                      );
+                    },
+                    text: Languages.of(context).txtRequestATrip,
+                  ),
                 ),
               ),
             ],
@@ -1238,48 +1321,51 @@ class StepFourView extends StatelessWidget {
               SizedBox(width: 8.setWidth),
               Expanded(
                 flex: 2,
-                child: CommonButton(
-                  height: 48.setHeight,
-                  buttonTextSize: 16.setFontSize,
-                  onTap: () {
-                    showDialog(
-                      barrierDismissible: false,
-                      context: context,
-                      builder: (dialogContext) {
-                        return Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 28.setWidth),
-                          child: CommonDialog(
-                            titleText: CommonText(
-                              text: Languages.of(context).txtConfirmBooking,
-                              fontWeight: FontWeight.w700,
-                              fontSize: 24.setFontSize,
-                              textColor: CustomAppColor.of(context).txtBlack,
+                child: IgnorePointer(
+                  ignoring: true,
+                  child: CommonButton(
+                    height: 48.setHeight,
+                    buttonTextSize: 16.setFontSize,
+                    onTap: () {
+                      showDialog(
+                        barrierDismissible: false,
+                        context: context,
+                        builder: (dialogContext) {
+                          return Padding(
+                            padding: EdgeInsets.symmetric(horizontal: 28.setWidth),
+                            child: CommonDialog(
+                              titleText: CommonText(
+                                text: Languages.of(context).txtConfirmBooking,
+                                fontWeight: FontWeight.w700,
+                                fontSize: 24.setFontSize,
+                                textColor: CustomAppColor.of(context).txtBlack,
+                              ),
+                              descriptionText: CommonText(
+                                text: Languages.of(context).txtConfirmBookingDesc,
+                                fontSize: 13.setFontSize,
+                                fontWeight: FontWeight.w500,
+                                textColor: CustomAppColor.of(context).txtGray,
+                              ),
+                              icon: Image.asset(
+                                AppAssets.imgThankYou,
+                                height: 110.setHeight,
+                              ),
+                              button: CommonButton(
+                                text: Languages.of(context).txtDone,
+                                onTap: () {
+                                  Navigator.pop(dialogContext);
+                                  // Navigator.push(context, HomeScreen.route(isFromRideBooked: true));
+                                },
+                                height: 45.setHeight,
+                                buttonTextSize: 16.setFontSize,
+                              ),
                             ),
-                            descriptionText: CommonText(
-                              text: Languages.of(context).txtConfirmBookingDesc,
-                              fontSize: 13.setFontSize,
-                              fontWeight: FontWeight.w500,
-                              textColor: CustomAppColor.of(context).txtGray,
-                            ),
-                            icon: Image.asset(
-                              AppAssets.imgThankYou,
-                              height: 110.setHeight,
-                            ),
-                            button: CommonButton(
-                              text: Languages.of(context).txtDone,
-                              onTap: () {
-                                Navigator.pop(dialogContext);
-                                // Navigator.push(context, HomeScreen.route(isFromRideBooked: true));
-                              },
-                              height: 45.setHeight,
-                              buttonTextSize: 16.setFontSize,
-                            ),
-                          ),
-                        );
-                      },
-                    );
-                  },
-                  text: Languages.of(context).txtRideConfirm,
+                          );
+                        },
+                      );
+                    },
+                    text: Languages.of(context).txtRideConfirm,
+                  ),
                 ),
               ),
             ],

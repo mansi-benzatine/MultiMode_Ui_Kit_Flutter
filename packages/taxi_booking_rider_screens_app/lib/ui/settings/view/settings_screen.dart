@@ -17,11 +17,17 @@ import '../../../widgets/button/common_button.dart';
 import '../../app/my_app.dart';
 
 class SettingsScreen extends StatefulWidget {
-  static Route<void> route() {
-    return MaterialPageRoute(builder: (_) => const SettingsScreen());
+  final bool isShownLogoutAlert;
+  final bool isShownDeleteAlert;
+  static Route<void> route({bool isShownLogoutAlert = false, bool isShownDeleteAlert = false}) {
+    return MaterialPageRoute(
+        builder: (_) => SettingsScreen(
+              isShownDeleteAlert: isShownDeleteAlert,
+              isShownLogoutAlert: isShownLogoutAlert,
+            ));
   }
 
-  const SettingsScreen({super.key});
+  const SettingsScreen({super.key, this.isShownDeleteAlert = false, this.isShownLogoutAlert = false});
 
   @override
   State<SettingsScreen> createState() => _SettingsScreenState();
@@ -40,6 +46,145 @@ class _SettingsScreenState extends State<SettingsScreen> implements TopBarClickL
   void initState() {
     super.initState();
     _fillData();
+
+    if (widget.isShownLogoutAlert) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        showDialog(
+          barrierDismissible: false,
+          context: context,
+          builder: (dialogContext) {
+            return PopScope(
+              canPop: false,
+              onPopInvokedWithResult: (didPop, result) {
+                if (!didPop) {
+                  Navigator.pop(context);
+                  Navigator.pop(context);
+                }
+              },
+              child: Padding(
+                padding: EdgeInsets.symmetric(horizontal: 16.setWidth),
+                child: CommonDialog(
+                  titleText: CommonText(
+                    text: Languages.of(context).txtLogout,
+                    fontWeight: FontWeight.w700,
+                    fontSize: 24.setFontSize,
+                    textColor: CustomAppColor.of(context).txtBlack,
+                  ),
+                  descriptionText: CommonText(
+                    text: Languages.of(context).txtAreYouSureYouWantToLogout,
+                    fontSize: 14.setFontSize,
+                    fontWeight: FontWeight.w400,
+                    textColor: CustomAppColor.of(context).txtGray,
+                  ),
+                  icon: Image.asset(
+                    AppAssets.icRedLogout,
+                    height: 90.setHeight,
+                  ),
+                  button: IgnorePointer(
+                    ignoring: true,
+                    child: Row(
+                      children: [
+                        Expanded(
+                          child: CommonButton(
+                            text: Languages.of(context).txtCancel,
+                            onTap: () => Navigator.pop(dialogContext),
+                            buttonColor: CustomAppColor.of(context).transparent,
+                            borderColor: CustomAppColor.of(context).txtGray,
+                            buttonTextColor: CustomAppColor.of(context).txtGray,
+                            height: 45.setHeight,
+                            buttonTextSize: 16.setFontSize,
+                          ),
+                        ),
+                        SizedBox(width: 15.setWidth),
+                        Expanded(
+                          child: CommonButton(
+                            text: Languages.of(context).txtLogout,
+                            onTap: () => Navigator.pop(dialogContext),
+                            height: 45.setHeight,
+                            borderColor: CustomAppColor.of(context).orange,
+                            buttonColor: CustomAppColor.of(context).orange,
+                            buttonTextSize: 16.setFontSize,
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            );
+          },
+        );
+      });
+    }
+    if (widget.isShownDeleteAlert) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        showDialog(
+          barrierDismissible: false,
+          context: context,
+          builder: (dialogContext) {
+            return PopScope(
+              canPop: false,
+              onPopInvokedWithResult: (didPop, result) {
+                if (!didPop) {
+                  Navigator.pop(context);
+                  Navigator.pop(context);
+                }
+              },
+              child: Padding(
+                padding: EdgeInsets.symmetric(horizontal: 20.setWidth),
+                child: CommonDialog(
+                  titleText: CommonText(
+                    text: Languages.of(context).txtDeleteAccount,
+                    fontWeight: FontWeight.w700,
+                    fontSize: 24.setFontSize,
+                    textColor: CustomAppColor.of(context).txtBlack,
+                  ),
+                  descriptionText: CommonText(
+                    text: Languages.of(context).txtAreYouSureYouWantToDeleteYourAccount,
+                    fontSize: 14.setFontSize,
+                    fontWeight: FontWeight.w400,
+                    textColor: CustomAppColor.of(context).txtGray,
+                  ),
+                  icon: Image.asset(
+                    AppAssets.icRedLogout,
+                    height: 90.setHeight,
+                  ),
+                  button: IgnorePointer(
+                    ignoring: true,
+                    child: Row(
+                      children: [
+                        Expanded(
+                          child: CommonButton(
+                            text: Languages.of(context).txtCancel,
+                            onTap: () => Navigator.pop(dialogContext),
+                            buttonColor: CustomAppColor.of(context).transparent,
+                            borderColor: CustomAppColor.of(context).txtGray,
+                            buttonTextColor: CustomAppColor.of(context).txtGray,
+                            height: 45.setHeight,
+                            buttonTextSize: 16.setFontSize,
+                          ),
+                        ),
+                        SizedBox(width: 15.setWidth),
+                        Expanded(
+                          child: CommonButton(
+                            text: Languages.of(context).txtDelete,
+                            onTap: () => Navigator.pop(dialogContext),
+                            height: 45.setHeight,
+                            borderColor: CustomAppColor.of(context).orange,
+                            buttonColor: CustomAppColor.of(context).orange,
+                            buttonTextSize: 16.setFontSize,
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            );
+          },
+        );
+      });
+    }
   }
 
   @override
@@ -213,10 +358,13 @@ class _SettingsScreenState extends State<SettingsScreen> implements TopBarClickL
                     ),
                   );
                 } else {
-                  return _settingsItem(
-                    icon: item['icon'],
-                    title: item['title'],
-                    onTap: item['onTap'],
+                  return IgnorePointer(
+                    ignoring: true,
+                    child: _settingsItem(
+                      icon: item['icon'],
+                      title: item['title'],
+                      onTap: item['onTap'],
+                    ),
                   );
                 }
               },

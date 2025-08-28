@@ -14,11 +14,12 @@ import '../../../widgets/text/common_text.dart';
 import '../datamodel/cancel_ride_data.dart';
 
 class CancelRideScreen extends StatefulWidget {
-  static Route route() {
-    return MaterialPageRoute(builder: (_) => const CancelRideScreen());
+  final bool isForAlert;
+  static Route route({bool isForAlert = false}) {
+    return MaterialPageRoute(builder: (_) => CancelRideScreen(isForAlert: isForAlert));
   }
 
-  const CancelRideScreen({super.key});
+  const CancelRideScreen({super.key, this.isForAlert = false});
 
   @override
   State<CancelRideScreen> createState() => _CancelRideScreenState();
@@ -57,6 +58,63 @@ class _CancelRideScreenState extends State<CancelRideScreen> implements TopBarCl
   void dispose() {
     _otherReasonController.dispose();
     super.dispose();
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    if (widget.isForAlert) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        showDialog(
+          barrierDismissible: false,
+          context: context,
+          builder: (dialogContext) {
+            return PopScope(
+              canPop: false,
+              onPopInvokedWithResult: (didPop, result) {
+                if (!didPop) {
+                  Navigator.pop(context);
+                  Navigator.pop(context);
+                }
+              },
+              child: Padding(
+                padding: EdgeInsets.symmetric(horizontal: 22.setWidth),
+                child: CommonDialog(
+                  titleText: CommonText(
+                    text: Languages.of(dialogContext).txtItIsSadToSeeYouCancel,
+                    fontWeight: FontWeight.w700,
+                    fontSize: 24.setFontSize,
+                    textColor: CustomAppColor.of(dialogContext).txtBlack,
+                  ),
+                  descriptionText: CommonText(
+                    text: Languages.of(dialogContext).txtWeWillContinueToImproveOurServiceAndSatisfyYouOnTheNextTrip,
+                    fontSize: 13.setFontSize,
+                    fontWeight: FontWeight.w500,
+                    textColor: CustomAppColor.of(dialogContext).txtGray,
+                  ),
+                  icon: Image.asset(
+                    AppAssets.imgCancelRide,
+                    height: 110.setHeight,
+                  ),
+                  button: IgnorePointer(
+                    ignoring: true,
+                    child: CommonButton(
+                      text: Languages.of(dialogContext).txtBackToHome,
+                      onTap: () {
+                        Navigator.of(dialogContext, rootNavigator: true).pop('cancelled');
+                      },
+                      height: 45.setHeight,
+                      buttonTextSize: 16.setFontSize,
+                    ),
+                  ),
+                ),
+              ),
+            );
+          },
+        );
+      });
+    }
   }
 
   @override

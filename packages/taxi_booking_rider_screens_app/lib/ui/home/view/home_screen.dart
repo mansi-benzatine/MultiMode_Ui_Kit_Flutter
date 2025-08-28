@@ -26,19 +26,21 @@ import '../../create_new_pin/call_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   final bool isFromRideBooked;
+  final bool isShownLocationAlert;
   final bool isForArrivedView;
   final bool isForPayTipView;
+  final bool isShownThankYouAlert;
+  final bool isShownSideMenu;
 
-  static Route<void> route({
-    required bool isFromRideBooked,
-    bool isForArrivedView = false,
-    bool isForPayTipView = false,
-  }) {
+  static Route<void> route({required bool isFromRideBooked, bool isForArrivedView = false, bool isForPayTipView = false, bool isShownLocationAlert = false, bool isShownThankYouAlert = false, bool isShownSideMenu = false}) {
     return MaterialPageRoute(
       builder: (_) => HomeScreen(
         isFromRideBooked: isFromRideBooked,
         isForArrivedView: isForArrivedView,
         isForPayTipView: isForPayTipView,
+        isShownLocationAlert: isShownLocationAlert,
+        isShownThankYouAlert: isShownThankYouAlert,
+        isShownSideMenu: isShownSideMenu,
       ),
     );
   }
@@ -48,6 +50,9 @@ class HomeScreen extends StatefulWidget {
     required this.isFromRideBooked,
     this.isForArrivedView = false,
     this.isForPayTipView = false,
+    this.isShownLocationAlert = false,
+    this.isShownThankYouAlert = false,
+    this.isShownSideMenu = false,
   });
 
   @override
@@ -63,14 +68,66 @@ class _HomeScreenState extends State<HomeScreen> {
   bool _isFromRideBooked = true;
 
   @override
-  @override
   void initState() {
     super.initState();
     _isFromRideBooked = widget.isFromRideBooked;
 
-    if (widget.isForPayTipView) {
+    if (widget.isForPayTipView && !(widget.isShownThankYouAlert)) {
       _showPayTipView = true;
       _isFromRideBooked = true;
+    } else if (widget.isForPayTipView && widget.isShownThankYouAlert) {
+      _showPayTipView = true;
+      _isFromRideBooked = true;
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        showDialog(
+          barrierDismissible: false,
+          context: context,
+          builder: (dialogContext) {
+            return PopScope(
+              canPop: false,
+              onPopInvokedWithResult: (didPop, result) {
+                if (!didPop) {
+                  Navigator.pop(dialogContext);
+                  Navigator.pop(context);
+                }
+              },
+              child: Padding(
+                padding: EdgeInsets.symmetric(horizontal: 30.setWidth),
+                child: CommonDialog(
+                  titleText: CommonText(
+                    text: Languages.of(context).txtThankYou,
+                    fontWeight: FontWeight.w700,
+                    fontSize: 24.setFontSize,
+                    textColor: CustomAppColor.of(context).txtBlack,
+                  ),
+                  descriptionText: CommonText(
+                    text: Languages.of(context).txtManyThanksForYourValuableFeedbackAndTip,
+                    fontSize: 13.setFontSize,
+                    fontWeight: FontWeight.w500,
+                    textColor: CustomAppColor.of(context).txtGray,
+                  ),
+                  icon: Image.asset(
+                    AppAssets.imgThankYou,
+                    height: 90.setHeight,
+                  ),
+                  button: IgnorePointer(
+                    ignoring: true,
+                    child: CommonButton(
+                      text: Languages.of(context).txtBackToHome,
+                      onTap: () {
+                        Navigator.pop(dialogContext);
+                        /*  widget.onBackToHome();*/
+                      },
+                      height: 45.setHeight,
+                      buttonTextSize: 14.setFontSize,
+                    ),
+                  ),
+                ),
+              ),
+            );
+          },
+        );
+      });
     } else if (widget.isForArrivedView) {
       _showArrivedView = true;
       _isFromRideBooked = true;
@@ -85,6 +142,77 @@ class _HomeScreenState extends State<HomeScreen> {
           }
         },
       );
+    }
+
+    if (widget.isShownLocationAlert) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        showDialog(
+          barrierDismissible: false,
+          context: context,
+          builder: (dialogContext) {
+            return PopScope(
+              canPop: false,
+              onPopInvokedWithResult: (didPop, result) {
+                if (!didPop) {
+                  Navigator.pop(context);
+                  Navigator.pop(context);
+                }
+              },
+              child: Padding(
+                padding: EdgeInsets.symmetric(horizontal: 28.setWidth),
+                child: CommonDialog(
+                  titleText: CommonText(
+                    text: Languages.of(context).txtEnableLocation,
+                    fontWeight: FontWeight.w700,
+                    fontSize: 24.setFontSize,
+                    textColor: CustomAppColor.of(context).txtBlack,
+                  ),
+                  descriptionText: CommonText(
+                    text: Languages.of(context).txtWeNeedAccessToYourLocationToBeAbleToUseThisService,
+                    fontSize: 14.setFontSize,
+                    fontWeight: FontWeight.w400,
+                    textColor: CustomAppColor.of(context).txtGray,
+                  ),
+                  icon: Image.asset(
+                    AppAssets.imgEnableLocation,
+                    height: 100.setHeight,
+                  ),
+                  button: IgnorePointer(
+                    ignoring: true,
+                    child: Column(
+                      children: [
+                        CommonButton(
+                          text: Languages.of(context).txtEnableLocation,
+                          onTap: () => Navigator.pop(dialogContext),
+                          height: 45.setHeight,
+                          buttonColor: CustomAppColor.of(context).btnPrimary,
+                          buttonTextSize: 14.setFontSize,
+                        ),
+                        SizedBox(height: 16.setHeight),
+                        CommonButton(
+                          text: Languages.of(context).txtNotNow,
+                          onTap: () => Navigator.pop(dialogContext),
+                          buttonColor: CustomAppColor.of(context).transparent,
+                          borderColor: CustomAppColor.of(context).txtGray.withValues(alpha: 0.5),
+                          buttonTextColor: CustomAppColor.of(context).txtBlack,
+                          height: 42.setHeight,
+                          buttonTextSize: 14.setFontSize,
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            );
+          },
+        );
+      });
+    }
+
+    if (widget.isShownSideMenu) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        _scaffoldKey.currentState?.openDrawer();
+      });
     }
   }
 
@@ -101,242 +229,265 @@ class _HomeScreenState extends State<HomeScreen> {
       value: const SystemUiOverlayStyle(
         statusBarIconBrightness: Brightness.dark,
       ),
-      child: SafeArea(
-        top: false,
-        child: Scaffold(
-          key: _scaffoldKey,
-          drawer: _buildDrawer(),
-          body: Stack(
-            children: [
-              _buildMapBackground(),
-              SafeArea(
-                child: Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 16.setWidth, vertical: 12.setHeight),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Container(
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(20),
-                          color: CustomAppColor.of(context).bgScreen,
-                        ),
-                        child: IconButton(
-                          onPressed: () {
-                            _scaffoldKey.currentState?.openDrawer();
-                          },
-                          icon: Image.asset(
-                            AppAssets.icMenu,
-                            height: 12.setHeight,
-                            width: 16.setWidth,
-                            color: CustomAppColor.of(context).icBlackWhite,
-                          ),
-                        ),
-                      ),
-                      InkWell(
-                        onTap: () {
-                          showDialog(
-                            barrierDismissible: false,
-                            context: context,
-                            builder: (dialogContext) {
-                              return Padding(
-                                padding: EdgeInsets.symmetric(horizontal: 28.setWidth),
-                                child: CommonDialog(
-                                  titleText: CommonText(
-                                    text: Languages.of(context).txtEnableLocation,
-                                    fontWeight: FontWeight.w700,
-                                    fontSize: 24.setFontSize,
-                                    textColor: CustomAppColor.of(context).txtBlack,
-                                  ),
-                                  descriptionText: CommonText(
-                                    text: Languages.of(context).txtWeNeedAccessToYourLocationToBeAbleToUseThisService,
-                                    fontSize: 14.setFontSize,
-                                    fontWeight: FontWeight.w400,
-                                    textColor: CustomAppColor.of(context).txtGray,
-                                  ),
-                                  icon: Image.asset(
-                                    AppAssets.imgEnableLocation,
-                                    height: 100.setHeight,
-                                  ),
-                                  button: Column(
-                                    children: [
-                                      CommonButton(
-                                        text: Languages.of(context).txtEnableLocation,
-                                        onTap: () => Navigator.pop(dialogContext),
-                                        height: 45.setHeight,
-                                        buttonColor: CustomAppColor.of(context).btnPrimary,
-                                        buttonTextSize: 14.setFontSize,
-                                      ),
-                                      SizedBox(height: 16.setHeight),
-                                      CommonButton(
-                                        text: Languages.of(context).txtNotNow,
-                                        onTap: () => Navigator.pop(dialogContext),
-                                        buttonColor: CustomAppColor.of(context).transparent,
-                                        borderColor: CustomAppColor.of(context).txtGray.withValues(alpha: 0.5),
-                                        buttonTextColor: CustomAppColor.of(context).txtBlack,
-                                        height: 42.setHeight,
-                                        buttonTextSize: 14.setFontSize,
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              );
-                            },
-                          );
-                        },
-                        child: Container(
-                          padding: EdgeInsets.symmetric(vertical: 10.setHeight, horizontal: 12.setWidth),
+      child: PopScope(
+        canPop: widget.isShownSideMenu ? false : true,
+        onPopInvokedWithResult: (didPop, result) {
+          if (!didPop && widget.isShownSideMenu) {
+            Navigator.pop(context);
+            Navigator.pop(context);
+          }
+        },
+        child: SafeArea(
+          top: false,
+          child: Scaffold(
+            key: _scaffoldKey,
+            drawer: Container(
+              color: Colors.transparent,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  SizedBox(
+                    width: 304,
+                    child: _buildDrawer(),
+                  ),
+                ],
+              ),
+            ),
+            body: Stack(
+              children: [
+                _buildMapBackground(),
+                SafeArea(
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 16.setWidth, vertical: 12.setHeight),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Container(
                           decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(26),
+                            borderRadius: BorderRadius.circular(20),
                             color: CustomAppColor.of(context).bgScreen,
                           ),
-                          child: Row(
-                            children: [
-                              Icon(Icons.my_location, color: CustomAppColor.of(context).icBlackGreen),
-                              SizedBox(width: 8.setWidth),
-                              CommonText(
-                                text: Languages.of(context).txtLocation,
-                                fontSize: 14.setFontSize,
-                                fontWeight: FontWeight.w500,
-                              ),
-                            ],
+                          child: IconButton(
+                            onPressed: () {
+                              _scaffoldKey.currentState?.openDrawer();
+                            },
+                            icon: Image.asset(
+                              AppAssets.icMenu,
+                              height: 12.setHeight,
+                              width: 16.setWidth,
+                              color: CustomAppColor.of(context).icBlackWhite,
+                            ),
                           ),
                         ),
-                      )
-                    ],
-                  ),
-                ),
-              ),
-              Align(
-                alignment: Alignment.bottomCenter,
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: CustomAppColor.of(context).bgScreen,
-                    borderRadius: const BorderRadius.vertical(top: Radius.circular(39)),
-                  ),
-                  child: _isFromRideBooked
-                      ? Column(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            if (_showPayTipView)
-                              PayTipView(
-                                onBackToHome: () {
-                                  setState(() {
-                                    _isFromRideBooked = false;
-                                    _showPayTipView = false;
-                                  });
-
-                                  Navigator.pushReplacement(
-                                    context,
-                                    HomeScreen.route(isFromRideBooked: false),
+                        IgnorePointer(
+                          ignoring: true,
+                          child: InkWell(
+                            onTap: () {
+                              showDialog(
+                                barrierDismissible: false,
+                                context: context,
+                                builder: (dialogContext) {
+                                  return Padding(
+                                    padding: EdgeInsets.symmetric(horizontal: 28.setWidth),
+                                    child: CommonDialog(
+                                      titleText: CommonText(
+                                        text: Languages.of(context).txtEnableLocation,
+                                        fontWeight: FontWeight.w700,
+                                        fontSize: 24.setFontSize,
+                                        textColor: CustomAppColor.of(context).txtBlack,
+                                      ),
+                                      descriptionText: CommonText(
+                                        text: Languages.of(context).txtWeNeedAccessToYourLocationToBeAbleToUseThisService,
+                                        fontSize: 14.setFontSize,
+                                        fontWeight: FontWeight.w400,
+                                        textColor: CustomAppColor.of(context).txtGray,
+                                      ),
+                                      icon: Image.asset(
+                                        AppAssets.imgEnableLocation,
+                                        height: 100.setHeight,
+                                      ),
+                                      button: Column(
+                                        children: [
+                                          CommonButton(
+                                            text: Languages.of(context).txtEnableLocation,
+                                            onTap: () => Navigator.pop(dialogContext),
+                                            height: 45.setHeight,
+                                            buttonColor: CustomAppColor.of(context).btnPrimary,
+                                            buttonTextSize: 14.setFontSize,
+                                          ),
+                                          SizedBox(height: 16.setHeight),
+                                          CommonButton(
+                                            text: Languages.of(context).txtNotNow,
+                                            onTap: () => Navigator.pop(dialogContext),
+                                            buttonColor: CustomAppColor.of(context).transparent,
+                                            borderColor: CustomAppColor.of(context).txtGray.withValues(alpha: 0.5),
+                                            buttonTextColor: CustomAppColor.of(context).txtBlack,
+                                            height: 42.setHeight,
+                                            buttonTextSize: 14.setFontSize,
+                                          ),
+                                        ],
+                                      ),
+                                    ),
                                   );
                                 },
-                              )
-                            else if (_showArrivedView)
-                              YouHaveArrivedView(
-                                onSubmitFeedback: () {
-                                  setState(() {
-                                    _showArrivedView = false;
-                                    _showPayTipView = true;
-                                  });
-                                },
-                              )
-                            else
-                              ConfirmRideView(
-                                countDown: countDown,
-                                onClickCancelFeedback: () async {
-                                  // _timer?.cancel();
-                                  final result = await Navigator.push(context, CancelRideScreen.route());
-                                  if (result == 'cancelled') {
-                                    setState(() {
-                                      _isFromRideBooked = false;
-                                      _showArrivedView = false;
-                                      _showPayTipView = false;
-                                    });
-                                  }
-                                },
-                              ),
-                          ],
-                        )
-                      : Column(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            SizedBox(height: 16.setHeight),
-                            Container(
-                              width: 42.setWidth,
-                              height: 4.setHeight,
+                              );
+                            },
+                            child: Container(
+                              padding: EdgeInsets.symmetric(vertical: 10.setHeight, horizontal: 12.setWidth),
                               decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(2),
-                                color: const Color(0xFF9EA2A7),
+                                borderRadius: BorderRadius.circular(26),
+                                color: CustomAppColor.of(context).bgScreen,
                               ),
-                            ),
-                            Align(
-                              alignment: Alignment.centerLeft,
-                              child: Padding(
-                                padding: EdgeInsets.symmetric(horizontal: 20.setWidth, vertical: 20.setHeight),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    CommonText(
-                                      text: "Hey Lisa",
-                                      fontSize: 14.setFontSize,
-                                      textColor: CustomAppColor.of(context).txtGray,
-                                      fontWeight: FontWeight.w500,
-                                    ),
-                                    CommonText(
-                                      text: Languages.of(context).txtWhereAreYouGoing,
-                                      fontSize: 22.setFontSize,
-                                      fontWeight: FontWeight.w600,
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                            SizedBox(
-                              height: 102.setHeight,
-                              child: ListView(
-                                scrollDirection: Axis.horizontal,
+                              child: Row(
                                 children: [
-                                  _buildDestinationItem(
-                                    icon: Icons.location_on_rounded,
-                                    title: Languages.of(context).txtNewTrip,
-                                    subtitle: Languages.of(context).txtCreate,
-                                    onTap: () {
-                                      Navigator.push(context, CreateTripScreen.route());
-                                    },
-                                  ),
-                                  _buildDestinationItem(
-                                    icon: Icons.work,
-                                    title: Languages.of(context).txtWork,
-                                    subtitle: "38 minutes",
-                                    onTap: () {
-                                      Navigator.push(context, CreateTripScreen.route());
-                                    },
-                                  ),
-                                  _buildDestinationItem(
-                                    icon: Icons.flight,
-                                    title: Languages.of(context).txtAirport,
-                                    subtitle: "23 minutes",
-                                    onTap: () {
-                                      Navigator.push(context, CreateTripScreen.route());
-                                    },
-                                  ),
-                                  _buildDestinationItem(
-                                    icon: Icons.directions_bus,
-                                    title: Languages.of(context).txtBusStop,
-                                    subtitle: "12 minutes",
-                                    onTap: () {
-                                      Navigator.push(context, CreateTripScreen.route());
-                                    },
+                                  Icon(Icons.my_location, color: CustomAppColor.of(context).icBlackGreen),
+                                  SizedBox(width: 8.setWidth),
+                                  CommonText(
+                                    text: Languages.of(context).txtLocation,
+                                    fontSize: 14.setFontSize,
+                                    fontWeight: FontWeight.w500,
                                   ),
                                 ],
                               ),
                             ),
-                            SizedBox(height: 20.setHeight),
-                          ],
-                        ),
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
                 ),
-              ),
-            ],
+                Align(
+                  alignment: Alignment.bottomCenter,
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: CustomAppColor.of(context).bgScreen,
+                      borderRadius: const BorderRadius.vertical(top: Radius.circular(39)),
+                    ),
+                    child: _isFromRideBooked
+                        ? Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              if (_showPayTipView)
+                                PayTipView(
+                                  onBackToHome: () {
+                                    setState(() {
+                                      _isFromRideBooked = false;
+                                      _showPayTipView = false;
+                                    });
+
+                                    Navigator.pushReplacement(
+                                      context,
+                                      HomeScreen.route(isFromRideBooked: false),
+                                    );
+                                  },
+                                )
+                              else if (_showArrivedView)
+                                YouHaveArrivedView(
+                                  onSubmitFeedback: () {
+                                    setState(() {
+                                      _showArrivedView = false;
+                                      _showPayTipView = true;
+                                    });
+                                  },
+                                )
+                              else
+                                ConfirmRideView(
+                                  countDown: countDown,
+                                  onClickCancelFeedback: () async {
+                                    // _timer?.cancel();
+                                    final result = await Navigator.push(context, CancelRideScreen.route());
+                                    if (result == 'cancelled') {
+                                      setState(() {
+                                        _isFromRideBooked = false;
+                                        _showArrivedView = false;
+                                        _showPayTipView = false;
+                                      });
+                                    }
+                                  },
+                                ),
+                            ],
+                          )
+                        : Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              SizedBox(height: 16.setHeight),
+                              Container(
+                                width: 42.setWidth,
+                                height: 4.setHeight,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(2),
+                                  color: const Color(0xFF9EA2A7),
+                                ),
+                              ),
+                              Align(
+                                alignment: Alignment.centerLeft,
+                                child: Padding(
+                                  padding: EdgeInsets.symmetric(horizontal: 20.setWidth, vertical: 20.setHeight),
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      CommonText(
+                                        text: "Hey Lisa",
+                                        fontSize: 14.setFontSize,
+                                        textColor: CustomAppColor.of(context).txtGray,
+                                        fontWeight: FontWeight.w500,
+                                      ),
+                                      CommonText(
+                                        text: Languages.of(context).txtWhereAreYouGoing,
+                                        fontSize: 22.setFontSize,
+                                        fontWeight: FontWeight.w600,
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                              SizedBox(
+                                height: 102.setHeight,
+                                child: ListView(
+                                  scrollDirection: Axis.horizontal,
+                                  children: [
+                                    _buildDestinationItem(
+                                      icon: Icons.location_on_rounded,
+                                      title: Languages.of(context).txtNewTrip,
+                                      subtitle: Languages.of(context).txtCreate,
+                                      onTap: () {
+                                        Navigator.push(context, CreateTripScreen.route());
+                                      },
+                                    ),
+                                    _buildDestinationItem(
+                                      icon: Icons.work,
+                                      title: Languages.of(context).txtWork,
+                                      subtitle: "38 minutes",
+                                      onTap: () {
+                                        Navigator.push(context, CreateTripScreen.route());
+                                      },
+                                    ),
+                                    _buildDestinationItem(
+                                      icon: Icons.flight,
+                                      title: Languages.of(context).txtAirport,
+                                      subtitle: "23 minutes",
+                                      onTap: () {
+                                        Navigator.push(context, CreateTripScreen.route());
+                                      },
+                                    ),
+                                    _buildDestinationItem(
+                                      icon: Icons.directions_bus,
+                                      title: Languages.of(context).txtBusStop,
+                                      subtitle: "12 minutes",
+                                      onTap: () {
+                                        Navigator.push(context, CreateTripScreen.route());
+                                      },
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              SizedBox(height: 20.setHeight),
+                            ],
+                          ),
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),
@@ -473,80 +624,83 @@ class _HomeScreenState extends State<HomeScreen> {
               },
             ),
             const Spacer(),
-            InkWell(
-              onTap: () {
-                showDialog(
-                  barrierDismissible: false,
-                  context: context,
-                  builder: (dialogContext) {
-                    return Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 16.setWidth),
-                      child: CommonDialog(
-                        titleText: CommonText(
-                          text: Languages.of(context).txtLogout,
-                          fontWeight: FontWeight.w700,
-                          fontSize: 24.setFontSize,
-                          textColor: CustomAppColor.of(context).txtBlack,
-                        ),
-                        descriptionText: CommonText(
-                          text: Languages.of(context).txtAreYouSureYouWantToLogout,
-                          fontSize: 14.setFontSize,
-                          fontWeight: FontWeight.w400,
-                          textColor: CustomAppColor.of(context).txtGray,
-                        ),
-                        icon: Image.asset(
-                          AppAssets.icRedLogout,
-                          height: 90.setHeight,
-                        ),
-                        button: Row(
-                          children: [
-                            Expanded(
-                              child: CommonButton(
-                                text: Languages.of(context).txtCancel,
-                                onTap: () => Navigator.pop(dialogContext),
-                                buttonColor: CustomAppColor.of(context).transparent,
-                                borderColor: CustomAppColor.of(context).txtGray,
-                                buttonTextColor: CustomAppColor.of(context).txtGray,
-                                height: 45.setHeight,
-                                buttonTextSize: 16.setFontSize,
+            IgnorePointer(
+              ignoring: true,
+              child: InkWell(
+                onTap: () {
+                  showDialog(
+                    barrierDismissible: false,
+                    context: context,
+                    builder: (dialogContext) {
+                      return Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 16.setWidth),
+                        child: CommonDialog(
+                          titleText: CommonText(
+                            text: Languages.of(context).txtLogout,
+                            fontWeight: FontWeight.w700,
+                            fontSize: 24.setFontSize,
+                            textColor: CustomAppColor.of(context).txtBlack,
+                          ),
+                          descriptionText: CommonText(
+                            text: Languages.of(context).txtAreYouSureYouWantToLogout,
+                            fontSize: 14.setFontSize,
+                            fontWeight: FontWeight.w400,
+                            textColor: CustomAppColor.of(context).txtGray,
+                          ),
+                          icon: Image.asset(
+                            AppAssets.icRedLogout,
+                            height: 90.setHeight,
+                          ),
+                          button: Row(
+                            children: [
+                              Expanded(
+                                child: CommonButton(
+                                  text: Languages.of(context).txtCancel,
+                                  onTap: () => Navigator.pop(dialogContext),
+                                  buttonColor: CustomAppColor.of(context).transparent,
+                                  borderColor: CustomAppColor.of(context).txtGray,
+                                  buttonTextColor: CustomAppColor.of(context).txtGray,
+                                  height: 45.setHeight,
+                                  buttonTextSize: 16.setFontSize,
+                                ),
                               ),
-                            ),
-                            SizedBox(width: 15.setWidth),
-                            Expanded(
-                              child: CommonButton(
-                                text: Languages.of(context).txtLogout,
-                                onTap: () => Navigator.pop(dialogContext),
-                                height: 45.setHeight,
-                                borderColor: CustomAppColor.of(context).orange,
-                                buttonColor: CustomAppColor.of(context).orange,
-                                buttonTextSize: 16.setFontSize,
-                              ),
-                            )
-                          ],
+                              SizedBox(width: 15.setWidth),
+                              Expanded(
+                                child: CommonButton(
+                                  text: Languages.of(context).txtLogout,
+                                  onTap: () => Navigator.pop(dialogContext),
+                                  height: 45.setHeight,
+                                  borderColor: CustomAppColor.of(context).orange,
+                                  buttonColor: CustomAppColor.of(context).orange,
+                                  buttonTextSize: 16.setFontSize,
+                                ),
+                              )
+                            ],
+                          ),
                         ),
+                      );
+                    },
+                  );
+                },
+                child: Padding(
+                  padding: EdgeInsets.symmetric(vertical: 16.setHeight, horizontal: 22.setWidth),
+                  child: Row(
+                    children: [
+                      Image.asset(
+                        AppAssets.icLogout,
+                        width: 20.setWidth,
+                        height: 20.setHeight,
+                        color: CustomAppColor.of(context).red,
                       ),
-                    );
-                  },
-                );
-              },
-              child: Padding(
-                padding: EdgeInsets.symmetric(vertical: 16.setHeight, horizontal: 22.setWidth),
-                child: Row(
-                  children: [
-                    Image.asset(
-                      AppAssets.icLogout,
-                      width: 20.setWidth,
-                      height: 20.setHeight,
-                      color: CustomAppColor.of(context).red,
-                    ),
-                    SizedBox(width: 15.setWidth),
-                    CommonText(
-                      text: Languages.of(context).txtLogout,
-                      fontSize: 16.setFontSize,
-                      fontWeight: FontWeight.w600,
-                      textColor: CustomAppColor.of(context).red,
-                    ),
-                  ],
+                      SizedBox(width: 15.setWidth),
+                      CommonText(
+                        text: Languages.of(context).txtLogout,
+                        fontSize: 16.setFontSize,
+                        fontWeight: FontWeight.w600,
+                        textColor: CustomAppColor.of(context).red,
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),
@@ -1203,48 +1357,51 @@ class _PayTipViewState extends State<PayTipView> {
             ),
           ),
           SizedBox(height: 25.setHeight),
-          CommonButton(
-            height: 48.setHeight,
-            buttonTextSize: 16.setFontSize,
-            onTap: () {
-              showDialog(
-                barrierDismissible: false,
-                context: context,
-                builder: (dialogContext) {
-                  return Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 30.setWidth),
-                    child: CommonDialog(
-                      titleText: CommonText(
-                        text: Languages.of(context).txtThankYou,
-                        fontWeight: FontWeight.w700,
-                        fontSize: 24.setFontSize,
-                        textColor: CustomAppColor.of(context).txtBlack,
+          IgnorePointer(
+            ignoring: true,
+            child: CommonButton(
+              height: 48.setHeight,
+              buttonTextSize: 16.setFontSize,
+              onTap: () {
+                showDialog(
+                  barrierDismissible: false,
+                  context: context,
+                  builder: (dialogContext) {
+                    return Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 30.setWidth),
+                      child: CommonDialog(
+                        titleText: CommonText(
+                          text: Languages.of(context).txtThankYou,
+                          fontWeight: FontWeight.w700,
+                          fontSize: 24.setFontSize,
+                          textColor: CustomAppColor.of(context).txtBlack,
+                        ),
+                        descriptionText: CommonText(
+                          text: Languages.of(context).txtManyThanksForYourValuableFeedbackAndTip,
+                          fontSize: 13.setFontSize,
+                          fontWeight: FontWeight.w500,
+                          textColor: CustomAppColor.of(context).txtGray,
+                        ),
+                        icon: Image.asset(
+                          AppAssets.imgThankYou,
+                          height: 90.setHeight,
+                        ),
+                        button: CommonButton(
+                          text: Languages.of(context).txtBackToHome,
+                          onTap: () {
+                            Navigator.pop(dialogContext);
+                            /*  widget.onBackToHome();*/
+                          },
+                          height: 45.setHeight,
+                          buttonTextSize: 14.setFontSize,
+                        ),
                       ),
-                      descriptionText: CommonText(
-                        text: Languages.of(context).txtManyThanksForYourValuableFeedbackAndTip,
-                        fontSize: 13.setFontSize,
-                        fontWeight: FontWeight.w500,
-                        textColor: CustomAppColor.of(context).txtGray,
-                      ),
-                      icon: Image.asset(
-                        AppAssets.imgThankYou,
-                        height: 90.setHeight,
-                      ),
-                      button: CommonButton(
-                        text: Languages.of(context).txtBackToHome,
-                        onTap: () {
-                          Navigator.pop(dialogContext);
-                          /*  widget.onBackToHome();*/
-                        },
-                        height: 45.setHeight,
-                        buttonTextSize: 14.setFontSize,
-                      ),
-                    ),
-                  );
-                },
-              );
-            },
-            text: Languages.of(context).txtPayTip,
+                    );
+                  },
+                );
+              },
+              text: Languages.of(context).txtPayTip,
+            ),
           ),
         ],
       ),
