@@ -31,129 +31,157 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> implements To
 
   final ValueNotifier<bool> isShowPassword = ValueNotifier(false);
   final ValueNotifier<bool> isShowConfirmPassword = ValueNotifier(false);
-
+  bool _isDialogOpen = false;
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     if (widget.isForAlert) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
-        showDialog(
-          barrierDismissible: false,
-          context: context,
-          builder: (dialogContext) => CongratulationsDialog(
-            title: Languages.of(context).txtCongratulations,
-            message: Languages.of(context).txtYourAccountIsReadyToUse,
-            onComplete: () {
-              Navigator.pop(dialogContext);
-              Navigator.pop(context);
-            },
-          ),
-        );
+        _showLogoutDialog();
       });
     }
   }
 
+  void _showLogoutDialog() {
+    setState(() {
+      _isDialogOpen = true;
+    });
+    showDialog(
+      barrierDismissible: false,
+      context: context,
+      builder: (dialogContext) => CongratulationsDialog(
+        title: Languages.of(context).txtCongratulations,
+        message: Languages.of(context).txtYourAccountIsReadyToUse,
+        /*onComplete: () {
+          Navigator.pop(dialogContext);
+          Navigator.pop(context);
+        },*/
+      ),
+    ).then((_) {
+      if (_isDialogOpen) {
+        print('LogoutDialog dismissed: Popping MyProfileScreen');
+        setState(() {
+          _isDialogOpen = false;
+        });
+        Navigator.of(context).pop(); // Pop MyProfileScreen
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: CustomAppColor.of(context).bgScreen,
-      body: SafeArea(
-        child: Column(
-          children: [
-            TopBar(
-              this,
-              title: "",
-              isShowBack: true,
-            ),
-            SizedBox(height: 20.setHeight),
-            Expanded(
-              child: SingleChildScrollView(
-                padding: EdgeInsets.only(left: 16.setWidth, right: 16.setWidth, bottom: 16.setHeight),
-                child: Column(
-                  children: [
-                    SizedBox(
-                      height: 250.setHeight,
-                      width: double.infinity,
-                      child: Image.asset(AppAssets.imgVerifyOtp, fit: BoxFit.contain),
-                    ),
-                    SizedBox(height: 20.setHeight),
-                    Align(
-                      alignment: Alignment.centerLeft,
-                      child: CommonText(
-                        text: Languages.of(context).txtResetPassword.toUpperCase(),
-                        textAlign: TextAlign.start,
-                        fontSize: 30.setFontSize,
-                        fontWeight: FontWeight.w600,
-                        textColor: CustomAppColor.of(context).txtBlack,
+    return PopScope(
+      canPop: !_isDialogOpen,
+      onPopInvokedWithResult: (didPop, result) {
+        if (!didPop && _isDialogOpen) {
+          print('PopScope: System back button pressed, isDialogOpen=$_isDialogOpen');
+          Navigator.of(context).pop();
+          setState(() {
+            _isDialogOpen = false;
+          });
+          Navigator.of(context).pop();
+        }
+      },
+      child: Scaffold(
+        backgroundColor: CustomAppColor.of(context).bgScreen,
+        body: SafeArea(
+          child: Column(
+            children: [
+              TopBar(
+                this,
+                title: "",
+                isShowBack: true,
+              ),
+              SizedBox(height: 20.setHeight),
+              Expanded(
+                child: SingleChildScrollView(
+                  padding: EdgeInsets.only(left: 16.setWidth, right: 16.setWidth, bottom: 16.setHeight),
+                  child: Column(
+                    children: [
+                      SizedBox(
+                        height: 250.setHeight,
+                        width: double.infinity,
+                        child: Image.asset(AppAssets.imgVerifyOtp, fit: BoxFit.contain),
                       ),
-                    ),
-                    SizedBox(height: 20.setHeight),
-                    CommonTextFormField(
-                      controller: emailController,
-                      hintText: Languages.of(context).txtEnterYourEmail,
-                      labelText: Languages.of(context).txtEmail.toUpperCase(),
-                    ),
-                    SizedBox(height: 25.setHeight),
-                    ValueListenableBuilder(
-                      valueListenable: isShowPassword,
-                      builder: (context, value, child) {
-                        return CommonTextFormFieldWithSuffix(
-                          controller: passwordController,
-                          hintText: Languages.of(context).txtEnterYourPassword,
-                          labelText: Languages.of(context).txtPassword.toUpperCase(),
-                          suffixIcon: value ? AppAssets.icEye : AppAssets.icEyeClose,
-                          suffixIconColor: CustomAppColor.of(context).txtBlack,
-                          obscureText: !value,
-                          keyboardType: TextInputType.visiblePassword,
-                          onSuffixClick: () {
-                            isShowPassword.value = !isShowPassword.value;
-                          },
-                        );
-                      },
-                    ),
-                    SizedBox(height: 25.setHeight),
-                    ValueListenableBuilder(
-                      valueListenable: isShowConfirmPassword,
-                      builder: (context, value, child) {
-                        return CommonTextFormFieldWithSuffix(
-                          controller: confirmPasswordController,
-                          hintText: Languages.of(context).txtEnterYourConfirmPassword,
-                          labelText: Languages.of(context).txtConfirmPassword.toUpperCase(),
-                          suffixIcon: value ? AppAssets.icEye : AppAssets.icEyeClose,
-                          suffixIconColor: CustomAppColor.of(context).txtBlack,
-                          obscureText: !value,
-                          keyboardType: TextInputType.visiblePassword,
-                          onSuffixClick: () {
-                            isShowConfirmPassword.value = !isShowConfirmPassword.value;
-                          },
-                        );
-                      },
-                    ),
-                    SizedBox(height: 30.setHeight),
-                    IgnorePointer(
-                      ignoring: true,
-                      child: CommonButton(
-                        text: Languages.of(context).txtResetPassword,
-                        onTap: () {
-                          showDialog(
-                            context: context,
-                            builder: (dialogContext) => CongratulationsDialog(
-                              title: Languages.of(context).txtCongratulations,
-                              message: Languages.of(context).txtYourAccountIsReadyToUse,
-                              onComplete: () {
-                                Navigator.pop(dialogContext);
-                              },
-                            ),
+                      SizedBox(height: 20.setHeight),
+                      Align(
+                        alignment: Alignment.centerLeft,
+                        child: CommonText(
+                          text: Languages.of(context).txtResetPassword.toUpperCase(),
+                          textAlign: TextAlign.start,
+                          fontSize: 30.setFontSize,
+                          fontWeight: FontWeight.w600,
+                          textColor: CustomAppColor.of(context).txtBlack,
+                        ),
+                      ),
+                      SizedBox(height: 20.setHeight),
+                      CommonTextFormField(
+                        controller: emailController,
+                        hintText: Languages.of(context).txtEnterYourEmail,
+                        labelText: Languages.of(context).txtEmail.toUpperCase(),
+                      ),
+                      SizedBox(height: 25.setHeight),
+                      ValueListenableBuilder(
+                        valueListenable: isShowPassword,
+                        builder: (context, value, child) {
+                          return CommonTextFormFieldWithSuffix(
+                            controller: passwordController,
+                            hintText: Languages.of(context).txtEnterYourPassword,
+                            labelText: Languages.of(context).txtPassword.toUpperCase(),
+                            suffixIcon: value ? AppAssets.icEye : AppAssets.icEyeClose,
+                            suffixIconColor: CustomAppColor.of(context).txtBlack,
+                            obscureText: !value,
+                            keyboardType: TextInputType.visiblePassword,
+                            onSuffixClick: () {
+                              isShowPassword.value = !isShowPassword.value;
+                            },
                           );
                         },
                       ),
-                    ),
-                  ],
+                      SizedBox(height: 25.setHeight),
+                      ValueListenableBuilder(
+                        valueListenable: isShowConfirmPassword,
+                        builder: (context, value, child) {
+                          return CommonTextFormFieldWithSuffix(
+                            controller: confirmPasswordController,
+                            hintText: Languages.of(context).txtEnterYourConfirmPassword,
+                            labelText: Languages.of(context).txtConfirmPassword.toUpperCase(),
+                            suffixIcon: value ? AppAssets.icEye : AppAssets.icEyeClose,
+                            suffixIconColor: CustomAppColor.of(context).txtBlack,
+                            obscureText: !value,
+                            keyboardType: TextInputType.visiblePassword,
+                            onSuffixClick: () {
+                              isShowConfirmPassword.value = !isShowConfirmPassword.value;
+                            },
+                          );
+                        },
+                      ),
+                      SizedBox(height: 30.setHeight),
+                      IgnorePointer(
+                        ignoring: true,
+                        child: CommonButton(
+                          text: Languages.of(context).txtResetPassword,
+                          onTap: () {
+                            showDialog(
+                              context: context,
+                              builder: (dialogContext) => CongratulationsDialog(
+                                title: Languages.of(context).txtCongratulations,
+                                message: Languages.of(context).txtYourAccountIsReadyToUse,
+                                onComplete: () {
+                                  Navigator.pop(dialogContext);
+                                },
+                              ),
+                            );
+                          },
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

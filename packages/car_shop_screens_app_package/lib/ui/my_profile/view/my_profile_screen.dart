@@ -32,6 +32,7 @@ class MyProfileScreen extends StatefulWidget {
 
 class _MyProfileScreenState extends State<MyProfileScreen> implements TopBarClickListener {
   final ValueNotifier<bool> isDarkMode = ValueNotifier(false);
+  bool _isDialogOpen = false;
   _fillData() {
     bool isDarkModePref = !Utils.isLightTheme();
     isDarkMode.value = isDarkModePref;
@@ -44,216 +45,243 @@ class _MyProfileScreenState extends State<MyProfileScreen> implements TopBarClic
 
     if (widget.isForLogoutAlert) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
-        showDialog(
-          context: context,
-          barrierDismissible: false,
-          builder: (dialogContext) => LogoutDialog(dialogContext: dialogContext),
-        );
+        _showLogoutDialog();
       });
     }
   }
 
+  void _showLogoutDialog() {
+    setState(() {
+      _isDialogOpen = true;
+    });
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (dialogContext) => const LogoutDialog(),
+    ).then((_) {
+      if (_isDialogOpen) {
+        print('LogoutDialog dismissed: Popping MyProfileScreen');
+        setState(() {
+          _isDialogOpen = false;
+        });
+        Navigator.of(context).pop(); // Pop MyProfileScreen
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: CustomAppColor.of(context).bgScreen,
-      body: SafeArea(
-        child: Column(
-          children: [
-            TopBar(
-              this,
-              title: Languages.of(context).txtMyProfile,
-              isShowBack: false,
-            ),
-            Expanded(
-              child: SingleChildScrollView(
-                padding: EdgeInsets.only(left: 20.setWidth, right: 20.setWidth, bottom: 100.setHeight),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    SizedBox(height: 10.setHeight),
-                    Stack(
+    return PopScope(
+        canPop: !_isDialogOpen,
+        onPopInvokedWithResult: (didPop, result) {
+          if (!didPop && _isDialogOpen) {
+            print('PopScope: System back button pressed, isDialogOpen=$_isDialogOpen');
+            Navigator.of(context).pop(); // Pop the dialog
+            setState(() {
+              _isDialogOpen = false;
+            });
+            Navigator.of(context).pop(); // Pop MyProfileScreen
+          }
+        },
+        child: Scaffold(
+          backgroundColor: CustomAppColor.of(context).bgScreen,
+          body: SafeArea(
+            child: Column(
+              children: [
+                TopBar(
+                  this,
+                  title: Languages.of(context).txtMyProfile,
+                  isShowBack: false,
+                ),
+                Expanded(
+                  child: SingleChildScrollView(
+                    padding: EdgeInsets.only(left: 20.setWidth, right: 20.setWidth, bottom: 100.setHeight),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        ClipRRect(
-                          borderRadius: BorderRadius.circular(100.setWidth),
-                          child: Image.asset(
-                            AppAssets.imgDummyGirl,
-                            height: 100.setHeight,
-                            width: 100.setWidth,
+                        SizedBox(height: 10.setHeight),
+                        Stack(
+                          children: [
+                            ClipRRect(
+                              borderRadius: BorderRadius.circular(100.setWidth),
+                              child: Image.asset(
+                                AppAssets.imgDummyGirl,
+                                height: 100.setHeight,
+                                width: 100.setWidth,
+                              ),
+                            ),
+                            Positioned(
+                              bottom: 5,
+                              right: 5,
+                              child: Container(
+                                height: 20.setHeight,
+                                width: 20.setWidth,
+                                decoration: BoxDecoration(
+                                  border: Border.all(color: CustomAppColor.of(context).txtWhite, width: 1.5.setWidth),
+                                  borderRadius: BorderRadius.circular(5.setWidth),
+                                  gradient: CustomAppColor.of(context).primaryGradient,
+                                ),
+                                padding: EdgeInsets.all(3.setWidth),
+                                child: Image.asset(
+                                  AppAssets.icProfileEdit,
+                                  height: 16.setHeight,
+                                  width: 16.setWidth,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                        SizedBox(height: 20.setHeight),
+                        CommonText(
+                          text: "Mona Lisa",
+                          fontSize: 18.setFontSize,
+                          fontWeight: FontWeight.w600,
+                          textColor: CustomAppColor.of(context).txtBlack,
+                          textAlign: TextAlign.center,
+                        ),
+                        CommonText(
+                          text: "+1 12345 67890",
+                          fontSize: 12.setFontSize,
+                          fontWeight: FontWeight.w400,
+                          textColor: CustomAppColor.of(context).txtGray,
+                          textAlign: TextAlign.center,
+                        ),
+                        SizedBox(height: 30.setHeight),
+                        IgnorePointer(
+                          ignoring: true,
+                          child: _settingItem(
+                            title: Languages.of(context).txtEditName,
+                            icon: AppAssets.icProfile,
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(builder: (context) => const EditProfileScreen()),
+                              );
+                            },
                           ),
                         ),
-                        Positioned(
-                          bottom: 5,
-                          right: 5,
-                          child: Container(
-                            height: 20.setHeight,
-                            width: 20.setWidth,
-                            decoration: BoxDecoration(
-                              border: Border.all(color: CustomAppColor.of(context).txtWhite, width: 1.5.setWidth),
-                              borderRadius: BorderRadius.circular(5.setWidth),
-                              gradient: CustomAppColor.of(context).primaryGradient,
+                        IgnorePointer(
+                          ignoring: true,
+                          child: _settingItem(
+                            title: Languages.of(context).txtNotification,
+                            icon: AppAssets.icNotificationProfile,
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(builder: (context) => const NotificationSetting()),
+                              );
+                            },
+                          ),
+                        ),
+                        IgnorePointer(
+                          ignoring: true,
+                          child: _settingItem(
+                            title: Languages.of(context).txtMyVehicle,
+                            icon: AppAssets.icMyVehicleProfile,
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(builder: (context) => const MyVehicleScreen()),
+                              );
+                            },
+                          ),
+                        ),
+                        IgnorePointer(
+                          ignoring: true,
+                          child: _settingItem(
+                            title: Languages.of(context).txtDarkMode,
+                            icon: AppAssets.icDarkModeProfile,
+                            onTap: () {},
+                            iconWidget: ValueListenableBuilder(
+                              valueListenable: isDarkMode,
+                              builder: (context, value, child) {
+                                return SizedBox(
+                                  width: 40.setWidth,
+                                  height: 20.setHeight,
+                                  child: Switch(
+                                    value: isDarkMode.value,
+                                    onChanged: (value) {
+                                      isDarkMode.value = value;
+                                      getIt.get<LocalStorageService>().setBool(LocalStorageService.isLightTheme, !value);
+                                      Debug.printLoge("isDarkMode.value", "${isDarkMode.value} ${getIt.get<LocalStorageService>().getBool(LocalStorageService.isLightTheme, optionalValue: false)} ");
+                                      final newTheme = value ? ThemeData.dark() : ThemeData.light();
+                                      CarShopScreensApp.changeTheme(context, newTheme);
+                                    },
+                                    activeColor: CustomAppColor.of(context).primary,
+                                    inactiveThumbColor: CustomAppColor.of(context).white,
+                                    inactiveTrackColor: CustomAppColor.of(context).black.withValues(alpha: 0.1),
+                                    activeTrackColor: CustomAppColor.of(context).primary,
+                                    thumbColor: WidgetStateProperty.all(CustomAppColor.of(context).white),
+                                    trackOutlineWidth: WidgetStateProperty.all(0),
+                                    trackOutlineColor: WidgetStateProperty.all(CustomAppColor.of(context).transparent),
+                                  ),
+                                );
+                              },
                             ),
-                            padding: EdgeInsets.all(3.setWidth),
-                            child: Image.asset(
-                              AppAssets.icProfileEdit,
-                              height: 16.setHeight,
-                              width: 16.setWidth,
-                            ),
+                          ),
+                        ),
+                        IgnorePointer(
+                          ignoring: true,
+                          child: _settingItem(
+                            title: Languages.of(context).txtPrivacyPolicy,
+                            icon: AppAssets.icPrivacyProfile,
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(builder: (context) => const PrivacyPolicyScreen()),
+                              );
+                            },
+                          ),
+                        ),
+                        IgnorePointer(
+                          ignoring: true,
+                          child: _settingItem(
+                            title: Languages.of(context).txtLanguage,
+                            icon: AppAssets.icLangProfile,
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(builder: (context) => const LanguageSettingScreen()),
+                              );
+                            },
+                          ),
+                        ),
+                        IgnorePointer(
+                          ignoring: true,
+                          child: _settingItem(
+                            title: Languages.of(context).txtHelpCenter,
+                            icon: AppAssets.icHelpProfile,
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(builder: (context) => const HelpCenterScreen()),
+                              );
+                            },
+                          ),
+                        ),
+                        IgnorePointer(
+                          ignoring: true,
+                          child: _settingItem(
+                            title: Languages.of(context).txtLogout,
+                            icon: AppAssets.icLogout,
+                            textColor: CustomAppColor.of(context).txtRed,
+                            isLast: true,
+                            onTap: () {
+                              showDialog(
+                                context: context,
+                                builder: (dialogContext) => LogoutDialog(),
+                              );
+                            },
                           ),
                         ),
                       ],
                     ),
-                    SizedBox(height: 20.setHeight),
-                    CommonText(
-                      text: "Mona Lisa",
-                      fontSize: 18.setFontSize,
-                      fontWeight: FontWeight.w600,
-                      textColor: CustomAppColor.of(context).txtBlack,
-                      textAlign: TextAlign.center,
-                    ),
-                    CommonText(
-                      text: "+1 12345 67890",
-                      fontSize: 12.setFontSize,
-                      fontWeight: FontWeight.w400,
-                      textColor: CustomAppColor.of(context).txtGray,
-                      textAlign: TextAlign.center,
-                    ),
-                    SizedBox(height: 30.setHeight),
-                    IgnorePointer(
-                      ignoring: true,
-                      child: _settingItem(
-                        title: Languages.of(context).txtEditName,
-                        icon: AppAssets.icProfile,
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (context) => const EditProfileScreen()),
-                          );
-                        },
-                      ),
-                    ),
-                    IgnorePointer(
-                      ignoring: true,
-                      child: _settingItem(
-                        title: Languages.of(context).txtNotification,
-                        icon: AppAssets.icNotificationProfile,
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (context) => const NotificationSetting()),
-                          );
-                        },
-                      ),
-                    ),
-                    IgnorePointer(
-                      ignoring: true,
-                      child: _settingItem(
-                        title: Languages.of(context).txtMyVehicle,
-                        icon: AppAssets.icMyVehicleProfile,
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (context) => const MyVehicleScreen()),
-                          );
-                        },
-                      ),
-                    ),
-                    IgnorePointer(
-                      ignoring: true,
-                      child: _settingItem(
-                        title: Languages.of(context).txtDarkMode,
-                        icon: AppAssets.icDarkModeProfile,
-                        onTap: () {},
-                        iconWidget: ValueListenableBuilder(
-                          valueListenable: isDarkMode,
-                          builder: (context, value, child) {
-                            return SizedBox(
-                              width: 40.setWidth,
-                              height: 20.setHeight,
-                              child: Switch(
-                                value: isDarkMode.value,
-                                onChanged: (value) {
-                                  isDarkMode.value = value;
-                                  getIt.get<LocalStorageService>().setBool(LocalStorageService.isLightTheme, !value);
-                                  Debug.printLoge("isDarkMode.value", "${isDarkMode.value} ${getIt.get<LocalStorageService>().getBool(LocalStorageService.isLightTheme, optionalValue: false)} ");
-                                  final newTheme = value ? ThemeData.dark() : ThemeData.light();
-                                  CarShopScreensApp.changeTheme(context, newTheme);
-                                },
-                                activeColor: CustomAppColor.of(context).primary,
-                                inactiveThumbColor: CustomAppColor.of(context).white,
-                                inactiveTrackColor: CustomAppColor.of(context).black.withValues(alpha: 0.1),
-                                activeTrackColor: CustomAppColor.of(context).primary,
-                                thumbColor: WidgetStateProperty.all(CustomAppColor.of(context).white),
-                                trackOutlineWidth: WidgetStateProperty.all(0),
-                                trackOutlineColor: WidgetStateProperty.all(CustomAppColor.of(context).transparent),
-                              ),
-                            );
-                          },
-                        ),
-                      ),
-                    ),
-                    IgnorePointer(
-                      ignoring: true,
-                      child: _settingItem(
-                        title: Languages.of(context).txtPrivacyPolicy,
-                        icon: AppAssets.icPrivacyProfile,
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (context) => const PrivacyPolicyScreen()),
-                          );
-                        },
-                      ),
-                    ),
-                    IgnorePointer(
-                      ignoring: true,
-                      child: _settingItem(
-                        title: Languages.of(context).txtLanguage,
-                        icon: AppAssets.icLangProfile,
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (context) => const LanguageSettingScreen()),
-                          );
-                        },
-                      ),
-                    ),
-                    IgnorePointer(
-                      ignoring: true,
-                      child: _settingItem(
-                        title: Languages.of(context).txtHelpCenter,
-                        icon: AppAssets.icHelpProfile,
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (context) => const HelpCenterScreen()),
-                          );
-                        },
-                      ),
-                    ),
-                    IgnorePointer(
-                      ignoring: true,
-                      child: _settingItem(
-                        title: Languages.of(context).txtLogout,
-                        icon: AppAssets.icLogout,
-                        textColor: CustomAppColor.of(context).txtRed,
-                        isLast: true,
-                        onTap: () {
-                          showDialog(
-                            context: context,
-                            builder: (dialogContext) => LogoutDialog(dialogContext: dialogContext),
-                          );
-                        },
-                      ),
-                    ),
-                  ],
+                  ),
                 ),
-              ),
+              ],
             ),
-          ],
-        ),
-      ),
-    );
+          ),
+        ));
   }
 
   Widget _settingItem({
