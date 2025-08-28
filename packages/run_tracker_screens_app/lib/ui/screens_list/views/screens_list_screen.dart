@@ -18,6 +18,7 @@ import 'package:run_tracker_screens_app/utils/sizer_utils.dart';
 import '../../../utils/app_assets.dart';
 import '../../../utils/app_color.dart';
 import '../../../widgets/text/common_text.dart';
+import '../../loading_weekly_goal/views/loading_weekly_goal_screen.dart';
 import '../../splash/views/splash_screen.dart';
 import '../datamodels/screens_list_data.dart';
 
@@ -44,19 +45,45 @@ class _ScreenListScreen extends State<ScreenListScreen> {
       ScreenListDataModel(title: "Onboarding 2", icon: AppAssets.icScreens, onClick: () => Navigator.push(context, OnboardingScreen.route(currentIndex: 1))),
       ScreenListDataModel(title: "Onboarding 3", icon: AppAssets.icScreens, onClick: () => Navigator.push(context, OnboardingScreen.route(currentIndex: 2))),
       ScreenListDataModel(title: "What's Your Gender?", icon: AppAssets.icScreens, onClick: () => Navigator.push(context, FillInformationScreen.route(currentIndex: 0))),
+      ScreenListDataModel(title: "Gender : Female Selected View", icon: AppAssets.icScreens, onClick: () => Navigator.push(context, FillInformationScreen.route(currentIndex: 0, isFemaleSelected: true))),
+      ScreenListDataModel(title: "Gender : Male Selected View", icon: AppAssets.icScreens, onClick: () => Navigator.push(context, FillInformationScreen.route(currentIndex: 0, isMaleSelected: true))),
       ScreenListDataModel(title: "What's Your Daily Goal?", icon: AppAssets.icScreens, onClick: () => Navigator.push(context, FillInformationScreen.route(currentIndex: 1))),
+      ScreenListDataModel(title: "Loading Weekly Goal", icon: AppAssets.icScreens, onClick: () => Navigator.push(context, GoalLoadingScreen.route())),
       ScreenListDataModel(title: "Home", icon: AppAssets.icScreens, onClick: () => Navigator.push(context, DashboardScreen.route(currentIndex: 0, isFromEmptyHistoryScreen: false))),
       ScreenListDataModel(title: "Recent History", icon: AppAssets.icScreens, onClick: () => Navigator.push(context, DashboardScreen.route(currentIndex: 1, isFromEmptyHistoryScreen: false))),
       ScreenListDataModel(title: "Empty Recent History", icon: AppAssets.icScreens, onClick: () => Navigator.push(context, DashboardScreen.route(currentIndex: 1, isFromEmptyHistoryScreen: true))),
+      ScreenListDataModel(
+        title: "Delete Recent History",
+        icon: AppAssets.icScreens,
+        onClick: () => Navigator.push(context, DashboardScreen.route(currentIndex: 1, isFromEmptyHistoryScreen: true, isFromDeleteAlertHistoryScreen: true)),
+      ),
       ScreenListDataModel(title: "Result Run Tracking", icon: AppAssets.icScreens, onClick: () => Navigator.push(context, ResultShareScreen.route())),
       ScreenListDataModel(title: "Allow Location Permission", icon: AppAssets.icScreens, onClick: () => Navigator.push(context, AllowLocationsPermissionScreen.route())),
       ScreenListDataModel(title: "Start Running", icon: AppAssets.icScreens, onClick: () => Navigator.push(context, StartRunningScreen.route())),
-      ScreenListDataModel(title: "Count Down", icon: AppAssets.icScreens, onClick: () => Navigator.push(context, CountdownScreen.route())),
+      ScreenListDataModel(title: "Count Down 1", icon: AppAssets.icScreens, onClick: () => Navigator.push(context, CountdownScreen.route(currentIndex: 2))),
+      ScreenListDataModel(title: "Count Down 2", icon: AppAssets.icScreens, onClick: () => Navigator.push(context, CountdownScreen.route(currentIndex: 1))),
+      ScreenListDataModel(title: "Count Down 3", icon: AppAssets.icScreens, onClick: () => Navigator.push(context, CountdownScreen.route(currentIndex: 0))),
+      ScreenListDataModel(title: "Count Down Go", icon: AppAssets.icScreens, onClick: () => Navigator.push(context, CountdownScreen.route(currentIndex: 3))),
       ScreenListDataModel(title: "Daily Run Tracking", icon: AppAssets.icScreens, onClick: () => Navigator.push(context, StartRunningDetailsScreen.route())),
+      ScreenListDataModel(title: "Locked - Unlocked Run Tracking", icon: AppAssets.icScreens, onClick: () => Navigator.push(context, StartRunningDetailsScreen.route(isLockShown: true))),
+      ScreenListDataModel(title: "Restart Stop Resume Run Tracking", icon: AppAssets.icScreens, onClick: () => Navigator.push(context, StartRunningDetailsScreen.route(isRestartStopResumeShown: true))),
+      ScreenListDataModel(title: "Finished Run Tracking", icon: AppAssets.icScreens, onClick: () => Navigator.push(context, StartRunningDetailsScreen.route(isFinishRunTrackingShown: true))),
       ScreenListDataModel(title: "Expanded View", icon: AppAssets.icScreens, onClick: () => Navigator.push(context, ExpandMapScreen.route())),
       ScreenListDataModel(title: "Reports", icon: AppAssets.icScreens, onClick: () => Navigator.push(context, DashboardScreen.route(currentIndex: 2, isFromEmptyHistoryScreen: false))),
       ScreenListDataModel(title: "Setting", icon: AppAssets.icScreens, onClick: () => Navigator.push(context, DashboardScreen.route(currentIndex: 3, isFromEmptyHistoryScreen: false))),
+      ScreenListDataModel(
+        title: "Setting : Set Daily Goal",
+        icon: AppAssets.icScreens,
+        onClick: () => Navigator.push(context, DashboardScreen.route(currentIndex: 3, isFromEmptyHistoryScreen: false, isForSetDailyGoalSetting: true)),
+      ),
+      ScreenListDataModel(
+        title: "Setting : Metric & Imperial Unit",
+        icon: AppAssets.icScreens,
+        onClick: () => Navigator.push(context, DashboardScreen.route(currentIndex: 3, isFromEmptyHistoryScreen: false, isForMetricAndImperialUnitSetting: true)),
+      ),
+      ScreenListDataModel(title: "Setting : Choose Language", icon: AppAssets.icScreens, onClick: () => Navigator.push(context, DashboardScreen.route(currentIndex: 3, isFromEmptyHistoryScreen: false, isForLanguageBs: true))),
       ScreenListDataModel(title: "Reminder", icon: AppAssets.icScreens, onClick: () => Navigator.push(context, ReminderScreen.route())),
+      ScreenListDataModel(title: "Repeat Reminder", icon: AppAssets.icScreens, onClick: () => Navigator.push(context, ReminderScreen.route(isForRepeatReminderBs: true))),
       ScreenListDataModel(title: "Achievement List", icon: AppAssets.icScreens, onClick: () => Navigator.push(context, AchievementsScreen.route())),
       ScreenListDataModel(
         title: "Achievement Share View",

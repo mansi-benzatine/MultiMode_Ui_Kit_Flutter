@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:run_tracker_screens_app/localization/language/languages.dart';
-import 'package:run_tracker_screens_app/ui/dashboard/views/dashboard_screen.dart';
 import 'package:run_tracker_screens_app/utils/app_assets.dart';
 import 'package:run_tracker_screens_app/utils/app_color.dart';
 import 'package:run_tracker_screens_app/utils/sizer_utils.dart';
@@ -37,13 +36,13 @@ class _GoalLoadingScreenState extends State<GoalLoadingScreen> {
         if (progress >= 1.0) {
           progress = 1.0;
           timer.cancel();
-          Navigator.push(
+          /* Navigator.push(
             context,
             DashboardScreen.route(
               currentIndex: 0,
               isFromEmptyHistoryScreen: false,
             ),
-          );
+          );*/
         }
       });
     });
@@ -62,10 +61,7 @@ class _GoalLoadingScreenState extends State<GoalLoadingScreen> {
         children: [
           Container(
             decoration: BoxDecoration(
-              image: DecorationImage(
-                image: AssetImage(AppAssets.imgLoading),
-                fit: BoxFit.cover,
-              ),
+              image: DecorationImage(image: AssetImage(AppAssets.imgLoading), fit: BoxFit.cover),
             ),
           ),
           SafeArea(
@@ -80,35 +76,20 @@ class _GoalLoadingScreenState extends State<GoalLoadingScreen> {
                         child: LinearProgressIndicator(
                           value: progress,
                           minHeight: 8,
-                          backgroundColor: CustomAppColor.of(
-                            context,
-                          ).white.withValues(alpha: 0.2),
-                          valueColor: AlwaysStoppedAnimation<Color>(
-                            CustomAppColor.of(context).lime,
-                          ),
+                          backgroundColor: CustomAppColor.of(context).white.withValues(alpha: 0.2),
+                          valueColor: AlwaysStoppedAnimation<Color>(CustomAppColor.of(context).lime),
                           borderRadius: BorderRadius.circular(10),
                         ),
                       ),
                       SizedBox(width: 10.setWidth),
-                      CommonText(
-                        text: "${(progress * 100).toInt()}%",
-                        textColor: CustomAppColor.of(context).white,
-                        fontWeight: FontWeight.w400,
-                      ),
+                      CommonText(text: "${(progress * 100).toInt()}%", textColor: CustomAppColor.of(context).white, fontWeight: FontWeight.w400),
                     ],
                   ),
                 ),
 
                 // Label
                 SizedBox(height: 20.setHeight),
-                CommonText(
-                  text: Languages.of(
-                    context,
-                  ).txtGeneratingYourDailyGoal.toUpperCase(),
-                  fontSize: 14.setFontSize,
-                  textColor: CustomAppColor.of(context).white,
-                  fontWeight: FontWeight.w600,
-                ),
+                CommonText(text: Languages.of(context).txtGeneratingYourDailyGoal.toUpperCase(), fontSize: 14.setFontSize, textColor: CustomAppColor.of(context).white, fontWeight: FontWeight.w600),
                 SizedBox(height: 40.setHeight),
               ],
             ),

@@ -13,14 +13,27 @@ import '../datamodel/dashboard_data.dart';
 class DashboardScreen extends StatefulWidget {
   final int currentIndex;
   final bool? isFromEmptyHistoryScreen;
+  final bool? isFromDeleteAlertHistoryScreen;
+  final bool? isForSetDailyGoalSetting;
+  final bool? isForMetricAndImperialUnitSetting;
+  final bool? isForLanguageBs;
+
   static Route<void> route({
     required int currentIndex,
     required bool? isFromEmptyHistoryScreen,
+    bool isFromDeleteAlertHistoryScreen = false,
+    bool isForMetricAndImperialUnitSetting = false,
+    bool isForSetDailyGoalSetting = false,
+    bool isForLanguageBs = false,
   }) {
     return MaterialPageRoute(
       builder: (_) => DashboardScreen(
         currentIndex: currentIndex,
         isFromEmptyHistoryScreen: isFromEmptyHistoryScreen,
+        isFromDeleteAlertHistoryScreen: isFromDeleteAlertHistoryScreen,
+        isForMetricAndImperialUnitSetting: isForMetricAndImperialUnitSetting,
+        isForSetDailyGoalSetting: isForSetDailyGoalSetting,
+        isForLanguageBs: isForLanguageBs,
       ),
     );
   }
@@ -29,6 +42,10 @@ class DashboardScreen extends StatefulWidget {
     super.key,
     required this.currentIndex,
     this.isFromEmptyHistoryScreen,
+    this.isFromDeleteAlertHistoryScreen = false,
+    this.isForMetricAndImperialUnitSetting = false,
+    this.isForSetDailyGoalSetting = false,
+    this.isForLanguageBs = false,
   });
 
   @override
@@ -45,27 +62,17 @@ class _DashboardScreenState extends State<DashboardScreen> {
     super.initState();
     currentIndex = widget.currentIndex;
     _navItems = [
-      BottomNavItem(
-        selectedIcon: AppAssets.icSelectedHome,
-        unselectedIcon: AppAssets.icUnSelectedHome,
-        screen: HomeScreen(),
-      ),
+      BottomNavItem(selectedIcon: AppAssets.icSelectedHome, unselectedIcon: AppAssets.icUnSelectedHome, screen: HomeScreen()),
       BottomNavItem(
         selectedIcon: AppAssets.icSelectedHistory,
         unselectedIcon: AppAssets.icUnSelectedHistory,
-        screen: HistoryScreen(
-          isFromEmptyScreen: widget.isFromEmptyHistoryScreen ?? false,
-        ),
+        screen: HistoryScreen(isFromEmptyScreen: widget.isFromEmptyHistoryScreen ?? false, isFromDeleteHistoryAlert: widget.isFromDeleteAlertHistoryScreen ?? false),
       ),
-      BottomNavItem(
-        selectedIcon: AppAssets.icSelectedReports,
-        unselectedIcon: AppAssets.icUnSelectedReport,
-        screen: ReportsScreen(),
-      ),
+      BottomNavItem(selectedIcon: AppAssets.icSelectedReports, unselectedIcon: AppAssets.icUnSelectedReport, screen: ReportsScreen()),
       BottomNavItem(
         selectedIcon: AppAssets.icSelectedSetting,
         unselectedIcon: AppAssets.icUnSelectedSetting,
-        screen: SettingScreen(),
+        screen: SettingScreen(isForSetDailyGoalBs: widget.isForSetDailyGoalSetting ?? false, isForMetricAndImperialUnitBs: widget.isForMetricAndImperialUnitSetting ?? false, isForLanguageBs: widget.isForLanguageBs ?? false),
       ),
     ];
   }
@@ -87,11 +94,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
               shape: CircleBorder(),
               clipBehavior: Clip.hardEdge,
               elevation: 0,
-              child: Icon(
-                Icons.directions_run,
-                color: CustomAppColor.of(context).icWhite,
-                size: 40,
-              ),
+              child: Icon(Icons.directions_run, color: CustomAppColor.of(context).icWhite, size: 40),
               onPressed: () {
                 Navigator.push(context, AllowLocationsPermissionScreen.route());
               },
@@ -102,27 +105,14 @@ class _DashboardScreenState extends State<DashboardScreen> {
         bottomNavigationBar: Container(
           height: 80.setHeight,
           decoration: BoxDecoration(
-            boxShadow: [
-              BoxShadow(
-                color: CustomAppColor.of(context).black.withValues(alpha: 0.05),
-                offset: Offset(0, -2),
-                blurRadius: 15,
-                spreadRadius: 8,
-              ),
-            ],
-            borderRadius: const BorderRadius.only(
-              topLeft: Radius.circular(28),
-              topRight: Radius.circular(28),
-            ),
+            boxShadow: [BoxShadow(color: CustomAppColor.of(context).black.withValues(alpha: 0.05), offset: Offset(0, -2), blurRadius: 15, spreadRadius: 8)],
+            borderRadius: const BorderRadius.only(topLeft: Radius.circular(28), topRight: Radius.circular(28)),
           ),
           child: PhysicalModel(
             color: CustomAppColor.of(context).transparent,
             elevation: 0,
             shadowColor: Colors.transparent,
-            borderRadius: const BorderRadius.only(
-              topLeft: Radius.circular(28),
-              topRight: Radius.circular(28),
-            ),
+            borderRadius: const BorderRadius.only(topLeft: Radius.circular(28), topRight: Radius.circular(28)),
             clipBehavior: Clip.antiAlias,
             child: BottomAppBar(
               shape: const RoundedNotchedRectangle(radius: 30),
@@ -150,12 +140,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
   Widget _buildIcon(int index) {
     final isSelected = currentIndex == index;
-    final iconPath = isSelected
-        ? _navItems[index].selectedIcon
-        : _navItems[index].unselectedIcon;
-    final selectedIcon = isSelected
-        ? CustomAppColor.of(context).primary
-        : CustomAppColor.of(context).icGrey;
+    final iconPath = isSelected ? _navItems[index].selectedIcon : _navItems[index].unselectedIcon;
+    final selectedIcon = isSelected ? CustomAppColor.of(context).primary : CustomAppColor.of(context).icGrey;
 
     return IgnorePointer(
       ignoring: true,
@@ -165,12 +151,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
             currentIndex = index;
           });
         },
-        child: Image.asset(
-          iconPath,
-          height: 26.setHeight,
-          width: 26.setWidth,
-          color: selectedIcon,
-        ),
+        child: Image.asset(iconPath, height: 26.setHeight, width: 26.setWidth, color: selectedIcon),
       ),
     );
   }
@@ -184,8 +165,7 @@ class RoundedNotchedRectangle extends NotchedShape {
   @override
   Path getOuterPath(Rect host, Rect? guest) {
     if (guest == null) {
-      return Path()
-        ..addRRect(RRect.fromRectAndRadius(host, Radius.circular(radius)));
+      return Path()..addRRect(RRect.fromRectAndRadius(host, Radius.circular(radius)));
     }
 
     final notchRadius = guest.width / 2.0;
@@ -201,12 +181,7 @@ class RoundedNotchedRectangle extends NotchedShape {
     final notchCenter = guest.center.dx;
     final notchTop = guest.top;
 
-    path.addOval(
-      Rect.fromCircle(
-        center: Offset(notchCenter, notchTop + notchRadius),
-        radius: notchRadius + 2,
-      ),
-    );
+    path.addOval(Rect.fromCircle(center: Offset(notchCenter, notchTop + notchRadius), radius: notchRadius + 2));
     path.fillType = PathFillType.evenOdd;
 
     return path;

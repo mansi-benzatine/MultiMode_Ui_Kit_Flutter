@@ -13,23 +13,25 @@ import '../../home/datamodels/home_data.dart';
 
 class HistoryScreen extends StatefulWidget {
   final bool isFromEmptyScreen;
-  static Route<void> route({required bool isFromEmptyScreen}) {
+  final bool isFromDeleteHistoryAlert;
+
+  static Route<void> route({required bool isFromEmptyScreen, bool isForDeleteHistoryAlert = false}) {
     return MaterialPageRoute(
-      builder: (_) => HistoryScreen(isFromEmptyScreen: isFromEmptyScreen),
+      builder: (_) => HistoryScreen(isFromEmptyScreen: isFromEmptyScreen, isFromDeleteHistoryAlert: isForDeleteHistoryAlert),
     );
   }
 
-  const HistoryScreen({super.key, required this.isFromEmptyScreen});
+  const HistoryScreen({super.key, required this.isFromEmptyScreen, this.isFromDeleteHistoryAlert = false});
 
   @override
   State<HistoryScreen> createState() => _HistoryScreenState();
 }
 
-class _HistoryScreenState extends State<HistoryScreen>
-    implements TopBarClickListener {
+class _HistoryScreenState extends State<HistoryScreen> implements TopBarClickListener {
   List<RecentActivity> activitiesList = [];
   Set<int> selectedIndices = {};
   bool isSelectionMode = false;
+  bool _isBottomSheetOpen = false;
 
   @override
   void initState() {
@@ -38,45 +40,122 @@ class _HistoryScreenState extends State<HistoryScreen>
     if (widget.isFromEmptyScreen) {
       activitiesList = [];
     }
+
+    if (widget.isFromDeleteHistoryAlert) {
+      _fillData();
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        showDeleteBs();
+      });
+    }
+  }
+
+  void showDeleteBs() {
+    setState(() {
+      _isBottomSheetOpen = true;
+    });
+    showModalBottomSheet(
+      isDismissible: false,
+      enableDrag: false,
+      isScrollControlled: false,
+      context: context,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.vertical(top: Radius.circular(40))),
+      backgroundColor: CustomAppColor.of(context).bottomNavbar,
+      builder: (context) {
+        return SafeArea(
+          top: false,
+          child: Padding(
+            padding: const EdgeInsets.all(20),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Container(
+                      height: 4.setHeight,
+                      width: 50.setWidth,
+                      decoration: BoxDecoration(borderRadius: BorderRadius.circular(10), color: Color(0xFFBDBDBD)),
+                    ),
+                  ],
+                ),
+                SizedBox(height: 16.setHeight),
+                CommonText(text: Languages.of(context).txtDeleteHistory.toUpperCase(), fontWeight: FontWeight.w600, fontSize: 20.setFontSize, textAlign: TextAlign.start),
+                SizedBox(height: 5.setHeight),
+
+                Divider(),
+                SizedBox(height: 16.setHeight),
+
+                Container(
+                  alignment: Alignment.center,
+                  padding: EdgeInsets.all(16),
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: CustomAppColor.of(context).bgScaffold,
+                    boxShadow: [BoxShadow(color: CustomAppColor.of(context).black.withValues(alpha: 0.05), offset: Offset(0, 0), blurRadius: 2, spreadRadius: 4)],
+                  ),
+                  child: Icon(Icons.delete, color: Colors.red, size: 40),
+                ),
+                SizedBox(height: 30.setHeight),
+                Center(
+                  child: CommonText(text: Languages.of(context).txtDeleteHistoryDesc, fontSize: 16.setFontSize, fontWeight: FontWeight.w500, textColor: CustomAppColor.of(context).txtDarkGrey),
+                ),
+                SizedBox(height: 40.setHeight),
+                IgnorePointer(
+                  ignoring: true,
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: CommonButton(
+                          height: 40.setHeight,
+                          buttonColor: CustomAppColor.of(context).transparent,
+                          borderColor: CustomAppColor.of(context).primary,
+                          text: Languages.of(context).txtCancel,
+                          buttonTextColor: CustomAppColor.of(context).txtPrimary,
+                        ),
+                      ),
+                      SizedBox(width: 10),
+                      Expanded(
+                        child: CommonButton(
+                          height: 40.setHeight,
+                          onTap: () {
+                            setState(() {
+                              activitiesList = activitiesList.asMap().entries.where((e) => !selectedIndices.contains(e.key)).map((e) => e.value).toList();
+                              selectedIndices.clear();
+                              isSelectionMode = false;
+                            });
+                            Navigator.pop(context);
+                          },
+                          buttonTextColor: CustomAppColor.of(context).txtWhite,
+                          buttonColor: CustomAppColor.of(context).primary,
+                          text: Languages.of(context).txtDelete,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    ).whenComplete(() {
+      if (_isBottomSheetOpen) {
+        setState(() {
+          _isBottomSheetOpen = false;
+        });
+        Navigator.pop(context);
+      }
+    });
   }
 
   void _fillData() {
     activitiesList = [
-      RecentActivity(
-        date: "June 09, 2022",
-        distance: 20.67,
-        duration: "01:10:38",
-        pace: "12:23 min/km",
-        calories: 10,
-      ),
-      RecentActivity(
-        date: "June 08, 2022",
-        distance: 12.66,
-        duration: "00:00:38",
-        pace: "25:28 min/km",
-        calories: 20.00,
-      ),
-      RecentActivity(
-        date: "June 07, 2022",
-        distance: 35.00,
-        duration: "02:10:38",
-        pace: "10:20 min/km",
-        calories: 20.00,
-      ),
-      RecentActivity(
-        date: "May 30, 2022",
-        distance: 20.67,
-        duration: "01:10:38",
-        pace: "12:23 min/km",
-        calories: 10.00,
-      ),
-      RecentActivity(
-        date: "May 28, 2022",
-        distance: 12.66,
-        duration: "00:00:38",
-        pace: "25:28 min/km",
-        calories: 20.00,
-      ),
+      RecentActivity(date: "June 09, 2022", distance: 20.67, duration: "01:10:38", pace: "12:23 min/km", calories: 10),
+      RecentActivity(date: "June 08, 2022", distance: 12.66, duration: "00:00:38", pace: "25:28 min/km", calories: 20.00),
+      RecentActivity(date: "June 07, 2022", distance: 35.00, duration: "02:10:38", pace: "10:20 min/km", calories: 20.00),
+      RecentActivity(date: "May 30, 2022", distance: 20.67, duration: "01:10:38", pace: "12:23 min/km", calories: 10.00),
+      RecentActivity(date: "May 28, 2022", distance: 12.66, duration: "00:00:38", pace: "25:28 min/km", calories: 20.00),
     ];
   }
 
@@ -84,14 +163,7 @@ class _HistoryScreenState extends State<HistoryScreen>
   Widget build(BuildContext context) {
     return Column(
       children: [
-        TopBar(
-          this,
-          height: 75,
-          isShowSimpleTitle: true,
-          isShowSelected: isSelectionMode,
-          isShowDustbin: isSelectionMode,
-          simpleTitle: Languages.of(context).txtRecentHistory.toUpperCase(),
-        ),
+        TopBar(this, height: 75, isShowSimpleTitle: true, isShowSelected: isSelectionMode, isShowDustbin: isSelectionMode, simpleTitle: Languages.of(context).txtRecentHistory.toUpperCase()),
         Expanded(
           child: RecentActivitiesView(
             activitiesList: activitiesList,
@@ -120,9 +192,7 @@ class _HistoryScreenState extends State<HistoryScreen>
           selectedIndices.clear();
           isSelectionMode = false;
         } else {
-          selectedIndices = Set<int>.from(
-            List.generate(activitiesList.length, (index) => index),
-          );
+          selectedIndices = Set<int>.from(List.generate(activitiesList.length, (index) => index));
           isSelectionMode = true;
         }
       });
@@ -132,9 +202,7 @@ class _HistoryScreenState extends State<HistoryScreen>
   void _showDeleteBottomSheet() {
     showModalBottomSheet(
       context: context,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.vertical(top: Radius.circular(40)),
-      ),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.vertical(top: Radius.circular(40))),
       backgroundColor: CustomAppColor.of(context).bottomNavbar,
       builder: (context) {
         return SafeArea(
@@ -151,20 +219,12 @@ class _HistoryScreenState extends State<HistoryScreen>
                     Container(
                       height: 4.setHeight,
                       width: 50.setWidth,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        color: Color(0xFFBDBDBD),
-                      ),
+                      decoration: BoxDecoration(borderRadius: BorderRadius.circular(10), color: Color(0xFFBDBDBD)),
                     ),
                   ],
                 ),
                 SizedBox(height: 16.setHeight),
-                CommonText(
-                  text: Languages.of(context).txtDeleteHistory.toUpperCase(),
-                  fontWeight: FontWeight.w600,
-                  fontSize: 20.setFontSize,
-                  textAlign: TextAlign.start,
-                ),
+                CommonText(text: Languages.of(context).txtDeleteHistory.toUpperCase(), fontWeight: FontWeight.w600, fontSize: 20.setFontSize, textAlign: TextAlign.start),
                 SizedBox(height: 5.setHeight),
 
                 Divider(),
@@ -176,27 +236,13 @@ class _HistoryScreenState extends State<HistoryScreen>
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
                     color: CustomAppColor.of(context).bgScaffold,
-                    boxShadow: [
-                      BoxShadow(
-                        color: CustomAppColor.of(
-                          context,
-                        ).black.withValues(alpha: 0.05),
-                        offset: Offset(0, 0),
-                        blurRadius: 2,
-                        spreadRadius: 4,
-                      ),
-                    ],
+                    boxShadow: [BoxShadow(color: CustomAppColor.of(context).black.withValues(alpha: 0.05), offset: Offset(0, 0), blurRadius: 2, spreadRadius: 4)],
                   ),
                   child: Icon(Icons.delete, color: Colors.red, size: 40),
                 ),
                 SizedBox(height: 30.setHeight),
                 Center(
-                  child: CommonText(
-                    text: Languages.of(context).txtDeleteHistoryDesc,
-                    fontSize: 16.setFontSize,
-                    fontWeight: FontWeight.w500,
-                    textColor: CustomAppColor.of(context).txtDarkGrey,
-                  ),
+                  child: CommonText(text: Languages.of(context).txtDeleteHistoryDesc, fontSize: 16.setFontSize, fontWeight: FontWeight.w500, textColor: CustomAppColor.of(context).txtDarkGrey),
                 ),
                 SizedBox(height: 40.setHeight),
                 Row(
@@ -216,12 +262,7 @@ class _HistoryScreenState extends State<HistoryScreen>
                         height: 40.setHeight,
                         onTap: () {
                           setState(() {
-                            activitiesList = activitiesList
-                                .asMap()
-                                .entries
-                                .where((e) => !selectedIndices.contains(e.key))
-                                .map((e) => e.value)
-                                .toList();
+                            activitiesList = activitiesList.asMap().entries.where((e) => !selectedIndices.contains(e.key)).map((e) => e.value).toList();
                             selectedIndices.clear();
                             isSelectionMode = false;
                           });
@@ -249,13 +290,7 @@ class RecentActivitiesView extends StatefulWidget {
   final bool isSelectionMode;
   final void Function(Set<int>, bool) onSelectionChange;
 
-  const RecentActivitiesView({
-    super.key,
-    required this.activitiesList,
-    required this.selectedIndices,
-    required this.isSelectionMode,
-    required this.onSelectionChange,
-  });
+  const RecentActivitiesView({super.key, required this.activitiesList, required this.selectedIndices, required this.isSelectionMode, required this.onSelectionChange});
 
   @override
   State<RecentActivitiesView> createState() => _RecentActivitiesViewState();
@@ -269,24 +304,11 @@ class _RecentActivitiesViewState extends State<RecentActivitiesView> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Image.asset(
-              AppAssets.imgEmptyHistory,
-              width: 180.setWidth,
-              height: 180.setHeight,
-            ),
+            Image.asset(AppAssets.imgEmptyHistory, width: 180.setWidth, height: 180.setHeight),
             SizedBox(height: 10.setHeight),
-            CommonText(
-              text: Languages.of(context).txtEmpty,
-              fontWeight: FontWeight.w600,
-              fontSize: 20.setFontSize,
-            ),
+            CommonText(text: Languages.of(context).txtEmpty, fontWeight: FontWeight.w600, fontSize: 20.setFontSize),
             SizedBox(height: 5.setHeight),
-            CommonText(
-              text: Languages.of(context).txtEmptyDesc,
-              fontWeight: FontWeight.w500,
-              fontSize: 14.setFontSize,
-              textColor: CustomAppColor.of(context).txtGrey,
-            ),
+            CommonText(text: Languages.of(context).txtEmptyDesc, fontWeight: FontWeight.w500, fontSize: 14.setFontSize, textColor: CustomAppColor.of(context).txtGrey),
           ],
         ),
       );
@@ -324,15 +346,9 @@ class _RecentActivitiesViewState extends State<RecentActivitiesView> {
                 Padding(
                   padding: EdgeInsets.symmetric(vertical: 8.setHeight),
                   child: Container(
-                    padding: EdgeInsets.symmetric(
-                      horizontal: 14.setWidth,
-                      vertical: 14.setHeight,
-                    ),
+                    padding: EdgeInsets.symmetric(horizontal: 14.setWidth, vertical: 14.setHeight),
                     decoration: BoxDecoration(
-                      border: Border.all(
-                        color: CustomAppColor.of(context).border,
-                        width: 0.7,
-                      ),
+                      border: Border.all(color: CustomAppColor.of(context).border, width: 0.7),
                       color: CustomAppColor.of(context).containerBgColor,
                       borderRadius: BorderRadius.circular(15),
                     ),
@@ -341,11 +357,7 @@ class _RecentActivitiesViewState extends State<RecentActivitiesView> {
                       children: [
                         ClipRRect(
                           borderRadius: BorderRadius.circular(15),
-                          child: Image.asset(
-                            AppAssets.icMap,
-                            height: 79.setHeight,
-                            width: 79.setWidth,
-                          ),
+                          child: Image.asset(AppAssets.icMap, height: 79.setHeight, width: 79.setWidth),
                         ),
                         SizedBox(width: 17.setWidth),
                         Expanded(
@@ -356,70 +368,25 @@ class _RecentActivitiesViewState extends State<RecentActivitiesView> {
                                 text: TextSpan(
                                   children: [
                                     TextSpan(
-                                      text: activity.distance.toStringAsFixed(
-                                        2,
-                                      ),
-                                      style: TextStyle(
-                                        fontSize: 24.setFontSize,
-                                        fontWeight: FontWeight.w600,
-                                        color: CustomAppColor.of(
-                                          context,
-                                        ).txtBlack,
-                                      ),
+                                      text: activity.distance.toStringAsFixed(2),
+                                      style: TextStyle(fontSize: 24.setFontSize, fontWeight: FontWeight.w600, color: CustomAppColor.of(context).txtBlack),
                                     ),
                                     TextSpan(
-                                      text:
-                                          " ${Languages.of(context).txtKm.toLowerCase()}",
-                                      style: TextStyle(
-                                        fontSize: 14.setFontSize,
-                                        fontWeight: FontWeight.w600,
-                                        color: CustomAppColor.of(
-                                          context,
-                                        ).txtBlack,
-                                      ),
+                                      text: " ${Languages.of(context).txtKm.toLowerCase()}",
+                                      style: TextStyle(fontSize: 14.setFontSize, fontWeight: FontWeight.w600, color: CustomAppColor.of(context).txtBlack),
                                     ),
                                   ],
                                 ),
                               ),
                               SizedBox(height: 4.setHeight),
-                              CommonText(
-                                text: activity.date,
-                                fontWeight: FontWeight.w500,
-                                fontSize: 15.setFontSize,
-                                textColor: CustomAppColor.of(
-                                  context,
-                                ).txtDarkGrey,
-                              ),
+                              CommonText(text: activity.date, fontWeight: FontWeight.w500, fontSize: 15.setFontSize, textColor: CustomAppColor.of(context).txtDarkGrey),
                               SizedBox(height: 10.setHeight),
                               Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
-                                  CommonText(
-                                    text: activity.duration,
-                                    fontWeight: FontWeight.w400,
-                                    fontSize: 11.setFontSize,
-                                    textColor: CustomAppColor.of(
-                                      context,
-                                    ).txtDarkGrey,
-                                  ),
-                                  CommonText(
-                                    text: activity.pace,
-                                    fontWeight: FontWeight.w400,
-                                    fontSize: 11.setFontSize,
-                                    textColor: CustomAppColor.of(
-                                      context,
-                                    ).txtDarkGrey,
-                                  ),
-                                  CommonText(
-                                    text:
-                                        "${activity.calories.toStringAsFixed(0)} Kcal",
-                                    fontWeight: FontWeight.w400,
-                                    fontSize: 11.setFontSize,
-                                    textColor: CustomAppColor.of(
-                                      context,
-                                    ).txtDarkGrey,
-                                  ),
+                                  CommonText(text: activity.duration, fontWeight: FontWeight.w400, fontSize: 11.setFontSize, textColor: CustomAppColor.of(context).txtDarkGrey),
+                                  CommonText(text: activity.pace, fontWeight: FontWeight.w400, fontSize: 11.setFontSize, textColor: CustomAppColor.of(context).txtDarkGrey),
+                                  CommonText(text: "${activity.calories.toStringAsFixed(0)} Kcal", fontWeight: FontWeight.w400, fontSize: 11.setFontSize, textColor: CustomAppColor.of(context).txtDarkGrey),
                                 ],
                               ),
                             ],
@@ -433,13 +400,7 @@ class _RecentActivitiesViewState extends State<RecentActivitiesView> {
                   Positioned(
                     top: 20.setHeight,
                     right: 10.setWidth,
-                    child: Icon(
-                      isSelected
-                          ? Icons.check_circle
-                          : Icons.radio_button_unchecked,
-                      color: Color(0xFFC1E241),
-                      size: 26,
-                    ),
+                    child: Icon(isSelected ? Icons.check_circle : Icons.radio_button_unchecked, color: Color(0xFFC1E241), size: 26),
                   ),
               ],
             ),

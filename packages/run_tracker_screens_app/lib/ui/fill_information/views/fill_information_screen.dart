@@ -11,13 +11,15 @@ import '../datamodel/fill_information_data.dart';
 
 class FillInformationScreen extends StatefulWidget {
   final int currentIndex;
-  static Route<void> route({required int currentIndex}) {
+  final bool isMaleSelected;
+  final bool isFemaleSelected;
+  static Route<void> route({required int currentIndex, bool isFemaleSelected = false, bool isMaleSelected = false}) {
     return MaterialPageRoute(
-      builder: (_) => FillInformationScreen(currentIndex: currentIndex),
+      builder: (_) => FillInformationScreen(currentIndex: currentIndex, isFemaleSelected: isFemaleSelected, isMaleSelected: isMaleSelected),
     );
   }
 
-  const FillInformationScreen({super.key, required this.currentIndex});
+  const FillInformationScreen({super.key, required this.currentIndex, this.isFemaleSelected = false, this.isMaleSelected = false});
 
   @override
   State<FillInformationScreen> createState() => _FillInformationScreenState();
@@ -40,6 +42,7 @@ class _FillInformationScreenState extends State<FillInformationScreen> {
     super.initState();
     _pageController = PageController(initialPage: widget.currentIndex);
     currentPage = widget.currentIndex;
+    selectedGender = widget.isFemaleSelected ? "Female" :widget.isMaleSelected ?"Male" :"";
   }
 
   @override
@@ -67,49 +70,28 @@ class _FillInformationScreenState extends State<FillInformationScreen> {
             IgnorePointer(
               ignoring: true,
               child: Padding(
-                padding: EdgeInsets.symmetric(
-                  horizontal: 64.setWidth,
-                  vertical: 38.setHeight,
-                ),
+                padding: EdgeInsets.symmetric(horizontal: 64.setWidth, vertical: 38.setHeight),
                 child: GestureDetector(
                   onTap: () {
                     if (currentPage == 0) {
-                      _pageController.nextPage(
-                        duration: const Duration(milliseconds: 300),
-                        curve: Curves.easeInOut,
-                      );
+                      _pageController.nextPage(duration: const Duration(milliseconds: 300), curve: Curves.easeInOut);
                     } else {
                       Navigator.push(context, GoalLoadingScreen.route());
                     }
                   },
 
                   child: Container(
-                    padding: EdgeInsets.symmetric(
-                      horizontal: 18.setWidth,
-                      vertical: 16.setHeight,
-                    ),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(40),
-                      color: CustomAppColor.of(context).primary,
-                    ),
+                    padding: EdgeInsets.symmetric(horizontal: 18.setWidth, vertical: 16.setHeight),
+                    decoration: BoxDecoration(borderRadius: BorderRadius.circular(40), color: CustomAppColor.of(context).primary),
                     child: Stack(
                       alignment: Alignment.center,
                       children: [
                         Center(
-                          child: CommonText(
-                            text: Languages.of(context).txtNext.toUpperCase(),
-                            fontSize: 18.setFontSize,
-                            fontWeight: FontWeight.w900,
-                            textColor: CustomAppColor.of(context).txtWhite,
-                          ),
+                          child: CommonText(text: Languages.of(context).txtNext.toUpperCase(), fontSize: 18.setFontSize, fontWeight: FontWeight.w900, textColor: CustomAppColor.of(context).txtWhite),
                         ),
                         Positioned(
                           right: 0.setWidth,
-                          child: Icon(
-                            Icons.navigate_next_rounded,
-                            size: 30,
-                            color: CustomAppColor.of(context).icWhite,
-                          ),
+                          child: Icon(Icons.navigate_next_rounded, size: 30, color: CustomAppColor.of(context).icWhite),
                         ),
                       ],
                     ),
@@ -134,31 +116,19 @@ class _FillInformationScreenState extends State<FillInformationScreen> {
             height: 20.setHeight,
             decoration: BoxDecoration(
               color: CustomAppColor.of(context).primary,
-              border: Border.all(
-                color: CustomAppColor.of(context).primary,
-                width: 2,
-              ),
+              border: Border.all(color: CustomAppColor.of(context).primary, width: 2),
               shape: BoxShape.circle,
             ),
           ),
           // Connecting line
-          Container(
-            width: 29.setWidth,
-            height: 2.setHeight,
-            color: CustomAppColor.of(context).primary,
-          ),
+          Container(width: 29.setWidth, height: 2.setHeight, color: CustomAppColor.of(context).primary),
           // Hollow circle
           Container(
             width: 20.setWidth,
             height: 20.setHeight,
             decoration: BoxDecoration(
-              color: currentPage == 1
-                  ? CustomAppColor.of(context).primary
-                  : Colors.transparent,
-              border: Border.all(
-                color: CustomAppColor.of(context).primary,
-                width: 2,
-              ),
+              color: currentPage == 1 ? CustomAppColor.of(context).primary : Colors.transparent,
+              border: Border.all(color: CustomAppColor.of(context).primary, width: 2),
               shape: BoxShape.circle,
             ),
           ),
@@ -170,28 +140,11 @@ class _FillInformationScreenState extends State<FillInformationScreen> {
   Widget _buildGenderSelection() {
     return Column(
       children: [
-        CommonText(
-          text: Languages.of(context).txtWhatIsYourGender.toUpperCase(),
-          fontSize: 24.setFontSize,
-          fontWeight: FontWeight.w700,
-          textColor: CustomAppColor.of(context).txtPrimary,
-        ),
+        CommonText(text: Languages.of(context).txtWhatIsYourGender.toUpperCase(), fontSize: 24.setFontSize, fontWeight: FontWeight.w700, textColor: CustomAppColor.of(context).txtPrimary),
         SizedBox(height: 4.setHeight),
-        CommonText(
-          text: Languages.of(
-            context,
-          ).txtCaloriesAndStrideLengthCalculationNeedIt,
-          fontSize: 16.setFontSize,
-          textColor: CustomAppColor.of(context).txtGreyWhite,
-        ),
+        CommonText(text: Languages.of(context).txtCaloriesAndStrideLengthCalculationNeedIt, fontSize: 16.setFontSize, textColor: CustomAppColor.of(context).txtGreyWhite),
         SizedBox(height: 75.setHeight),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            _genderOption(Languages.of(context).txtMale, AppAssets.imgMale),
-            _genderOption(Languages.of(context).txtFemale, AppAssets.imgFemale),
-          ],
-        ),
+        Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [_genderOption(Languages.of(context).txtMale, AppAssets.imgMale), _genderOption(Languages.of(context).txtFemale, AppAssets.imgFemale)]),
       ],
     );
   }
@@ -208,18 +161,10 @@ class _FillInformationScreenState extends State<FillInformationScreen> {
             text: gender[0].toUpperCase() + gender.substring(1),
             fontSize: 18.setFontSize,
             fontWeight: FontWeight.w600,
-            textColor: isSelected
-                ? CustomAppColor.of(context).txtPrimary
-                : CustomAppColor.of(context).txtLightGrey,
+            textColor: isSelected ? CustomAppColor.of(context).txtPrimary : CustomAppColor.of(context).txtLightGrey,
           ),
           SizedBox(height: 10.setHeight),
-          Icon(
-            Icons.check_circle_rounded,
-            size: 25,
-            color: isSelected
-                ? CustomAppColor.of(context).txtPrimary
-                : CustomAppColor.of(context).txtLightGrey,
-          ),
+          Icon(Icons.check_circle_rounded, size: 25, color: isSelected ? CustomAppColor.of(context).txtPrimary : CustomAppColor.of(context).txtLightGrey),
         ],
       ),
     );
@@ -228,25 +173,14 @@ class _FillInformationScreenState extends State<FillInformationScreen> {
   Widget _buildGoalSelection() {
     final List<int> distances = List.generate(96, (index) {
       int kmValue = index + 5;
-      return weightUnitType == UnitType.km
-          ? kmValue
-          : (kmValue * 0.621371).round();
+      return weightUnitType == UnitType.km ? kmValue : (kmValue * 0.621371).round();
     });
 
     return Column(
       children: [
-        CommonText(
-          text: Languages.of(context).txtWhatIsYourDailyGoal.toUpperCase(),
-          fontSize: 24.setFontSize,
-          fontWeight: FontWeight.w700,
-          textColor: CustomAppColor.of(context).txtPrimary,
-        ),
+        CommonText(text: Languages.of(context).txtWhatIsYourDailyGoal.toUpperCase(), fontSize: 24.setFontSize, fontWeight: FontWeight.w700, textColor: CustomAppColor.of(context).txtPrimary),
         SizedBox(height: 4.setHeight),
-        CommonText(
-          text: Languages.of(context).txtToPersonalizeYourDailyGoal,
-          fontSize: 16.setFontSize,
-          textColor: Colors.grey,
-        ),
+        CommonText(text: Languages.of(context).txtToPersonalizeYourDailyGoal, fontSize: 16.setFontSize, textColor: Colors.grey),
         SizedBox(height: 80.setHeight),
         buildUnitToggle(
           context: context,
@@ -262,11 +196,7 @@ class _FillInformationScreenState extends State<FillInformationScreen> {
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Image.asset(
-              AppAssets.icPrimaryNavigator,
-              height: 24.setHeight,
-              width: 24.setWidth,
-            ),
+            Image.asset(AppAssets.icPrimaryNavigator, height: 24.setHeight, width: 24.setWidth),
             SizedBox(width: 15.setWidth),
             Stack(
               alignment: Alignment.center,
@@ -281,9 +211,7 @@ class _FillInformationScreenState extends State<FillInformationScreen> {
                     selectionOverlay: Container(),
                     itemExtent: 100.0,
                     diameterRatio: 15,
-                    scrollController: FixedExtentScrollController(
-                      initialItem: distances.indexOf(selectedDistance),
-                    ),
+                    scrollController: FixedExtentScrollController(initialItem: distances.indexOf(selectedDistance)),
                     onSelectedItemChanged: (index) {
                       setState(() {
                         selectedDistance = distances[index];
@@ -292,12 +220,7 @@ class _FillInformationScreenState extends State<FillInformationScreen> {
                     children: distances
                         .map(
                           (w) => Center(
-                            child: CommonText(
-                              text: "$w",
-                              fontSize: 40.setFontSize,
-                              fontWeight: FontWeight.w700,
-                              textColor: CustomAppColor.of(context).txtPrimary,
-                            ),
+                            child: CommonText(text: "$w", fontSize: 40.setFontSize, fontWeight: FontWeight.w700, textColor: CustomAppColor.of(context).txtPrimary),
                           ),
                         )
                         .toList(),
@@ -317,81 +240,40 @@ class _FillInformationScreenState extends State<FillInformationScreen> {
       child: Column(
         children: [
           Spacer(),
-          Container(
-            width: 83.setWidth,
-            height: 1.setHeight,
-            color: CustomAppColor.of(context).divider,
-          ),
+          Container(width: 83.setWidth, height: 1.setHeight, color: CustomAppColor.of(context).divider),
           Spacer(flex: 1),
-          Container(
-            width: 83.setWidth,
-            height: 1.setHeight,
-            color: CustomAppColor.of(context).divider,
-          ),
+          Container(width: 83.setWidth, height: 1.setHeight, color: CustomAppColor.of(context).divider),
           Spacer(),
         ],
       ),
     );
   }
 
-  Widget buildUnitToggle({
-    required BuildContext context,
-    required UnitType selectedUnit,
-    required ValueChanged<UnitType> onChanged,
-  }) {
+  Widget buildUnitToggle({required BuildContext context, required UnitType selectedUnit, required ValueChanged<UnitType> onChanged}) {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 24.setWidth),
       child: Container(
-        decoration: BoxDecoration(
-          color: CustomAppColor.of(context).toggleBg,
-          borderRadius: BorderRadius.circular(40),
-        ),
+        decoration: BoxDecoration(color: CustomAppColor.of(context).toggleBg, borderRadius: BorderRadius.circular(40)),
         child: Row(
           children: [
-            _buildToggleItem(
-              context: context,
-              label: 'KM',
-              isSelected: selectedUnit == UnitType.km,
-              onTap: () => onChanged(UnitType.km),
-            ),
-            _buildToggleItem(
-              context: context,
-              label: 'MILE',
-              isSelected: selectedUnit == UnitType.mi,
-              onTap: () => onChanged(UnitType.mi),
-            ),
+            _buildToggleItem(context: context, label: 'KM', isSelected: selectedUnit == UnitType.km, onTap: () => onChanged(UnitType.km)),
+            _buildToggleItem(context: context, label: 'MILE', isSelected: selectedUnit == UnitType.mi, onTap: () => onChanged(UnitType.mi)),
           ],
         ),
       ),
     );
   }
 
-  Widget _buildToggleItem({
-    required BuildContext context,
-    required String label,
-    required bool isSelected,
-    required VoidCallback onTap,
-  }) {
+  Widget _buildToggleItem({required BuildContext context, required String label, required bool isSelected, required VoidCallback onTap}) {
     return Expanded(
       child: GestureDetector(
         onTap: onTap,
         child: AnimatedContainer(
           duration: const Duration(milliseconds: 200),
           height: 50.setHeight,
-          decoration: BoxDecoration(
-            color: isSelected
-                ? CustomAppColor.of(context).lime
-                : Colors.transparent,
-            borderRadius: BorderRadius.circular(40),
-          ),
+          decoration: BoxDecoration(color: isSelected ? CustomAppColor.of(context).lime : Colors.transparent, borderRadius: BorderRadius.circular(40)),
           alignment: Alignment.center,
-          child: CommonText(
-            text: label,
-            fontWeight: FontWeight.bold,
-            textColor: isSelected
-                ? Colors.black
-                : CustomAppColor.of(context).txtLightGrey,
-          ),
+          child: CommonText(text: label, fontWeight: FontWeight.bold, textColor: isSelected ? Colors.black : CustomAppColor.of(context).txtLightGrey),
         ),
       ),
     );

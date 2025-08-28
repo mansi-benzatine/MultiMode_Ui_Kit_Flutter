@@ -11,18 +11,134 @@ import '../../../utils/app_assets.dart';
 import '../../../widgets/text/common_text.dart';
 
 class ReminderScreen extends StatefulWidget {
-  static Route<void> route() {
-    return MaterialPageRoute(builder: (_) => ReminderScreen());
+  final bool isForRepeatReminderBs;
+
+  static Route<void> route({bool isForRepeatReminderBs = false}) {
+    return MaterialPageRoute(builder: (_) => ReminderScreen(isForRepeatReminderBs: isForRepeatReminderBs));
   }
 
-  const ReminderScreen({super.key});
+  const ReminderScreen({super.key, this.isForRepeatReminderBs = false});
 
   @override
   State<ReminderScreen> createState() => _ReminderScreenState();
 }
 
-class _ReminderScreenState extends State<ReminderScreen>
-    implements TopBarClickListener {
+class _ReminderScreenState extends State<ReminderScreen> implements TopBarClickListener {
+  TimeOfDay startTime = const TimeOfDay(hour: 10, minute: 0);
+  bool _isBottomSheetOpen = false;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    if (widget.isForRepeatReminderBs) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        showColoeBS();
+      });
+    }
+  }
+
+  void showColoeBS() {
+    final List<String> days = [
+      Languages.of(context).txtSunday,
+      Languages.of(context).txtMonday,
+      Languages.of(context).txtTuesday,
+      Languages.of(context).txtWednesday,
+      Languages.of(context).txtThursday,
+      Languages.of(context).txtFriday,
+      Languages.of(context).txtSaturday,
+    ];
+
+    final List<bool> selected = [true, true, true, true, true, false, false];
+
+    setState(() {
+      _isBottomSheetOpen = true;
+    });
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      isDismissible: false,
+      enableDrag: false,
+      backgroundColor: CustomAppColor.of(context).bottomNavbar,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.vertical(top: Radius.circular(30))),
+      builder: (context) {
+        return StatefulBuilder(
+          builder: (context, setModalState) {
+            return SafeArea(
+              child: Padding(
+                padding: const EdgeInsets.all(20),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Center(
+                      child: Container(
+                        height: 4,
+                        width: 50,
+                        decoration: BoxDecoration(color: Colors.grey[400], borderRadius: BorderRadius.circular(10)),
+                      ),
+                    ),
+                    SizedBox(height: 16.setHeight),
+                    CommonText(text: Languages.of(context).txtRepeat.toUpperCase(), fontWeight: FontWeight.w600, fontSize: 20.setFontSize),
+                    SizedBox(height: 5.setHeight),
+
+                    Divider(),
+
+                    ...List.generate(days.length, (index) {
+                      return Row(
+                        children: [
+                          Checkbox(
+                            value: selected[index],
+                            onChanged: (value) {
+                              setModalState(() => selected[index] = value ?? false);
+                            },
+                            activeColor: CustomAppColor.of(context).primary,
+                            materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                            side: BorderSide(color: CustomAppColor.of(context).grey),
+                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(6)),
+                          ),
+                          SizedBox(width: 8),
+                          CommonText(text: days[index], textColor: selected[index] ? CustomAppColor.of(context).primary : CustomAppColor.of(context).txtDarkGrey, fontWeight: FontWeight.w500, fontSize: 16.setFontSize),
+                        ],
+                      );
+                    }),
+                    const SizedBox(height: 20),
+                    // Buttons
+                    Row(
+                      children: [
+                        Expanded(
+                          child: CommonButton(
+                            height: 40.setHeight,
+                            buttonColor: CustomAppColor.of(context).transparent,
+                            borderColor: CustomAppColor.of(context).primary,
+                            text: Languages.of(context).txtCancel,
+                            buttonTextSize: 14.setFontSize,
+                            buttonTextColor: CustomAppColor.of(context).primary,
+                          ),
+                        ),
+                        SizedBox(width: 10),
+                        Expanded(
+                          child: CommonButton(buttonColor: CustomAppColor.of(context).primary, height: 40.setHeight, text: Languages.of(context).txtSave, buttonTextSize: 14.setFontSize),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            );
+          },
+        );
+      },
+    ).whenComplete(() {
+      if (_isBottomSheetOpen) {
+        setState(() {
+          _isBottomSheetOpen = false;
+        });
+        Navigator.pop(context);
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -34,20 +150,90 @@ class _ReminderScreenState extends State<ReminderScreen>
             Expanded(
               child: Column(
                 children: [
-                  TopBar(
-                    this,
-                    isShowBack: true,
-                    isShowSimpleTitle: true,
-                    simpleTitle: Languages.of(
-                      context,
-                    ).txtReminder.toUpperCase(),
-                  ),
+                  TopBar(this, isShowBack: true, isShowSimpleTitle: true, simpleTitle: Languages.of(context).txtReminder.toUpperCase()),
                   Padding(
-                    padding: EdgeInsets.symmetric(
-                      horizontal: 22.setWidth,
-                      vertical: 15.setHeight,
+                    padding: EdgeInsets.symmetric(horizontal: 22.setWidth, vertical: 15.setHeight),
+                    child: Container(
+                      padding: EdgeInsets.symmetric(horizontal: 16.setWidth, vertical: 14.setHeight),
+                      decoration: BoxDecoration(
+                        color: CustomAppColor.of(context).containerBgColor,
+                        border: Border.all(color: CustomAppColor.of(context).border),
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                      child: Column(
+                        children: [
+                          Row(
+                            children: [
+                              Row(
+                                children: [
+                                  Image.asset(AppAssets.icAlarm, height: 24.setHeight, width: 24.setWidth),
+                                  SizedBox(width: 16.setWidth),
+                                  GestureDetector(
+                                    onTap: () async {
+                                      TimeOfDay? time = await showTimePicker(context: context, initialTime: startTime);
+                                      if (time != null) {
+                                        setState(() => startTime = time);
+                                      }
+                                    },
+                                    child: Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        CommonText(text: Languages.of(context).txtReminder, fontSize: 18.setFontSize, fontWeight: FontWeight.w400),
+                                        Row(
+                                          children: [
+                                            CommonText(text: startTime.format(context), fontSize: 16.setFontSize, fontWeight: FontWeight.w400),
+                                            SizedBox(width: 10.setWidth),
+                                            Icon(Icons.arrow_drop_down),
+                                          ],
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                          Padding(
+                            padding: EdgeInsets.symmetric(vertical: 10.setHeight),
+                            child: Divider(color: CustomAppColor.of(context).txtBlack.withValues(alpha: 0.1)),
+                          ),
+                          Row(
+                            children: [
+                              Expanded(
+                                child: Row(
+                                  children: [
+                                    Image.asset(AppAssets.icRepeat, height: 24.setHeight, width: 24.setWidth),
+                                    SizedBox(width: 16.setWidth),
+                                    Expanded(
+                                      child: Column(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: [
+                                          CommonText(text: Languages.of(context).txtRepeat, fontSize: 18.setFontSize, fontWeight: FontWeight.w400),
+                                          IgnorePointer(
+                                            ignoring: true,
+                                            child: GestureDetector(
+                                              onTap: () => showRepeatDaysBottomSheet(),
+                                              child: Row(
+                                                children: [
+                                                  Expanded(
+                                                    child: CommonText(text: "Sun, Mon, Tue, Wed, Thu, Fri, Sat", fontSize: 13.setFontSize, overflow: TextOverflow.ellipsis, fontWeight: FontWeight.w400, textAlign: TextAlign.start),
+                                                  ),
+                                                  Icon(Icons.arrow_drop_down),
+                                                ],
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
                     ),
-                    child: ReminderView(),
                   ),
                 ],
               ),
@@ -55,157 +241,15 @@ class _ReminderScreenState extends State<ReminderScreen>
             IgnorePointer(
               ignoring: true,
               child: Padding(
-                padding: EdgeInsets.symmetric(
-                  horizontal: 42.setWidth,
-                  vertical: 20.setHeight,
-                ),
+                padding: EdgeInsets.symmetric(horizontal: 42.setWidth, vertical: 20.setHeight),
                 child: Align(
                   alignment: Alignment.bottomCenter,
-                  child: CommonButton(
-                    onTap: () => Navigator.pop(context),
-                    text: Languages.of(context).txtSave,
-                    radius: 30,
-                    buttonTextColor: CustomAppColor.of(context).txtWhite,
-                    buttonColor: CustomAppColor.of(context).primary,
-                  ),
+                  child: CommonButton(onTap: () => Navigator.pop(context), text: Languages.of(context).txtSave, radius: 30, buttonTextColor: CustomAppColor.of(context).txtWhite, buttonColor: CustomAppColor.of(context).primary),
                 ),
               ),
             ),
           ],
         ),
-      ),
-    );
-  }
-
-  @override
-  void onTopBarClick(String name, {bool value = true}) {
-    if (name == Constant.strBack) {
-      Navigator.pop(context);
-    }
-  }
-}
-
-class ReminderView extends StatefulWidget {
-  const ReminderView({super.key});
-
-  @override
-  State<ReminderView> createState() => _ReminderViewState();
-}
-
-class _ReminderViewState extends State<ReminderView> {
-  TimeOfDay startTime = const TimeOfDay(hour: 10, minute: 0);
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.symmetric(
-        horizontal: 16.setWidth,
-        vertical: 14.setHeight,
-      ),
-      decoration: BoxDecoration(
-        color: CustomAppColor.of(context).containerBgColor,
-        border: Border.all(color: CustomAppColor.of(context).border),
-        borderRadius: BorderRadius.circular(20),
-      ),
-      child: Column(
-        children: [
-          Row(
-            children: [
-              Row(
-                children: [
-                  Image.asset(
-                    AppAssets.icAlarm,
-                    height: 24.setHeight,
-                    width: 24.setWidth,
-                  ),
-                  SizedBox(width: 16.setWidth),
-                  GestureDetector(
-                    onTap: () async {
-                      TimeOfDay? time = await showTimePicker(
-                        context: context,
-                        initialTime: startTime,
-                      );
-                      if (time != null) {
-                        setState(() => startTime = time);
-                      }
-                    },
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        CommonText(
-                          text: Languages.of(context).txtReminder,
-                          fontSize: 18.setFontSize,
-                          fontWeight: FontWeight.w400,
-                        ),
-                        Row(
-                          children: [
-                            CommonText(
-                              text: startTime.format(context),
-                              fontSize: 16.setFontSize,
-                              fontWeight: FontWeight.w400,
-                            ),
-                            SizedBox(width: 10.setWidth),
-                            Icon(Icons.arrow_drop_down),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-            ],
-          ),
-          Padding(
-            padding: EdgeInsets.symmetric(vertical: 10.setHeight),
-            child: Divider(
-              color: CustomAppColor.of(context).txtBlack.withValues(alpha: 0.1),
-            ),
-          ),
-          Row(
-            children: [
-              Expanded(
-                child: Row(
-                  children: [
-                    Image.asset(
-                      AppAssets.icRepeat,
-                      height: 24.setHeight,
-                      width: 24.setWidth,
-                    ),
-                    SizedBox(width: 16.setWidth),
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          CommonText(
-                            text: Languages.of(context).txtRepeat,
-                            fontSize: 18.setFontSize,
-                            fontWeight: FontWeight.w400,
-                          ),
-                          GestureDetector(
-                            onTap: () => showRepeatDaysBottomSheet(),
-                            child: Row(
-                              children: [
-                                Expanded(
-                                  child: CommonText(
-                                    text: "Sun, Mon, Tue, Wed, Thu, Fri, Sat",
-                                    fontSize: 13.setFontSize,
-                                    overflow: TextOverflow.ellipsis,
-                                    fontWeight: FontWeight.w400,
-                                    textAlign: TextAlign.start,
-                                  ),
-                                ),
-                                Icon(Icons.arrow_drop_down),
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
-        ],
       ),
     );
   }
@@ -227,9 +271,7 @@ class _ReminderViewState extends State<ReminderView> {
       context: context,
       isScrollControlled: true,
       backgroundColor: CustomAppColor.of(context).bottomNavbar,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.vertical(top: Radius.circular(30)),
-      ),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.vertical(top: Radius.circular(30))),
       builder: (context) {
         return StatefulBuilder(
           builder: (context, setModalState) {
@@ -244,18 +286,11 @@ class _ReminderViewState extends State<ReminderView> {
                       child: Container(
                         height: 4,
                         width: 50,
-                        decoration: BoxDecoration(
-                          color: Colors.grey[400],
-                          borderRadius: BorderRadius.circular(10),
-                        ),
+                        decoration: BoxDecoration(color: Colors.grey[400], borderRadius: BorderRadius.circular(10)),
                       ),
                     ),
                     SizedBox(height: 16.setHeight),
-                    CommonText(
-                      text: Languages.of(context).txtRepeat.toUpperCase(),
-                      fontWeight: FontWeight.w600,
-                      fontSize: 20.setFontSize,
-                    ),
+                    CommonText(text: Languages.of(context).txtRepeat.toUpperCase(), fontWeight: FontWeight.w600, fontSize: 20.setFontSize),
                     SizedBox(height: 5.setHeight),
 
                     Divider(),
@@ -266,29 +301,15 @@ class _ReminderViewState extends State<ReminderView> {
                           Checkbox(
                             value: selected[index],
                             onChanged: (value) {
-                              setModalState(
-                                () => selected[index] = value ?? false,
-                              );
+                              setModalState(() => selected[index] = value ?? false);
                             },
                             activeColor: CustomAppColor.of(context).primary,
-                            materialTapTargetSize:
-                                MaterialTapTargetSize.shrinkWrap,
-                            side: BorderSide(
-                              color: CustomAppColor.of(context).grey,
-                            ),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(6),
-                            ),
+                            materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                            side: BorderSide(color: CustomAppColor.of(context).grey),
+                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(6)),
                           ),
                           SizedBox(width: 8),
-                          CommonText(
-                            text: days[index],
-                            textColor: selected[index]
-                                ? CustomAppColor.of(context).primary
-                                : CustomAppColor.of(context).txtDarkGrey,
-                            fontWeight: FontWeight.w500,
-                            fontSize: 16.setFontSize,
-                          ),
+                          CommonText(text: days[index], textColor: selected[index] ? CustomAppColor.of(context).primary : CustomAppColor.of(context).txtDarkGrey, fontWeight: FontWeight.w500, fontSize: 16.setFontSize),
                         ],
                       );
                     }),
@@ -328,5 +349,12 @@ class _ReminderViewState extends State<ReminderView> {
         );
       },
     );
+  }
+
+  @override
+  void onTopBarClick(String name, {bool value = true}) {
+    if (name == Constant.strBack) {
+      Navigator.pop(context);
+    }
   }
 }
