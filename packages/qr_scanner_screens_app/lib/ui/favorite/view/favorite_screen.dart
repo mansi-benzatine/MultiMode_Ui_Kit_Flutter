@@ -290,7 +290,7 @@ class _FavoriteScreenState extends State<FavoriteScreen> implements TopBarClickL
   void showDeleteDialog() {
     showDialog(
         context: context,
-        builder: (context) => FavoriteDeleteConfirmationDialog(
+        builder: (_) => FavoriteDeleteConfirmationDialog(
               parentContext: context,
             )).then((value) {
       if (value == true) {
