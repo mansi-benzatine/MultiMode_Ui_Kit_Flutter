@@ -8,11 +8,8 @@ import '../../widgets/button/common_button.dart';
 import '../../widgets/text/common_text.dart';
 
 class IntrestedInOfferBottomSheet extends StatefulWidget {
-  final BuildContext parentContext;
-
   const IntrestedInOfferBottomSheet({
     super.key,
-    required this.parentContext,
   });
 
   @override
@@ -22,31 +19,22 @@ class IntrestedInOfferBottomSheet extends StatefulWidget {
 class _IntrestedInOfferBottomSheetState extends State<IntrestedInOfferBottomSheet> {
   @override
   Widget build(BuildContext context) {
-    return PopScope(
-      canPop: false,
-      onPopInvokedWithResult: (didPop, result) {
-        if (!didPop) {
-          Navigator.pop(widget.parentContext);
-          Navigator.pop(context);
-        }
-      },
-      child: SafeArea(
-        child: Container(
-          constraints: BoxConstraints(
-            maxHeight: MediaQuery.of(context).size.height * 0.6,
+    return SafeArea(
+      child: Container(
+        constraints: BoxConstraints(
+          maxHeight: MediaQuery.of(context).size.height * 0.6,
+        ),
+        decoration: BoxDecoration(
+          color: CustomAppColor.of(context).bgBottomSheet,
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(20.setWidth),
+            topRight: Radius.circular(20.setWidth),
           ),
-          decoration: BoxDecoration(
-            color: CustomAppColor.of(context).bgBottomSheet,
-            borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(20.setWidth),
-              topRight: Radius.circular(20.setWidth),
-            ),
-          ),
-          child: Wrap(
-            children: [
-              _buildContent(),
-            ],
-          ),
+        ),
+        child: Wrap(
+          children: [
+            _buildContent(),
+          ],
         ),
       ),
     );

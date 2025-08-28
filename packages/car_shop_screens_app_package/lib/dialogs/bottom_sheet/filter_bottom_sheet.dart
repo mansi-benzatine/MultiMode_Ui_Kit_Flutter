@@ -11,12 +11,10 @@ import '../../widgets/text_field/text_form_field.dart';
 
 class FilterBottomSheet extends StatefulWidget {
   final int selectedIndex;
-  final BuildContext parentContext;
 
   const FilterBottomSheet({
     super.key,
     this.selectedIndex = 0,
-    required this.parentContext,
   });
 
   @override
@@ -84,140 +82,131 @@ class _FilterBottomSheetState extends State<FilterBottomSheet> {
 
   @override
   Widget build(BuildContext context) {
-    return PopScope(
-      canPop: false,
-      onPopInvokedWithResult: (didPop, result) {
-        if (!didPop) {
-          Navigator.pop(widget.parentContext);
-          Navigator.pop(context);
-        }
-      },
-      child: SafeArea(
-        child: Container(
-          constraints: BoxConstraints(
-            maxHeight: MediaQuery.of(context).size.height * 0.667,
-          ),
-          decoration: BoxDecoration(
-            color: CustomAppColor.of(context).bgBottomSheet,
-            borderRadius: const BorderRadius.vertical(top: Radius.circular(20)),
-          ),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              // Header
-              Container(
-                padding: EdgeInsets.symmetric(horizontal: 20.setWidth, vertical: 10.setHeight),
-                decoration: BoxDecoration(
-                  border: Border(
-                    bottom: BorderSide(
-                      color: CustomAppColor.of(context).containerBorder,
-                      width: 1,
-                    ),
+    return SafeArea(
+      child: Container(
+        constraints: BoxConstraints(
+          maxHeight: MediaQuery.of(context).size.height * 0.667,
+        ),
+        decoration: BoxDecoration(
+          color: CustomAppColor.of(context).bgBottomSheet,
+          borderRadius: const BorderRadius.vertical(top: Radius.circular(20)),
+        ),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            // Header
+            Container(
+              padding: EdgeInsets.symmetric(horizontal: 20.setWidth, vertical: 10.setHeight),
+              decoration: BoxDecoration(
+                border: Border(
+                  bottom: BorderSide(
+                    color: CustomAppColor.of(context).containerBorder,
+                    width: 1,
                   ),
                 ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    CommonText(
-                      text: Languages.of(context).txtFilter,
-                      fontSize: 16.setFontSize,
-                      fontWeight: FontWeight.w600,
-                      textColor: CustomAppColor.of(context).txtBlack,
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  CommonText(
+                    text: Languages.of(context).txtFilter,
+                    fontSize: 16.setFontSize,
+                    fontWeight: FontWeight.w600,
+                    textColor: CustomAppColor.of(context).txtBlack,
+                  ),
+                  IgnorePointer(
+                    ignoring: true,
+                    child: GestureDetector(
+                      onTap: () {
+                        Navigator.pop(context);
+                      },
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: CustomAppColor.of(context).bgSearchBar,
+                          borderRadius: BorderRadius.circular(8.setWidth),
+                        ),
+                        height: 30.setHeight,
+                        width: 30.setWidth,
+                        child: Center(
+                          child: Icon(
+                            Icons.close,
+                            size: 20.setWidth,
+                            color: CustomAppColor.of(context).txtBlack,
+                          ),
+                        ),
+                      ),
                     ),
-                    IgnorePointer(
-                      ignoring: true,
-                      child: GestureDetector(
+                  ),
+                ],
+              ),
+            ),
+
+            // Content
+            Expanded(
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  // Sidebar
+                  IgnorePointer(ignoring: true, child: _buildSidebar()),
+                  // Main Content
+                  Expanded(
+                    child: Container(
+                      padding: EdgeInsets.symmetric(horizontal: 20.setWidth),
+                      child: _buildMainContent(),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+
+            // Bottom Buttons
+            Container(
+              padding: EdgeInsets.only(left: 20.setWidth, right: 20.setWidth, bottom: 10.setHeight, top: 20.setHeight),
+              decoration: BoxDecoration(
+                border: Border(
+                  top: BorderSide(
+                    color: CustomAppColor.of(context).containerBorder,
+                    width: 1,
+                  ),
+                ),
+              ),
+              child: IgnorePointer(
+                ignoring: true,
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: CommonButton(
+                        text: Languages.of(context).txtClearAll,
+                        buttonTextColor: CustomAppColor.of(context).txtGray,
+                        height: 45.setHeight,
+                        buttonGradient: LinearGradient(
+                          colors: [
+                            CustomAppColor.of(context).transparent,
+                            CustomAppColor.of(context).transparent,
+                          ],
+                        ),
+                        buttonTextWeight: FontWeight.w500,
+                        borderColor: CustomAppColor.of(context).containerBorder,
                         onTap: () {
                           Navigator.pop(context);
                         },
-                        child: Container(
-                          decoration: BoxDecoration(
-                            color: CustomAppColor.of(context).bgSearchBar,
-                            borderRadius: BorderRadius.circular(8.setWidth),
-                          ),
-                          height: 30.setHeight,
-                          width: 30.setWidth,
-                          child: Center(
-                            child: Icon(
-                              Icons.close,
-                              size: 20.setWidth,
-                              color: CustomAppColor.of(context).txtBlack,
-                            ),
-                          ),
-                        ),
                       ),
                     ),
-                  ],
-                ),
-              ),
-
-              // Content
-              Expanded(
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    // Sidebar
-                    IgnorePointer(ignoring: true, child: _buildSidebar()),
-                    // Main Content
+                    SizedBox(width: 16.setWidth),
                     Expanded(
-                      child: Container(
-                        padding: EdgeInsets.symmetric(horizontal: 20.setWidth),
-                        child: _buildMainContent(),
+                      child: CommonButton(
+                        text: Languages.of(context).txtApply,
+                        height: 45.setHeight,
+                        onTap: () {
+                          Navigator.pop(context);
+                        },
                       ),
                     ),
                   ],
                 ),
               ),
-
-              // Bottom Buttons
-              Container(
-                padding: EdgeInsets.only(left: 20.setWidth, right: 20.setWidth, bottom: 10.setHeight, top: 20.setHeight),
-                decoration: BoxDecoration(
-                  border: Border(
-                    top: BorderSide(
-                      color: CustomAppColor.of(context).containerBorder,
-                      width: 1,
-                    ),
-                  ),
-                ),
-                child: IgnorePointer(
-                  ignoring: true,
-                  child: Row(
-                    children: [
-                      Expanded(
-                        child: CommonButton(
-                          text: Languages.of(context).txtClearAll,
-                          buttonTextColor: CustomAppColor.of(context).txtGray,
-                          height: 45.setHeight,
-                          buttonGradient: LinearGradient(
-                            colors: [
-                              CustomAppColor.of(context).transparent,
-                              CustomAppColor.of(context).transparent,
-                            ],
-                          ),
-                          buttonTextWeight: FontWeight.w500,
-                          borderColor: CustomAppColor.of(context).containerBorder,
-                          onTap: () {
-                            Navigator.pop(context);
-                          },
-                        ),
-                      ),
-                      SizedBox(width: 16.setWidth),
-                      Expanded(
-                        child: CommonButton(
-                          text: Languages.of(context).txtApply,
-                          height: 45.setHeight,
-                          onTap: () {
-                            Navigator.pop(context);
-                          },
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

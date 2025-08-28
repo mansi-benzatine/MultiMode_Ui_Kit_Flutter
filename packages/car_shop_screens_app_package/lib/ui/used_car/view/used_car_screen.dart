@@ -66,7 +66,7 @@ class _UsedCarScreenState extends State<UsedCarScreen> with TickerProviderStateM
   ];
   final Set<int> favouriteIndexes = {};
   late TabController _tabController;
-
+  bool _isBottomSheetOpen = false;
   @override
   void initState() {
     super.initState();
@@ -77,77 +77,117 @@ class _UsedCarScreenState extends State<UsedCarScreen> with TickerProviderStateM
 
     if (widget.isForFilterAlert) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
-        showModalBottomSheet(
-          context: context,
-          isScrollControlled: false,
-          isDismissible: false,
-          enableDrag: false,
-          scrollControlDisabledMaxHeightRatio: 0.8,
-          backgroundColor: CustomAppColor.of(context).txtWhite,
-          useSafeArea: true,
-          shape: const RoundedRectangleBorder(
-            borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
-          ),
-          builder: (context) => FilterBottomSheet(
-            selectedIndex: widget.selectedIndexForFilterBS,
-            parentContext: context,
-          ),
-        );
+        _showFilterBottomSheet();
       });
     }
     if (widget.isForSortAlert) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
-        showModalBottomSheet(
-          context: context,
-          isScrollControlled: false,
-          isDismissible: false,
-          enableDrag: false,
-          backgroundColor: CustomAppColor.of(context).txtWhite,
-          useSafeArea: true,
-          shape: const RoundedRectangleBorder(borderRadius: BorderRadius.vertical(top: Radius.circular(20))),
-          builder: (context) => SortBottomSheet(
-            parentContext: context,
-          ),
-        );
+        _showSortBottomSheet();
       });
     }
   }
 
+  void _showFilterBottomSheet() {
+    setState(() {
+      _isBottomSheetOpen = true;
+    });
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: false,
+      isDismissible: false,
+      enableDrag: false,
+      backgroundColor: CustomAppColor.of(context).txtWhite,
+      scrollControlDisabledMaxHeightRatio: 0.8,
+      useSafeArea: true,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+      ),
+      builder: (buildContext) => FilterBottomSheet(
+        selectedIndex: widget.selectedIndexForFilterBS,
+      ),
+    ).whenComplete(() {
+      if (_isBottomSheetOpen) {
+        setState(() {
+          _isBottomSheetOpen = false;
+        });
+        Navigator.pop(context); // Pop the UsedCarScreen
+      }
+    });
+  }
+
+  void _showSortBottomSheet() {
+    setState(() {
+      _isBottomSheetOpen = true;
+    });
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: false,
+      isDismissible: false,
+      enableDrag: false,
+      backgroundColor: CustomAppColor.of(context).txtWhite,
+      useSafeArea: true,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+      ),
+      builder: (buildContext) => SortBottomSheet(
+        parentContext: buildContext,
+      ),
+    ).whenComplete(() {
+      if (_isBottomSheetOpen) {
+        setState(() {
+          _isBottomSheetOpen = false;
+        });
+        Navigator.pop(context);
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: CustomAppColor.of(context).bgScreen,
-      body: SafeArea(
-        child: Column(
-          children: [
-            TopBar(
-              this,
-              title: Languages.of(context).txtUsedCar,
-              isShowBack: true,
-              isShowSearch: true,
-            ),
-            Expanded(
-              child: SingleChildScrollView(
-                child: Column(
-                  children: [
-                    SizedBox(height: 10.setHeight),
-                    _buildFilesSorting(),
-                    _brandList(),
-                    SizedBox(height: 10.setHeight),
-                    _carList(),
-                    _recentViewedCars(),
-                    SizedBox(height: 30.setHeight),
-                    _carsByBudget(),
-                    SizedBox(height: 20.setHeight),
-                    _carsNearYou(),
-                  ],
+    return PopScope(
+        canPop: !_isBottomSheetOpen,
+        onPopInvokedWithResult: (didPop, result) {
+          if (!didPop && _isBottomSheetOpen) {
+            Navigator.pop(context);
+            setState(() {
+              _isBottomSheetOpen = false;
+            });
+            Navigator.pop(context);
+          }
+        },
+        child: Scaffold(
+          backgroundColor: CustomAppColor.of(context).bgScreen,
+          body: SafeArea(
+            child: Column(
+              children: [
+                TopBar(
+                  this,
+                  title: Languages.of(context).txtUsedCar,
+                  isShowBack: true,
+                  isShowSearch: true,
                 ),
-              ),
+                Expanded(
+                  child: SingleChildScrollView(
+                    child: Column(
+                      children: [
+                        SizedBox(height: 10.setHeight),
+                        _buildFilesSorting(),
+                        _brandList(),
+                        SizedBox(height: 10.setHeight),
+                        _carList(),
+                        _recentViewedCars(),
+                        SizedBox(height: 30.setHeight),
+                        _carsByBudget(),
+                        SizedBox(height: 20.setHeight),
+                        _carsNearYou(),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
             ),
-          ],
-        ),
-      ),
-    );
+          ),
+        ));
   }
 
   Widget _buildFilesSorting() {
@@ -168,9 +208,7 @@ class _UsedCarScreenState extends State<UsedCarScreen> with TickerProviderStateM
                     shape: const RoundedRectangleBorder(
                       borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
                     ),
-                    builder: (context) => FilterBottomSheet(
-                      parentContext: context,
-                    ),
+                    builder: (context) => FilterBottomSheet(),
                   );
                 },
                 child: Row(

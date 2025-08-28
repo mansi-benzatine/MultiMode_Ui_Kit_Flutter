@@ -108,6 +108,7 @@ class _EnterCarDetailScreenState extends State<EnterCarDetailScreen> with Ticker
   String selectedLocation = "";
   String selectedPrice = "";
   String selectedPhotos = "";
+  bool _isBottomSheetOpen = false;
 
   @override
   initState() {
@@ -123,99 +124,127 @@ class _EnterCarDetailScreenState extends State<EnterCarDetailScreen> with Ticker
 
     if (widget.isForAlert) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
-        showModalBottomSheet(
-          isScrollControlled: false,
-          isDismissible: false,
-          enableDrag: false,
-          context: context,
-          builder: (dialogContext) =>  SellCarDetailConfirmationBottomSheet(parentContext: dialogContext,),
-        );
+        _showInterestedBottomSheet();
       });
     }
   }
 
+  void _showInterestedBottomSheet() {
+    setState(() {
+      _isBottomSheetOpen = true;
+    });
+    showModalBottomSheet(
+      isScrollControlled: false,
+      isDismissible: false,
+      enableDrag: false,
+      context: context,
+      builder: (dialogContext) => SellCarDetailConfirmationBottomSheet(
+        parentContext: dialogContext,
+      ),
+    ).whenComplete(() {
+      if (_isBottomSheetOpen) {
+        setState(() {
+          _isBottomSheetOpen = false;
+        });
+        Navigator.pop(context);
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: CustomAppColor.of(context).bgScreen,
-      body: SafeArea(
-        child: Column(
-          children: [
-            TopBar(
-              this,
-              title: Languages.of(context).txtSellCar,
-              isShowBack: true,
-            ),
-            SizedBox(height: 10.setHeight),
-            IgnorePointer(
-              ignoring: true,
-              child: TabBar(
-                controller: _tabController,
-                indicator: BoxDecoration(
-                  borderRadius: BorderRadius.circular(25.setWidth),
-                  color: CustomAppColor.of(context).transparent,
-                ),
-                indicatorSize: TabBarIndicatorSize.tab,
-                indicatorPadding: EdgeInsets.zero,
-                dividerColor: Colors.transparent,
-                tabAlignment: TabAlignment.start,
-                isScrollable: true,
-                labelPadding: EdgeInsets.only(right: 10.setWidth),
-                padding: EdgeInsets.only(
-                  left: 16.setWidth,
-                ),
-                labelColor: CustomAppColor.of(context).txtWhite,
-                onTap: (index) {
-                  setState(() {
-                    selectedIndex = index;
-                    _tabController.animateTo(index);
-                  });
-                },
-                tabs: List.generate(
-                  tabList.length,
-                  (index) => Container(
-                    alignment: Alignment.center,
-                    decoration: BoxDecoration(
-                      color: (selectedIndex > index) ? CustomAppColor.of(context).primary.withOpacityPercent(0.1) : null,
-                      borderRadius: BorderRadius.circular(25.setWidth),
-                      gradient: selectedIndex == index ? CustomAppColor.of(context).primaryGradient : null,
-                      border: Border.all(
-                        color: (selectedIndex > index) ? CustomAppColor.of(context).primary : CustomAppColor.of(context).containerBorder,
-                        width: 0.5,
+    return PopScope(
+      canPop: !_isBottomSheetOpen,
+      onPopInvokedWithResult: (didPop, result) {
+        if (!didPop && _isBottomSheetOpen) {
+          Navigator.pop(context);
+          setState(() {
+            _isBottomSheetOpen = false;
+          });
+          Navigator.pop(context);
+        }
+      },
+      child: Scaffold(
+        backgroundColor: CustomAppColor.of(context).bgScreen,
+        body: SafeArea(
+          child: Column(
+            children: [
+              TopBar(
+                this,
+                title: Languages.of(context).txtSellCar,
+                isShowBack: true,
+              ),
+              SizedBox(height: 10.setHeight),
+              IgnorePointer(
+                ignoring: true,
+                child: TabBar(
+                  controller: _tabController,
+                  indicator: BoxDecoration(
+                    borderRadius: BorderRadius.circular(25.setWidth),
+                    color: CustomAppColor.of(context).transparent,
+                  ),
+                  indicatorSize: TabBarIndicatorSize.tab,
+                  indicatorPadding: EdgeInsets.zero,
+                  dividerColor: Colors.transparent,
+                  tabAlignment: TabAlignment.start,
+                  isScrollable: true,
+                  labelPadding: EdgeInsets.only(right: 10.setWidth),
+                  padding: EdgeInsets.only(
+                    left: 16.setWidth,
+                  ),
+                  labelColor: CustomAppColor.of(context).txtWhite,
+                  onTap: (index) {
+                    setState(() {
+                      selectedIndex = index;
+                      _tabController.animateTo(index);
+                    });
+                  },
+                  tabs: List.generate(
+                    tabList.length,
+                    (index) => Container(
+                      alignment: Alignment.center,
+                      decoration: BoxDecoration(
+                        color: (selectedIndex > index) ? CustomAppColor.of(context).primary.withOpacityPercent(0.1) : null,
+                        borderRadius: BorderRadius.circular(25.setWidth),
+                        gradient: selectedIndex == index ? CustomAppColor.of(context).primaryGradient : null,
+                        border: Border.all(
+                          color: (selectedIndex > index) ? CustomAppColor.of(context).primary : CustomAppColor.of(context).containerBorder,
+                          width: 0.5,
+                        ),
                       ),
-                    ),
-                    height: 35.setHeight,
-                    padding: EdgeInsets.symmetric(
-                      horizontal: 20.setWidth,
-                    ),
-                    child: CommonText(
-                      text: tabList[index],
-                      textColor: selectedIndex == index ? CustomAppColor.of(context).tabSelectedTxtColor : CustomAppColor.of(context).tabTxtColor,
-                      fontSize: 14.setFontSize,
-                      fontWeight: FontWeight.w400,
+                      height: 35.setHeight,
+                      padding: EdgeInsets.symmetric(
+                        horizontal: 20.setWidth,
+                      ),
+                      child: CommonText(
+                        text: tabList[index],
+                        textColor: selectedIndex == index ? CustomAppColor.of(context).tabSelectedTxtColor : CustomAppColor.of(context).tabTxtColor,
+                        fontSize: 14.setFontSize,
+                        fontWeight: FontWeight.w400,
+                      ),
                     ),
                   ),
                 ),
               ),
-            ),
-            Expanded(
-              child: TabBarView(
-                controller: _tabController,
-                physics: const NeverScrollableScrollPhysics(),
-                children: [
-                  _brandSelection(),
-                  _yearSelection(),
-                  _modelSelection(),
-                  _variantSelection(),
-                  _stateSelection(),
-                  _kmsDrivenSelection(),
-                  _locationSelection(),
-                  _priceSelection(),
-                  _photosSelection(),
-                ],
+              Expanded(
+                child: TabBarView(
+                  controller: _tabController,
+                  physics: const NeverScrollableScrollPhysics(),
+                  children: [
+                    _brandSelection(),
+                    _yearSelection(),
+                    _modelSelection(),
+                    _variantSelection(),
+                    _stateSelection(),
+                    _kmsDrivenSelection(),
+                    _locationSelection(),
+                    _priceSelection(),
+                    _photosSelection(),
+                  ],
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

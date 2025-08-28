@@ -16,32 +16,23 @@ class SellCarDetailConfirmationBottomSheet extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return PopScope(
-      canPop: false,
-      onPopInvokedWithResult: (didPop, result) {
-        if (!didPop) {
-          Navigator.pop(parentContext);
-          Navigator.pop(context);
-        }
-      },
-      child: SafeArea(
-        child: Container(
-          constraints: BoxConstraints(
-            maxHeight: MediaQuery.of(context).size.height * 0.8,
+    return SafeArea(
+      child: Container(
+        constraints: BoxConstraints(
+          maxHeight: MediaQuery.of(context).size.height * 0.8,
+        ),
+        decoration: BoxDecoration(
+          color: CustomAppColor.of(context).bgBottomSheet,
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(20.setWidth),
+            topRight: Radius.circular(20.setWidth),
           ),
-          decoration: BoxDecoration(
-            color: CustomAppColor.of(context).bgBottomSheet,
-            borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(20.setWidth),
-              topRight: Radius.circular(20.setWidth),
-            ),
-          ),
-          child: Wrap(
-            children: [
-              _buildHeader(context),
-              _buildContent(context),
-            ],
-          ),
+        ),
+        child: Wrap(
+          children: [
+            _buildHeader(context),
+            _buildContent(context),
+          ],
         ),
       ),
     );

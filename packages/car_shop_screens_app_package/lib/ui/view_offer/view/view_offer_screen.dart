@@ -14,6 +14,7 @@ import '../../../widgets/top_bar/topbar.dart';
 
 class ViewOfferScreen extends StatefulWidget {
   final bool isForAlert;
+
   static Route<void> route({bool isForAlert = false}) {
     return MaterialPageRoute(builder: (_) => ViewOfferScreen(isForAlert: isForAlert));
   }
@@ -32,6 +33,7 @@ class _ViewOfferScreenState extends State<ViewOfferScreen> implements TopBarClic
   String selectedPurchaseTime = "Within 15 Days";
   String selectedSellOldCar = "No";
   String selectedFuelType = "Petrol";
+  bool _isBottomSheetOpen = false;
 
   @override
   void dispose() {
@@ -48,49 +50,75 @@ class _ViewOfferScreenState extends State<ViewOfferScreen> implements TopBarClic
 
     if (widget.isForAlert) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
-        showModalBottomSheet(
-          context: context,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(16.setWidth),
-              topRight: Radius.circular(16.setWidth),
-            ),
-          ),
-          builder: (dialogContext) =>  IntrestedInOfferBottomSheet(parentContext: dialogContext,),
-          isScrollControlled: true,
-          backgroundColor: CustomAppColor.of(context).bgScreen,
-        );
+        _showFilterBottomSheet();
       });
     }
   }
 
+  void _showFilterBottomSheet() {
+    setState(() {
+      _isBottomSheetOpen = true;
+    });
+    showModalBottomSheet(
+      context: context,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(16.setWidth),
+          topRight: Radius.circular(16.setWidth),
+        ),
+      ),
+      builder: (dialogContext) => IntrestedInOfferBottomSheet(),
+      isScrollControlled: true,
+      backgroundColor: CustomAppColor.of(context).bgScreen,
+    ).whenComplete(() {
+      if (_isBottomSheetOpen) {
+        setState(() {
+          _isBottomSheetOpen = false;
+        });
+        Navigator.pop(context); // Pop the UsedCarScreen
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: CustomAppColor.of(context).bgScreen,
-      body: SafeArea(
-        top: false,
-        child: Column(
-          children: [
-            TopBar(
-              this,
-              title: "Tesla Model Y",
-              isShowBack: true,
-            ),
-            Expanded(
-              child: SingleChildScrollView(
-                padding: EdgeInsets.only(bottom: 20.setHeight),
-                child: Column(
-                  children: [
-                    _buildCarImage(),
-                    _buildOfferHeader(),
-                    _buildOfferForm(),
-                  ],
+    return PopScope(
+      canPop: !_isBottomSheetOpen,
+      onPopInvokedWithResult: (didPop, result) {
+        if (!didPop && _isBottomSheetOpen) {
+          Navigator.pop(context);
+          setState(() {
+            _isBottomSheetOpen = false;
+          });
+          Navigator.pop(context);
+        }
+      },
+      child: Scaffold(
+        backgroundColor: CustomAppColor.of(context).bgScreen,
+        body: SafeArea(
+          top: false,
+          child: Column(
+            children: [
+              TopBar(
+                this,
+                title: "Tesla Model Y",
+                isShowBack: true,
+              ),
+              Expanded(
+                child: SingleChildScrollView(
+                  padding: EdgeInsets.only(bottom: 20.setHeight),
+                  child: Column(
+                    children: [
+                      _buildCarImage(),
+                      _buildOfferHeader(),
+                      _buildOfferForm(),
+                    ],
+                  ),
                 ),
               ),
-            ),
-            _buildContinueButton(),
-          ],
+              _buildContinueButton(),
+            ],
+          ),
         ),
       ),
     );
@@ -295,7 +323,7 @@ class _ViewOfferScreenState extends State<ViewOfferScreen> implements TopBarClic
                     topRight: Radius.circular(16.setWidth),
                   ),
                 ),
-                builder: (dialogContext) =>  IntrestedInOfferBottomSheet(parentContext: dialogContext,),
+                builder: (dialogContext) => IntrestedInOfferBottomSheet(),
                 isScrollControlled: true,
                 backgroundColor: CustomAppColor.of(context).bgScreen,
               );

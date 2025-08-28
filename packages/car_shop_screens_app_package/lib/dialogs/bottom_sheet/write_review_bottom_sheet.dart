@@ -32,35 +32,26 @@ class _WriteReviewBottomSheetState extends State<WriteReviewBottomSheet> {
 
   @override
   Widget build(BuildContext context) {
-    return PopScope(
-      canPop: false,
-      onPopInvokedWithResult: (didPop, result) {
-        if (!didPop) {
-          Navigator.pop(widget.parentContext);
-          Navigator.pop(context);
-        }
-      },
-      child: SafeArea(
-        child: Container(
-          padding: EdgeInsets.only(
-            bottom: MediaQuery.of(context).viewInsets.bottom,
+    return SafeArea(
+      child: Container(
+        padding: EdgeInsets.only(
+          bottom: MediaQuery.of(context).viewInsets.bottom,
+        ),
+        constraints: BoxConstraints(
+          maxHeight: MediaQuery.of(context).size.height * 0.8,
+        ),
+        decoration: BoxDecoration(
+          color: CustomAppColor.of(context).bgBottomSheet,
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(20.setWidth),
+            topRight: Radius.circular(20.setWidth),
           ),
-          constraints: BoxConstraints(
-            maxHeight: MediaQuery.of(context).size.height * 0.8,
-          ),
-          decoration: BoxDecoration(
-            color: CustomAppColor.of(context).bgBottomSheet,
-            borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(20.setWidth),
-              topRight: Radius.circular(20.setWidth),
-            ),
-          ),
-          child: Wrap(
-            children: [
-              _buildHeader(),
-              _buildContent(),
-            ],
-          ),
+        ),
+        child: Wrap(
+          children: [
+            _buildHeader(),
+            _buildContent(),
+          ],
         ),
       ),
     );

@@ -53,6 +53,7 @@ class _CarDetailScreenState extends State<CarDetailScreen> with TickerProviderSt
     const Car360ViewPage(),
     const ReviewPage(),
   ];
+  bool _isBottomSheetOpen = false;
 
   @override
   void initState() {
@@ -79,146 +80,172 @@ class _CarDetailScreenState extends State<CarDetailScreen> with TickerProviderSt
 
     if (widget.isForAlert) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
-        showModalBottomSheet(
-          context: context,
-          useSafeArea: true,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(16.setWidth),
-              topRight: Radius.circular(16.setWidth),
-            ),
-          ),
-          builder: (dialogContext) => WriteReviewBottomSheet(
-            parentContext: dialogContext,
-          ),
-          isScrollControlled: true,
-          backgroundColor: CustomAppColor.of(context).bgScreen,
-        );
+        _showReviewBottomSheet();
       });
     }
   }
 
+  void _showReviewBottomSheet() {
+    setState(() {
+      _isBottomSheetOpen = true;
+    });
+    showModalBottomSheet(
+      context: context,
+      useSafeArea: true,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(16.setWidth),
+          topRight: Radius.circular(16.setWidth),
+        ),
+      ),
+      builder: (dialogContext) => WriteReviewBottomSheet(
+        parentContext: dialogContext,
+      ),
+      isScrollControlled: true,
+      backgroundColor: CustomAppColor.of(context).bgScreen,
+    ).whenComplete(() {
+      if (_isBottomSheetOpen) {
+        setState(() {
+          _isBottomSheetOpen = false;
+        });
+        Navigator.pop(context);
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: CustomAppColor.of(context).bgScreen,
-      body: SafeArea(
-        child: Column(
-          children: [
-            TopBar(
-              this,
-              title: widget.car.carName,
-              isShowBack: true,
-              isShowSearch: true,
-            ),
-            if (_tabs.isNotEmpty) ...[
-              AnimatedBuilder(
-                animation: _tabController,
-                builder: (context, _) {
-                  return IgnorePointer(
-                    ignoring: true,
-                    child: TabBar(
-                      controller: _tabController,
-                      indicatorColor: CustomAppColor.of(context).primary,
-                      indicatorWeight: 1,
-                      indicatorSize: TabBarIndicatorSize.label,
-                      dividerColor: Colors.transparent,
-                      isScrollable: true,
-                      padding: EdgeInsets.symmetric(horizontal: 10.setWidth),
-                      tabAlignment: TabAlignment.start,
-                      indicator: BoxDecoration(
-                        gradient: CustomAppColor.of(context).primaryGradient,
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      indicatorPadding: EdgeInsets.only(
-                        top: Platform.isAndroid ? 40.setHeight : 41.setHeight,
-                      ),
-                      tabs: List.generate(
-                        _tabs.length,
-                        (index) {
-                          final isSelected = _tabController.index == index;
-                          return Tab(
-                            child: CommonText(
-                              text: _tabs[index],
-                              fontSize: 12.setFontSize,
-                              fontWeight: isSelected ? FontWeight.w700 : FontWeight.w600,
-                              textColor: isSelected ? CustomAppColor.of(context).primary : CustomAppColor.of(context).txtGray,
-                            ),
-                          );
-                        },
-                      ),
-                    ),
-                  );
-                },
+    return PopScope(
+      canPop: !_isBottomSheetOpen,
+      onPopInvokedWithResult: (didPop, result) {
+        if (!didPop && _isBottomSheetOpen) {
+          Navigator.pop(context);
+          setState(() {
+            _isBottomSheetOpen = false;
+          });
+          Navigator.pop(context);
+        }
+      },
+      child: Scaffold(
+        backgroundColor: CustomAppColor.of(context).bgScreen,
+        body: SafeArea(
+          child: Column(
+            children: [
+              TopBar(
+                this,
+                title: widget.car.carName,
+                isShowBack: true,
+                isShowSearch: true,
               ),
-              Expanded(
-                child: TabBarView(
-                  controller: _tabController,
-                  physics: NeverScrollableScrollPhysics(),
-                  children: List.generate(
-                    _tabs.length,
-                    (index) => (_pages.length > index)
-                        ? _pages[index]
-                        : InkWell(
-                            onTap: () {
-                              _tabController.animateTo(index, duration: const Duration(milliseconds: 300));
-                            },
-                            child: Container(
-                              padding: EdgeInsets.only(left: 10.setWidth, right: 10.setWidth, top: 10.setHeight),
+              if (_tabs.isNotEmpty) ...[
+                AnimatedBuilder(
+                  animation: _tabController,
+                  builder: (context, _) {
+                    return IgnorePointer(
+                      ignoring: true,
+                      child: TabBar(
+                        controller: _tabController,
+                        indicatorColor: CustomAppColor.of(context).primary,
+                        indicatorWeight: 1,
+                        indicatorSize: TabBarIndicatorSize.label,
+                        dividerColor: Colors.transparent,
+                        isScrollable: true,
+                        padding: EdgeInsets.symmetric(horizontal: 10.setWidth),
+                        tabAlignment: TabAlignment.start,
+                        indicator: BoxDecoration(
+                          gradient: CustomAppColor.of(context).primaryGradient,
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        indicatorPadding: EdgeInsets.only(
+                          top: Platform.isAndroid ? 40.setHeight : 41.setHeight,
+                        ),
+                        tabs: List.generate(
+                          _tabs.length,
+                          (index) {
+                            final isSelected = _tabController.index == index;
+                            return Tab(
                               child: CommonText(
                                 text: _tabs[index],
                                 fontSize: 12.setFontSize,
-                                fontWeight: FontWeight.w600,
-                                textColor: selectedIndex == index ? CustomAppColor.of(context).primary : CustomAppColor.of(context).txtGray,
+                                fontWeight: isSelected ? FontWeight.w700 : FontWeight.w600,
+                                textColor: isSelected ? CustomAppColor.of(context).primary : CustomAppColor.of(context).txtGray,
+                              ),
+                            );
+                          },
+                        ),
+                      ),
+                    );
+                  },
+                ),
+                Expanded(
+                  child: TabBarView(
+                    controller: _tabController,
+                    physics: NeverScrollableScrollPhysics(),
+                    children: List.generate(
+                      _tabs.length,
+                      (index) => (_pages.length > index)
+                          ? _pages[index]
+                          : InkWell(
+                              onTap: () {
+                                _tabController.animateTo(index, duration: const Duration(milliseconds: 300));
+                              },
+                              child: Container(
+                                padding: EdgeInsets.only(left: 10.setWidth, right: 10.setWidth, top: 10.setHeight),
+                                child: CommonText(
+                                  text: _tabs[index],
+                                  fontSize: 12.setFontSize,
+                                  fontWeight: FontWeight.w600,
+                                  textColor: selectedIndex == index ? CustomAppColor.of(context).primary : CustomAppColor.of(context).txtGray,
+                                ),
                               ),
                             ),
+                    ),
+                  ),
+                ),
+                if (selectedIndex != 6) ...[
+                  IgnorePointer(
+                    ignoring: true,
+                    child: CommonButton(
+                      text: Languages.of(context).txtViewOffer,
+                      mLeft: 16.setWidth,
+                      mRight: 16.setWidth,
+                      onTap: () {
+                        Navigator.push(context, MaterialPageRoute(builder: (context) => const ViewOfferScreen()));
+                      },
+                    ),
+                  ),
+                ],
+                if (selectedIndex == 6) ...[
+                  IgnorePointer(
+                    ignoring: true,
+                    child: CommonButton(
+                      text: Languages.of(context).txtWriteReview,
+                      mLeft: 16.setWidth,
+                      mRight: 16.setWidth,
+                      onTap: () {
+                        showModalBottomSheet(
+                          context: context,
+                          useSafeArea: true,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(16.setWidth),
+                              topRight: Radius.circular(16.setWidth),
+                            ),
                           ),
-                  ),
-                ),
-              ),
-              if (selectedIndex != 6) ...[
-                IgnorePointer(
-                  ignoring: true,
-                  child: CommonButton(
-                    text: Languages.of(context).txtViewOffer,
-                    mLeft: 16.setWidth,
-                    mRight: 16.setWidth,
-                    onTap: () {
-                      Navigator.push(context, MaterialPageRoute(builder: (context) => const ViewOfferScreen()));
-                    },
-                  ),
-                ),
-              ],
-              if (selectedIndex == 6) ...[
-                IgnorePointer(
-                  ignoring: true,
-                  child: CommonButton(
-                    text: Languages.of(context).txtWriteReview,
-                    mLeft: 16.setWidth,
-                    mRight: 16.setWidth,
-                    onTap: () {
-                      showModalBottomSheet(
-                        context: context,
-                        useSafeArea: true,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(16.setWidth),
-                            topRight: Radius.circular(16.setWidth),
+                          builder: (dialogContext) => WriteReviewBottomSheet(
+                            parentContext: dialogContext,
                           ),
-                        ),
-                        builder: (dialogContext) => WriteReviewBottomSheet(
-                          parentContext: dialogContext,
-                        ),
-                        isScrollControlled: true,
-                        backgroundColor: CustomAppColor.of(context).bgScreen,
-                      );
-                    },
+                          isScrollControlled: true,
+                          backgroundColor: CustomAppColor.of(context).bgScreen,
+                        );
+                      },
+                    ),
                   ),
-                ),
+                ],
+                SizedBox(height: 16.setHeight)
               ],
-              SizedBox(height: 16.setHeight)
             ],
-          ],
+          ),
         ),
       ),
     );
