@@ -75,6 +75,7 @@ class _LogoutDialogState extends State<LogoutDialog> with TickerProviderStateMix
       onPopInvokedWithResult: (didPop, result) {
         if (!didPop) {
           Navigator.of(context).pop();
+          Navigator.of(context).pop();
         }
       },
       child: Dialog(

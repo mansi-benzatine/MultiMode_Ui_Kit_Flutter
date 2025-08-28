@@ -119,6 +119,7 @@ class _CongratulationsDialogState extends State<CongratulationsDialog> with Tick
       onPopInvokedWithResult: (didPop, result) {
         if (!didPop) {
           Navigator.of(context).pop();
+          Navigator.of(context).pop();
         }
       },
       child: Dialog(
