@@ -42,7 +42,7 @@ class _CongratulationDialogState extends State<CongratulationDialog> {
       canPop: false,
       onPopInvokedWithResult: (didPop, result) {
         if (!didPop) {
-          Navigator.pop(context);
+          Navigator.pop(widget.parentContext);
           Navigator.pop(context);
         }
       },
