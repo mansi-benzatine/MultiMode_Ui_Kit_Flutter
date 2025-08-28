@@ -43,7 +43,6 @@ class _SubscriptionCongratulationDialogState extends State<SubscriptionCongratul
       onPopInvokedWithResult: (didPop, result) {
         if (!didPop) {
           Navigator.pop(context);
-          Navigator.pop(context);
         }
       },
       child: AlertDialog(

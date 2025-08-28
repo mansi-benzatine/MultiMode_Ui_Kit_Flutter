@@ -39,7 +39,6 @@ class _LogoutDialogState extends State<LogoutDialog> {
       onPopInvokedWithResult: (didPop, result) {
         if (!didPop) {
           Navigator.pop(context);
-          Navigator.pop(context);
         }
       },
       child: AlertDialog(

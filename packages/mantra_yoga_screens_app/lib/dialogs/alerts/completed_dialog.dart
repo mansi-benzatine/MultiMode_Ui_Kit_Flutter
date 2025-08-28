@@ -43,7 +43,6 @@ class _CompletedDialogState extends State<CompletedDialog> {
       onPopInvokedWithResult: (didPop, result) {
         if (!didPop) {
           Navigator.pop(context);
-          Navigator.pop(context);
         }
       },
       child: AlertDialog(
