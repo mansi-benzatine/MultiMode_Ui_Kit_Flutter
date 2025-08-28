@@ -11,90 +11,130 @@ import '../../../widgets/text/common_text.dart';
 import '../../../widgets/top_bar/topbar.dart';
 
 class FavoriteScreen extends StatefulWidget {
-  const FavoriteScreen({super.key});
+  final bool isForEmptyFavoriteScreen;
+  final bool isForDeleteAlert;
+  const FavoriteScreen({super.key, this.isForDeleteAlert = false, this.isForEmptyFavoriteScreen = false});
 
   @override
   State<FavoriteScreen> createState() => _FavoriteScreenState();
 }
 
-class _FavoriteScreenState extends State<FavoriteScreen>
-    implements TopBarClickListener {
+class _FavoriteScreenState extends State<FavoriteScreen> implements TopBarClickListener {
   List<Map<String, dynamic>>? favoriteList;
 
   ValueNotifier<bool> isDeleteMode = ValueNotifier(false);
   ValueNotifier<bool> isSelectAll = ValueNotifier(false);
-
+  bool _isDialogOpen = false;
   @override
   void initState() {
     super.initState();
     favoriteList = null;
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      favoriteList = [];
-      favoriteList?.clear();
-      favoriteList?.add({
-        'icon': AppAssets.icWebsite,
-        'name': Languages.of(context).txtWebsite,
-        'description': 'https://www.google.com',
-        'date': '2025-07-24',
-        'time': '10:15 AM',
-        'isSelected': false,
-        'type': Constant.toolWebsite,
-      });
-      favoriteList?.add({
-        'icon': AppAssets.icText,
-        'name': Languages.of(context).txtText,
-        'description': 'software engineering',
-        'date': '2025-07-24',
-        'time': '10:15 PM',
-        'isSelected': false,
-        'type': Constant.toolText,
-      });
-      favoriteList?.add({
-        'icon': AppAssets.icEmail,
-        'name': Languages.of(context).txtEmail,
-        'description': 'john.doe@example.com',
-        'date': '2025-07-23',
-        'time': '11:00 PM',
-        'isSelected': false,
-        'type': Constant.toolEmail,
-      });
-      favoriteList?.add({
-        'icon': AppAssets.icLocation,
-        'name': Languages.of(context).txtLocation,
-        'description': '21.2325416, 72.8355564',
-        'date': '2025-07-20',
-        'time': '2:15 PM',
-        'isSelected': false,
-        'type': Constant.toolLocation,
-      });
 
-      setState(() {});
+    if (widget.isForDeleteAlert) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        _showLogoutDialog();
+      });
+    }
+    if (widget.isForEmptyFavoriteScreen) {
+      favoriteList = [];
+    } else {
+      WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+        favoriteList = [];
+        favoriteList?.clear();
+        favoriteList?.add({
+          'icon': AppAssets.icWebsite,
+          'name': Languages.of(context).txtWebsite,
+          'description': 'https://www.google.com',
+          'date': '2025-07-24',
+          'time': '10:15 AM',
+          'isSelected': false,
+          'type': Constant.toolWebsite,
+        });
+        favoriteList?.add({
+          'icon': AppAssets.icText,
+          'name': Languages.of(context).txtText,
+          'description': 'software engineering',
+          'date': '2025-07-24',
+          'time': '10:15 PM',
+          'isSelected': false,
+          'type': Constant.toolText,
+        });
+        favoriteList?.add({
+          'icon': AppAssets.icEmail,
+          'name': Languages.of(context).txtEmail,
+          'description': 'john.doe@example.com',
+          'date': '2025-07-23',
+          'time': '11:00 PM',
+          'isSelected': false,
+          'type': Constant.toolEmail,
+        });
+        favoriteList?.add({
+          'icon': AppAssets.icLocation,
+          'name': Languages.of(context).txtLocation,
+          'description': '21.2325416, 72.8355564',
+          'date': '2025-07-20',
+          'time': '2:15 PM',
+          'isSelected': false,
+          'type': Constant.toolLocation,
+        });
+
+        setState(() {});
+      });
+    }
+  }
+
+  void _showLogoutDialog() {
+    setState(() {
+      _isDialogOpen = true;
+    });
+    showDialog(
+        barrierDismissible: false,
+        context: context,
+        builder: (buildContext) => FavoriteDeleteConfirmationDialog(
+              parentContext: buildContext,
+            )).then((_) {
+      if (_isDialogOpen) {
+        print('LogoutDialog dismissed: Popping MyProfileScreen');
+        setState(() {
+          _isDialogOpen = false;
+        });
+        Navigator.of(context).pop(); // Pop MyProfileScreen
+      }
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: CustomAppColor.of(context).bgScreen,
-      body: SafeArea(
-        child: Column(
-          children: [
-            ValueListenableBuilder(
-              valueListenable: isDeleteMode,
-              builder: (context, value, child) => TopBar(this,
-                  title: Languages.of(context).txtFavorite,
-                  isShowDelete: true,
-                  isShowDone: value,
-                  isDeleteEnabled: value),
-            ),
-            Expanded(
-              child: favoriteList == null
-                  ? const SizedBox.shrink()
-                  : (favoriteList?.isEmpty ?? true)
-                      ? _buildEmptyFavorite()
-                      : _buildFavoriteList(),
-            ),
-          ],
+    return PopScope(
+      canPop: !_isDialogOpen,
+      onPopInvokedWithResult: (didPop, result) {
+        if (!didPop && _isDialogOpen) {
+          print('PopScope: System back button pressed, isDialogOpen=$_isDialogOpen');
+          Navigator.of(context).pop(); // Pop the dialog
+          setState(() {
+            _isDialogOpen = false;
+          });
+          Navigator.of(context).pop(); // Pop MyProfileScreen
+        }
+      },
+      child: Scaffold(
+        backgroundColor: CustomAppColor.of(context).bgScreen,
+        body: SafeArea(
+          child: Column(
+            children: [
+              ValueListenableBuilder(
+                valueListenable: isDeleteMode,
+                builder: (context, value, child) => TopBar(this, title: Languages.of(context).txtFavorite, isShowDelete: true, isShowDone: value, isDeleteEnabled: value),
+              ),
+              Expanded(
+                child: favoriteList == null
+                    ? const SizedBox.shrink()
+                    : (favoriteList?.isEmpty ?? true)
+                        ? _buildEmptyFavorite()
+                        : _buildFavoriteList(),
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -133,11 +173,7 @@ class _FavoriteScreenState extends State<FavoriteScreen>
   Widget _buildFavoriteList() {
     return ListView.builder(
       itemCount: favoriteList?.length ?? 0,
-      padding: EdgeInsets.only(
-          left: 16.setWidth,
-          right: 16.setWidth,
-          top: 16.setHeight,
-          bottom: 30.setHeight),
+      padding: EdgeInsets.only(left: 16.setWidth, right: 16.setWidth, top: 16.setHeight, bottom: 30.setHeight),
       itemBuilder: (context, index) => _buildFavoriteItem(favoriteList![index]),
     );
   }
@@ -148,12 +184,8 @@ class _FavoriteScreenState extends State<FavoriteScreen>
           if (isDeleteMode.value) {
             // showDeleteDialog();
             item['isSelected'] = !item['isSelected'];
-            isSelectAll.value = favoriteList
-                    ?.every((element) => element['isSelected'] == true) ??
-                false;
-            isDeleteMode.value =
-                favoriteList?.any((element) => element['isSelected'] == true) ??
-                    false;
+            isSelectAll.value = favoriteList?.every((element) => element['isSelected'] == true) ?? false;
+            isDeleteMode.value = favoriteList?.any((element) => element['isSelected'] == true) ?? false;
             setState(() {});
           } else {
             /*  Navigator.push(
@@ -165,34 +197,23 @@ class _FavoriteScreenState extends State<FavoriteScreen>
         onLongPress: () {
           if (isDeleteMode.value) {
             item['isSelected'] = !item['isSelected'];
-            isSelectAll.value = favoriteList
-                    ?.every((element) => element['isSelected'] == true) ??
-                false;
-            isDeleteMode.value =
-                favoriteList?.any((element) => element['isSelected'] == true) ??
-                    false;
+            isSelectAll.value = favoriteList?.every((element) => element['isSelected'] == true) ?? false;
+            isDeleteMode.value = favoriteList?.any((element) => element['isSelected'] == true) ?? false;
             setState(() {});
           } else {
             isDeleteMode.value = true;
             item['isSelected'] = true;
-            isSelectAll.value = favoriteList
-                    ?.every((element) => element['isSelected'] == true) ??
-                false;
-            isDeleteMode.value =
-                favoriteList?.any((element) => element['isSelected'] == true) ??
-                    false;
+            isSelectAll.value = favoriteList?.every((element) => element['isSelected'] == true) ?? false;
+            isDeleteMode.value = favoriteList?.any((element) => element['isSelected'] == true) ?? false;
             setState(() {});
           }
         },
         child: Container(
           width: double.infinity,
           margin: EdgeInsets.only(bottom: 16.setHeight),
-          padding: EdgeInsets.symmetric(
-              horizontal: 14.setWidth, vertical: 12.setHeight),
+          padding: EdgeInsets.symmetric(horizontal: 14.setWidth, vertical: 12.setHeight),
           decoration: BoxDecoration(
-            color: (item['isSelected'])
-                ? CustomAppColor.of(context).primary
-                : CustomAppColor.of(context).bgCard,
+            color: (item['isSelected']) ? CustomAppColor.of(context).primary : CustomAppColor.of(context).bgCard,
             borderRadius: BorderRadius.circular(12.setHeight),
             border: Border.all(
               color: CustomAppColor.of(context).containerBorder,
@@ -217,18 +238,14 @@ class _FavoriteScreenState extends State<FavoriteScreen>
                       fontSize: 14.setFontSize,
                       fontWeight: FontWeight.w500,
                       maxLines: 1,
-                      textColor: (item['isSelected'])
-                          ? CustomAppColor.of(context).txtWhite
-                          : CustomAppColor.of(context).txtBlack,
+                      textColor: (item['isSelected']) ? CustomAppColor.of(context).txtWhite : CustomAppColor.of(context).txtBlack,
                     ),
                     SizedBox(height: 4.setHeight),
                     CommonText(
                       text: item['description'],
                       fontSize: 12.setFontSize,
                       fontWeight: FontWeight.w400,
-                      textColor: (item['isSelected'])
-                          ? CustomAppColor.of(context).txtWhite
-                          : CustomAppColor.of(context).txtDarkGray,
+                      textColor: (item['isSelected']) ? CustomAppColor.of(context).txtWhite : CustomAppColor.of(context).txtDarkGray,
                     ),
                     SizedBox(height: 8.setHeight),
                     Row(
@@ -237,36 +254,28 @@ class _FavoriteScreenState extends State<FavoriteScreen>
                           AppAssets.icDate,
                           height: 14.setHeight,
                           width: 14.setWidth,
-                          color: (item['isSelected'])
-                              ? CustomAppColor.of(context).txtWhite
-                              : CustomAppColor.of(context).primary,
+                          color: (item['isSelected']) ? CustomAppColor.of(context).txtWhite : CustomAppColor.of(context).primary,
                         ),
                         SizedBox(width: 4.setWidth),
                         CommonText(
                           text: item['date'],
                           fontSize: 12.setFontSize,
                           fontWeight: FontWeight.w400,
-                          textColor: (item['isSelected'])
-                              ? CustomAppColor.of(context).txtWhite
-                              : CustomAppColor.of(context).txtDarkGray,
+                          textColor: (item['isSelected']) ? CustomAppColor.of(context).txtWhite : CustomAppColor.of(context).txtDarkGray,
                         ),
                         SizedBox(width: 16.setWidth),
                         Image.asset(
                           AppAssets.icTime,
                           height: 16.setHeight,
                           width: 16.setWidth,
-                          color: (item['isSelected'])
-                              ? CustomAppColor.of(context).txtWhite
-                              : CustomAppColor.of(context).primary,
+                          color: (item['isSelected']) ? CustomAppColor.of(context).txtWhite : CustomAppColor.of(context).primary,
                         ),
                         SizedBox(width: 4.setWidth),
                         CommonText(
                           text: item['time'],
                           fontSize: 12.setFontSize,
                           fontWeight: FontWeight.w400,
-                          textColor: (item['isSelected'])
-                              ? CustomAppColor.of(context).txtWhite
-                              : CustomAppColor.of(context).txtDarkGray,
+                          textColor: (item['isSelected']) ? CustomAppColor.of(context).txtWhite : CustomAppColor.of(context).txtDarkGray,
                         ),
                       ],
                     ),
@@ -281,7 +290,7 @@ class _FavoriteScreenState extends State<FavoriteScreen>
   void showDeleteDialog() {
     showDialog(
         context: context,
-        builder: (_) => FavoriteDeleteConfirmationDialog(
+        builder: (context) => FavoriteDeleteConfirmationDialog(
               parentContext: context,
             )).then((value) {
       if (value == true) {

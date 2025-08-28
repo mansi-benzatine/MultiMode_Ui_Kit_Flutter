@@ -14,105 +14,142 @@ import '../../../widgets/top_bar/topbar.dart';
 enum ModuleShape { square, round }
 
 class QrCodeSettingScreen extends StatefulWidget {
-  static Route<void> route() {
-    return MaterialPageRoute(builder: (_) => const QrCodeSettingScreen());
+  final bool isColorBottomSheetShown;
+
+  static Route<void> route({bool isColorBottomSheetShown = false}) {
+    return MaterialPageRoute(
+        builder: (_) => QrCodeSettingScreen(
+              isColorBottomSheetShown: isColorBottomSheetShown,
+            ));
   }
 
-  const QrCodeSettingScreen({super.key});
+  const QrCodeSettingScreen({super.key, this.isColorBottomSheetShown = false});
 
   @override
   State<QrCodeSettingScreen> createState() => _QrCodeSettingScreenState();
 }
 
-class _QrCodeSettingScreenState extends State<QrCodeSettingScreen>
-    implements TopBarClickListener {
+class _QrCodeSettingScreenState extends State<QrCodeSettingScreen> implements TopBarClickListener {
   ValueNotifier<ModuleShape> selectedShape = ValueNotifier(ModuleShape.square);
-  ValueNotifier<ModuleShape> selectedEyeBallShape =
-      ValueNotifier(ModuleShape.square);
+  ValueNotifier<ModuleShape> selectedEyeBallShape = ValueNotifier(ModuleShape.square);
   ValueNotifier<Color> selectedColor = ValueNotifier(Colors.black);
   ValueNotifier<Color> selectedEyeBallColor = ValueNotifier(Colors.black);
+  bool _isBottomSheetOpen = false;
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    if (widget.isColorBottomSheetShown) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        showColoeBS();
+      });
+    }
+  }
+
+  void showColoeBS() {
+    setState(() {
+      _isBottomSheetOpen = true;
+    });
+    showModalBottomSheet(
+      context: context,
+      isDismissible: false,
+      isScrollControlled: false,
+      enableDrag: false,
+      scrollControlDisabledMaxHeightRatio: 0.8,
+      backgroundColor: Colors.transparent,
+      builder: (context) => SelectColorBottomSheetDialog(
+        initialColor: selectedColor.value,
+        onColorSelected: (color) {
+          selectedColor.value = color;
+        },
+      ),
+    ).whenComplete(() {
+      if (_isBottomSheetOpen) {
+        setState(() {
+          _isBottomSheetOpen = false;
+        });
+        Navigator.pop(context);
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: CustomAppColor.of(context).bgScreen,
-      body: SafeArea(
-        child: Column(
-          children: [
-            TopBar(
-              this,
-              title: Languages.of(context).txtQrCodeSetting,
-              isShowBack: true,
-            ),
-            Expanded(
-              child: SingleChildScrollView(
-                child: Padding(
-                  padding: EdgeInsets.all(24.setWidth),
-                  child: Wrap(
-                    children: [
-                      Stack(
-                        children: [
-                          Wrap(
-                            children: [
-                              Container(
-                                width: double.infinity,
-                                margin: EdgeInsets.only(top: 42.setHeight),
-                                decoration: BoxDecoration(
-                                  color: CustomAppColor.of(context).bgScreen,
-                                  borderRadius:
-                                      BorderRadius.circular(12.setHeight),
-                                  border: Border.all(
-                                    color: CustomAppColor.of(context)
-                                        .containerBorder,
-                                    width: 1,
-                                  ),
-                                ),
-                                padding: EdgeInsets.all(16.setWidth),
-                                child: Column(
-                                  children: [
-                                    SizedBox(height: 30.setHeight),
-                                    Image.asset(
-                                      AppAssets.imgDummyQr,
-                                      width: double.infinity,
-                                      fit: BoxFit.contain,
-                                      color:
-                                          CustomAppColor.of(context).txtBlack,
-                                    ),
-                                  ],
+      body: Column(
+        children: [
+          TopBar(
+            this,
+            title: Languages.of(context).txtQrCodeSetting,
+            isShowBack: true,
+          ),
+          Expanded(
+            child: SingleChildScrollView(
+              child: Padding(
+                padding: EdgeInsets.all(24.setWidth),
+                child: Wrap(
+                  children: [
+                    Stack(
+                      children: [
+                        Wrap(
+                          children: [
+                            Container(
+                              width: double.infinity,
+                              margin: EdgeInsets.only(top: 42.setHeight),
+                              decoration: BoxDecoration(
+                                color: CustomAppColor.of(context).bgScreen,
+                                borderRadius: BorderRadius.circular(12.setHeight),
+                                border: Border.all(
+                                  color: CustomAppColor.of(context).containerBorder,
+                                  width: 1,
                                 ),
                               ),
-                            ],
-                          ),
-                          Positioned(
-                            top: 0,
-                            left: 0,
-                            right: 0,
-                            child: Center(child: _buildQrTypeIcon()),
-                          ),
-                        ],
-                      ),
-                      _buildModuleShapeEyeBallShape(),
-                      CommonButton(
-                        text: Languages.of(context).txtApply.toUpperCase(),
-                        buttonColor: CustomAppColor.of(context).primary,
-                        buttonTextColor: CustomAppColor.of(context).txtWhite,
-                        height: 45.setHeight,
-                        width: double.infinity,
-                        mTop: 40.setHeight,
-                        mLeft: 20.setWidth,
-                        mRight: 20.setWidth,
-                        buttonTextSize: 16.setFontSize,
-                        buttonTextWeight: FontWeight.w600,
-                        pHorizontal: 10.setWidth,
-                        onTap: () {},
-                      ),
-                    ],
-                  ),
+                              padding: EdgeInsets.all(16.setWidth),
+                              child: Column(
+                                children: [
+                                  SizedBox(height: 30.setHeight),
+                                  Image.asset(
+                                    AppAssets.imgDummyQr,
+                                    width: double.infinity,
+                                    fit: BoxFit.contain,
+                                    color: CustomAppColor.of(context).txtBlack,
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                        Positioned(
+                          top: 0,
+                          left: 0,
+                          right: 0,
+                          child: Center(child: _buildQrTypeIcon()),
+                        ),
+                      ],
+                    ),
+                    _buildModuleShapeEyeBallShape(),
+                    CommonButton(
+                      text: Languages.of(context).txtApply.toUpperCase(),
+                      buttonColor: CustomAppColor.of(context).primary,
+                      buttonTextColor: CustomAppColor.of(context).txtWhite,
+                      height: 45.setHeight,
+                      width: double.infinity,
+                      mTop: 40.setHeight,
+                      mLeft: 20.setWidth,
+                      mRight: 20.setWidth,
+                      mBottom: 40.setHeight,
+                      buttonTextSize: 16.setFontSize,
+                      buttonTextWeight: FontWeight.w600,
+                      pHorizontal: 10.setWidth,
+                      onTap: () {},
+                    ),
+                  ],
                 ),
               ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
@@ -128,8 +165,7 @@ class _QrCodeSettingScreenState extends State<QrCodeSettingScreen>
         ),
         borderRadius: BorderRadius.circular(12.setHeight),
       ),
-      padding:
-          EdgeInsets.symmetric(horizontal: 16.setWidth, vertical: 16.setHeight),
+      padding: EdgeInsets.symmetric(horizontal: 16.setWidth, vertical: 16.setHeight),
       child: Column(
         children: [
           _buildModuleShape(),
@@ -174,8 +210,7 @@ class _QrCodeSettingScreenState extends State<QrCodeSettingScreen>
                               value: ModuleShape.square,
                               groupValue: currentShape,
                               activeColor: CustomAppColor.of(context).primary,
-                              fillColor: WidgetStateProperty.all(
-                                  CustomAppColor.of(context).primary),
+                              fillColor: WidgetStateProperty.all(CustomAppColor.of(context).primary),
                               onChanged: (ModuleShape? value) {
                                 if (value != null) {
                                   selectedShape.value = value;
@@ -203,8 +238,7 @@ class _QrCodeSettingScreenState extends State<QrCodeSettingScreen>
                               value: ModuleShape.round,
                               groupValue: currentShape,
                               activeColor: CustomAppColor.of(context).primary,
-                              fillColor: WidgetStateProperty.all(
-                                  CustomAppColor.of(context).primary),
+                              fillColor: WidgetStateProperty.all(CustomAppColor.of(context).primary),
                               onChanged: (ModuleShape? value) {
                                 if (value != null) {
                                   selectedShape.value = value;
@@ -237,32 +271,35 @@ class _QrCodeSettingScreenState extends State<QrCodeSettingScreen>
                 textColor: CustomAppColor.of(context).txtBlack,
               ),
               SizedBox(height: 10.setHeight),
-              GestureDetector(
-                onTap: () {
-                  showModalBottomSheet(
-                    context: context,
-                    isScrollControlled: true,
-                    backgroundColor: Colors.transparent,
-                    builder: (context) => SelectColorBottomSheetDialog(
-                      initialColor: selectedColor.value,
-                      onColorSelected: (color) {
-                        selectedColor.value = color;
-                      },
-                    ),
-                  );
-                },
-                child: ValueListenableBuilder<Color>(
-                  valueListenable: selectedColor,
-                  builder: (context, color, child) {
-                    return Container(
-                      width: 30.setWidth,
-                      height: 30.setHeight,
-                      decoration: BoxDecoration(
-                        color: color,
-                        shape: BoxShape.circle,
+              IgnorePointer(
+                ignoring: true,
+                child: GestureDetector(
+                  onTap: () {
+                    showModalBottomSheet(
+                      context: context,
+                      isScrollControlled: true,
+                      backgroundColor: Colors.transparent,
+                      builder: (context) => SelectColorBottomSheetDialog(
+                        initialColor: selectedColor.value,
+                        onColorSelected: (color) {
+                          selectedColor.value = color;
+                        },
                       ),
                     );
                   },
+                  child: ValueListenableBuilder<Color>(
+                    valueListenable: selectedColor,
+                    builder: (context, color, child) {
+                      return Container(
+                        width: 30.setWidth,
+                        height: 30.setHeight,
+                        decoration: BoxDecoration(
+                          color: color,
+                          shape: BoxShape.circle,
+                        ),
+                      );
+                    },
+                  ),
                 ),
               ),
             ],
@@ -299,8 +336,7 @@ class _QrCodeSettingScreenState extends State<QrCodeSettingScreen>
                             value: ModuleShape.square,
                             groupValue: currentShape,
                             activeColor: CustomAppColor.of(context).primary,
-                            fillColor: WidgetStateProperty.all(
-                                CustomAppColor.of(context).primary),
+                            fillColor: WidgetStateProperty.all(CustomAppColor.of(context).primary),
                             onChanged: (ModuleShape? value) {
                               if (value != null) {
                                 selectedEyeBallShape.value = value;
@@ -328,8 +364,7 @@ class _QrCodeSettingScreenState extends State<QrCodeSettingScreen>
                             value: ModuleShape.round,
                             groupValue: currentShape,
                             activeColor: CustomAppColor.of(context).primary,
-                            fillColor: WidgetStateProperty.all(
-                                CustomAppColor.of(context).primary),
+                            fillColor: WidgetStateProperty.all(CustomAppColor.of(context).primary),
                             onChanged: (ModuleShape? value) {
                               if (value != null) {
                                 selectedEyeBallShape.value = value;
@@ -360,32 +395,35 @@ class _QrCodeSettingScreenState extends State<QrCodeSettingScreen>
                 textColor: CustomAppColor.of(context).txtBlack,
               ),
               SizedBox(height: 10.setHeight),
-              GestureDetector(
-                onTap: () {
-                  showModalBottomSheet(
-                    context: context,
-                    isScrollControlled: true,
-                    backgroundColor: Colors.transparent,
-                    builder: (context) => SelectColorBottomSheetDialog(
-                      initialColor: selectedEyeBallColor.value,
-                      onColorSelected: (color) {
-                        selectedEyeBallColor.value = color;
-                      },
-                    ),
-                  );
-                },
-                child: ValueListenableBuilder<Color>(
-                  valueListenable: selectedEyeBallColor,
-                  builder: (context, color, child) {
-                    return Container(
-                      width: 30.setWidth,
-                      height: 30.setHeight,
-                      decoration: BoxDecoration(
-                        color: color,
-                        shape: BoxShape.circle,
+              IgnorePointer(
+                ignoring: true,
+                child: GestureDetector(
+                  onTap: () {
+                    showModalBottomSheet(
+                      context: context,
+                      isScrollControlled: true,
+                      backgroundColor: Colors.transparent,
+                      builder: (context) => SelectColorBottomSheetDialog(
+                        initialColor: selectedEyeBallColor.value,
+                        onColorSelected: (color) {
+                          selectedEyeBallColor.value = color;
+                        },
                       ),
                     );
                   },
+                  child: ValueListenableBuilder<Color>(
+                    valueListenable: selectedEyeBallColor,
+                    builder: (context, color, child) {
+                      return Container(
+                        width: 30.setWidth,
+                        height: 30.setHeight,
+                        decoration: BoxDecoration(
+                          color: color,
+                          shape: BoxShape.circle,
+                        ),
+                      );
+                    },
+                  ),
                 ),
               ),
             ],

@@ -29,8 +29,7 @@ class SettingScreen extends StatefulWidget {
   State<SettingScreen> createState() => _SettingScreenState();
 }
 
-class _SettingScreenState extends State<SettingScreen>
-    implements TopBarClickListener {
+class _SettingScreenState extends State<SettingScreen> implements TopBarClickListener {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -41,11 +40,7 @@ class _SettingScreenState extends State<SettingScreen>
           TopBar(this, title: Languages.of(context).txtSettings),
           Expanded(
               child: SingleChildScrollView(
-            padding: EdgeInsets.only(
-                left: 16.setWidth,
-                right: 16.setWidth,
-                top: 16.setHeight,
-                bottom: 30.setHeight),
+            padding: EdgeInsets.only(left: 16.setWidth, right: 16.setWidth, top: 16.setHeight, bottom: 30.setHeight),
             child: Column(
               children: [
                 _buildProWidget(),
@@ -74,16 +69,14 @@ class _SettingScreenState extends State<SettingScreen>
   Widget _buildProWidget() {
     return GestureDetector(
       onTap: () {
-        Navigator.push(context,
-            MaterialPageRoute(builder: (context) => const ProVersionScreen()));
+        Navigator.push(context, MaterialPageRoute(builder: (context) => const ProVersionScreen()));
       },
       child: Container(
         decoration: BoxDecoration(
           color: CustomAppColor.of(context).primary,
           borderRadius: BorderRadius.circular(12.setHeight),
         ),
-        padding: EdgeInsets.symmetric(
-            horizontal: 16.setWidth, vertical: 16.setHeight),
+        padding: EdgeInsets.symmetric(horizontal: 16.setWidth, vertical: 16.setHeight),
         child: Row(
           children: [
             Image.asset(
@@ -141,12 +134,9 @@ class _GeneralSettingWidget extends StatelessWidget {
       decoration: BoxDecoration(
         color: CustomAppColor.of(context).bgScreen,
         borderRadius: BorderRadius.circular(12.setHeight),
-        border: Border.all(
-            color: CustomAppColor.of(context).containerBorder,
-            width: 1.setHeight),
+        border: Border.all(color: CustomAppColor.of(context).containerBorder, width: 1.setHeight),
       ),
-      padding:
-          EdgeInsets.symmetric(horizontal: 16.setWidth, vertical: 16.setHeight),
+      padding: EdgeInsets.symmetric(horizontal: 16.setWidth, vertical: 16.setHeight),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -187,10 +177,7 @@ class _GeneralSettingWidget extends StatelessWidget {
   Widget _buildQrCodeSettingsWidget(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) => const QrCodeSettingScreen()));
+        Navigator.push(context, MaterialPageRoute(builder: (context) => const QrCodeSettingScreen()));
       },
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -241,10 +228,7 @@ class _GeneralSettingWidget extends StatelessWidget {
   Widget _buildIntroductionWidget(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) => const IntroductionScreen()));
+        Navigator.push(context, MaterialPageRoute(builder: (context) => const IntroductionScreen()));
       },
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -291,14 +275,12 @@ class _GeneralSettingWidget extends StatelessWidget {
       onTap: () {
         showDialog(
             context: context,
-            builder: (dialogContext) =>
-                ChangeThemeDialog(parentContext: context)).then((value) {
+            builder: (buildContext) => ChangeThemeDialog(
+                  parentContext: buildContext,
+                )).then((value) {
           if (value != null) {
-            getIt
-                .get<LocalStorageService>()
-                .setBool(LocalStorageService.isLightTheme, value);
-            Debug.printLog(
-                "isLightTheme: ${getIt.get<LocalStorageService>().getBool(LocalStorageService.isLightTheme, optionalValue: false)}");
+            getIt.get<LocalStorageService>().setBool(LocalStorageService.isLightTheme, value);
+            Debug.printLog("isLightTheme: ${getIt.get<LocalStorageService>().getBool(LocalStorageService.isLightTheme, optionalValue: false)}");
             if (context.mounted) {
               QrScannerApp.changeTheme(context, AppTheme.getTheme(context));
               (context as Element).markNeedsBuild();
@@ -337,9 +319,7 @@ class _GeneralSettingWidget extends StatelessWidget {
           ),
           SizedBox(width: 16.setWidth),
           CommonText(
-            text: Utils.isLightTheme()
-                ? Languages.of(context).txtLight
-                : Languages.of(context).txtDark,
+            text: Utils.isLightTheme() ? Languages.of(context).txtLight : Languages.of(context).txtDark,
             fontSize: 14.setFontSize,
             fontWeight: FontWeight.w600,
             textColor: CustomAppColor.of(context).primary,
@@ -359,10 +339,7 @@ class _GeneralSettingWidget extends StatelessWidget {
   Widget _buildLanguageSettingWidget(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) => const LanguagesOptionsScreen()));
+        Navigator.push(context, MaterialPageRoute(builder: (context) => const LanguagesOptionsScreen()));
       },
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -427,12 +404,9 @@ class _ScanControlWidget extends StatelessWidget {
       decoration: BoxDecoration(
         color: CustomAppColor.of(context).bgScreen,
         borderRadius: BorderRadius.circular(12.setHeight),
-        border: Border.all(
-            color: CustomAppColor.of(context).containerBorder,
-            width: 1.setHeight),
+        border: Border.all(color: CustomAppColor.of(context).containerBorder, width: 1.setHeight),
       ),
-      padding:
-          EdgeInsets.symmetric(horizontal: 16.setWidth, vertical: 16.setHeight),
+      padding: EdgeInsets.symmetric(horizontal: 16.setWidth, vertical: 16.setHeight),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -516,8 +490,7 @@ class _ScanControlWidget extends StatelessWidget {
               activeColor: CustomAppColor.of(context).txtWhite,
               activeTrackColor: CustomAppColor.of(context).primary,
               inactiveThumbColor: CustomAppColor.of(context).txtWhite,
-              inactiveTrackColor:
-                  CustomAppColor.of(context).switchInactiveTrackColor,
+              inactiveTrackColor: CustomAppColor.of(context).switchInactiveTrackColor,
               trackOutlineColor: WidgetStateProperty.all(Colors.transparent),
               onChanged: (value) {
                 isPlaySound.value = value;
@@ -568,8 +541,7 @@ class _ScanControlWidget extends StatelessWidget {
               activeColor: CustomAppColor.of(context).txtWhite,
               activeTrackColor: CustomAppColor.of(context).primary,
               inactiveThumbColor: CustomAppColor.of(context).txtWhite,
-              inactiveTrackColor:
-                  CustomAppColor.of(context).switchInactiveTrackColor,
+              inactiveTrackColor: CustomAppColor.of(context).switchInactiveTrackColor,
               trackOutlineColor: WidgetStateProperty.all(Colors.transparent),
               onChanged: (value) {
                 isVibrate.value = value;
@@ -620,8 +592,7 @@ class _ScanControlWidget extends StatelessWidget {
               activeColor: CustomAppColor.of(context).txtWhite,
               activeTrackColor: CustomAppColor.of(context).primary,
               inactiveThumbColor: CustomAppColor.of(context).txtWhite,
-              inactiveTrackColor:
-                  CustomAppColor.of(context).switchInactiveTrackColor,
+              inactiveTrackColor: CustomAppColor.of(context).switchInactiveTrackColor,
               trackOutlineColor: WidgetStateProperty.all(Colors.transparent),
               onChanged: (value) {
                 isClipboardToClipboard.value = value;
@@ -672,8 +643,7 @@ class _ScanControlWidget extends StatelessWidget {
               activeColor: CustomAppColor.of(context).txtWhite,
               activeTrackColor: CustomAppColor.of(context).primary,
               inactiveThumbColor: CustomAppColor.of(context).txtWhite,
-              inactiveTrackColor:
-                  CustomAppColor.of(context).switchInactiveTrackColor,
+              inactiveTrackColor: CustomAppColor.of(context).switchInactiveTrackColor,
               trackOutlineColor: WidgetStateProperty.all(Colors.transparent),
               onChanged: (value) {
                 isAutoWebSearch.value = value;
@@ -690,7 +660,9 @@ class _ScanControlWidget extends StatelessWidget {
       onTap: () {
         showDialog(
             context: context,
-            builder: (_) => ChangeCameraTypeDialog(parentContext: context));
+            builder: (buildContext) => ChangeCameraTypeDialog(
+                  parentContext: buildContext,
+                ));
       },
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -749,12 +721,9 @@ class _SupprtUsWidget extends StatelessWidget {
       decoration: BoxDecoration(
         color: CustomAppColor.of(context).bgScreen,
         borderRadius: BorderRadius.circular(12.setHeight),
-        border: Border.all(
-            color: CustomAppColor.of(context).containerBorder,
-            width: 1.setHeight),
+        border: Border.all(color: CustomAppColor.of(context).containerBorder, width: 1.setHeight),
       ),
-      padding:
-          EdgeInsets.symmetric(horizontal: 16.setWidth, vertical: 16.setHeight),
+      padding: EdgeInsets.symmetric(horizontal: 16.setWidth, vertical: 16.setHeight),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -911,12 +880,9 @@ class _AboutUsWidget extends StatelessWidget {
       decoration: BoxDecoration(
         color: CustomAppColor.of(context).bgScreen,
         borderRadius: BorderRadius.circular(12.setHeight),
-        border: Border.all(
-            color: CustomAppColor.of(context).containerBorder,
-            width: 1.setHeight),
+        border: Border.all(color: CustomAppColor.of(context).containerBorder, width: 1.setHeight),
       ),
-      padding:
-          EdgeInsets.symmetric(horizontal: 16.setWidth, vertical: 16.setHeight),
+      padding: EdgeInsets.symmetric(horizontal: 16.setWidth, vertical: 16.setHeight),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

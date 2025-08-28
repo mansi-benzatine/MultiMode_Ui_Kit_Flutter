@@ -1,7 +1,5 @@
 import 'package:animated_bottom_navigation_bar/animated_bottom_navigation_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:qr_scanner_screens_app_package/ui/generate_qr/view/generate_qr_screen.dart';
-import 'package:qr_scanner_screens_app_package/ui/scan/view/scan_screen.dart';
 import 'package:qr_scanner_screens_app_package/utils/app_assets.dart';
 import 'package:qr_scanner_screens_app_package/utils/app_color.dart';
 import 'package:qr_scanner_screens_app_package/utils/debug.dart';
@@ -9,20 +7,50 @@ import 'package:qr_scanner_screens_app_package/utils/sizer_utils.dart';
 import 'package:qr_scanner_screens_app_package/utils/utils.dart';
 
 import '../../favorite/view/favorite_screen.dart';
+import '../../generate_qr/view/generate_qr_screen.dart';
 import '../../history/view/history_screen.dart';
+import '../../scan/view/scan_screen.dart';
 import '../../setting/view/setting_screen.dart';
 
 class DashboardScreen extends StatefulWidget {
   final int currentIndex;
+  final bool isForEmptyHistoryScreen;
+  final bool isForDeleteHistoryAlert;
+  final bool isForEmptyFavouriteScreen;
+  final bool isForDeleteFavouriteAlert;
+  final bool isForCameraTypeAlert;
+  final bool isForThemeChangeAlert;
 
-  static Route<void> route({required int currentIndex}) {
+  static Route<void> route(
+      {required int currentIndex,
+      bool isForEmptyHistoryScreen = false,
+      bool isForDeleteAlertInHistoryScreen = false,
+      bool isForDeleteFavouriteAlertInFavScreen = false,
+      bool isForEmptyFavouriteScreen = false,
+      bool isForCameraTypeAlertInSettingScreen = false,
+      bool isForThemeChangeAlertInSettingScreen = false}) {
     return MaterialPageRoute(
         builder: (_) => DashboardScreen(
               currentIndex: currentIndex,
+              isForEmptyHistoryScreen: isForEmptyHistoryScreen,
+              isForDeleteHistoryAlert: isForDeleteAlertInHistoryScreen,
+              isForEmptyFavouriteScreen: isForEmptyFavouriteScreen,
+              isForDeleteFavouriteAlert: isForDeleteFavouriteAlertInFavScreen,
+              isForCameraTypeAlert: isForCameraTypeAlertInSettingScreen,
+              isForThemeChangeAlert: isForThemeChangeAlertInSettingScreen,
             ));
   }
 
-  const DashboardScreen({super.key, required this.currentIndex});
+  const DashboardScreen({
+    super.key,
+    required this.currentIndex,
+    this.isForEmptyHistoryScreen = false,
+    this.isForDeleteHistoryAlert = false,
+    this.isForDeleteFavouriteAlert = false,
+    this.isForEmptyFavouriteScreen = false,
+    this.isForCameraTypeAlert = false,
+    this.isForThemeChangeAlert = false,
+  });
 
   @override
   State<DashboardScreen> createState() => _DashboardScreenState();
@@ -32,13 +60,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
   final ValueNotifier<int> _selectedIndex = ValueNotifier(0);
   final PageController _pageController = PageController();
 
-  final List<Widget> _pages = [
-    const GenerateQrScreen(),
-    const HistoryScreen(),
-    ScanScreen(key: UniqueKey()),
-    const FavoriteScreen(),
-    const SettingScreen(),
-  ];
+  List<Widget> _pages = [];
 
   void _onItemTapped(int index) {
     Debug.printLog("OnItemTapped: $index");
@@ -54,6 +76,22 @@ class _DashboardScreenState extends State<DashboardScreen> {
   @override
   void initState() {
     super.initState();
+    _pages = [
+      const GenerateQrScreen(),
+      HistoryScreen(
+        isEmptyScreenShown: widget.isForEmptyHistoryScreen,
+        isDeleteAlertShown: widget.isForDeleteHistoryAlert,
+      ),
+      ScanScreen(key: UniqueKey()),
+      FavoriteScreen(
+        isForDeleteAlert: widget.isForDeleteFavouriteAlert,
+        isForEmptyFavoriteScreen: widget.isForEmptyFavouriteScreen,
+      ),
+      SettingScreen(
+        isThemeAlertShown: widget.isForThemeChangeAlert,
+        isCameraAlertShown: widget.isForCameraTypeAlert,
+      ),
+    ];
     Future.delayed(const Duration(milliseconds: 100), () {
       int initialBarIndex;
       if (widget.currentIndex == 3) {
@@ -111,8 +149,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
           ignoring: true,
           child: FloatingActionButton(
             backgroundColor: CustomAppColor.of(context).primary,
-            shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(100)),
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(100)),
             elevation: 0,
             child: Padding(
               padding: EdgeInsets.all(16.setHeight),
@@ -122,8 +159,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
               ),
             ),
             onPressed: () {
-              Debug.printLog(
-                  "Floating Action Button pressed - navigating to scan screen");
+              Debug.printLog("Floating Action Button pressed - navigating to scan screen");
               _selectedIndex.value = -1; // No bottom bar icon selected
               _pageController.jumpToPage(2); // Scan screen
             },
@@ -186,9 +222,8 @@ class _BottomBar extends StatelessWidget {
           ),
         );
       },
-      activeIndex: selectedTabIndex >= 0
-          ? selectedTabIndex
-          : 0, // Required by AnimatedBottomNavigationBar
+      activeIndex: selectedTabIndex >= 0 ? selectedTabIndex : 0,
+      // Required by AnimatedBottomNavigationBar
       gapLocation: GapLocation.center,
       notchSmoothness: NotchSmoothness.sharpEdge,
       onTap: onTabIndexChanged,

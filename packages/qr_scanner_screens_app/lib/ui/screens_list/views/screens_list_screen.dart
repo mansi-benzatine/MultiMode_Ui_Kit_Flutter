@@ -659,9 +659,55 @@ class _ScreenListScreen extends State<ScreenListScreen> {
         onClick: () => Navigator.push(context, DashboardScreen.route(currentIndex: 1)),
       ),
       ScreenListDataModel(
+        title: "Result - Website Screen",
+        icon: AppAssets.icScreens,
+        onClick: () => Navigator.push(
+            context,
+            QrCodeResultScreen.route(
+              qrType: {
+                'name': Languages.of(context).txtWebsite,
+                'icon': AppAssets.icWebsite,
+                'type': Constant.toolWebsite,
+              },
+            )),
+      ),
+      ScreenListDataModel(
+        title: "Empty History Screen",
+        icon: AppAssets.icScreens,
+        onClick: () => Navigator.push(context, DashboardScreen.route(currentIndex: 1, isForEmptyHistoryScreen: true)),
+      ),
+      ScreenListDataModel(
+        title: "Delete History Confirm Popup Screen",
+        icon: AppAssets.icScreens,
+        onClick: () => Navigator.push(context, DashboardScreen.route(currentIndex: 1, isForDeleteAlertInHistoryScreen: true)),
+      ),
+      ScreenListDataModel(
         title: "Favourites Screen",
         icon: AppAssets.icScreens,
         onClick: () => Navigator.push(context, DashboardScreen.route(currentIndex: 3)),
+      ),
+      ScreenListDataModel(
+        title: "Result - Website Screen",
+        icon: AppAssets.icScreens,
+        onClick: () => Navigator.push(
+            context,
+            QrCodeResultScreen.route(
+              qrType: {
+                'name': Languages.of(context).txtWebsite,
+                'icon': AppAssets.icWebsite,
+                'type': Constant.toolWebsite,
+              },
+            )),
+      ),
+      ScreenListDataModel(
+        title: "Empty Favourite Screen",
+        icon: AppAssets.icScreens,
+        onClick: () => Navigator.push(context, DashboardScreen.route(currentIndex: 3, isForEmptyFavouriteScreen: true)),
+      ),
+      ScreenListDataModel(
+        title: "Delete Favourite Confirm Popup Screen",
+        icon: AppAssets.icScreens,
+        onClick: () => Navigator.push(context, DashboardScreen.route(currentIndex: 3, isForDeleteFavouriteAlertInFavScreen: true)),
       ),
       ScreenListDataModel(
         title: "Settings Screen",
@@ -677,6 +723,31 @@ class _ScreenListScreen extends State<ScreenListScreen> {
         title: "QR Code Settings Screen",
         icon: AppAssets.icScreens,
         onClick: () => Navigator.push(context, QrCodeSettingScreen.route()),
+      ),
+      ScreenListDataModel(
+        title: "QR Code Primary Color Settings ",
+        icon: AppAssets.icScreens,
+        onClick: () => Navigator.push(context, QrCodeSettingScreen.route(isColorBottomSheetShown: true)),
+      ),
+      ScreenListDataModel(
+        title: "QR Code Accent Color Settings ",
+        icon: AppAssets.icScreens,
+        onClick: () => Navigator.push(context, QrCodeSettingScreen.route(isColorBottomSheetShown: true)),
+      ),
+      ScreenListDataModel(
+        title: "QR Code Black & White Color Settings ",
+        icon: AppAssets.icScreens,
+        onClick: () => Navigator.push(context, QrCodeSettingScreen.route(isColorBottomSheetShown: true)),
+      ),
+      ScreenListDataModel(
+        title: "Theme Change",
+        icon: AppAssets.icScreens,
+        onClick: () => Navigator.push(context, DashboardScreen.route(currentIndex: 4, isForThemeChangeAlertInSettingScreen: true)),
+      ),
+      ScreenListDataModel(
+        title: "Camera Type Change",
+        icon: AppAssets.icScreens,
+        onClick: () => Navigator.push(context, DashboardScreen.route(currentIndex: 4, isForCameraTypeAlertInSettingScreen: true)),
       ),
       ScreenListDataModel(
         title: "Languages Options Screen",

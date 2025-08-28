@@ -19,12 +19,10 @@ class SelectColorBottomSheetDialog extends StatefulWidget {
   });
 
   @override
-  State<SelectColorBottomSheetDialog> createState() =>
-      _SelectColorBottomSheetDialogState();
+  State<SelectColorBottomSheetDialog> createState() => _SelectColorBottomSheetDialogState();
 }
 
-class _SelectColorBottomSheetDialogState
-    extends State<SelectColorBottomSheetDialog> {
+class _SelectColorBottomSheetDialogState extends State<SelectColorBottomSheetDialog> {
   ColorCategory selectedCategory = ColorCategory.primary;
   Color selectedColor = const Color(0xFFEE5B4A); // Default red color
   Color selectedShade = const Color(0xFFEE5B4A);
@@ -179,148 +177,141 @@ class _SelectColorBottomSheetDialogState
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        color: CustomAppColor.of(context).bgScreen,
-        borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(20.setHeight),
-          topRight: Radius.circular(20.setHeight),
+    return SafeArea(
+      child: Container(
+        decoration: BoxDecoration(
+          color: CustomAppColor.of(context).bgScreen,
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(20.setHeight),
+            topRight: Radius.circular(20.setHeight),
+          ),
         ),
-      ),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          // Title
-          Padding(
-            padding: EdgeInsets.all(20.setWidth),
-            child: CommonText(
-              text: Languages.of(context).txtSelectColor,
-              fontSize: 20.setFontSize,
-              fontWeight: FontWeight.w600,
-              textColor: CustomAppColor.of(context).primary,
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            // Title
+            Padding(
+              padding: EdgeInsets.all(20.setWidth),
+              child: CommonText(
+                text: Languages.of(context).txtSelectColor,
+                fontSize: 20.setFontSize,
+                fontWeight: FontWeight.w600,
+                textColor: CustomAppColor.of(context).primary,
+              ),
             ),
-          ),
 
-          // Category tabs
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 20.setWidth),
-            child: Row(
-              children: [
-                Expanded(
-                  child: _buildCategoryTab(
-                      Languages.of(context).txtPrimary, ColorCategory.primary),
-                ),
-                SizedBox(width: 10.setWidth),
-                Expanded(
-                  child: _buildCategoryTab(
-                      Languages.of(context).txtAccent, ColorCategory.accent),
-                ),
-                SizedBox(width: 10.setWidth),
-                Expanded(
-                  child: _buildCategoryTab(Languages.of(context).txtBlackWhite,
-                      ColorCategory.blackWhite),
-                ),
-              ],
-            ),
-          ),
-
-          SizedBox(height: 20.setHeight),
-
-          // Color grid
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 20.setWidth),
-            child: Wrap(
-              spacing: 12.setWidth,
-              runSpacing: 12.setHeight,
-              children: currentColors
-                  .map((color) => _buildColorCircle(color, false))
-                  .toList(),
-            ),
-          ),
-
-          SizedBox(height: 30.setHeight),
-
-          // Color shade section
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 20.setWidth),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                CommonText(
-                  text: Languages.of(context).txtSelectColorShade,
-                  fontSize: 18.setFontSize,
-                  fontWeight: FontWeight.w600,
-                  textColor: CustomAppColor.of(context).txtBlack,
-                ),
-                SizedBox(height: 15.setHeight),
-                Wrap(
-                  spacing: 8.setWidth,
-                  runSpacing: 8.setHeight,
-                  children: getShades(selectedColor)
-                      .map((shade) => _buildColorCircle(shade, true))
-                      .toList(),
-                ),
-              ],
-            ),
-          ),
-
-          SizedBox(height: 20.setHeight),
-
-          // Color name
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 20.setWidth),
-            child: CommonText(
-              text:
-                  "${getColorName(selectedColor)} (500) ${getColorName(selectedShade)}",
-              fontSize: 16.setFontSize,
-              fontWeight: FontWeight.w500,
-              textColor: CustomAppColor.of(context).txtGray,
-            ),
-          ),
-
-          SizedBox(height: 30.setHeight),
-
-          // Action buttons
-          Padding(
-            padding: EdgeInsets.symmetric(
-                horizontal: 20.setWidth, vertical: 20.setHeight),
-            child: Row(
-              children: [
-                Expanded(
-                  child: CommonButton(
-                    text: Languages.of(context).txtCancel.toUpperCase(),
-                    buttonColor: Colors.transparent,
-                    buttonTextColor: CustomAppColor.of(context).primary,
-                    height: 45.setHeight,
-                    borderColor: CustomAppColor.of(context).primary,
-                    buttonTextSize: 14.setFontSize,
-                    buttonTextWeight: FontWeight.w500,
-                    onTap: () {
-                      Navigator.pop(context);
-                    },
+            // Category tabs
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 20.setWidth),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: _buildCategoryTab(Languages.of(context).txtPrimary, ColorCategory.primary),
                   ),
-                ),
-                SizedBox(width: 15.setWidth),
-                Expanded(
-                  child: CommonButton(
-                    text: Languages.of(context).txtOk.toUpperCase(),
-                    buttonColor: CustomAppColor.of(context).primary,
-                    buttonTextColor: CustomAppColor.of(context).white,
-                    height: 45.setHeight,
-                    buttonTextSize: 14.setFontSize,
-                    buttonTextWeight: FontWeight.w500,
-                    onTap: () {
-                      if (widget.onColorSelected != null) {
-                        widget.onColorSelected!(selectedShade);
-                      }
-                      Navigator.pop(context, selectedShade);
-                    },
+                  SizedBox(width: 10.setWidth),
+                  Expanded(
+                    child: _buildCategoryTab(Languages.of(context).txtAccent, ColorCategory.accent),
                   ),
-                ),
-              ],
+                  SizedBox(width: 10.setWidth),
+                  Expanded(
+                    child: _buildCategoryTab(Languages.of(context).txtBlackWhite, ColorCategory.blackWhite),
+                  ),
+                ],
+              ),
             ),
-          ),
-        ],
+
+            SizedBox(height: 20.setHeight),
+
+            // Color grid
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 20.setWidth),
+              child: Wrap(
+                spacing: 12.setWidth,
+                runSpacing: 12.setHeight,
+                children: currentColors.map((color) => _buildColorCircle(color, false)).toList(),
+              ),
+            ),
+
+            SizedBox(height: 30.setHeight),
+
+            // Color shade section
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 20.setWidth),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  CommonText(
+                    text: Languages.of(context).txtSelectColorShade,
+                    fontSize: 18.setFontSize,
+                    fontWeight: FontWeight.w600,
+                    textColor: CustomAppColor.of(context).txtBlack,
+                  ),
+                  SizedBox(height: 15.setHeight),
+                  Wrap(
+                    spacing: 8.setWidth,
+                    runSpacing: 8.setHeight,
+                    children: getShades(selectedColor).map((shade) => _buildColorCircle(shade, true)).toList(),
+                  ),
+                ],
+              ),
+            ),
+
+            SizedBox(height: 20.setHeight),
+
+            // Color name
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 20.setWidth),
+              child: CommonText(
+                text: "${getColorName(selectedColor)} (500) ${getColorName(selectedShade)}",
+                fontSize: 16.setFontSize,
+                fontWeight: FontWeight.w500,
+                textColor: CustomAppColor.of(context).txtGray,
+              ),
+            ),
+
+            SizedBox(height: 30.setHeight),
+
+            // Action buttons
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 20.setWidth, vertical: 20.setHeight),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: CommonButton(
+                      text: Languages.of(context).txtCancel.toUpperCase(),
+                      buttonColor: Colors.transparent,
+                      buttonTextColor: CustomAppColor.of(context).primary,
+                      height: 45.setHeight,
+                      borderColor: CustomAppColor.of(context).primary,
+                      buttonTextSize: 14.setFontSize,
+                      buttonTextWeight: FontWeight.w500,
+                      onTap: () {
+                        Navigator.pop(context);
+                      },
+                    ),
+                  ),
+                  SizedBox(width: 15.setWidth),
+                  Expanded(
+                    child: CommonButton(
+                      text: Languages.of(context).txtOk.toUpperCase(),
+                      buttonColor: CustomAppColor.of(context).primary,
+                      buttonTextColor: CustomAppColor.of(context).white,
+                      height: 45.setHeight,
+                      buttonTextSize: 14.setFontSize,
+                      buttonTextWeight: FontWeight.w500,
+                      onTap: () {
+                        if (widget.onColorSelected != null) {
+                          widget.onColorSelected!(selectedShade);
+                        }
+                        Navigator.pop(context, selectedShade);
+                      },
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -335,12 +326,9 @@ class _SelectColorBottomSheetDialogState
       },
       child: Expanded(
         child: Container(
-          padding: EdgeInsets.symmetric(
-              horizontal: 10.setWidth, vertical: 7.setHeight),
+          padding: EdgeInsets.symmetric(horizontal: 10.setWidth, vertical: 7.setHeight),
           decoration: BoxDecoration(
-            color: isSelected
-                ? CustomAppColor.of(context).primary
-                : Colors.transparent,
+            color: isSelected ? CustomAppColor.of(context).primary : Colors.transparent,
             borderRadius: BorderRadius.circular(20.setHeight),
             border: Border.all(
               color: CustomAppColor.of(context).primary,
@@ -351,9 +339,7 @@ class _SelectColorBottomSheetDialogState
             text: title,
             fontSize: 12.setFontSize,
             fontWeight: FontWeight.w500,
-            textColor: isSelected
-                ? CustomAppColor.of(context).white
-                : CustomAppColor.of(context).primary,
+            textColor: isSelected ? CustomAppColor.of(context).white : CustomAppColor.of(context).primary,
           ),
         ),
       ),
@@ -361,8 +347,7 @@ class _SelectColorBottomSheetDialogState
   }
 
   Widget _buildColorCircle(Color color, bool isShade) {
-    final isSelected =
-        isShade ? selectedShade == color : selectedColor == color;
+    final isSelected = isShade ? selectedShade == color : selectedColor == color;
     return GestureDetector(
       onTap: () {
         setState(() {
@@ -370,8 +355,7 @@ class _SelectColorBottomSheetDialogState
             selectedShade = color;
           } else {
             selectedColor = color;
-            selectedShade =
-                color; // Reset shade selection when base color changes
+            selectedShade = color; // Reset shade selection when base color changes
           }
         });
       },
