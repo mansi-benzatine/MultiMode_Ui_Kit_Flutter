@@ -11,20 +11,157 @@ import '../../../widgets/button/common_button.dart';
 import '../../water_drink_reminder/views/water_drink_reminder_screen.dart';
 
 class WaterTrackerSettingScreen extends StatefulWidget {
-  static Route<void> route() {
-    return MaterialPageRoute(builder: (_) => const WaterTrackerSettingScreen());
+  final bool isShownSetTarget;
+  static Route<void> route({bool isShownSetTarget = false}) {
+    return MaterialPageRoute(builder: (_) => WaterTrackerSettingScreen(isShownSetTarget: isShownSetTarget));
   }
 
-  const WaterTrackerSettingScreen({super.key});
+  const WaterTrackerSettingScreen({super.key, this.isShownSetTarget = false});
 
   @override
-  State<WaterTrackerSettingScreen> createState() =>
-      _WaterTrackerSettingScreenState();
+  State<WaterTrackerSettingScreen> createState() => _WaterTrackerSettingScreenState();
 }
 
-class _WaterTrackerSettingScreenState extends State<WaterTrackerSettingScreen>
-    implements TopBarClickListener {
+class _WaterTrackerSettingScreenState extends State<WaterTrackerSettingScreen> implements TopBarClickListener {
   int target = 2000;
+  bool _isBottomSheetOpen = false;
+
+  void showSetTargetBS() {
+    final List<String> volumeOptions = ["1000 ml", "1500 ml", "2000 ml", "250 ml", "300 ml", "350 ml", "500 ml"];
+    int selectedIndex = 0;
+
+    setState(() {
+      _isBottomSheetOpen = true;
+    });
+
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      enableDrag: false,
+      isDismissible: false,
+      backgroundColor: Colors.transparent,
+      builder: (context) {
+        return SafeArea(
+          bottom: true,
+          child: StatefulBuilder(
+            builder: (context, setState) {
+              return Container(
+                padding: EdgeInsets.all(20.setWidth),
+                decoration: BoxDecoration(
+                  color: CustomAppColor.of(context).bgScaffold,
+                  borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
+                ),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        CommonText(text: Languages.of(context).txtSetTarget, fontSize: 24.setFontSize, fontWeight: FontWeight.bold),
+                        IgnorePointer(
+                          ignoring: true,
+                          child: IconButton(icon: Icon(Icons.close), onPressed: () => Navigator.pop(context)),
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: 8.setHeight),
+
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Image.asset(AppAssets.icSetTarget, height: 96.setHeight, width: 96.setWidth),
+                        SizedBox(width: 40.setWidth),
+                        Column(
+                          children: [
+                            GestureDetector(
+                              child: Icon(Icons.arrow_drop_up, size: 50, color: Colors.grey),
+                              onTap: () {
+                                setState(() {
+                                  selectedIndex = (selectedIndex - 1 + volumeOptions.length) % volumeOptions.length;
+                                });
+                              },
+                            ),
+                            Container(
+                              margin: EdgeInsets.only(bottom: 10.setHeight),
+                              height: 1.setHeight,
+                              width: 80.setWidth,
+                              color: CustomAppColor.of(context).primary,
+                            ),
+                            CommonText(text: volumeOptions[selectedIndex], fontSize: 20.setFontSize, fontWeight: FontWeight.bold, textColor: CustomAppColor.of(context).txtPurple),
+                            Container(
+                              margin: EdgeInsets.only(top: 10.setHeight),
+                              height: 1.setHeight,
+                              width: 80.setWidth,
+                              color: CustomAppColor.of(context).primary,
+                            ),
+                            GestureDetector(
+                              child: Icon(Icons.arrow_drop_down, size: 50, color: Colors.grey),
+                              onTap: () {
+                                setState(() {
+                                  selectedIndex = (selectedIndex + 1) % volumeOptions.length;
+                                });
+                              },
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+
+                    SizedBox(height: 10.setHeight),
+                    IgnorePointer(
+                      ignoring: true,
+                      child: Row(
+                        children: [
+                          Expanded(
+                            child: CommonButton(
+                              text: Languages.of(context).txtCancel,
+                              buttonColor: CustomAppColor.of(context).containerBgPurple,
+                              buttonTextColor: CustomAppColor.of(context).txtPurpleWhite,
+                              onTap: () => Navigator.pop(context),
+                            ),
+                          ),
+                          SizedBox(width: 15.setWidth),
+                          Expanded(
+                            child: CommonButton(
+                              text: Languages.of(context).txtSet,
+                              buttonColor: CustomAppColor.of(context).primary,
+                              buttonTextColor: Colors.white,
+                              onTap: () {
+                                Navigator.pop(context);
+                              },
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              );
+            },
+          ),
+        );
+      },
+    ).whenComplete(() {
+      if (_isBottomSheetOpen) {
+        setState(() {
+          _isBottomSheetOpen = false;
+        });
+        Navigator.pop(context);
+      }
+    });
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+
+    if (widget.isShownSetTarget) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        showSetTargetBS();
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -33,12 +170,7 @@ class _WaterTrackerSettingScreenState extends State<WaterTrackerSettingScreen>
       body: SafeArea(
         child: Column(
           children: [
-            TopBar(
-              this,
-              isShowSimpleTitle: true,
-              isShowBack: true,
-              simpleTitle: Languages.of(context).txtSettings,
-            ),
+            TopBar(this, isShowSimpleTitle: true, isShowBack: true, simpleTitle: Languages.of(context).txtSettings),
             Expanded(
               child: Padding(
                 padding: EdgeInsets.symmetric(horizontal: 22.setWidth),
@@ -47,10 +179,7 @@ class _WaterTrackerSettingScreenState extends State<WaterTrackerSettingScreen>
                     TargetView(),
                     Padding(
                       padding: EdgeInsets.symmetric(vertical: 10.setHeight),
-                      child: Divider(
-                        thickness: 1,
-                        color: CustomAppColor.of(context).containerGreyBorder,
-                      ),
+                      child: Divider(thickness: 1, color: CustomAppColor.of(context).containerGreyBorder),
                     ),
 
                     DrinkReminderNavigationView(),
@@ -79,46 +208,28 @@ class TargetView extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            CommonText(
-              text: Languages.of(context).txtTarget,
-              fontSize: 18.setFontSize,
-              fontWeight: FontWeight.w500,
-            ),
-            InkWell(
-              onTap: () => showSetTargetBottomSheet(context),
-              child: Row(
-                children: [
-                  CommonText(
-                    text: "2000 ml",
-                    fontSize: 14.setFontSize,
-                    fontWeight: FontWeight.w500,
-                  ),
-                  Icon(Icons.arrow_drop_down),
-                ],
+            CommonText(text: Languages.of(context).txtTarget, fontSize: 18.setFontSize, fontWeight: FontWeight.w500),
+            IgnorePointer(
+              ignoring: true,
+              child: InkWell(
+                onTap: () => showSetTargetBottomSheet(context),
+                child: Row(
+                  children: [
+                    CommonText(text: "2000 ml", fontSize: 14.setFontSize, fontWeight: FontWeight.w500),
+                    Icon(Icons.arrow_drop_down),
+                  ],
+                ),
               ),
             ),
           ],
         ),
-        CommonText(
-          text: Languages.of(context).txtMostPeopleNeed2000MlADay,
-          fontSize: 14.setFontSize,
-          fontWeight: FontWeight.w400,
-          textColor: CustomAppColor.of(context).txtGrey,
-        ),
+        CommonText(text: Languages.of(context).txtMostPeopleNeed2000MlADay, fontSize: 14.setFontSize, fontWeight: FontWeight.w400, textColor: CustomAppColor.of(context).txtGrey),
       ],
     );
   }
 
   void showSetTargetBottomSheet(BuildContext context) {
-    final List<String> volumeOptions = [
-      "1000 ml",
-      "1500 ml",
-      "2000 ml",
-      "250 ml",
-      "300 ml",
-      "350 ml",
-      "500 ml",
-    ];
+    final List<String> volumeOptions = ["1000 ml", "1500 ml", "2000 ml", "250 ml", "300 ml", "350 ml", "500 ml"];
     int selectedIndex = 0;
 
     showModalBottomSheet(
@@ -142,15 +253,8 @@ class TargetView extends StatelessWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        CommonText(
-                          text: Languages.of(context).txtSetTarget,
-                          fontSize: 24.setFontSize,
-                          fontWeight: FontWeight.bold,
-                        ),
-                        IconButton(
-                          icon: Icon(Icons.close),
-                          onPressed: () => Navigator.pop(context),
-                        ),
+                        CommonText(text: Languages.of(context).txtSetTarget, fontSize: 24.setFontSize, fontWeight: FontWeight.bold),
+                        IconButton(icon: Icon(Icons.close), onPressed: () => Navigator.pop(context)),
                       ],
                     ),
                     SizedBox(height: 8.setHeight),
@@ -158,27 +262,15 @@ class TargetView extends StatelessWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Image.asset(
-                          AppAssets.icSetTarget,
-                          height: 96.setHeight,
-                          width: 96.setWidth,
-                        ),
+                        Image.asset(AppAssets.icSetTarget, height: 96.setHeight, width: 96.setWidth),
                         SizedBox(width: 40.setWidth),
                         Column(
                           children: [
                             GestureDetector(
-                              child: Icon(
-                                Icons.arrow_drop_up,
-                                size: 50,
-                                color: Colors.grey,
-                              ),
+                              child: Icon(Icons.arrow_drop_up, size: 50, color: Colors.grey),
                               onTap: () {
                                 setState(() {
-                                  selectedIndex =
-                                      (selectedIndex -
-                                          1 +
-                                          volumeOptions.length) %
-                                      volumeOptions.length;
+                                  selectedIndex = (selectedIndex - 1 + volumeOptions.length) % volumeOptions.length;
                                 });
                               },
                             ),
@@ -188,12 +280,7 @@ class TargetView extends StatelessWidget {
                               width: 80.setWidth,
                               color: CustomAppColor.of(context).primary,
                             ),
-                            CommonText(
-                              text: volumeOptions[selectedIndex],
-                              fontSize: 20.setFontSize,
-                              fontWeight: FontWeight.bold,
-                              textColor: CustomAppColor.of(context).txtPurple,
-                            ),
+                            CommonText(text: volumeOptions[selectedIndex], fontSize: 20.setFontSize, fontWeight: FontWeight.bold, textColor: CustomAppColor.of(context).txtPurple),
                             Container(
                               margin: EdgeInsets.only(top: 10.setHeight),
                               height: 1.setHeight,
@@ -201,16 +288,10 @@ class TargetView extends StatelessWidget {
                               color: CustomAppColor.of(context).primary,
                             ),
                             GestureDetector(
-                              child: Icon(
-                                Icons.arrow_drop_down,
-                                size: 50,
-                                color: Colors.grey,
-                              ),
+                              child: Icon(Icons.arrow_drop_down, size: 50, color: Colors.grey),
                               onTap: () {
                                 setState(() {
-                                  selectedIndex =
-                                      (selectedIndex + 1) %
-                                      volumeOptions.length;
+                                  selectedIndex = (selectedIndex + 1) % volumeOptions.length;
                                 });
                               },
                             ),
@@ -225,12 +306,8 @@ class TargetView extends StatelessWidget {
                         Expanded(
                           child: CommonButton(
                             text: Languages.of(context).txtCancel,
-                            buttonColor: CustomAppColor.of(
-                              context,
-                            ).containerBgPurple,
-                            buttonTextColor: CustomAppColor.of(
-                              context,
-                            ).txtPurpleWhite,
+                            buttonColor: CustomAppColor.of(context).containerBgPurple,
+                            buttonTextColor: CustomAppColor.of(context).txtPurpleWhite,
                             onTap: () => Navigator.pop(context),
                           ),
                         ),
@@ -270,10 +347,7 @@ class DrinkReminderNavigationView extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            CommonText(
-              text: Languages.of(context).txtDrinkWaterReminder,
-              fontSize: 18.setFontSize,
-            ),
+            CommonText(text: Languages.of(context).txtDrinkWaterReminder, fontSize: 18.setFontSize),
             Icon(Icons.chevron_right_rounded),
           ],
         ),

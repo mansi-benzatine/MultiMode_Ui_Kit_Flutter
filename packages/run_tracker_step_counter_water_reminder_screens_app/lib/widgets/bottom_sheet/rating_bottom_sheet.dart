@@ -17,21 +17,9 @@ class RatingBottomSheet extends StatefulWidget {
 class RatingBottomSheetState extends State<RatingBottomSheet> {
   double _rating = 3;
 
-  final Map<int, String> _emojis = {
-    1: AppAssets.img12Star,
-    2: AppAssets.img12Star,
-    3: AppAssets.img3Star,
-    4: AppAssets.img4Star,
-    5: AppAssets.img5Star,
-  };
+  final Map<int, String> _emojis = {1: AppAssets.img12Star, 2: AppAssets.img12Star, 3: AppAssets.img3Star, 4: AppAssets.img4Star, 5: AppAssets.img5Star};
 
-  final Map<int, String> _labels = {
-    1: 'TERRIBLE',
-    2: 'BAD',
-    3: 'OK',
-    4: 'GOOD',
-    5: 'GREAT',
-  };
+  final Map<int, String> _labels = {1: 'TERRIBLE', 2: 'BAD', 3: 'OK', 4: 'GOOD', 5: 'GREAT'};
 
   @override
   Widget build(BuildContext context) {
@@ -44,12 +32,7 @@ class RatingBottomSheetState extends State<RatingBottomSheet> {
         children: [
           Container(
             margin: EdgeInsets.only(top: 60.setHeight),
-            padding: EdgeInsets.only(
-              top: 80.setHeight,
-              left: 20.setWidth,
-              right: 20.setWidth,
-              bottom: 30.setHeight,
-            ),
+            padding: EdgeInsets.only(top: 80.setHeight, left: 20.setWidth, right: 20.setWidth, bottom: 30.setHeight),
             decoration: BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.vertical(top: Radius.circular(30)),
@@ -59,12 +42,7 @@ class RatingBottomSheetState extends State<RatingBottomSheet> {
               children: [
                 SizedBox(height: 5.setHeight),
 
-                CommonText(
-                  text: _labels[roundedRating]!,
-                  fontSize: 32.setFontSize,
-                  fontWeight: FontWeight.w700,
-                  textColor: CustomAppColor.of(context).black,
-                ),
+                CommonText(text: _labels[roundedRating]!, fontSize: 32.setFontSize, fontWeight: FontWeight.w700, textColor: CustomAppColor.of(context).black),
                 SizedBox(height: 20.setHeight),
                 RatingBar.builder(
                   initialRating: _rating,
@@ -74,8 +52,7 @@ class RatingBottomSheetState extends State<RatingBottomSheet> {
                   itemSize: 54,
                   unratedColor: Color(0xFF9195B6).withValues(alpha: 0.4),
                   itemPadding: EdgeInsets.symmetric(horizontal: 4.setWidth),
-                  itemBuilder: (context, index) =>
-                      Icon(Icons.star_rounded, color: Colors.amber),
+                  itemBuilder: (context, index) => Icon(Icons.star_rounded, color: Colors.amber),
                   onRatingUpdate: (rating) {
                     setState(() {
                       _rating = rating;
@@ -83,19 +60,13 @@ class RatingBottomSheetState extends State<RatingBottomSheet> {
                   },
                 ),
                 SizedBox(height: 28.setHeight),
-                CommonText(
-                  text: Languages.of(context).txtRatingDesc,
-                  fontWeight: FontWeight.w400,
-                  fontSize: 18.setFontSize,
-                  textColor: CustomAppColor.of(context).txtGrey,
-                ),
+                CommonText(text: Languages.of(context).txtRatingDesc, fontWeight: FontWeight.w400, fontSize: 18.setFontSize, textColor: CustomAppColor.of(context).txtGrey),
                 SizedBox(height: 30.setHeight),
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 46.setWidth),
-                  child: CommonButton(
-                    buttonTextSize: 16.setFontSize,
-                    text: Languages.of(context).txtRate,
-                    onTap: () => Navigator.pop(context),
+                IgnorePointer(
+                  ignoring: true,
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 46.setWidth),
+                    child: CommonButton(buttonTextSize: 16.setFontSize, text: Languages.of(context).txtRate, onTap: () => Navigator.pop(context)),
                   ),
                 ),
               ],
@@ -105,23 +76,9 @@ class RatingBottomSheetState extends State<RatingBottomSheet> {
           Container(
             decoration: BoxDecoration(
               shape: BoxShape.circle,
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black.withValues(alpha: 0.15),
-                  blurRadius: 12,
-                  offset: Offset(0, 4),
-                ),
-              ],
+              boxShadow: [BoxShadow(color: Colors.black.withValues(alpha: 0.15), blurRadius: 12, offset: Offset(0, 4))],
             ),
-            child: CircleAvatar(
-              radius: 60,
-              backgroundColor: Colors.white,
-              child: Image.asset(
-                _emojis[roundedRating]!,
-                width: 90,
-                height: 90,
-              ),
-            ),
+            child: CircleAvatar(radius: 60, backgroundColor: Colors.white, child: Image.asset(_emojis[roundedRating]!, width: 90, height: 90)),
           ),
         ],
       ),

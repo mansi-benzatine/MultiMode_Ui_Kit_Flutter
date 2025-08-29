@@ -4,27 +4,24 @@ import 'package:flutter/material.dart';
 import 'package:run_tracker_step_counter_water_reminder_screens_app/utils/app_assets.dart';
 
 class CountdownScreen extends StatefulWidget {
-  const CountdownScreen({super.key});
-  static Route<void> route() {
-    return MaterialPageRoute(builder: (_) => CountdownScreen());
+  final int currentIndex;
+
+  const CountdownScreen({super.key, this.currentIndex = 0});
+
+  static Route<void> route({int currentIndex = 0}) {
+    return MaterialPageRoute(builder: (_) => CountdownScreen(currentIndex: currentIndex));
   }
 
   @override
   State<CountdownScreen> createState() => _CountdownScreenState();
 }
 
-class _CountdownScreenState extends State<CountdownScreen>
-    with TickerProviderStateMixin {
+class _CountdownScreenState extends State<CountdownScreen> with TickerProviderStateMixin {
   late AnimationController _animationController;
   late Animation<double> _scaleAnimation;
   late Animation<double> _opacityAnimation;
 
-  final List<String> countdownImages = [
-    AppAssets.imgCount3,
-    AppAssets.imgCount2,
-    AppAssets.imgCount1,
-    AppAssets.imgCountGO,
-  ];
+  final List<String> countdownImages = [AppAssets.imgCount3, AppAssets.imgCount2, AppAssets.imgCount1, AppAssets.imgCountGO];
 
   int _currentIndex = 0;
   Timer? _timer;
@@ -32,23 +29,23 @@ class _CountdownScreenState extends State<CountdownScreen>
   @override
   void initState() {
     super.initState();
+    _currentIndex = widget.currentIndex;
     _initAnimation();
-    _startCountdown();
+
+    if (widget.currentIndex >= 0) {
+      _playAnimation();
+    } else {
+      // run full countdown
+      _startCountdown();
+    }
   }
 
   void _initAnimation() {
-    _animationController = AnimationController(
-      vsync: this,
-      duration: const Duration(milliseconds: 800),
-    );
+    _animationController = AnimationController(vsync: this, duration: const Duration(milliseconds: 800));
 
-    _scaleAnimation = Tween<double>(begin: 0.5, end: 1.2).animate(
-      CurvedAnimation(parent: _animationController, curve: Curves.easeOutBack),
-    );
+    _scaleAnimation = Tween<double>(begin: 0.5, end: 1.2).animate(CurvedAnimation(parent: _animationController, curve: Curves.easeOutBack));
 
-    _opacityAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(
-      CurvedAnimation(parent: _animationController, curve: Curves.easeIn),
-    );
+    _opacityAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(parent: _animationController, curve: Curves.easeIn));
   }
 
   void _startCountdown() {
@@ -61,7 +58,7 @@ class _CountdownScreenState extends State<CountdownScreen>
         });
         _playAnimation();
       } else {
-        _currentIndex = -1;
+        timer.cancel();
       }
     });
   }
@@ -95,12 +92,7 @@ class _CountdownScreenState extends State<CountdownScreen>
                   opacity: _opacityAnimation.value,
                   child: Transform.scale(
                     scale: _scaleAnimation.value,
-                    child: Image.asset(
-                      countdownImages[_currentIndex],
-                      width: 200,
-                      height: 200,
-                      fit: BoxFit.contain,
-                    ),
+                    child: Image.asset(countdownImages[_currentIndex], width: 200, height: 200, fit: BoxFit.contain),
                   ),
                 );
               },

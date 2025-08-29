@@ -13,19 +13,19 @@ import '../../../widgets/text/common_text.dart';
 import '../../fill_information/datamodels/fill_information_data.dart';
 
 class WeeklyGoalSettingScreen extends StatefulWidget {
-  const WeeklyGoalSettingScreen({super.key});
-  static Route<void> route() {
-    return MaterialPageRoute(builder: (_) => WeeklyGoalSettingScreen());
+  final int currentIndex;
+
+  const WeeklyGoalSettingScreen({super.key, this.currentIndex = 0});
+
+  static Route<void> route({int currentIndex = 0}) {
+    return MaterialPageRoute(builder: (_) => WeeklyGoalSettingScreen(currentIndex: currentIndex));
   }
 
   @override
-  State<WeeklyGoalSettingScreen> createState() =>
-      _WeeklyGoalSettingScreenState();
+  State<WeeklyGoalSettingScreen> createState() => _WeeklyGoalSettingScreenState();
 }
 
-class _WeeklyGoalSettingScreenState extends State<WeeklyGoalSettingScreen>
-    with SingleTickerProviderStateMixin
-    implements TopBarClickListener {
+class _WeeklyGoalSettingScreenState extends State<WeeklyGoalSettingScreen> with SingleTickerProviderStateMixin implements TopBarClickListener {
   late TabController _tabController;
   UnitType distanceUnit = UnitType.km;
   int selectedDistance = 1;
@@ -33,7 +33,7 @@ class _WeeklyGoalSettingScreenState extends State<WeeklyGoalSettingScreen>
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(length: 2, vsync: this);
+    _tabController = TabController(initialIndex: widget.currentIndex, length: 2, vsync: this);
 
     selectedDistance = distanceUnit == UnitType.km ? 1 : 3;
   }
@@ -51,52 +51,36 @@ class _WeeklyGoalSettingScreenState extends State<WeeklyGoalSettingScreen>
       body: SafeArea(
         child: Column(
           children: [
-            TopBar(
-              this,
-              isShowSimpleTitle: true,
-              isShowBack: true,
-              simpleTitle: Languages.of(context).txtWeeklyGoalSetting,
-            ),
+            TopBar(this, isShowSimpleTitle: true, isShowBack: true, simpleTitle: Languages.of(context).txtWeeklyGoalSetting),
             SizedBox(height: 30.setHeight),
             Expanded(
               child: Padding(
                 padding: EdgeInsets.symmetric(horizontal: 24.setWidth),
                 child: Column(
                   children: [
-                    TabBar(
-                      controller: _tabController,
-                      indicator: UnderlineTabIndicator(
-                        borderSide: BorderSide(
-                          width: 3.0,
-                          color: CustomAppColor.of(context).txtPurple,
+                    IgnorePointer(
+                      ignoring: true,
+                      child: TabBar(
+                        controller: _tabController,
+                        indicator: UnderlineTabIndicator(
+                          borderSide: BorderSide(width: 3.0, color: CustomAppColor.of(context).txtPurple),
+                          insets: EdgeInsets.symmetric(horizontal: 60.setWidth),
                         ),
-                        insets: EdgeInsets.symmetric(horizontal: 60.setWidth),
+                        indicatorSize: TabBarIndicatorSize.tab,
+                        labelColor: CustomAppColor.of(context).txtPurple,
+                        unselectedLabelColor: CustomAppColor.of(context).txtGrey,
+                        labelStyle: TextStyle(fontSize: 20.setFontSize, fontWeight: FontWeight.w700, fontFamily: Constant.fontFamily),
+                        unselectedLabelStyle: TextStyle(fontSize: 20.setFontSize, fontWeight: FontWeight.w700, fontFamily: Constant.fontFamily),
+                        tabs: [
+                          Tab(text: Languages.of(context).txtHeartHealth),
+                          Tab(text: Languages.of(context).txtDistance),
+                        ],
                       ),
-                      indicatorSize: TabBarIndicatorSize.tab,
-                      labelColor: CustomAppColor.of(context).txtPurple,
-                      unselectedLabelColor: CustomAppColor.of(context).txtGrey,
-                      labelStyle: TextStyle(
-                        fontSize: 20.setFontSize,
-                        fontWeight: FontWeight.w700,
-                        fontFamily: Constant.fontFamily,
-                      ),
-                      unselectedLabelStyle: TextStyle(
-                        fontSize: 20.setFontSize,
-                        fontWeight: FontWeight.w700,
-                        fontFamily: Constant.fontFamily,
-                      ),
-                      tabs: [
-                        Tab(text: Languages.of(context).txtHeartHealth),
-                        Tab(text: Languages.of(context).txtDistance),
-                      ],
                     ),
                     SizedBox(height: 24.setHeight),
 
                     Expanded(
-                      child: TabBarView(
-                        controller: _tabController,
-                        children: [_buildHeartHealthTab(), _buildDistanceTab()],
-                      ),
+                      child: TabBarView(physics: NeverScrollableScrollPhysics(), controller: _tabController, children: [_buildHeartHealthTab(), _buildDistanceTab()]),
                     ),
                   ],
                 ),
@@ -126,46 +110,21 @@ class _WeeklyGoalSettingScreenState extends State<WeeklyGoalSettingScreen>
                     ),
                     child: Column(
                       children: [
-                        Image.asset(
-                          AppAssets.icYellowWalk,
-                          width: 20.setWidth,
-                          height: 20.setHeight,
-                        ),
-                        CommonText(
-                          text: "300",
-                          fontWeight: FontWeight.w700,
-                          fontSize: 24.setFontSize,
-                        ),
-                        CommonText(
-                          text: "min",
-                          fontWeight: FontWeight.w400,
-                          fontSize: 14.setFontSize,
-                        ),
+                        Image.asset(AppAssets.icYellowWalk, width: 20.setWidth, height: 20.setHeight),
+                        CommonText(text: "300", fontWeight: FontWeight.w700, fontSize: 24.setFontSize),
+                        CommonText(text: "min", fontWeight: FontWeight.w400, fontSize: 14.setFontSize),
                       ],
                     ),
                   ),
                   SizedBox(height: 26.setHeight),
 
-                  CommonText(
-                    text: Languages.of(context).txtModerateIntensity,
-                    fontWeight: FontWeight.w700,
-                    fontSize: 18.setFontSize,
-                    textColor: CustomAppColor.of(context).txtGrey,
-                  ),
+                  CommonText(text: Languages.of(context).txtModerateIntensity, fontWeight: FontWeight.w700, fontSize: 18.setFontSize, textColor: CustomAppColor.of(context).txtGrey),
                 ],
               ),
             ),
             Padding(
-              padding: EdgeInsets.symmetric(
-                horizontal: 20.setHeight,
-                vertical: 70.setHeight,
-              ),
-              child: CommonText(
-                text: Languages.of(context).txtOr.toLowerCase(),
-                fontWeight: FontWeight.w700,
-                fontSize: 14.setFontSize,
-                textColor: CustomAppColor.of(context).txtGrey,
-              ),
+              padding: EdgeInsets.symmetric(horizontal: 20.setHeight, vertical: 70.setHeight),
+              child: CommonText(text: Languages.of(context).txtOr.toLowerCase(), fontWeight: FontWeight.w700, fontSize: 14.setFontSize, textColor: CustomAppColor.of(context).txtGrey),
             ),
             Expanded(
               child: Column(
@@ -178,31 +137,14 @@ class _WeeklyGoalSettingScreenState extends State<WeeklyGoalSettingScreen>
                     ),
                     child: Column(
                       children: [
-                        Image.asset(
-                          AppAssets.icRedWalk,
-                          width: 20.setWidth,
-                          height: 20.setHeight,
-                        ),
-                        CommonText(
-                          text: "150",
-                          fontWeight: FontWeight.w700,
-                          fontSize: 24.setFontSize,
-                        ),
-                        CommonText(
-                          text: "min",
-                          fontWeight: FontWeight.w400,
-                          fontSize: 14.setFontSize,
-                        ),
+                        Image.asset(AppAssets.icRedWalk, width: 20.setWidth, height: 20.setHeight),
+                        CommonText(text: "150", fontWeight: FontWeight.w700, fontSize: 24.setFontSize),
+                        CommonText(text: "min", fontWeight: FontWeight.w400, fontSize: 14.setFontSize),
                       ],
                     ),
                   ),
                   SizedBox(height: 36.setHeight),
-                  CommonText(
-                    text: Languages.of(context).txtHighIntensity,
-                    fontWeight: FontWeight.w700,
-                    fontSize: 18.setFontSize,
-                    textColor: CustomAppColor.of(context).txtGrey,
-                  ),
+                  CommonText(text: Languages.of(context).txtHighIntensity, fontWeight: FontWeight.w700, fontSize: 18.setFontSize, textColor: CustomAppColor.of(context).txtGrey),
                 ],
               ),
             ),
@@ -217,10 +159,7 @@ class _WeeklyGoalSettingScreenState extends State<WeeklyGoalSettingScreen>
           ignoring: true,
           child: Padding(
             padding: EdgeInsets.symmetric(horizontal: 40.setWidth),
-            child: CommonButton(
-              text: Languages.of(context).txtSetAsMyGoal,
-              onTap: () => Navigator.pop(context),
-            ),
+            child: CommonButton(text: Languages.of(context).txtSetAsMyGoal, onTap: () => Navigator.pop(context)),
           ),
         ),
       ],
@@ -228,32 +167,18 @@ class _WeeklyGoalSettingScreenState extends State<WeeklyGoalSettingScreen>
   }
 
   Widget _buildDistanceTab() {
-    final List<int> distances = List.generate(
-      96,
-      (index) => distanceUnit == UnitType.km ? index + 5 : index + 3,
-    );
+    final List<int> distances = List.generate(96, (index) => distanceUnit == UnitType.km ? index + 5 : index + 3);
 
     return Column(
       children: [
         SizedBox(height: 40.setHeight),
 
-        _buildUnitSwitch(
-          selectedUnit: distanceUnit,
-          firstUnit: UnitType.km,
-          secondUnit: UnitType.mi,
-          firstLabel: "KM",
-          secondLabel: "MI",
-          onUnitChanged: (unit) => setState(() => distanceUnit = unit),
-        ),
+        _buildUnitSwitch(selectedUnit: distanceUnit, firstUnit: UnitType.km, secondUnit: UnitType.mi, firstLabel: "KM", secondLabel: "MI", onUnitChanged: (unit) => setState(() => distanceUnit = unit)),
         SizedBox(height: 58.setHeight),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Image.asset(
-              AppAssets.icArrowSelect,
-              height: 24.setHeight,
-              width: 24.setWidth,
-            ),
+            Image.asset(AppAssets.icArrowSelect, height: 24.setHeight, width: 24.setWidth),
             Stack(
               alignment: Alignment.center,
               children: [
@@ -266,22 +191,12 @@ class _WeeklyGoalSettingScreenState extends State<WeeklyGoalSettingScreen>
                     looping: true,
                     selectionOverlay: Container(),
                     itemExtent: 95.0,
-                    scrollController: FixedExtentScrollController(
-                      initialItem: distances.contains(selectedDistance)
-                          ? distances.indexOf(selectedDistance)
-                          : 0,
-                    ),
-                    onSelectedItemChanged: (index) =>
-                        setState(() => selectedDistance = distances[index]),
+                    scrollController: FixedExtentScrollController(initialItem: distances.contains(selectedDistance) ? distances.indexOf(selectedDistance) : 0),
+                    onSelectedItemChanged: (index) => setState(() => selectedDistance = distances[index]),
                     children: distances
                         .map(
                           (d) => Center(
-                            child: CommonText(
-                              text: "$d",
-                              fontSize: 40.setFontSize,
-                              fontWeight: FontWeight.w700,
-                              textColor: CustomAppColor.of(context).txtPurple,
-                            ),
+                            child: CommonText(text: "$d", fontSize: 40.setFontSize, fontWeight: FontWeight.w700, textColor: CustomAppColor.of(context).txtPurple),
                           ),
                         )
                         .toList(),
@@ -297,10 +212,7 @@ class _WeeklyGoalSettingScreenState extends State<WeeklyGoalSettingScreen>
           ignoring: true,
           child: Padding(
             padding: EdgeInsets.symmetric(horizontal: 40.setWidth),
-            child: CommonButton(
-              text: Languages.of(context).txtSetAsMyGoal,
-              onTap: () => Navigator.pop(context),
-            ),
+            child: CommonButton(text: Languages.of(context).txtSetAsMyGoal, onTap: () => Navigator.pop(context)),
           ),
         ),
       ],
@@ -312,36 +224,18 @@ class _WeeklyGoalSettingScreenState extends State<WeeklyGoalSettingScreen>
       child: Column(
         children: [
           Spacer(),
-          Container(
-            width: 83.setWidth,
-            height: 1.setHeight,
-            color: CustomAppColor.of(context).divider,
-          ),
+          Container(width: 83.setWidth, height: 1.setHeight, color: CustomAppColor.of(context).divider),
           Spacer(flex: 1),
-          Container(
-            width: 83.setWidth,
-            height: 1.setHeight,
-            color: CustomAppColor.of(context).divider,
-          ),
+          Container(width: 83.setWidth, height: 1.setHeight, color: CustomAppColor.of(context).divider),
           Spacer(),
         ],
       ),
     );
   }
 
-  Widget _buildUnitSwitch({
-    required UnitType selectedUnit,
-    required UnitType firstUnit,
-    required UnitType secondUnit,
-    required String firstLabel,
-    required String secondLabel,
-    required ValueChanged<UnitType> onUnitChanged,
-  }) {
+  Widget _buildUnitSwitch({required UnitType selectedUnit, required UnitType firstUnit, required UnitType secondUnit, required String firstLabel, required String secondLabel, required ValueChanged<UnitType> onUnitChanged}) {
     return Container(
-      padding: EdgeInsets.symmetric(
-        horizontal: 35.setWidth,
-        vertical: 15.setHeight,
-      ),
+      padding: EdgeInsets.symmetric(horizontal: 35.setWidth, vertical: 15.setHeight),
       decoration: BoxDecoration(
         border: Border.all(color: CustomAppColor.of(context).greyDivider),
         borderRadius: BorderRadius.circular(20),
@@ -351,31 +245,15 @@ class _WeeklyGoalSettingScreenState extends State<WeeklyGoalSettingScreen>
         children: [
           GestureDetector(
             onTap: () => onUnitChanged(firstUnit),
-            child: CommonText(
-              text: firstLabel,
-              fontSize: 18.setFontSize,
-              textColor: selectedUnit == firstUnit
-                  ? CustomAppColor.of(context).primary
-                  : Colors.grey,
-            ),
+            child: CommonText(text: firstLabel, fontSize: 18.setFontSize, textColor: selectedUnit == firstUnit ? CustomAppColor.of(context).primary : Colors.grey),
           ),
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 26.setWidth),
-            child: Container(
-              width: 1,
-              height: 23.setHeight,
-              color: CustomAppColor.of(context).greyDivider,
-            ),
+            child: Container(width: 1, height: 23.setHeight, color: CustomAppColor.of(context).greyDivider),
           ),
           GestureDetector(
             onTap: () => onUnitChanged(secondUnit),
-            child: CommonText(
-              text: secondLabel,
-              fontSize: 18.setFontSize,
-              textColor: selectedUnit == secondUnit
-                  ? CustomAppColor.of(context).primary
-                  : Colors.grey,
-            ),
+            child: CommonText(text: secondLabel, fontSize: 18.setFontSize, textColor: selectedUnit == secondUnit ? CustomAppColor.of(context).primary : Colors.grey),
           ),
         ],
       ),
@@ -416,11 +294,7 @@ class _CustomRangeSliderState extends State<CustomRangeSlider> {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        IconButton(
-          icon: const Icon(Icons.remove),
-          color: Colors.deepPurple,
-          onPressed: _decrement,
-        ),
+        IconButton(icon: const Icon(Icons.remove), color: Colors.deepPurple, onPressed: _decrement),
         Expanded(
           child: Stack(
             alignment: Alignment.center,
@@ -429,15 +303,11 @@ class _CustomRangeSliderState extends State<CustomRangeSlider> {
                 data: SliderTheme.of(context).copyWith(
                   overlayShape: SliderComponentShape.noOverlay,
                   activeTrackColor: Colors.deepPurple,
-                  inactiveTrackColor: CustomAppColor.of(
-                    context,
-                  ).containerBgPurple,
+                  inactiveTrackColor: CustomAppColor.of(context).containerBgPurple,
                   thumbColor: Colors.deepPurple,
 
                   overlayColor: Colors.deepPurple.withValues(alpha: 0.2),
-                  thumbShape: const RoundSliderThumbShape(
-                    enabledThumbRadius: 8.0,
-                  ),
+                  thumbShape: const RoundSliderThumbShape(enabledThumbRadius: 8.0),
                   trackHeight: 2,
                 ),
                 child: Slider(
@@ -459,11 +329,7 @@ class _CustomRangeSliderState extends State<CustomRangeSlider> {
                         if (index == 0 || index == 4) {
                           return const SizedBox();
                         }
-                        return Container(
-                          width: 4.setWidth,
-                          height: 4.setHeight,
-                          color: CustomAppColor.of(context).primary,
-                        );
+                        return Container(width: 4.setWidth, height: 4.setHeight, color: CustomAppColor.of(context).primary);
                       }),
                     );
                   },
@@ -473,11 +339,7 @@ class _CustomRangeSliderState extends State<CustomRangeSlider> {
           ),
         ),
         // Plus button
-        IconButton(
-          icon: const Icon(Icons.add),
-          color: Colors.deepPurple,
-          onPressed: _increment,
-        ),
+        IconButton(icon: const Icon(Icons.add), color: Colors.deepPurple, onPressed: _increment),
       ],
     );
   }

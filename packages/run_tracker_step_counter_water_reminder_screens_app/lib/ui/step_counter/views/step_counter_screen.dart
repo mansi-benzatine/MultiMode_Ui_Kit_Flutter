@@ -14,20 +14,142 @@ import 'package:syncfusion_flutter_gauges/gauges.dart';
 import '../../../widgets/button/common_button.dart';
 
 class StepCounterScreen extends StatefulWidget {
-  const StepCounterScreen({super.key});
+  final bool isShownEditTarget;
+  const StepCounterScreen({super.key, this.isShownEditTarget = false});
 
-  static Route<void> route() {
-    return MaterialPageRoute(builder: (_) => StepCounterScreen());
+  static Route<void> route({bool isShownEditTarget = false}) {
+    return MaterialPageRoute(builder: (_) => StepCounterScreen(isShownEditTarget: isShownEditTarget));
   }
 
   @override
   State<StepCounterScreen> createState() => _StepCounterScreenState();
 }
 
-class _StepCounterScreenState extends State<StepCounterScreen>
-    implements TopBarClickListener {
+class _StepCounterScreenState extends State<StepCounterScreen> implements TopBarClickListener {
   double stepValue = 149;
   double maxSteps = 6000;
+  bool _isBottomSheetOpen = false;
+
+  void showEditTargetStepsBS() {
+    setState(() {
+      _isBottomSheetOpen = true;
+    });
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      enableDrag: false,
+      isDismissible: false,
+      builder: (context) {
+        return SafeArea(
+          bottom: true,
+          child: StatefulBuilder(
+            builder: (context, setState) {
+              return Padding(
+                padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+
+                child: Container(
+                  padding: EdgeInsets.all(24.setWidth),
+                  decoration: BoxDecoration(
+                    color: CustomAppColor.of(context).bgScaffold,
+                    borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
+                  ),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              CommonText(text: Languages.of(context).txtEditTargetSteps, fontSize: 24.setFontSize, fontWeight: FontWeight.w500),
+                              IgnorePointer(
+                                ignoring: true,
+                                child: IconButton(icon: Icon(Icons.close), onPressed: () => Navigator.pop(context)),
+                              ),
+                            ],
+                          ),
+                          CommonText(text: Languages.of(context).txtEditTargetStepsDesc, fontSize: 15.setFontSize, fontWeight: FontWeight.w400, textAlign: TextAlign.start, textColor: CustomAppColor.of(context).txtGrey),
+                        ],
+                      ),
+                      SizedBox(height: 50.setHeight),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          CommonText(text: Languages.of(context).txtSteps.toUpperCase(), fontSize: 20.setFontSize, fontWeight: FontWeight.bold),
+                          SizedBox(width: 90.setWidth),
+                          Expanded(
+                            child: Container(
+                              padding: EdgeInsets.symmetric(horizontal: 12.setWidth),
+                              decoration: BoxDecoration(borderRadius: BorderRadius.circular(24), color: CustomAppColor.of(context).containerBgPurple),
+                              child: TextFormField(
+                                textAlign: TextAlign.center,
+                                style: TextStyle(fontSize: 25.setFontSize, fontWeight: FontWeight.w600),
+                                controller: TextEditingController(text: "6000"),
+                                keyboardType: TextInputType.number,
+                                decoration: InputDecoration(border: InputBorder.none),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      SizedBox(height: 50.setHeight),
+                      IgnorePointer(
+                        ignoring: true,
+                        child: Row(
+                          children: [
+                            Expanded(
+                              child: CommonButton(
+                                text: Languages.of(context).txtCancel,
+                                buttonColor: CustomAppColor.of(context).containerBgPurple,
+                                buttonTextColor: CustomAppColor.of(context).txtPurpleWhite,
+                                onTap: () => Navigator.pop(context),
+                              ),
+                            ),
+                            SizedBox(width: 15.setWidth),
+                            Expanded(
+                              child: CommonButton(
+                                text: Languages.of(context).txtSet,
+                                buttonColor: CustomAppColor.of(context).primary,
+                                buttonTextColor: Colors.white,
+                                onTap: () {
+                                  Navigator.pop(context);
+                                },
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              );
+            },
+          ),
+        );
+      },
+    ).whenComplete(() {
+      if (_isBottomSheetOpen) {
+        setState(() {
+          _isBottomSheetOpen = false;
+        });
+        Navigator.pop(context);
+      }
+    });
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+
+    if (widget.isShownEditTarget) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        showEditTargetStepsBS();
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -36,13 +158,7 @@ class _StepCounterScreenState extends State<StepCounterScreen>
       body: SafeArea(
         child: Column(
           children: [
-            TopBar(
-              this,
-              simpleTitle: Languages.of(context).txtStepCounter,
-              isShowSimpleTitle: true,
-              isShowBack: true,
-              isShowMore: true,
-            ),
+            TopBar(this, simpleTitle: Languages.of(context).txtStepCounter, isShowSimpleTitle: true, isShowBack: true, isShowMore: true),
             SizedBox(height: 20.setHeight),
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 20.setWidth),
@@ -53,10 +169,7 @@ class _StepCounterScreenState extends State<StepCounterScreen>
                       CircleAvatar(
                         radius: 20,
                         backgroundColor: CustomAppColor.of(context).black,
-                        child: Icon(
-                          Icons.pause,
-                          color: CustomAppColor.of(context).white,
-                        ),
+                        child: Icon(Icons.pause, color: CustomAppColor.of(context).white),
                       ),
                       Expanded(
                         child: SizedBox(
@@ -71,26 +184,12 @@ class _StepCounterScreenState extends State<StepCounterScreen>
                                 minimum: 0,
                                 maximum: 100,
                                 radiusFactor: 1.3,
-                                axisLineStyle: AxisLineStyle(
-                                  thickness: 0.18,
-                                  cornerStyle: CornerStyle.bothCurve,
-                                  color: CustomAppColor.of(
-                                    context,
-                                  ).lime.withValues(alpha: 0.2),
-                                  thicknessUnit: GaugeSizeUnit.factor,
-                                ),
+                                axisLineStyle: AxisLineStyle(thickness: 0.18, cornerStyle: CornerStyle.bothCurve, color: CustomAppColor.of(context).lime.withValues(alpha: 0.2), thicknessUnit: GaugeSizeUnit.factor),
                                 pointers: <GaugePointer>[
                                   RangePointer(
                                     value: 75,
                                     width: 0.20,
-                                    gradient: SweepGradient(
-                                      colors: [
-                                        CustomAppColor.of(context).lime,
-                                        CustomAppColor.of(context).lime,
-                                      ],
-                                      startAngle: 23,
-                                      endAngle: 50,
-                                    ),
+                                    gradient: SweepGradient(colors: [CustomAppColor.of(context).lime, CustomAppColor.of(context).lime], startAngle: 23, endAngle: 50),
                                     cornerStyle: CornerStyle.bothCurve,
                                     sizeUnit: GaugeSizeUnit.factor,
                                   ),
@@ -101,23 +200,11 @@ class _StepCounterScreenState extends State<StepCounterScreen>
                                     angle: 100,
                                     widget: FittedBox(
                                       child: Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
+                                        mainAxisAlignment: MainAxisAlignment.center,
 
                                         children: [
-                                          CommonText(
-                                            text: "${stepValue.toInt()}",
-                                            fontSize: 48.setFontSize,
-                                            fontWeight: FontWeight.w700,
-                                          ),
-                                          CommonText(
-                                            text: "/${maxSteps.toInt()}",
-                                            fontSize: 16.setFontSize,
-                                            fontWeight: FontWeight.w400,
-                                            textColor: CustomAppColor.of(
-                                              context,
-                                            ).txtGrey,
-                                          ),
+                                          CommonText(text: "${stepValue.toInt()}", fontSize: 48.setFontSize, fontWeight: FontWeight.w700),
+                                          CommonText(text: "/${maxSteps.toInt()}", fontSize: 16.setFontSize, fontWeight: FontWeight.w400, textColor: CustomAppColor.of(context).txtGrey),
                                         ],
                                       ),
                                     ),
@@ -131,89 +218,44 @@ class _StepCounterScreenState extends State<StepCounterScreen>
                       IgnorePointer(
                         ignoring: true,
                         child: GestureDetector(
-                          onTap: () =>
-                              Navigator.push(context, ReportScreen.route()),
+                          onTap: () => Navigator.push(context, ReportScreen.route()),
                           child: CircleAvatar(
                             radius: 20,
                             backgroundColor: CustomAppColor.of(context).black,
-                            child: Image.asset(
-                              AppAssets.icGraph,
-                              height: 20.setHeight,
-                              width: 20.setWidth,
-                            ),
+                            child: Image.asset(AppAssets.icGraph, height: 20.setHeight, width: 20.setWidth),
                           ),
                         ),
                       ),
                     ],
                   ),
                   SizedBox(height: 20.setHeight),
-                  CommonText(
-                    text: Languages.of(context).txtSteps,
-                    fontSize: 14.setFontSize,
-                    fontWeight: FontWeight.w500,
-                  ),
+                  CommonText(text: Languages.of(context).txtSteps, fontSize: 14.setFontSize, fontWeight: FontWeight.w500),
                   SizedBox(height: 30.setHeight),
-                  Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 16),
-                    child: buildMiniGaugesRow(context),
-                  ),
+                  Padding(padding: EdgeInsets.symmetric(horizontal: 16), child: buildMiniGaugesRow(context)),
                   SizedBox(height: 40.setHeight),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      _statColumn("00h 6m", Languages.of(context).txtDuration),
-                      _statColumn("12", "Kcal"),
-                      _statColumn("0.10", "Km"),
-                    ],
-                  ),
+                  Row(mainAxisAlignment: MainAxisAlignment.spaceAround, children: [_statColumn("00h 6m", Languages.of(context).txtDuration), _statColumn("12", "Kcal"), _statColumn("0.10", "Km")]),
                   SizedBox(height: 40.setHeight),
                   IgnorePointer(
                     ignoring: true,
                     child: GestureDetector(
-                      onTap: () => Navigator.push(
-                        context,
-                        LastSevenDaysReportScreen.route(),
-                      ),
+                      onTap: () => Navigator.push(context, LastSevenDaysReportScreen.route()),
                       child: Container(
                         width: double.infinity,
-                        padding: EdgeInsets.symmetric(
-                          horizontal: 15.setWidth,
-                          vertical: 15.setHeight,
-                        ),
-                        decoration: BoxDecoration(
-                          color: CustomAppColor.of(context).containerBlack,
-                          borderRadius: BorderRadius.circular(16),
-                        ),
+                        padding: EdgeInsets.symmetric(horizontal: 15.setWidth, vertical: 15.setHeight),
+                        decoration: BoxDecoration(color: CustomAppColor.of(context).containerBlack, borderRadius: BorderRadius.circular(16)),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            CommonText(
-                              text:
-                                  "${Languages.of(context).txtLastSevenDaysSteps}:",
-                              fontSize: 17.setFontSize,
-                              textColor: CustomAppColor.of(context).white,
-                              fontWeight: FontWeight.w700,
-                            ),
+                            CommonText(text: "${Languages.of(context).txtLastSevenDaysSteps}:", fontSize: 17.setFontSize, textColor: CustomAppColor.of(context).white, fontWeight: FontWeight.w700),
                             SizedBox(height: 2.setHeight),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                CommonText(
-                                  text: "1125",
-                                  fontSize: 48.setFontSize,
-                                  textColor: CustomAppColor.of(context).lime,
-                                  fontWeight: FontWeight.bold,
-                                ),
+                                CommonText(text: "1125", fontSize: 48.setFontSize, textColor: CustomAppColor.of(context).lime, fontWeight: FontWeight.bold),
                                 Container(
                                   padding: EdgeInsets.all(12),
-                                  decoration: BoxDecoration(
-                                    shape: BoxShape.circle,
-                                    color: CustomAppColor.of(context).lime,
-                                  ),
-                                  child: Icon(
-                                    Icons.keyboard_arrow_right_rounded,
-                                    color: CustomAppColor.of(context).black,
-                                  ),
+                                  decoration: BoxDecoration(shape: BoxShape.circle, color: CustomAppColor.of(context).lime),
+                                  child: Icon(Icons.keyboard_arrow_right_rounded, color: CustomAppColor.of(context).black),
                                 ),
                               ],
                             ),
@@ -234,16 +276,8 @@ class _StepCounterScreenState extends State<StepCounterScreen>
   Widget _statColumn(String value, String label) {
     return Column(
       children: [
-        CommonText(
-          text: value,
-          fontSize: 30.setFontSize,
-          fontWeight: FontWeight.w600,
-        ),
-        CommonText(
-          text: label,
-          fontSize: 14.setFontSize,
-          textColor: CustomAppColor.of(context).txtGrey,
-        ),
+        CommonText(text: value, fontSize: 30.setFontSize, fontWeight: FontWeight.w600),
+        CommonText(text: label, fontSize: 14.setFontSize, textColor: CustomAppColor.of(context).txtGrey),
       ],
     );
   }
@@ -269,33 +303,14 @@ class _StepCounterScreenState extends State<StepCounterScreen>
                     startAngle: 270,
                     endAngle: 270 + 360,
                     showTicks: false,
-                    axisLineStyle: AxisLineStyle(
-                      thickness: 0.25,
-                      thicknessUnit: GaugeSizeUnit.factor,
-                      color: CustomAppColor.of(
-                        context,
-                      ).lime.withValues(alpha: 0.2),
-                    ),
-                    pointers: <GaugePointer>[
-                      RangePointer(
-                        value: progress[index],
-                        width: 0.25,
-                        sizeUnit: GaugeSizeUnit.factor,
-                        cornerStyle: CornerStyle.bothCurve,
-                        color: CustomAppColor.of(context).lime,
-                      ),
-                    ],
+                    axisLineStyle: AxisLineStyle(thickness: 0.25, thicknessUnit: GaugeSizeUnit.factor, color: CustomAppColor.of(context).lime.withValues(alpha: 0.2)),
+                    pointers: <GaugePointer>[RangePointer(value: progress[index], width: 0.25, sizeUnit: GaugeSizeUnit.factor, cornerStyle: CornerStyle.bothCurve, color: CustomAppColor.of(context).lime)],
                   ),
                 ],
               ),
             ),
             SizedBox(height: 4.setHeight),
-            CommonText(
-              text: days[index],
-              fontSize: 12,
-              fontWeight: FontWeight.w600,
-              textColor: CustomAppColor.of(context).txtBlack,
-            ),
+            CommonText(text: days[index], fontSize: 12, fontWeight: FontWeight.w600, textColor: CustomAppColor.of(context).txtBlack),
           ],
         );
       }),
@@ -314,17 +329,13 @@ class _StepCounterScreenState extends State<StepCounterScreen>
           child: StatefulBuilder(
             builder: (context, setState) {
               return Padding(
-                padding: EdgeInsets.only(
-                  bottom: MediaQuery.of(context).viewInsets.bottom,
-                ),
+                padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
 
                 child: Container(
                   padding: EdgeInsets.all(24.setWidth),
                   decoration: BoxDecoration(
                     color: CustomAppColor.of(context).bgScaffold,
-                    borderRadius: BorderRadius.vertical(
-                      top: Radius.circular(24),
-                    ),
+                    borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
                   ),
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
@@ -335,58 +346,29 @@ class _StepCounterScreenState extends State<StepCounterScreen>
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              CommonText(
-                                text: Languages.of(context).txtEditTargetSteps,
-                                fontSize: 24.setFontSize,
-                                fontWeight: FontWeight.w500,
-                              ),
-                              IconButton(
-                                icon: Icon(Icons.close),
-                                onPressed: () => Navigator.pop(context),
-                              ),
+                              CommonText(text: Languages.of(context).txtEditTargetSteps, fontSize: 24.setFontSize, fontWeight: FontWeight.w500),
+                              IconButton(icon: Icon(Icons.close), onPressed: () => Navigator.pop(context)),
                             ],
                           ),
-                          CommonText(
-                            text: Languages.of(context).txtEditTargetStepsDesc,
-                            fontSize: 15.setFontSize,
-                            fontWeight: FontWeight.w400,
-                            textAlign: TextAlign.start,
-                            textColor: CustomAppColor.of(context).txtGrey,
-                          ),
+                          CommonText(text: Languages.of(context).txtEditTargetStepsDesc, fontSize: 15.setFontSize, fontWeight: FontWeight.w400, textAlign: TextAlign.start, textColor: CustomAppColor.of(context).txtGrey),
                         ],
                       ),
                       SizedBox(height: 50.setHeight),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          CommonText(
-                            text: Languages.of(context).txtSteps.toUpperCase(),
-                            fontSize: 20.setFontSize,
-                            fontWeight: FontWeight.bold,
-                          ),
+                          CommonText(text: Languages.of(context).txtSteps.toUpperCase(), fontSize: 20.setFontSize, fontWeight: FontWeight.bold),
                           SizedBox(width: 90.setWidth),
                           Expanded(
                             child: Container(
-                              padding: EdgeInsets.symmetric(
-                                horizontal: 12.setWidth,
-                              ),
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(24),
-                                color: CustomAppColor.of(
-                                  context,
-                                ).containerBgPurple,
-                              ),
+                              padding: EdgeInsets.symmetric(horizontal: 12.setWidth),
+                              decoration: BoxDecoration(borderRadius: BorderRadius.circular(24), color: CustomAppColor.of(context).containerBgPurple),
                               child: TextFormField(
                                 textAlign: TextAlign.center,
-                                style: TextStyle(
-                                  fontSize: 25.setFontSize,
-                                  fontWeight: FontWeight.w600,
-                                ),
+                                style: TextStyle(fontSize: 25.setFontSize, fontWeight: FontWeight.w600),
                                 controller: TextEditingController(text: "6000"),
                                 keyboardType: TextInputType.number,
-                                decoration: InputDecoration(
-                                  border: InputBorder.none,
-                                ),
+                                decoration: InputDecoration(border: InputBorder.none),
                               ),
                             ),
                           ),
@@ -398,12 +380,8 @@ class _StepCounterScreenState extends State<StepCounterScreen>
                           Expanded(
                             child: CommonButton(
                               text: Languages.of(context).txtCancel,
-                              buttonColor: CustomAppColor.of(
-                                context,
-                              ).containerBgPurple,
-                              buttonTextColor: CustomAppColor.of(
-                                context,
-                              ).txtPurpleWhite,
+                              buttonColor: CustomAppColor.of(context).containerBgPurple,
+                              buttonTextColor: CustomAppColor.of(context).txtPurpleWhite,
                               onTap: () => Navigator.pop(context),
                             ),
                           ),

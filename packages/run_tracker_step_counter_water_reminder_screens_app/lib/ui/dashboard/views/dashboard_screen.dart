@@ -9,11 +9,12 @@ import '../../profile/views/profile_screen.dart';
 
 class DashboardScreen extends StatefulWidget {
   final int currentIndex;
-  static Route<void> route({required int currentIndex}) => MaterialPageRoute(
-    builder: (_) => DashboardScreen(currentIndex: currentIndex),
+  final bool isAddWeightBs;
+  static Route<void> route({required int currentIndex, bool isAddWeightBs = false}) => MaterialPageRoute(
+    builder: (_) => DashboardScreen(currentIndex: currentIndex, isAddWeightBs: isAddWeightBs),
   );
 
-  const DashboardScreen({super.key, required this.currentIndex});
+  const DashboardScreen({super.key, required this.currentIndex, this.isAddWeightBs = false});
 
   @override
   State<DashboardScreen> createState() => _DashboardScreenState();
@@ -22,11 +23,7 @@ class DashboardScreen extends StatefulWidget {
 class _DashboardScreenState extends State<DashboardScreen> {
   int _selectedIndex = 0;
 
-  final List<Widget> _screens = [
-    const HomeScreen(),
-    const LocationPermissionScreen(),
-    const ProfileScreen(),
-  ];
+  List<Widget> _screens = [];
 
   void _onNavTap(int index) {
     setState(() {
@@ -38,6 +35,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
+    _screens = [const HomeScreen(), const LocationPermissionScreen(), ProfileScreen(isShownAddWeightBs: widget.isAddWeightBs)];
     _selectedIndex = widget.currentIndex;
   }
 
@@ -53,11 +51,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
               ignoring: true,
               child: GestureDetector(
                 onTap: () => _onNavTap(1),
-                child: Image.asset(
-                  AppAssets.icRun,
-                  width: 72.setWidth,
-                  height: 72.setHeight,
-                ),
+                child: Image.asset(AppAssets.icRun, width: 72.setWidth, height: 72.setHeight),
               ),
             ),
       bottomNavigationBar: _selectedIndex == 1 ? null : _buildBottomNavBar(),
@@ -72,13 +66,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
           height: 80.setHeight,
           decoration: BoxDecoration(
             color: Colors.transparent,
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black.withValues(alpha: 0.1),
-                blurRadius: 10,
-                offset: Offset(0, -4),
-              ),
-            ],
+            boxShadow: [BoxShadow(color: Colors.black.withValues(alpha: 0.1), blurRadius: 10, offset: Offset(0, -4))],
           ),
         ),
         BottomAppBar(
@@ -86,25 +74,13 @@ class _DashboardScreenState extends State<DashboardScreen> {
           color: CustomAppColor.of(context).bottomNavbar,
           child: Container(
             height: 70.setHeight,
-            decoration: BoxDecoration(
-              color: CustomAppColor.of(context).bottomNavbar,
-            ),
+            decoration: BoxDecoration(color: CustomAppColor.of(context).bottomNavbar),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                _buildNavItem(
-                  _selectedIndex == 0
-                      ? AppAssets.icSelectedHome
-                      : AppAssets.icUnselectedHome,
-                  0,
-                ),
+                _buildNavItem(_selectedIndex == 0 ? AppAssets.icSelectedHome : AppAssets.icUnselectedHome, 0),
                 SizedBox(width: 70.setWidth),
-                _buildNavItem(
-                  _selectedIndex == 2
-                      ? AppAssets.icSelectedProfile
-                      : AppAssets.icUnselectedProfile,
-                  2,
-                ),
+                _buildNavItem(_selectedIndex == 2 ? AppAssets.icSelectedProfile : AppAssets.icUnselectedProfile, 2),
               ],
             ),
           ),
@@ -119,15 +95,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
       child: GestureDetector(
         onTap: () => _onNavTap(index),
         child: Padding(
-          padding: EdgeInsets.symmetric(
-            vertical: 12.setHeight,
-            horizontal: 20.setWidth,
-          ),
-          child: Image.asset(
-            iconPath,
-            width: 28.setWidth,
-            height: 28.setHeight,
-          ),
+          padding: EdgeInsets.symmetric(vertical: 12.setHeight, horizontal: 20.setWidth),
+          child: Image.asset(iconPath, width: 28.setWidth, height: 28.setHeight),
         ),
       ),
     );
