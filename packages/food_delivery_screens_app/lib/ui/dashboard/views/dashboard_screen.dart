@@ -12,11 +12,20 @@ import '../datamodels/dashboard_data.dart';
 class DashboardScreen extends StatefulWidget {
   final int currentIndex;
   final bool isFromEmptyCart;
-  static Route<void> route({required int currentIndex, required bool isFromEmptyCart}) {
-    return MaterialPageRoute(builder: (_) => DashboardScreen(currentIndex: currentIndex, isFromEmptyCart: isFromEmptyCart));
+  final bool isForChangeAddressBsInHome;
+  final bool isForLogoutBs;
+
+  static Route<void> route({required int currentIndex, required bool isFromEmptyCart, bool isForChangeAddressBsInHome = false, bool isForLogoutBs = false}) {
+    return MaterialPageRoute(
+        builder: (_) => DashboardScreen(
+              currentIndex: currentIndex,
+              isFromEmptyCart: isFromEmptyCart,
+              isForChangeAddressBsInHome: isForChangeAddressBsInHome,
+              isForLogoutBs: isForLogoutBs,
+            ));
   }
 
-  const DashboardScreen({super.key, required this.currentIndex, required this.isFromEmptyCart});
+  const DashboardScreen({super.key, required this.currentIndex, required this.isFromEmptyCart, this.isForChangeAddressBsInHome = false, this.isForLogoutBs = false});
 
   @override
   State<DashboardScreen> createState() => _DashboardScreenState();
@@ -44,7 +53,9 @@ class _DashboardScreenState extends State<DashboardScreen> with SingleTickerProv
         BottomNavigationBarData(
           title: Languages.of(context).txtHome,
           image: AppAssets.icHome,
-          screen: const HomeScreen(),
+          screen: HomeScreen(
+            isForChangeLocationBs: widget.isForChangeAddressBsInHome,
+          ),
         ),
         BottomNavigationBarData(
           title: Languages.of(context).txtCart,
@@ -57,7 +68,9 @@ class _DashboardScreenState extends State<DashboardScreen> with SingleTickerProv
         BottomNavigationBarData(
           title: Languages.of(context).txtAccount,
           image: AppAssets.icAccount,
-          screen: const AccountScreen(),
+          screen: AccountScreen(
+            isForLogoutBs: widget.isForLogoutBs,
+          ),
         ),
       ];
 

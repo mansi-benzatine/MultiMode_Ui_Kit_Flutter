@@ -15,10 +15,14 @@ import '../../re_order/views/re_order_screen.dart';
 import '../datamodels/past_order_data.dart';
 
 class PastOrdersScreen extends StatefulWidget {
-  const PastOrdersScreen({super.key});
+  final int currentIndex;
+  const PastOrdersScreen({super.key, this.currentIndex = 0});
 
-  static Route<void> route() {
-    return MaterialPageRoute(builder: (_) => const PastOrdersScreen());
+  static Route<void> route({int currentIndex = 0}) {
+    return MaterialPageRoute(
+        builder: (_) => PastOrdersScreen(
+              currentIndex: currentIndex,
+            ));
   }
 
   @override
@@ -27,13 +31,15 @@ class PastOrdersScreen extends StatefulWidget {
 
 class _PastOrdersScreenState extends State<PastOrdersScreen> implements TopBarClickListener {
   List<PastOrder> pastOrderList = [];
-  final PageController _pageController = PageController();
-  int _currentPage = 0; // 0 for Delivered, 1 for Cancelled
+  late PageController _pageController;
+  int _currentPage = 0;
 
   @override
   void initState() {
     super.initState();
     fillData();
+    _currentPage = widget.currentIndex;
+    _pageController = PageController(initialPage: widget.currentIndex);
   }
 
   @override
@@ -113,88 +119,92 @@ class _PastOrdersScreenState extends State<PastOrdersScreen> implements TopBarCl
         child: Column(
           children: [
             TopBar(this, title: Languages.of(context).txtPastOrder),
-            Container(
-              color: CustomAppColor.of(context).bgScaffold,
-              padding: EdgeInsets.symmetric(horizontal: 24.setWidth, vertical: 10.setHeight),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Expanded(
-                    child: GestureDetector(
-                      onTap: () {
-                        setState(() {
-                          _currentPage = 0;
-                        });
-                        _pageController.animateToPage(
-                          0,
-                          duration: const Duration(milliseconds: 300),
-                          curve: Curves.easeInOut,
-                        );
-                      },
-                      child: Container(
-                        padding: EdgeInsets.symmetric(vertical: 10.setHeight, horizontal: 12.setWidth),
-                        decoration: BoxDecoration(
-                          color: _currentPage == 0 ? CustomAppColor.of(context).primary : CustomAppColor.of(context).bgScaffold,
-                          borderRadius: BorderRadius.circular(100),
-                          border: Border.all(
-                            color: CustomAppColor.of(context).primary,
-                            width: 1,
+            IgnorePointer(
+              ignoring: true,
+              child: Container(
+                color: CustomAppColor.of(context).bgScaffold,
+                padding: EdgeInsets.symmetric(horizontal: 24.setWidth, vertical: 10.setHeight),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Expanded(
+                      child: GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            _currentPage = 0;
+                          });
+                          _pageController.animateToPage(
+                            0,
+                            duration: const Duration(milliseconds: 300),
+                            curve: Curves.easeInOut,
+                          );
+                        },
+                        child: Container(
+                          padding: EdgeInsets.symmetric(vertical: 10.setHeight, horizontal: 12.setWidth),
+                          decoration: BoxDecoration(
+                            color: _currentPage == 0 ? CustomAppColor.of(context).primary : CustomAppColor.of(context).bgScaffold,
+                            borderRadius: BorderRadius.circular(100),
+                            border: Border.all(
+                              color: CustomAppColor.of(context).primary,
+                              width: 1,
+                            ),
                           ),
-                        ),
-                        child: Center(
-                          child: Text(
-                            Languages.of(context).txtDelivered.toUpperCase(),
-                            style: TextStyle(
-                              color: _currentPage == 0 ? Colors.white : CustomAppColor.of(context).primary,
-                              fontWeight: FontWeight.w600,
-                              fontSize: 14.setFontSize,
+                          child: Center(
+                            child: Text(
+                              Languages.of(context).txtDelivered.toUpperCase(),
+                              style: TextStyle(
+                                color: _currentPage == 0 ? Colors.white : CustomAppColor.of(context).primary,
+                                fontWeight: FontWeight.w600,
+                                fontSize: 14.setFontSize,
+                              ),
                             ),
                           ),
                         ),
                       ),
                     ),
-                  ),
-                  SizedBox(width: 10.setWidth),
-                  Expanded(
-                    child: GestureDetector(
-                      onTap: () {
-                        setState(() {
-                          _currentPage = 1;
-                        });
-                        _pageController.animateToPage(
-                          1,
-                          duration: const Duration(milliseconds: 300),
-                          curve: Curves.easeInOut,
-                        );
-                      },
-                      child: Container(
-                        padding: EdgeInsets.symmetric(vertical: 10.setHeight, horizontal: 12.setWidth),
-                        decoration: BoxDecoration(
-                          color: _currentPage == 1 ? CustomAppColor.of(context).primary : CustomAppColor.of(context).bgScaffold,
-                          borderRadius: BorderRadius.circular(100),
-                          border: Border.all(
-                            color: CustomAppColor.of(context).primary,
-                            width: 1,
+                    SizedBox(width: 10.setWidth),
+                    Expanded(
+                      child: GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            _currentPage = 1;
+                          });
+                          _pageController.animateToPage(
+                            1,
+                            duration: const Duration(milliseconds: 300),
+                            curve: Curves.easeInOut,
+                          );
+                        },
+                        child: Container(
+                          padding: EdgeInsets.symmetric(vertical: 10.setHeight, horizontal: 12.setWidth),
+                          decoration: BoxDecoration(
+                            color: _currentPage == 1 ? CustomAppColor.of(context).primary : CustomAppColor.of(context).bgScaffold,
+                            borderRadius: BorderRadius.circular(100),
+                            border: Border.all(
+                              color: CustomAppColor.of(context).primary,
+                              width: 1,
+                            ),
                           ),
-                        ),
-                        child: Center(
-                          child: Text(
-                            Languages.of(context).txtCancelled.toUpperCase(),
-                            style: TextStyle(
-                              color: _currentPage == 1 ? Colors.white : CustomAppColor.of(context).primary,
-                              fontWeight: FontWeight.w600,
-                              fontSize: 14.setFontSize,
+                          child: Center(
+                            child: Text(
+                              Languages.of(context).txtCancelled.toUpperCase(),
+                              style: TextStyle(
+                                color: _currentPage == 1 ? Colors.white : CustomAppColor.of(context).primary,
+                                fontWeight: FontWeight.w600,
+                                fontSize: 14.setFontSize,
+                              ),
                             ),
                           ),
                         ),
                       ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
             Expanded(
               child: PageView(
+                physics: NeverScrollableScrollPhysics(),
                 controller: _pageController,
                 onPageChanged: (index) {
                   setState(() {
@@ -310,27 +320,30 @@ class PastOrderListView extends StatelessWidget {
                 textColor: CustomAppColor.of(context).txtGrey,
               ),
               SizedBox(height: 16.setHeight),
-              Row(
-                children: [
-                  Expanded(
-                    child: CommonButton(
-                      height: 44.setHeight,
-                      text: Languages.of(context).txtReOrder.toUpperCase(),
-                      onTap: () => Navigator.push(context, ReOrderScreen.route()),
-                    ),
-                  ),
-                  if (item.isDelivered) SizedBox(width: 20.setWidth),
-                  if (item.isDelivered)
+              IgnorePointer(
+                ignoring: true,
+                child: Row(
+                  children: [
                     Expanded(
                       child: CommonButton(
-                        buttonColor: CustomAppColor.of(context).reviewButton,
-                        borderColor: CustomAppColor.of(context).txtBlack,
                         height: 44.setHeight,
-                        text: Languages.of(context).txtReview.toUpperCase(),
-                        onTap: () => Navigator.push(context, FeedbackScreen.route()),
+                        text: Languages.of(context).txtReOrder.toUpperCase(),
+                        onTap: () => Navigator.push(context, ReOrderScreen.route()),
                       ),
                     ),
-                ],
+                    if (item.isDelivered) SizedBox(width: 20.setWidth),
+                    if (item.isDelivered)
+                      Expanded(
+                        child: CommonButton(
+                          buttonColor: CustomAppColor.of(context).reviewButton,
+                          borderColor: CustomAppColor.of(context).txtBlack,
+                          height: 44.setHeight,
+                          text: Languages.of(context).txtReview.toUpperCase(),
+                          onTap: () => Navigator.push(context, FeedbackScreen.route()),
+                        ),
+                      ),
+                  ],
+                ),
               ),
             ],
           ),

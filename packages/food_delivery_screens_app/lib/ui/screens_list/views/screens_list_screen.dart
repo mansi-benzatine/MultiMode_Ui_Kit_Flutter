@@ -30,6 +30,7 @@ import 'package:food_delivery_screens_app_package/ui/near_you/views/near_you_scr
 import 'package:food_delivery_screens_app_package/ui/offers/views/offers_screen.dart';
 import 'package:food_delivery_screens_app_package/ui/on_boarding/views/on_boarding_screen.dart';
 import 'package:food_delivery_screens_app_package/ui/order_summary/views/order_smmary_screen.dart';
+import 'package:food_delivery_screens_app_package/ui/past_order/views/past_orders_screen.dart';
 import 'package:food_delivery_screens_app_package/ui/payment/views/payment_screen.dart';
 import 'package:food_delivery_screens_app_package/ui/proceed_to_pay/views/proceed_to_pay_screen.dart';
 import 'package:food_delivery_screens_app_package/ui/re_order/views/re_order_screen.dart';
@@ -124,9 +125,19 @@ class _FoodDeliveryScreensListScreen extends State<FoodDeliveryScreensListScreen
         onClick: () => Navigator.push(context, SetDeliveryLocationScreen.route()),
       ),
       ScreenListDataModel(
+        title: "Change Location",
+        icon: AppAssets.icScreens,
+        onClick: () => Navigator.push(context, SetDeliveryLocationScreen.route(isShowChangeLoacationBs: true)),
+      ),
+      ScreenListDataModel(
         title: "Home",
         icon: AppAssets.icScreens,
         onClick: () => Navigator.push(context, DashboardScreen.route(currentIndex: 0, isFromEmptyCart: false)),
+      ),
+      ScreenListDataModel(
+        title: "Change Address",
+        icon: AppAssets.icScreens,
+        onClick: () => Navigator.push(context, DashboardScreen.route(currentIndex: 0, isFromEmptyCart: false, isForChangeAddressBsInHome: true)),
       ),
       ScreenListDataModel(
         title: "Add Address",
@@ -137,6 +148,11 @@ class _FoodDeliveryScreensListScreen extends State<FoodDeliveryScreensListScreen
         title: "Search",
         icon: AppAssets.icScreens,
         onClick: () => Navigator.push(context, SearchScreen.route()),
+      ),
+      ScreenListDataModel(
+        title: "Search Not Found",
+        icon: AppAssets.icScreens,
+        onClick: () => Navigator.push(context, SearchScreen.route(isEmptySearchScreen: true)),
       ),
       ScreenListDataModel(
         title: "Near You",
@@ -159,9 +175,19 @@ class _FoodDeliveryScreensListScreen extends State<FoodDeliveryScreensListScreen
         onClick: () => Navigator.push(context, ViewCategoryDetailsScreen.route()),
       ),
       ScreenListDataModel(
+        title: "Add More Items",
+        icon: AppAssets.icScreens,
+        onClick: () => Navigator.push(context, ViewCategoryDetailsScreen.route(quantity: 2)),
+      ),
+      ScreenListDataModel(
         title: "View Restaurant Details",
         icon: AppAssets.icScreens,
         onClick: () => Navigator.push(context, ViewRestaurantScreen.route()),
+      ),
+      ScreenListDataModel(
+        title: "Add More Items",
+        icon: AppAssets.icScreens,
+        onClick: () => Navigator.push(context, ViewRestaurantScreen.route(totalItem: 2, totalAmount: 200)),
       ),
       ScreenListDataModel(
         title: "View Cart",
@@ -259,6 +285,16 @@ class _FoodDeliveryScreensListScreen extends State<FoodDeliveryScreensListScreen
         onClick: () => Navigator.push(context, EditCardScreen.route()),
       ),
       ScreenListDataModel(
+        title: "Order Completed",
+        icon: AppAssets.icScreens,
+        onClick: () => Navigator.push(context, PastOrdersScreen.route(currentIndex: 0)),
+      ),
+      ScreenListDataModel(
+        title: "Order Cancelled",
+        icon: AppAssets.icScreens,
+        onClick: () => Navigator.push(context, PastOrdersScreen.route(currentIndex: 1)),
+      ),
+      ScreenListDataModel(
         title: "Re Order",
         icon: AppAssets.icScreens,
         onClick: () => Navigator.push(context, ReOrderScreen.route()),
@@ -302,6 +338,11 @@ class _FoodDeliveryScreensListScreen extends State<FoodDeliveryScreensListScreen
         title: "Past Chat",
         icon: AppAssets.icScreens,
         onClick: () => Navigator.push(context, ChatScreen.route(isFromPastThread: true)),
+      ),
+      ScreenListDataModel(
+        title: "Logout",
+        icon: AppAssets.icScreens,
+        onClick: () => Navigator.push(context, DashboardScreen.route(currentIndex: 2, isFromEmptyCart: false, isForLogoutBs: true)),
       ),
     ];
   }

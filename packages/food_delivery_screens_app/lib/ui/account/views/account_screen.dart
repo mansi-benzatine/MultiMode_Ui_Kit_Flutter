@@ -17,10 +17,15 @@ import 'package:food_delivery_screens_app_package/widgets/text/common_text.dart'
 import '../../../widgets/dotted_divider/dotted_diveder.dart';
 
 class AccountScreen extends StatefulWidget {
-  const AccountScreen({super.key});
+  final bool isForLogoutBs;
+  const AccountScreen({super.key, this.isForLogoutBs = false});
 
-  static Route<void> route() {
-    return MaterialPageRoute(builder: (_) => const AccountScreen());
+  static Route<void> route({bool isForLogoutBs = false}) {
+    return MaterialPageRoute(
+      builder: (_) => AccountScreen(
+        isForLogoutBs: isForLogoutBs,
+      ),
+    );
   }
 
   @override
@@ -29,6 +34,7 @@ class AccountScreen extends StatefulWidget {
 
 class _AccountScreenState extends State<AccountScreen> {
   List<AccountNavigationList> navigationList = [];
+  bool _isBottomSheetOpen = false;
   void fillData() {
     navigationList = [
       AccountNavigationList(
@@ -47,6 +53,106 @@ class _AccountScreenState extends State<AccountScreen> {
         screen: const HelpsAndSupportScreen(),
       ),
     ];
+  }
+
+  void showLogoutBS() {
+    setState(() {
+      _isBottomSheetOpen = true;
+    });
+    showModalBottomSheet(
+      context: context,
+      useRootNavigator: true,
+      isScrollControlled: false,
+      enableDrag: false,
+      isDismissible: false,
+      scrollControlDisabledMaxHeightRatio: 0.4,
+      barrierColor: Colors.black54,
+      backgroundColor: CustomAppColor.of(context).bgScaffold,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
+      ),
+      builder: (dialogContext) {
+        return SafeArea(
+          top: true,
+          child: Wrap(
+            children: [
+              Stack(
+                clipBehavior: Clip.none,
+                children: [
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 24.setWidth, vertical: 20.setHeight),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        SizedBox(height: 26.setHeight),
+                        CommonText(
+                          text: Languages.of(context).txtLogout,
+                          fontWeight: FontWeight.w700,
+                          fontSize: 24.setFontSize,
+                        ),
+                        SizedBox(height: 12.setHeight),
+                        Divider(color: CustomAppColor.of(context).containerBorder),
+                        SizedBox(height: 18.setHeight),
+                        CommonText(
+                          text: Languages.of(context).txtAreYouSureYouWantToLogout,
+                          fontWeight: FontWeight.w400,
+                          fontSize: 16.setFontSize,
+                          textColor: CustomAppColor.of(context).txtGrey,
+                        ),
+                        SizedBox(height: 30.setHeight),
+                        CommonButton(
+                          onTap: () {},
+                          text: Languages.of(context).txtLogout.toUpperCase(),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Positioned(
+                    top: -20.setHeight,
+                    right: 0.setWidth,
+                    left: 0.setWidth,
+                    child: GestureDetector(
+                      onTap: () {},
+                      child: Container(
+                        padding: EdgeInsets.symmetric(vertical: 14.setHeight, horizontal: 14.setWidth),
+                        decoration: BoxDecoration(
+                          color: CustomAppColor.of(context).bgScaffold,
+                          shape: BoxShape.circle,
+                          border: Border.all(
+                            color: CustomAppColor.of(context).primary,
+                            width: 2,
+                          ),
+                        ),
+                        child: Icon(Icons.close, color: CustomAppColor.of(context).icBlack),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        );
+      },
+    ).whenComplete(() {
+      if (_isBottomSheetOpen) {
+        setState(() {
+          _isBottomSheetOpen = false;
+        });
+        Navigator.pop(context);
+      }
+    });
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    if (widget.isForLogoutBs) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        showLogoutBS();
+      });
+    }
   }
 
   @override
@@ -340,22 +446,25 @@ class LogOutView extends StatelessWidget {
     return Container(
       color: CustomAppColor.of(context).bgScaffold,
       padding: EdgeInsets.symmetric(vertical: 20.setHeight, horizontal: 24.setWidth),
-      child: InkWell(
-        onTap: () => logOutBs(context),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            CommonText(
-              text: Languages.of(context).txtLogout.toUpperCase(),
-              fontWeight: FontWeight.w700,
-              fontSize: 18.setFontSize,
-            ),
-            Image.asset(
-              AppAssets.icLogout,
-              height: 24.setHeight,
-              width: 24.setWidth,
-            )
-          ],
+      child: IgnorePointer(
+        ignoring: true,
+        child: InkWell(
+          onTap: () => logOutBs(context),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              CommonText(
+                text: Languages.of(context).txtLogout.toUpperCase(),
+                fontWeight: FontWeight.w700,
+                fontSize: 18.setFontSize,
+              ),
+              Image.asset(
+                AppAssets.icLogout,
+                height: 24.setHeight,
+                width: 24.setWidth,
+              )
+            ],
+          ),
         ),
       ),
     );

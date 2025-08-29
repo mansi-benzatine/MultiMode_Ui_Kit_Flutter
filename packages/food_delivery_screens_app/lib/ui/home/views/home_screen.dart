@@ -18,11 +18,15 @@ import '../../../widgets/text_field/text_form_field.dart';
 import '../../all_category_list/views/all_category_list_screen.dart';
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
+  final bool isForChangeLocationBs;
 
-  static Route<void> route() {
+  const HomeScreen({super.key, this.isForChangeLocationBs = false});
+
+  static Route<void> route({bool isForChangeLocationBs = false}) {
     return MaterialPageRoute(
-      builder: (_) => const HomeScreen(),
+      builder: (_) => HomeScreen(
+        isForChangeLocationBs: isForChangeLocationBs,
+      ),
     );
   }
 
@@ -36,7 +40,7 @@ class _HomeScreenState extends State<HomeScreen> {
   List<RestaurantData> nearYouList = [];
   List<BrandsData> brandList = [];
   List<RestaurantData> restaurantList = [];
-
+  bool _isBottomSheetOpen = false;
   void fillData() {
     newOffersList = [
       AppAssets.imgHomeBanner1,
@@ -175,6 +179,167 @@ class _HomeScreenState extends State<HomeScreen> {
     ];
   }
 
+  void showChangeLocationBS() {
+    setState(() {
+      _isBottomSheetOpen = true;
+    });
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: false,
+      isDismissible: false,
+      enableDrag: false,
+      backgroundColor: CustomAppColor.of(context).bgScaffold,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
+      ),
+      builder: (dialogContext) {
+        return SafeArea(
+          top: false,
+          child: Padding(
+            padding: MediaQuery.of(context).viewInsets,
+            child: Stack(
+              clipBehavior: Clip.none,
+              children: [
+                Padding(
+                  padding: EdgeInsets.symmetric(
+                    horizontal: 24.setWidth,
+                    vertical: 20.setHeight,
+                  ).copyWith(
+                    bottom: MediaQuery.of(context).padding.bottom + 20.setHeight,
+                  ),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      SizedBox(height: 19.setHeight),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          CommonText(
+                            text: Languages.of(context).txtSelectDeliveryLocation.toUpperCase(),
+                            fontWeight: FontWeight.w700,
+                            fontSize: 15.setFontSize,
+                            textColor: CustomAppColor.of(context).txtGrey,
+                          ),
+                          IgnorePointer(
+                            ignoring: true,
+                            child: InkWell(
+                              onTap: () => Navigator.push(context, ManageAddressScreen.route()),
+                              child: CommonText(
+                                text: Languages.of(context).txtCHANGE.toUpperCase(),
+                                fontWeight: FontWeight.w700,
+                                fontSize: 15.setFontSize,
+                                textColor: CustomAppColor.of(context).primary,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      SizedBox(height: 12.setHeight),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Image.asset(
+                            AppAssets.icSetDeliveryLocation,
+                            height: 23.setHeight,
+                            width: 23.setWidth,
+                          ),
+                          SizedBox(width: 7.setWidth),
+                          CommonText(
+                            text: "Cooper Square",
+                            textColor: CustomAppColor.of(context).txtBlack,
+                            fontSize: 22.setFontSize,
+                            fontWeight: FontWeight.w600,
+                            letterSpacing: -0.3,
+                          ),
+                        ],
+                      ),
+                      SizedBox(height: 12.setHeight),
+                      CommonText(
+                        text: "47 W 13th St, New York, NY 10011, USA",
+                        textColor: CustomAppColor.of(context).txtBlack,
+                        fontSize: 15.setFontSize,
+                        fontWeight: FontWeight.w400,
+                        letterSpacing: -0.3,
+                      ),
+                      SizedBox(height: 20.setHeight),
+                      IgnorePointer(
+                        ignoring: true,
+                        child: CommonButton(
+                          text: Languages.of(context).txtAddNewAddress.toUpperCase(),
+                          borderColor: CustomAppColor.of(context).primary,
+                          buttonColor: CustomAppColor.of(context).bgScaffold,
+                          buttonTextColor: CustomAppColor.of(context).txtBlack,
+                          onTap: () {},
+                        ),
+                      ),
+                      SizedBox(height: 25.setHeight),
+                      IgnorePointer(
+                        ignoring: true,
+                        child: CommonButton(
+                          onTap: () {},
+                          text: Languages.of(context).txtConfirmLocation.toUpperCase(),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Positioned(
+                  top: -25.setHeight,
+                  right: 0.setWidth,
+                  left: 0.setWidth,
+                  child: IgnorePointer(
+                    ignoring: true,
+                    child: GestureDetector(
+                      onTap: () => Navigator.pop(context),
+                      child: Container(
+                        padding: EdgeInsets.symmetric(
+                          vertical: 14.setHeight,
+                          horizontal: 14.setWidth,
+                        ),
+                        decoration: BoxDecoration(
+                          color: CustomAppColor.of(context).bgScaffold,
+                          shape: BoxShape.circle,
+                          border: Border.all(
+                            color: CustomAppColor.of(context).primary,
+                            width: 2,
+                          ),
+                        ),
+                        child: Icon(
+                          Icons.close,
+                          color: CustomAppColor.of(context).icBlack,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    ).whenComplete(() {
+      if (_isBottomSheetOpen) {
+        setState(() {
+          _isBottomSheetOpen = false;
+        });
+        Navigator.pop(context);
+      }
+    });
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    if (widget.isForChangeLocationBs) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        showChangeLocationBS();
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     fillData();
@@ -236,22 +401,25 @@ class TopBarView extends StatelessWidget {
                       fontSize: 22.setFontSize,
                       textColor: CustomAppColor.of(context).txtBlack,
                     ),
-                    InkWell(
-                      onTap: () => changeLocationBs(context),
-                      child: Row(
-                        children: [
-                          CommonText(
-                            text: "Home | 47 W 1...",
-                            fontWeight: FontWeight.w400,
-                            fontSize: 14.setFontSize,
-                            textColor: CustomAppColor.of(context).txtGrey,
-                          ),
-                          Image.asset(
-                            AppAssets.icDownOrangeArrow,
-                            width: 22.setWidth,
-                            height: 22.setHeight,
-                          )
-                        ],
+                    IgnorePointer(
+                      ignoring: true,
+                      child: InkWell(
+                        onTap: () => changeLocationBs(context),
+                        child: Row(
+                          children: [
+                            CommonText(
+                              text: "Home | 47 W 1...",
+                              fontWeight: FontWeight.w400,
+                              fontSize: 14.setFontSize,
+                              textColor: CustomAppColor.of(context).txtGrey,
+                            ),
+                            Image.asset(
+                              AppAssets.icDownOrangeArrow,
+                              width: 22.setWidth,
+                              height: 22.setHeight,
+                            )
+                          ],
+                        ),
                       ),
                     )
                   ],
@@ -286,7 +454,6 @@ class TopBarView extends StatelessWidget {
       builder: (dialogContext) {
         return SafeArea(
           bottom: false,
-          top: false,
           child: Padding(
             padding: MediaQuery.of(context).viewInsets,
             child: Stack(

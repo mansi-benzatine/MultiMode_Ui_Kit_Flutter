@@ -10,11 +10,17 @@ import 'package:food_delivery_screens_app_package/utils/sizer_utils.dart';
 import 'package:food_delivery_screens_app_package/widgets/text/common_text.dart';
 
 class ViewRestaurantScreen extends StatefulWidget {
-  static Route<void> route() {
-    return MaterialPageRoute(builder: (_) => const ViewRestaurantScreen());
+  final int totalItems;
+  final int totalAmount;
+  static Route<void> route({int totalItem = 0, int totalAmount = 0}) {
+    return MaterialPageRoute(
+        builder: (_) => ViewRestaurantScreen(
+              totalItems: totalItem,
+              totalAmount: totalAmount,
+            ));
   }
 
-  const ViewRestaurantScreen({super.key});
+  const ViewRestaurantScreen({super.key, this.totalItems = 0, this.totalAmount = 0});
 
   @override
   State<ViewRestaurantScreen> createState() => _ViewRestaurantScreenState();
@@ -22,7 +28,8 @@ class ViewRestaurantScreen extends StatefulWidget {
 
 class _ViewRestaurantScreenState extends State<ViewRestaurantScreen> {
   List<FoodData> recommendedList = [];
-
+  int totalItems = 0;
+  int totalAmount = 0;
   void fillData() {
     recommendedList = [
       FoodData(
@@ -52,18 +59,25 @@ class _ViewRestaurantScreenState extends State<ViewRestaurantScreen> {
     ];
   }
 
-  int get totalItems => recommendedList.fold(0, (sum, item) => sum + (item.isAddCart ? item.cartItem : 0));
-  int get totalAmount => recommendedList.fold(
+  void onCartUpdated() {
+    setState(() {
+      totalItems = recommendedList.fold(
+        0,
+        (sum, item) => sum + (item.isAddCart ? item.cartItem : 0),
+      );
+      totalAmount = recommendedList.fold(
         0,
         (sum, item) => sum + (item.isAddCart ? (item.cartItem) * (item.price ?? 0) : 0),
       );
-
-  void onCartUpdated() => setState(() {});
+    });
+  }
 
   @override
   void initState() {
     super.initState();
     fillData();
+    totalItems = widget.totalItems;
+    totalAmount = widget.totalAmount;
   }
 
   @override

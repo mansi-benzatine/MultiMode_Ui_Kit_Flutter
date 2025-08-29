@@ -13,11 +13,15 @@ import '../../search/views/search_screen.dart';
 import '../../view_restaurant/datamodels/view_restaurant_data.dart';
 
 class ViewCategoryDetailsScreen extends StatefulWidget {
-  static Route<void> route() {
-    return MaterialPageRoute(builder: (_) => const ViewCategoryDetailsScreen());
+  final int quantity;
+  static Route<void> route({int quantity = 0}) {
+    return MaterialPageRoute(
+        builder: (_) => ViewCategoryDetailsScreen(
+              quantity: quantity,
+            ));
   }
 
-  const ViewCategoryDetailsScreen({super.key});
+  const ViewCategoryDetailsScreen({super.key, this.quantity = 0});
 
   @override
   State<ViewCategoryDetailsScreen> createState() => _ViewCategoryDetailsScreenState();
@@ -64,7 +68,12 @@ class _ViewCategoryDetailsScreenState extends State<ViewCategoryDetailsScreen> {
   }
 
   void addToCardButtonOnTap() {}
-
+ @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    quantity = widget.quantity;
+  }
   @override
   Widget build(BuildContext context) {
     fillData();

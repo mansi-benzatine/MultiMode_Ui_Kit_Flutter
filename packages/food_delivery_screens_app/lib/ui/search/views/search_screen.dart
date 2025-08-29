@@ -13,10 +13,12 @@ import 'package:food_delivery_screens_app_package/widgets/top_bar/topbar.dart';
 import '../../view_restaurant/views/view_restaurant_screen.dart';
 
 class SearchScreen extends StatefulWidget {
-  const SearchScreen({super.key});
-  static Route<void> route() {
+  final bool isEmptySearchScreen;
+  const SearchScreen({super.key, this.isEmptySearchScreen = false});
+
+  static Route<void> route({bool isEmptySearchScreen = false}) {
     return MaterialPageRoute(
-      builder: (_) => const SearchScreen(),
+      builder: (_) => SearchScreen(isEmptySearchScreen: isEmptySearchScreen),
     );
   }
 
@@ -25,7 +27,7 @@ class SearchScreen extends StatefulWidget {
 }
 
 class _SearchScreenState extends State<SearchScreen> implements TopBarClickListener {
-  final TextEditingController _searchController = TextEditingController();
+  late TextEditingController _searchController;
   List<FoodDetailData> recentSearchList = [];
   List<RestaurantData> restaurantList = [];
   List<RestaurantData> filteredRestaurantList = [];
@@ -85,9 +87,18 @@ class _SearchScreenState extends State<SearchScreen> implements TopBarClickListe
   @override
   void initState() {
     super.initState();
-    fillData();
-    _searchController.addListener(_onSearchChanged);
-    filteredRestaurantList = List.from(restaurantList);
+    if (widget.isEmptySearchScreen) {
+      recentSearchList = [];
+      restaurantList = [];
+      filteredRestaurantList = [];
+      _searchController = TextEditingController(text: "food");
+    } else {
+      _searchController = TextEditingController();
+
+      fillData();
+      _searchController.addListener(_onSearchChanged);
+      filteredRestaurantList = List.from(restaurantList);
+    }
   }
 
   void _onSearchChanged() {
@@ -96,10 +107,7 @@ class _SearchScreenState extends State<SearchScreen> implements TopBarClickListe
       if (query.isEmpty) {
         filteredRestaurantList = List.from(restaurantList);
       } else {
-        filteredRestaurantList = restaurantList
-            .where((restaurant) =>
-                restaurant.restaurantName.toLowerCase().contains(query) || restaurant.cuisineType.any((type) => type.toLowerCase().contains(query)))
-            .toList();
+        filteredRestaurantList = restaurantList.where((restaurant) => restaurant.restaurantName.toLowerCase().contains(query) || restaurant.cuisineType.any((type) => type.toLowerCase().contains(query))).toList();
       }
     });
   }
@@ -121,24 +129,27 @@ class _SearchScreenState extends State<SearchScreen> implements TopBarClickListe
                 child: Padding(
                   padding: EdgeInsets.only(left: 24.setWidth, top: 20.setHeight, right: 24.setWidth),
                   child: SingleChildScrollView(
-                    child: Column(
-                      children: [
-                        CommonTextFormFieldWithPrefix(
-                          prefixIcon: AppAssets.icSearch,
-                          controller: _searchController,
-                          hintText: Languages.of(context).txtRestaurantNameCuisineOrDish,
-                        ),
-                        SizedBox(height: 20.setHeight),
-                        if (_searchController.text.isEmpty) ...[
-                          RecentSearchView(recentSearchList: recentSearchList),
-                          SizedBox(height: 16.setHeight),
-                          RecommendedForYouView(allRestaurantList: filteredRestaurantList),
-                        ] else if (filteredRestaurantList.isNotEmpty) ...[
-                          RecommendedForYouView(allRestaurantList: filteredRestaurantList),
-                        ] else ...[
-                          const EmptySearchView(),
-                        ]
-                      ],
+                    child: IgnorePointer(
+                      ignoring: true,
+                      child: Column(
+                        children: [
+                          CommonTextFormFieldWithPrefix(
+                            prefixIcon: AppAssets.icSearch,
+                            controller: _searchController,
+                            hintText: Languages.of(context).txtRestaurantNameCuisineOrDish,
+                          ),
+                          SizedBox(height: 20.setHeight),
+                          if (_searchController.text.isEmpty) ...[
+                            RecentSearchView(recentSearchList: recentSearchList),
+                            SizedBox(height: 16.setHeight),
+                            RecommendedForYouView(allRestaurantList: filteredRestaurantList),
+                          ] else if (filteredRestaurantList.isNotEmpty) ...[
+                            RecommendedForYouView(allRestaurantList: filteredRestaurantList),
+                          ] else ...[
+                            const EmptySearchView(),
+                          ]
+                        ],
+                      ),
                     ),
                   ),
                 ),

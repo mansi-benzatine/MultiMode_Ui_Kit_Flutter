@@ -9,12 +9,56 @@ import 'package:food_delivery_screens_app_package/widgets/text_field/text_form_f
 
 import '../../dashboard/views/dashboard_screen.dart';
 
-class SetDeliveryLocationScreen extends StatelessWidget {
-  const SetDeliveryLocationScreen({super.key});
-  static Route<void> route() {
+class SetDeliveryLocationScreen extends StatefulWidget {
+  final bool isShowChangeLocationBs;
+  const SetDeliveryLocationScreen({super.key, this.isShowChangeLocationBs = false});
+  static Route<void> route({bool isShowChangeLoacationBs = false}) {
     return MaterialPageRoute(
-      builder: (_) => const SetDeliveryLocationScreen(),
+      builder: (_) => SetDeliveryLocationScreen(
+        isShowChangeLocationBs: isShowChangeLoacationBs,
+      ),
     );
+  }
+
+  @override
+  State<SetDeliveryLocationScreen> createState() => _SetDeliveryLocationScreenState();
+}
+
+class _SetDeliveryLocationScreenState extends State<SetDeliveryLocationScreen> {
+  bool _isBottomSheetOpen = false;
+
+  void showChangeLocationBS() {
+    setState(() {
+      _isBottomSheetOpen = true;
+    });
+    showModalBottomSheet(
+      context: context,
+      enableDrag: false,
+      isDismissible: false,
+      isScrollControlled: false,
+      scrollControlDisabledMaxHeightRatio: 0.7,
+      backgroundColor: CustomAppColor.of(context).black.withValues(alpha: 0.3),
+      barrierColor: CustomAppColor.of(context).black.withValues(alpha: 0.3),
+      builder: (context) => const SearchLocationView(),
+    ).whenComplete(() {
+      if (_isBottomSheetOpen) {
+        setState(() {
+          _isBottomSheetOpen = false;
+        });
+        Navigator.pop(context);
+      }
+    });
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    if (widget.isShowChangeLocationBs) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        showChangeLocationBS();
+      });
+    }
   }
 
   @override
@@ -53,21 +97,24 @@ class SetDeliveryLocationScreen extends StatelessWidget {
                           fontSize: 15.setFontSize,
                           fontWeight: FontWeight.w700,
                         ),
-                        InkWell(
-                          onTap: () {
-                            showModalBottomSheet(
-                              context: context,
-                              scrollControlDisabledMaxHeightRatio: 0.7,
-                              backgroundColor: CustomAppColor.of(context).black.withValues(alpha: 0.3),
-                              barrierColor: CustomAppColor.of(context).black.withValues(alpha: 0.3),
-                              builder: (context) => const SearchLocationView(),
-                            );
-                          },
-                          child: CommonText(
-                            text: Languages.of(context).txtCHANGE.toUpperCase(),
-                            textColor: CustomAppColor.of(context).primary,
-                            fontSize: 15.setFontSize,
-                            fontWeight: FontWeight.w700,
+                        IgnorePointer(
+                          ignoring: true,
+                          child: InkWell(
+                            onTap: () {
+                              showModalBottomSheet(
+                                context: context,
+                                scrollControlDisabledMaxHeightRatio: 0.7,
+                                backgroundColor: CustomAppColor.of(context).black.withValues(alpha: 0.3),
+                                barrierColor: CustomAppColor.of(context).black.withValues(alpha: 0.3),
+                                builder: (context) => const SearchLocationView(),
+                              );
+                            },
+                            child: CommonText(
+                              text: Languages.of(context).txtCHANGE.toUpperCase(),
+                              textColor: CustomAppColor.of(context).primary,
+                              fontSize: 15.setFontSize,
+                              fontWeight: FontWeight.w700,
+                            ),
                           ),
                         )
                       ],
@@ -160,13 +207,16 @@ class SearchLocationView extends StatelessWidget {
                 text: Languages.of(context).txtSearchLocation.toUpperCase(),
                 fontWeight: FontWeight.w700,
               ),
-              InkWell(
-                onTap: () => Navigator.pop(context),
-                child: Image.asset(
-                  AppAssets.icClose,
-                  width: 16.setWidth,
-                  height: 16.setHeight,
-                  fit: BoxFit.fill,
+              IgnorePointer(
+                ignoring: true,
+                child: InkWell(
+                  onTap: () => Navigator.pop(context),
+                  child: Image.asset(
+                    AppAssets.icClose,
+                    width: 16.setWidth,
+                    height: 16.setHeight,
+                    fit: BoxFit.fill,
+                  ),
                 ),
               )
             ],
