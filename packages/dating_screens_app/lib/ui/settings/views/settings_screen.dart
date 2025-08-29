@@ -24,11 +24,14 @@ import '../../../widgets/button/common_button.dart';
 import '../../terms_and_conditions/views/terms_and_conditions_screen.dart';
 
 class SettingsScreen extends StatefulWidget {
-  static Route<void> route() {
-    return MaterialPageRoute(builder: (_) => const SettingsScreen());
+  final bool isShowLogoutAlert;
+  final bool isShownDeleteAccountAlert;
+
+  static Route<void> route({bool isShowLogoutAlert = false, bool isShowDeleteAccountAlert = false}) {
+    return MaterialPageRoute(builder: (_) =>  SettingsScreen(isShownDeleteAccountAlert: isShowDeleteAccountAlert,isShowLogoutAlert: isShowLogoutAlert,));
   }
 
-  const SettingsScreen({super.key});
+  const SettingsScreen({super.key, this.isShowLogoutAlert = false, this.isShownDeleteAccountAlert = false});
 
   @override
   State<SettingsScreen> createState() => _SettingsScreenState();
@@ -37,6 +40,7 @@ class SettingsScreen extends StatefulWidget {
 class _SettingsScreenState extends State<SettingsScreen> implements TopBarClickListener {
   final ValueNotifier<bool> _isPushNotification = ValueNotifier<bool>(true);
   ValueNotifier<bool> isDarkMode = ValueNotifier(false);
+  bool _isDialogOpen = false;
 
   _fillData() {
     bool isDarkModePref = !Utils.isLightTheme();
@@ -47,54 +51,252 @@ class _SettingsScreenState extends State<SettingsScreen> implements TopBarClickL
   void initState() {
     super.initState();
     _fillData();
+
+    if (widget.isShownDeleteAccountAlert) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        _showDeleteDialog();
+      });
+    }
+    if (widget.isShowLogoutAlert) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        _showLogoutDialog();
+      });
+    }
+  }
+
+  void _showDeleteDialog() {
+    setState(() {
+      _isDialogOpen = true;
+    });
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (_) => Dialog(
+        backgroundColor: Colors.transparent,
+        insetPadding: EdgeInsets.symmetric(horizontal: 24.setWidth),
+        child: Padding(
+          padding: EdgeInsets.symmetric(horizontal: 12.setWidth),
+          child: Container(
+            padding: EdgeInsets.symmetric(horizontal: 20.setWidth, vertical: 20.setHeight),
+            decoration: BoxDecoration(
+              color: CustomAppColor.of(context).bgSwipeCard,
+              borderRadius: BorderRadius.circular(24),
+              boxShadow: [
+                BoxShadow(
+                  color: CustomAppColor.of(context).black.withValues(alpha: 0.1),
+                  blurRadius: 10,
+                  spreadRadius: 1,
+                  offset: const Offset(0, 5),
+                ),
+              ],
+            ),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Align(
+                  alignment: Alignment.topRight,
+                  child: Container(
+                    padding: EdgeInsets.symmetric(vertical: 5.setHeight, horizontal: 5.setWidth),
+                    decoration: BoxDecoration(
+                      color: CustomAppColor.of(context).bgScaffold,
+                      borderRadius: BorderRadius.circular(24),
+                      boxShadow: [
+                        BoxShadow(
+                          color: CustomAppColor.of(context).black.withValues(alpha: 0.1),
+                          blurRadius: 10,
+                          spreadRadius: 1,
+                          offset: const Offset(0, 5),
+                        ),
+                      ],
+                    ),
+                    child: GestureDetector(
+                      onTap: () {},
+                      child: Icon(Icons.close, color: CustomAppColor.of(context).txtPink),
+                    ),
+                  ),
+                ),
+                SizedBox(height: 5.setHeight),
+                CommonText(
+                  text: Languages.of(context).txtDeleteAccount,
+                  fontWeight: FontWeight.w800,
+                  fontSize: 22.setFontSize,
+                ),
+                SizedBox(height: 5.setHeight),
+                Divider(color: CustomAppColor.of(context).divider),
+                SizedBox(height: 20.setHeight),
+                CommonText(
+                  text: Languages.of(context).txtAreYouSureYouWantToDeleteAccount,
+                  fontWeight: FontWeight.w400,
+                  fontSize: 14.setFontSize,
+                  textColor: CustomAppColor.of(context).txtGrey,
+                ),
+                SizedBox(height: 20.setHeight),
+                CommonButton(
+                  text: Languages.of(context).txtDeleteAccount.toUpperCase(),
+                  onTap: () {},
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    ).then((_) {
+      if (_isDialogOpen) {
+        print('LogoutDialog dismissed: Popping MyProfileScreen');
+        setState(() {
+          _isDialogOpen = false;
+        });
+        Navigator.of(context).pop();
+      }
+    });
+  }
+
+  void _showLogoutDialog() {
+    setState(() {
+      _isDialogOpen = true;
+    });
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (_) => Dialog(
+        backgroundColor: Colors.transparent,
+        insetPadding: EdgeInsets.symmetric(horizontal: 18.setWidth),
+        child: Padding(
+          padding: EdgeInsets.symmetric(horizontal: 14.setWidth),
+          child: Container(
+            padding: EdgeInsets.symmetric(horizontal: 20.setWidth, vertical: 20.setHeight),
+            decoration: BoxDecoration(
+              color: CustomAppColor.of(context).bgSwipeCard,
+              borderRadius: BorderRadius.circular(24),
+              boxShadow: [
+                BoxShadow(
+                  color: CustomAppColor.of(context).black.withValues(alpha: 0.1),
+                  blurRadius: 10,
+                  spreadRadius: 1,
+                  offset: const Offset(0, 5),
+                ),
+              ],
+            ),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Align(
+                  alignment: Alignment.topRight,
+                  child: Container(
+                    padding: EdgeInsets.symmetric(vertical: 5.setHeight, horizontal: 5.setWidth),
+                    decoration: BoxDecoration(
+                      color: CustomAppColor.of(context).bgScaffold,
+                      borderRadius: BorderRadius.circular(24),
+                      boxShadow: [
+                        BoxShadow(
+                          color: CustomAppColor.of(context).black.withValues(alpha: 0.1),
+                          blurRadius: 10,
+                          spreadRadius: 1,
+                          offset: const Offset(0, 5),
+                        ),
+                      ],
+                    ),
+                    child: GestureDetector(
+                      onTap: () {},
+                      child: Icon(Icons.close, color: CustomAppColor.of(context).txtPink),
+                    ),
+                  ),
+                ),
+                SizedBox(height: 10.setHeight),
+                CommonText(
+                  text: Languages.of(context).txtLogOut,
+                  fontWeight: FontWeight.w800,
+                  fontSize: 24.setFontSize,
+                ),
+                SizedBox(height: 5.setHeight),
+                Divider(color: CustomAppColor.of(context).divider),
+                SizedBox(height: 20.setHeight),
+                CommonText(
+                  text: Languages.of(context).txtAreYouSureYouWantToLogout,
+                  fontWeight: FontWeight.w400,
+                  fontSize: 14.setFontSize,
+                  textColor: CustomAppColor.of(context).txtGrey,
+                ),
+                SizedBox(height: 20.setHeight),
+                CommonButton(
+                  text: Languages.of(context).txtLogOut.toUpperCase(),
+                  onTap: () {},
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    ).then((_) {
+      if (_isDialogOpen) {
+        print('LogoutDialog dismissed: Popping MyProfileScreen');
+        setState(() {
+          _isDialogOpen = false;
+        });
+        Navigator.of(context).pop();
+      }
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: CustomAppColor.of(context).bgScaffold,
-      body: SafeArea(
-        top: true,
-        child: Column(
-          children: [
-            TopBar(
-              this,
-              isShowBack: true,
-              title: Languages.of(context).txtSettings,
-            ),
-            Expanded(
-              child: SingleChildScrollView(
-                child: Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 24.setWidth, vertical: 20.setHeight),
-                  child: Column(
-                    children: [
-                      const IgnorePointer(ignoring: true, child: UserDetailView()),
-                      SizedBox(height: 20.setHeight),
-                      const IgnorePointer(ignoring: true, child: UpgradeCardView()),
-                      SizedBox(height: 20.setHeight),
-                      const IgnorePointer(ignoring: true, child: SystemInformationView()),
-                      SizedBox(height: 20.setHeight),
-                      const IgnorePointer(ignoring: true, child: CurrentLocationView()),
-                      SizedBox(height: 20.setHeight),
-                      const MaximumDistanceView(),
-                      SizedBox(height: 20.setHeight),
-                      const AgeRangesView(),
-                      SizedBox(height: 20.setHeight),
-                      IgnorePointer(ignoring: true, child: NotificationView(isDarkMode: isDarkMode, isPushNotification: _isPushNotification)),
-                      SizedBox(height: 20.setHeight),
-                      const IgnorePointer(ignoring: true, child: ContactUsView()),
-                      SizedBox(height: 20.setHeight),
-                      const IgnorePointer(ignoring: true, child: CommunityView()),
-                      SizedBox(height: 20.setHeight),
-                      const IgnorePointer(ignoring: true, child: LegalView()),
-                      SizedBox(height: 20.setHeight),
-                      const FooterView()
-                    ],
+    return PopScope(
+      canPop: !_isDialogOpen,
+      onPopInvokedWithResult: (didPop, result) {
+        if (!didPop && _isDialogOpen) {
+          print('PopScope: System back button pressed, isDialogOpen=$_isDialogOpen');
+          Navigator.of(context).pop(); // Pop the dialog
+          setState(() {
+            _isDialogOpen = false;
+          });
+          Navigator.of(context).pop(); // Pop MyProfileScreen
+        }
+      },
+      child: Scaffold(
+        backgroundColor: CustomAppColor.of(context).bgScaffold,
+        body: SafeArea(
+          top: true,
+          child: Column(
+            children: [
+              TopBar(
+                this,
+                isShowBack: true,
+                title: Languages.of(context).txtSettings,
+              ),
+              Expanded(
+                child: SingleChildScrollView(
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 24.setWidth, vertical: 20.setHeight),
+                    child: Column(
+                      children: [
+                        const IgnorePointer(ignoring: true, child: UserDetailView()),
+                        SizedBox(height: 20.setHeight),
+                        const IgnorePointer(ignoring: true, child: UpgradeCardView()),
+                        SizedBox(height: 20.setHeight),
+                        const IgnorePointer(ignoring: true, child: SystemInformationView()),
+                        SizedBox(height: 20.setHeight),
+                        const IgnorePointer(ignoring: true, child: CurrentLocationView()),
+                        SizedBox(height: 20.setHeight),
+                        const MaximumDistanceView(),
+                        SizedBox(height: 20.setHeight),
+                        const AgeRangesView(),
+                        SizedBox(height: 20.setHeight),
+                        IgnorePointer(ignoring: true, child: NotificationView(isDarkMode: isDarkMode, isPushNotification: _isPushNotification)),
+                        SizedBox(height: 20.setHeight),
+                        const IgnorePointer(ignoring: true, child: ContactUsView()),
+                        SizedBox(height: 20.setHeight),
+                        const IgnorePointer(ignoring: true, child: CommunityView()),
+                        SizedBox(height: 20.setHeight),
+                        const IgnorePointer(ignoring: true, child: LegalView()),
+                        SizedBox(height: 20.setHeight),
+                        const FooterView()
+                      ],
+                    ),
                   ),
                 ),
-              ),
-            )
-          ],
+              )
+            ],
+          ),
         ),
       ),
     );
@@ -246,10 +448,7 @@ class SystemInformationView extends StatelessWidget {
         SizedBox(height: 10.setHeight),
         Container(
           padding: EdgeInsets.symmetric(horizontal: 18.setWidth, vertical: 15.setHeight),
-          decoration: BoxDecoration(
-              color: CustomAppColor.of(context).bgTextFormField,
-              borderRadius: BorderRadius.circular(14),
-              border: Border.all(color: CustomAppColor.of(context).textFormFieldBorder)),
+          decoration: BoxDecoration(color: CustomAppColor.of(context).bgTextFormField, borderRadius: BorderRadius.circular(14), border: Border.all(color: CustomAppColor.of(context).textFormFieldBorder)),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -920,23 +1119,29 @@ class FooterView extends StatelessWidget {
           textColor: CustomAppColor.of(context).txtPink,
         ),
         SizedBox(height: 25.setHeight),
-        InkWell(
-          onTap: () => _showLogoutAlert(context),
-          child: CommonText(
-            text: Languages.of(context).txtLogOut,
-            fontWeight: FontWeight.w700,
-            fontSize: 16.setFontSize,
-            textColor: CustomAppColor.of(context).txtVelvetPink,
+        IgnorePointer(
+          ignoring: true,
+          child: InkWell(
+            onTap: () => _showLogoutAlert(context),
+            child: CommonText(
+              text: Languages.of(context).txtLogOut,
+              fontWeight: FontWeight.w700,
+              fontSize: 16.setFontSize,
+              textColor: CustomAppColor.of(context).txtVelvetPink,
+            ),
           ),
         ),
         SizedBox(height: 8.setHeight),
-        InkWell(
-          onTap: () => _showDeleteAccountAlert(context),
-          child: CommonText(
-            text: Languages.of(context).txtDeleteAccount,
-            fontWeight: FontWeight.w700,
-            fontSize: 16.setFontSize,
-            textColor: CustomAppColor.of(context).txtVelvetPink,
+        IgnorePointer(
+          ignoring: true,
+          child: InkWell(
+            onTap: () => _showDeleteAccountAlert(context),
+            child: CommonText(
+              text: Languages.of(context).txtDeleteAccount,
+              fontWeight: FontWeight.w700,
+              fontSize: 16.setFontSize,
+              textColor: CustomAppColor.of(context).txtVelvetPink,
+            ),
           ),
         ),
       ],

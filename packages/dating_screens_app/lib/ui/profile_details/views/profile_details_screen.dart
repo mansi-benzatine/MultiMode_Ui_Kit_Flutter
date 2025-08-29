@@ -10,11 +10,12 @@ import '../../../localization/language/languages.dart';
 import '../../../widgets/text/common_text.dart';
 
 class ProfileDetailsScreen extends StatefulWidget {
-  static Route<void> route() {
-    return MaterialPageRoute(builder: (_) => const ProfileDetailsScreen());
+  final bool isShownMatchAlert;
+  static Route<void> route({bool isShownMatchAlert = false}) {
+    return MaterialPageRoute(builder: (_) => ProfileDetailsScreen(isShownMatchAlert: isShownMatchAlert));
   }
 
-  const ProfileDetailsScreen({super.key});
+  const ProfileDetailsScreen({super.key, this.isShownMatchAlert = false});
 
   @override
   State<ProfileDetailsScreen> createState() => _ProfileDetailsScreenState();
@@ -27,6 +28,7 @@ class _ProfileDetailsScreenState extends State<ProfileDetailsScreen> {
   List<String> languageList = [];
   late ScrollController _scrollController;
   bool isCollapsed = false;
+  bool _isDialogOpen = false;
 
   void fillData() {
     photoList = [
@@ -72,6 +74,185 @@ class _ProfileDetailsScreenState extends State<ProfileDetailsScreen> {
             isCollapsed = newValue;
           });
         }
+      }
+    });
+
+    if (widget.isShownMatchAlert) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        _showMatchDialog();
+      });
+    }
+  }
+
+  void _showMatchDialog() {
+    setState(() {
+      _isDialogOpen = true;
+    });
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (_) => Dialog(
+        backgroundColor: Colors.transparent,
+        insetPadding: EdgeInsets.symmetric(horizontal: 24.setWidth),
+        child: Container(
+          padding: EdgeInsets.symmetric(horizontal: 16.setWidth, vertical: 16.setHeight),
+          decoration: BoxDecoration(
+            color: CustomAppColor.of(context).bgSwipeCard,
+            borderRadius: BorderRadius.circular(24),
+            boxShadow: [
+              BoxShadow(
+                color: CustomAppColor.of(context).black.withValues(alpha: 0.1),
+                blurRadius: 10,
+                spreadRadius: 1,
+                offset: const Offset(0, 5),
+              ),
+            ],
+          ),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Align(
+                alignment: Alignment.topRight,
+                child: Container(
+                  padding: EdgeInsets.symmetric(vertical: 5.setHeight, horizontal: 5.setWidth),
+                  decoration: BoxDecoration(
+                    color: CustomAppColor.of(context).passionContainerBg,
+                    borderRadius: BorderRadius.circular(24),
+                    boxShadow: [
+                      BoxShadow(
+                        color: CustomAppColor.of(context).black.withValues(alpha: 0.1),
+                        blurRadius: 10,
+                        spreadRadius: 1,
+                        offset: const Offset(0, 5),
+                      ),
+                    ],
+                  ),
+                  child: GestureDetector(
+                    onTap: () {},
+                    child: Icon(Icons.close, color: CustomAppColor.of(context).txtPink),
+                  ),
+                ),
+              ),
+              Stack(
+                alignment: Alignment.center,
+                children: [
+                  Positioned(
+                    right: 32.setWidth,
+                    top: 90.setHeight,
+                    child: Container(
+                      decoration: BoxDecoration(
+                        border: Border.all(
+                          color: CustomAppColor.of(context).txtPink,
+                          width: 5,
+                        ),
+                        shape: BoxShape.circle,
+                      ),
+                      child: ClipOval(
+                        child: Image.asset(
+                          AppAssets.imgProfile,
+                          height: 110.setHeight,
+                          width: 110.setWidth,
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                    ),
+                  ),
+                  Positioned(
+                    left: 30.setWidth,
+                    top: 55.setHeight,
+                    child: Container(
+                      decoration: BoxDecoration(
+                        border: Border.all(
+                          color: CustomAppColor.of(context).txtPink,
+                          width: 5,
+                        ),
+                        shape: BoxShape.circle,
+                      ),
+                      child: ClipOval(
+                        child: Image.asset(
+                          AppAssets.imgProfile1,
+                          height: 110.setHeight,
+                          width: 110.setWidth,
+                          fit: BoxFit.cover,
+                          alignment: Alignment.topCenter,
+                        ),
+                      ),
+                    ),
+                  ),
+                  Positioned(child: Image.asset(AppAssets.imgBgProfile)),
+                ],
+              ),
+              CommonText(
+                text: Languages.of(context).txtItIsMatch.toUpperCase(),
+                fontWeight: FontWeight.w800,
+                fontSize: 18.setFontSize,
+                textColor: CustomAppColor.of(context).txtPink,
+              ),
+              SizedBox(height: 5.setHeight),
+              CommonText(
+                text: "Rose Ward, 29",
+                fontWeight: FontWeight.w700,
+                fontSize: 30.setFontSize,
+              ),
+              CommonText(
+                text: "Fashion Designer",
+                fontWeight: FontWeight.w400,
+                fontSize: 18.setFontSize,
+                textColor: CustomAppColor.of(context).txtGrey,
+              ),
+              Container(
+                margin: EdgeInsets.only(top: 10.setHeight, bottom: 10.setHeight),
+                decoration: BoxDecoration(
+                  color: CustomAppColor.of(context).containerPink,
+                  borderRadius: BorderRadius.circular(3),
+                ),
+                padding: EdgeInsets.symmetric(vertical: 6.setHeight, horizontal: 10.setWidth),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Image.asset(AppAssets.icShare, height: 13.setHeight, width: 13.setWidth),
+                    SizedBox(width: 6.setWidth),
+                    CommonText(
+                      text: "5KM",
+                      fontWeight: FontWeight.w400,
+                      fontSize: 12.setFontSize,
+                      textColor: CustomAppColor.of(context).white,
+                    ),
+                  ],
+                ),
+              ),
+              IgnorePointer(
+                ignoring: true,
+                child: Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 60.setWidth),
+                  child: CommonButton(
+                    text: Languages.of(context).txtSendAMessage,
+                    onTap: () {},
+                    height: 40.setHeight,
+                  ),
+                ),
+              ),
+              SizedBox(height: 10.setHeight),
+              InkWell(
+                onTap: () {},
+                child: CommonText(
+                  text: Languages.of(context).txtKeepPlaying,
+                  fontSize: 18.setFontSize,
+                  fontWeight: FontWeight.w600,
+                  textColor: CustomAppColor.of(context).txtGrey,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    ).then((_) {
+      if (_isDialogOpen) {
+        print('LogoutDialog dismissed: Popping MyProfileScreen');
+        setState(() {
+          _isDialogOpen = false;
+        });
+        Navigator.of(context).pop();
       }
     });
   }
@@ -133,10 +314,7 @@ class _ProfileDetailsScreenState extends State<ProfileDetailsScreen> {
                         gradient: LinearGradient(
                           begin: Alignment.topCenter,
                           end: Alignment.bottomCenter,
-                          colors: [
-                            CustomAppColor.of(context).primary.withValues(alpha: 0.01),
-                            CustomAppColor.of(context).primary.withValues(alpha: 0.7)
-                          ],
+                          colors: [CustomAppColor.of(context).primary.withValues(alpha: 0.01), CustomAppColor.of(context).primary.withValues(alpha: 0.7)],
                         ),
                       ),
                     ),

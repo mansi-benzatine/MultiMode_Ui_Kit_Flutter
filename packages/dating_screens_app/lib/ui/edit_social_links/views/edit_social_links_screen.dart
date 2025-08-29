@@ -79,9 +79,12 @@ class _EditSocialLinksScreenState extends State<EditSocialLinksScreen> implement
                 ),
               ),
             ),
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 24.setWidth, vertical: 20.setHeight),
-              child: CommonButton(onTap: () => Navigator.pop(context), text: Languages.of(context).txtUpdate.toUpperCase()),
+            IgnorePointer(
+
+              ignoring:true,child: Padding(
+                padding: EdgeInsets.symmetric(horizontal: 24.setWidth, vertical: 20.setHeight),
+                child: CommonButton(onTap: () => Navigator.pop(context), text: Languages.of(context).txtUpdate.toUpperCase()),
+              ),
             )
           ],
         ),

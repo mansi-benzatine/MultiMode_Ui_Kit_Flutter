@@ -1,5 +1,3 @@
-import 'package:dating_screens_app_package/ui/chats_list/views/chats_list_screen.dart';
-import 'package:dating_screens_app_package/ui/likes/views/likes_screen.dart';
 import 'package:dating_screens_app_package/utils/app_assets.dart';
 import 'package:dating_screens_app_package/utils/app_color.dart';
 import 'package:dating_screens_app_package/utils/sizer_utils.dart';
@@ -7,15 +5,29 @@ import 'package:dating_screens_app_package/widgets/text/common_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import '../../chats_list/views/chats_list_screen.dart';
 import '../../home/views/home_screen.dart';
+import '../../likes/views/likes_screen.dart';
 import '../../profile/views/profile_screen.dart';
 
 class DashboardScreen extends StatefulWidget {
   final int currentIndex;
-  const DashboardScreen({super.key, required this.currentIndex});
+  final int currentIndexHomeScreen;
+  final bool isShownMatchAlert;
+  final bool isAutomaticSwipeRight;
+  final bool isAutomaticSwipeLeft;
 
-  static Route<void> route({required int currentIndex}) {
-    return MaterialPageRoute(builder: (_) => DashboardScreen(currentIndex: currentIndex));
+  const DashboardScreen({super.key, required this.currentIndex, this.currentIndexHomeScreen = 0, this.isShownMatchAlert = false, this.isAutomaticSwipeRight = false, this.isAutomaticSwipeLeft = false});
+
+  static Route<void> route({required int currentIndex, int currentIndexHomeScreen = 0, bool isShownMatchAlert = false, bool isAutomaticSwipeRight = false, bool isAutomaticSwipeLeft = false}) {
+    return MaterialPageRoute(
+        builder: (_) => DashboardScreen(
+              currentIndex: currentIndex,
+              isShownMatchAlert: isShownMatchAlert,
+              currentIndexHomeScreen: currentIndexHomeScreen,
+              isAutomaticSwipeLeft: isAutomaticSwipeLeft,
+              isAutomaticSwipeRight: isAutomaticSwipeRight,
+            ));
   }
 
   @override
@@ -25,17 +37,22 @@ class DashboardScreen extends StatefulWidget {
 class _DashboardScreenState extends State<DashboardScreen> {
   int _currentIndex = 0;
 
-  final List<Widget> _pages = [
-    const HomeScreen(),
-    const LikesScreen(),
-    const ChatsListScreen(),
-    const ProfileScreen(),
-  ];
+  List<Widget> _pages = [];
 
   @override
   void initState() {
     super.initState();
-
+    _pages = [
+      HomeScreen(
+        currentIndex: widget.currentIndexHomeScreen,
+        isShownMatchAlert: widget.isShownMatchAlert,
+        isAutomaticSwipeRight: widget.isAutomaticSwipeRight,
+        isAutomaticSwipeLeft: widget.isAutomaticSwipeLeft,
+      ),
+      const LikesScreen(),
+      const ChatsListScreen(),
+      const ProfileScreen(),
+    ];
     _currentIndex = widget.currentIndex;
   }
 

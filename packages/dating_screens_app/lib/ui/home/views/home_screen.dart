@@ -10,7 +10,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_card_swiper/flutter_card_swiper.dart';
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
+  final int currentIndex;
+  final bool isShownMatchAlert;
+  final bool isAutomaticSwipeRight;
+  final bool isAutomaticSwipeLeft;
+  const HomeScreen({super.key, this.currentIndex = 0, this.isShownMatchAlert = false, this.isAutomaticSwipeRight = false, this.isAutomaticSwipeLeft = false});
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -19,10 +23,10 @@ class HomeScreen extends StatefulWidget {
 enum HomeTab { discover, nearby }
 
 class _HomeScreenState extends State<HomeScreen> {
-  HomeTab selectedTab = HomeTab.discover;
+  late HomeTab selectedTab;
   List<String> imageList = [];
   List<NearbyData> nearbyImageList = [];
-
+  bool _isDialogOpen = false;
   void fillData() {
     imageList = [
       AppAssets.imgProfile1,
@@ -42,105 +46,331 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
+
     fillData();
+    if (widget.isShownMatchAlert) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        _showMatchDialog();
+      });
+    }
+
+    selectedTab = HomeTab.values[(widget.currentIndex >= 0 && widget.currentIndex < HomeTab.values.length) ? widget.currentIndex : 0];
   }
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: CustomAppColor.of(context).bgPinkScaffold,
-      body: Stack(
-        children: [
-          Column(
+  void _showMatchDialog() {
+    setState(() {
+      _isDialogOpen = true;
+    });
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (_) => Dialog(
+        backgroundColor: Colors.transparent,
+        insetPadding: EdgeInsets.symmetric(horizontal: 24.setWidth),
+        child: Container(
+          padding: EdgeInsets.symmetric(horizontal: 16.setWidth, vertical: 16.setHeight),
+          decoration: BoxDecoration(
+            color: CustomAppColor.of(context).bgSwipeCard,
+            borderRadius: BorderRadius.circular(24),
+            boxShadow: [
+              BoxShadow(
+                color: CustomAppColor.of(context).black.withValues(alpha: 0.1),
+                blurRadius: 10,
+                spreadRadius: 1,
+                offset: const Offset(0, 5),
+              ),
+            ],
+          ),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
             children: [
-              Container(
-                height: selectedTab == HomeTab.discover ? 322.setHeight : 145.setHeight,
-                width: double.infinity,
-                decoration: BoxDecoration(
-                  color: CustomAppColor.of(context).txtPink,
-                  borderRadius: const BorderRadius.only(
-                    bottomRight: Radius.circular(40),
-                    bottomLeft: Radius.circular(40),
-                  ),
-                ),
-                child: Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 50.setWidth, vertical: 14.setHeight),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      GestureDetector(
-                        onTap: () {
-                          setState(() {
-                            selectedTab = HomeTab.discover;
-                          });
-                        },
-                        child: Column(
-                          children: [
-                            CommonText(
-                              text: Languages.of(context).txtDiscover,
-                              fontWeight: selectedTab == HomeTab.discover ? FontWeight.w700 : FontWeight.w500,
-                              fontSize: 24.setFontSize,
-                              textColor: CustomAppColor.of(context).white,
-                            ),
-                            Container(
-                              height: 6.setHeight,
-                              width: 6.setWidth,
-                              decoration: BoxDecoration(
-                                color: selectedTab == HomeTab.discover ? CustomAppColor.of(context).white : CustomAppColor.of(context).transparent,
-                                shape: BoxShape.circle,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      GestureDetector(
-                        onTap: () {
-                          setState(() {
-                            selectedTab = HomeTab.nearby;
-                          });
-                        },
-                        child: Column(
-                          children: [
-                            CommonText(
-                              text: Languages.of(context).txtNearby,
-                              fontWeight: selectedTab == HomeTab.nearby ? FontWeight.w700 : FontWeight.w500,
-                              fontSize: 24.setFontSize,
-                              textColor: CustomAppColor.of(context).white,
-                            ),
-                            Container(
-                              height: 6.setHeight,
-                              width: 6.setWidth,
-                              decoration: BoxDecoration(
-                                color: selectedTab == HomeTab.nearby ? CustomAppColor.of(context).white : CustomAppColor.of(context).transparent,
-                                shape: BoxShape.circle,
-                              ),
-                            ),
-                          ],
-                        ),
+              Align(
+                alignment: Alignment.topRight,
+                child: Container(
+                  padding: EdgeInsets.symmetric(vertical: 5.setHeight, horizontal: 5.setWidth),
+                  decoration: BoxDecoration(
+                    color: CustomAppColor.of(context).passionContainerBg,
+                    borderRadius: BorderRadius.circular(24),
+                    boxShadow: [
+                      BoxShadow(
+                        color: CustomAppColor.of(context).black.withValues(alpha: 0.1),
+                        blurRadius: 10,
+                        spreadRadius: 1,
+                        offset: const Offset(0, 5),
                       ),
                     ],
                   ),
+                  child: GestureDetector(
+                    onTap: () {},
+                    child: Icon(Icons.close, color: CustomAppColor.of(context).txtPink),
+                  ),
+                ),
+              ),
+              Stack(
+                alignment: Alignment.center,
+                children: [
+                  Positioned(
+                    right: 32.setWidth,
+                    top: 90.setHeight,
+                    child: Container(
+                      decoration: BoxDecoration(
+                        border: Border.all(
+                          color: CustomAppColor.of(context).txtPink,
+                          width: 5,
+                        ),
+                        shape: BoxShape.circle,
+                      ),
+                      child: ClipOval(
+                        child: Image.asset(
+                          AppAssets.imgProfile,
+                          height: 110.setHeight,
+                          width: 110.setWidth,
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                    ),
+                  ),
+                  Positioned(
+                    left: 30.setWidth,
+                    top: 55.setHeight,
+                    child: Container(
+                      decoration: BoxDecoration(
+                        border: Border.all(
+                          color: CustomAppColor.of(context).txtPink,
+                          width: 5,
+                        ),
+                        shape: BoxShape.circle,
+                      ),
+                      child: ClipOval(
+                        child: Image.asset(
+                          AppAssets.imgProfile1,
+                          height: 110.setHeight,
+                          width: 110.setWidth,
+                          fit: BoxFit.cover,
+                          alignment: Alignment.topCenter,
+                        ),
+                      ),
+                    ),
+                  ),
+                  Positioned(child: Image.asset(AppAssets.imgBgProfile)),
+                ],
+              ),
+              CommonText(
+                text: Languages.of(context).txtItIsMatch.toUpperCase(),
+                fontWeight: FontWeight.w800,
+                fontSize: 18.setFontSize,
+                textColor: CustomAppColor.of(context).txtPink,
+              ),
+              SizedBox(height: 5.setHeight),
+              CommonText(
+                text: "Rose Ward, 29",
+                fontWeight: FontWeight.w700,
+                fontSize: 30.setFontSize,
+              ),
+              CommonText(
+                text: "Fashion Designer",
+                fontWeight: FontWeight.w400,
+                fontSize: 18.setFontSize,
+                textColor: CustomAppColor.of(context).txtGrey,
+              ),
+              Container(
+                margin: EdgeInsets.only(top: 10.setHeight, bottom: 10.setHeight),
+                decoration: BoxDecoration(
+                  color: CustomAppColor.of(context).containerPink,
+                  borderRadius: BorderRadius.circular(3),
+                ),
+                padding: EdgeInsets.symmetric(vertical: 6.setHeight, horizontal: 10.setWidth),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Image.asset(AppAssets.icShare, height: 13.setHeight, width: 13.setWidth),
+                    SizedBox(width: 6.setWidth),
+                    CommonText(
+                      text: "5KM",
+                      fontWeight: FontWeight.w400,
+                      fontSize: 12.setFontSize,
+                      textColor: CustomAppColor.of(context).white,
+                    ),
+                  ],
+                ),
+              ),
+              IgnorePointer(
+                ignoring: true,
+                child: Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 60.setWidth),
+                  child: CommonButton(
+                    text: Languages.of(context).txtSendAMessage,
+                    onTap: () {},
+                    height: 40.setHeight,
+                  ),
+                ),
+              ),
+              SizedBox(height: 10.setHeight),
+              InkWell(
+                onTap: () {},
+                child: CommonText(
+                  text: Languages.of(context).txtKeepPlaying,
+                  fontSize: 18.setFontSize,
+                  fontWeight: FontWeight.w600,
+                  textColor: CustomAppColor.of(context).txtGrey,
                 ),
               ),
             ],
           ),
-          if (selectedTab == HomeTab.discover)
-            ProfileCardSwiper(imageList: imageList)
-          else
-            NearbyView(
-              nearbyList: nearbyImageList,
+        ),
+      ),
+    ).then((_) {
+      if (_isDialogOpen) {
+        print('LogoutDialog dismissed: Popping MyProfileScreen');
+        setState(() {
+          _isDialogOpen = false;
+        });
+        Navigator.of(context).pop();
+      }
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return PopScope(
+      canPop: !_isDialogOpen,
+      onPopInvokedWithResult: (didPop, result) {
+        if (!didPop && _isDialogOpen) {
+          print('PopScope: System back button pressed, isDialogOpen=$_isDialogOpen');
+          Navigator.of(context).pop(); // Pop the dialog
+          setState(() {
+            _isDialogOpen = false;
+          });
+          Navigator.of(context).pop();
+        }
+      },
+      child: Scaffold(
+        backgroundColor: CustomAppColor.of(context).bgPinkScaffold,
+        body: Stack(
+          children: [
+            Column(
+              children: [
+                Container(
+                  height: selectedTab == HomeTab.discover ? 322.setHeight : 145.setHeight,
+                  width: double.infinity,
+                  decoration: BoxDecoration(
+                    color: CustomAppColor.of(context).txtPink,
+                    borderRadius: const BorderRadius.only(
+                      bottomRight: Radius.circular(40),
+                      bottomLeft: Radius.circular(40),
+                    ),
+                  ),
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 50.setWidth, vertical: 14.setHeight),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        IgnorePointer(
+                          ignoring: true,
+                          child: GestureDetector(
+                            onTap: () {
+                              setState(() {
+                                selectedTab = HomeTab.discover;
+                              });
+                            },
+                            child: Column(
+                              children: [
+                                CommonText(
+                                  text: Languages.of(context).txtDiscover,
+                                  fontWeight: selectedTab == HomeTab.discover ? FontWeight.w700 : FontWeight.w500,
+                                  fontSize: 24.setFontSize,
+                                  textColor: CustomAppColor.of(context).white,
+                                ),
+                                Container(
+                                  height: 6.setHeight,
+                                  width: 6.setWidth,
+                                  decoration: BoxDecoration(
+                                    color: selectedTab == HomeTab.discover ? CustomAppColor.of(context).white : CustomAppColor.of(context).transparent,
+                                    shape: BoxShape.circle,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                        IgnorePointer(
+                          ignoring: true,
+                          child: GestureDetector(
+                            onTap: () {
+                              setState(() {
+                                selectedTab = HomeTab.nearby;
+                              });
+                            },
+                            child: Column(
+                              children: [
+                                CommonText(
+                                  text: Languages.of(context).txtNearby,
+                                  fontWeight: selectedTab == HomeTab.nearby ? FontWeight.w700 : FontWeight.w500,
+                                  fontSize: 24.setFontSize,
+                                  textColor: CustomAppColor.of(context).white,
+                                ),
+                                Container(
+                                  height: 6.setHeight,
+                                  width: 6.setWidth,
+                                  decoration: BoxDecoration(
+                                    color: selectedTab == HomeTab.nearby ? CustomAppColor.of(context).white : CustomAppColor.of(context).transparent,
+                                    shape: BoxShape.circle,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
             ),
-        ],
+            if (selectedTab == HomeTab.discover)
+              ProfileCardSwiper(
+                imageList: imageList,
+                autoSwipeRight: widget.isAutomaticSwipeRight,
+                autoSwipeLeft: widget.isAutomaticSwipeLeft,
+              )
+            else
+              NearbyView(
+                nearbyList: nearbyImageList,
+              ),
+          ],
+        ),
       ),
     );
   }
 }
 
-class ProfileCardSwiper extends StatelessWidget {
+class ProfileCardSwiper extends StatefulWidget {
   final List<String> imageList;
+  final bool autoSwipeRight;
+  final bool autoSwipeLeft;
+  const ProfileCardSwiper({super.key, required this.imageList, this.autoSwipeRight = false, this.autoSwipeLeft = false});
 
-  const ProfileCardSwiper({super.key, required this.imageList});
+  @override
+  State<ProfileCardSwiper> createState() => _ProfileCardSwiperState();
+}
+
+class _ProfileCardSwiperState extends State<ProfileCardSwiper> {
+  final CardSwiperController _controller = CardSwiperController();
+  @override
+  void initState() {
+    super.initState();
+
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      await Future.delayed(const Duration(milliseconds: 200));
+      if (widget.autoSwipeRight) {
+        _controller.swipe(CardSwiperDirection.right);
+      }
+      if (widget.autoSwipeLeft) {
+        _controller.swipe(CardSwiperDirection.left);
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -149,7 +379,8 @@ class ProfileCardSwiper extends StatelessWidget {
       child: Padding(
         padding: EdgeInsets.symmetric(horizontal: 24.setWidth),
         child: CardSwiper(
-          cardsCount: imageList.length,
+          controller: _controller,
+          cardsCount: widget.imageList.length,
           numberOfCardsDisplayed: 3,
           isLoop: true,
           backCardOffset: const Offset(0, 40),
@@ -182,7 +413,7 @@ class ProfileCardSwiper extends StatelessWidget {
                       ),
                     ],
                   ),
-                  child: _buildProfileCard(context, imageList[index]),
+                  child: _buildProfileCard(context, widget.imageList[index]),
                 ),
                 if (overlayText != null)
                   Positioned(
@@ -305,9 +536,7 @@ class ProfileCardSwiper extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               _buildActionButton(AppAssets.icClose, context, () {}),
-              _buildActionButton(AppAssets.icLike, context, () {
-                showMatchPopup(context);
-              }, isPrimary: true),
+              _buildActionButton(AppAssets.icLike, context, () {}, isPrimary: true),
               _buildActionButton(AppAssets.icRefresh, context, () {}),
             ],
           )

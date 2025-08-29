@@ -11,11 +11,12 @@ import 'package:flutter/material.dart';
 import '../datamodels/help_and_support_data.dart';
 
 class HelpSupportScreen extends StatefulWidget {
-  static Route<void> route() {
-    return MaterialPageRoute(builder: (_) => const HelpSupportScreen());
+  final int currentIndex;
+  static Route<void> route({int currentIndex = 0}) {
+    return MaterialPageRoute(builder: (_) => HelpSupportScreen(currentIndex: currentIndex));
   }
 
-  const HelpSupportScreen({super.key});
+  const HelpSupportScreen({super.key, this.currentIndex = 0});
 
   @override
   State<HelpSupportScreen> createState() => _HelpSupportScreenState();
@@ -34,49 +35,25 @@ class _HelpSupportScreenState extends State<HelpSupportScreen> with TickerProvid
     faqCategories = [
       FaqCategory(title: 'General', items: [
         FaqItem(question: "Lorem Ipsum Is Simply Dummy Text?", answer: "Lorem Ipsum is simply dummy text of the printing and typesetting industry."),
-        FaqItem(
-            question: "Lorem Ipsum Is Simply Dummy Text?",
-            answer:
-                "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum is simply dummy text of the printing and typesetting industry."),
+        FaqItem(question: "Lorem Ipsum Is Simply Dummy Text?", answer: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum is simply dummy text of the printing and typesetting industry."),
         FaqItem(question: "Lorem Ipsum Is Simply Dummy Text?", answer: "Lorem Ipsum is simply dummy text of the printing and typesetting industry."),
-        FaqItem(
-            question: "Lorem Ipsum Is Simply Dummy Text?",
-            answer:
-                "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum is simply dummy text of the printing and typesetting industry."),
+        FaqItem(question: "Lorem Ipsum Is Simply Dummy Text?", answer: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum is simply dummy text of the printing and typesetting industry."),
         FaqItem(question: "Lorem Ipsum Is Simply Dummy Text?", answer: "Lorem Ipsum is simply dummy text of the printing and typesetting industry."),
         FaqItem(question: "Lorem Ipsum Is Simply Dummy Text?", answer: "Lorem Ipsum is simply dummy text of the printing and typesetting industry."),
       ]),
       FaqCategory(title: 'Account', items: [
-        FaqItem(
-            question: "Lorem Ipsum Is Simply Dummy Text?",
-            answer:
-                "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum is simply dummy text of the printing and typesetting industry."),
+        FaqItem(question: "Lorem Ipsum Is Simply Dummy Text?", answer: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum is simply dummy text of the printing and typesetting industry."),
       ]),
       FaqCategory(title: 'Service', items: [
-        FaqItem(
-            question: "Lorem Ipsum Is Simply Dummy Text?",
-            answer:
-                "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum is simply dummy text of the printing and typesetting industry."),
-        FaqItem(
-            question: "Lorem Ipsum Is Simply Dummy Text?",
-            answer:
-                "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum is simply dummy text of the printing and typesetting industry."),
+        FaqItem(question: "Lorem Ipsum Is Simply Dummy Text?", answer: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum is simply dummy text of the printing and typesetting industry."),
+        FaqItem(question: "Lorem Ipsum Is Simply Dummy Text?", answer: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum is simply dummy text of the printing and typesetting industry."),
       ]),
       FaqCategory(title: 'Support', items: [
-        FaqItem(
-            question: "Lorem Ipsum Is Simply Dummy Text?",
-            answer:
-                "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum is simply dummy text of the printing and typesetting industry."),
+        FaqItem(question: "Lorem Ipsum Is Simply Dummy Text?", answer: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum is simply dummy text of the printing and typesetting industry."),
       ]),
       FaqCategory(title: 'Fraud', items: [
-        FaqItem(
-            question: "Lorem Ipsum Is Simply Dummy Text?",
-            answer:
-                "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum is simply dummy text of the printing and typesetting industry."),
-        FaqItem(
-            question: "Lorem Ipsum Is Simply Dummy Text?",
-            answer:
-                "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum is simply dummy text of the printing and typesetting industry."),
+        FaqItem(question: "Lorem Ipsum Is Simply Dummy Text?", answer: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum is simply dummy text of the printing and typesetting industry."),
+        FaqItem(question: "Lorem Ipsum Is Simply Dummy Text?", answer: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum is simply dummy text of the printing and typesetting industry."),
       ]),
     ];
     contacts = [
@@ -94,7 +71,7 @@ class _HelpSupportScreenState extends State<HelpSupportScreen> with TickerProvid
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(length: 2, vsync: this);
+    _tabController = TabController(initialIndex: widget.currentIndex, length: 2, vsync: this);
     _tabController.addListener(() {
       if (!_tabController.indexIsChanging) {
         setState(() {});
@@ -124,55 +101,59 @@ class _HelpSupportScreenState extends State<HelpSupportScreen> with TickerProvid
                 title: Languages.of(context).txtHelpAndSupport,
                 isShowBack: true,
               ),
-              TabBar(
-                controller: _tabController,
-                indicatorColor: CustomAppColor.of(context).txtVelvet,
-                unselectedLabelColor: CustomAppColor.of(context).txtGrey,
-                unselectedLabelStyle: TextStyle(
-                  fontWeight: FontWeight.w700,
-                  fontSize: 16.setFontSize,
-                  fontFamily: Constant.fontFamily,
-                  color: CustomAppColor.of(context).txtGrey,
-                ),
-                labelColor: CustomAppColor.of(context).txtVelvetPink,
-                labelStyle: TextStyle(
-                  fontWeight: FontWeight.w700,
-                  fontSize: 16.setFontSize,
-                  fontFamily: Constant.fontFamily,
-                  color: CustomAppColor.of(context).txtVelvetPink,
-                ),
-                indicatorSize: TabBarIndicatorSize.tab,
-                padding: EdgeInsets.symmetric(horizontal: 24.setWidth),
-                indicatorWeight: 2.0, // Fixed invalid value
-                indicator: UnderlineTabIndicator(
-                  borderSide: BorderSide(
-                    width: 2.0,
+              IgnorePointer(
+                ignoring: true,
+                child: TabBar(
+                  controller: _tabController,
+                  indicatorColor: CustomAppColor.of(context).txtVelvet,
+                  unselectedLabelColor: CustomAppColor.of(context).txtGrey,
+                  unselectedLabelStyle: TextStyle(
+                    fontWeight: FontWeight.w700,
+                    fontSize: 16.setFontSize,
+                    fontFamily: Constant.fontFamily,
+                    color: CustomAppColor.of(context).txtGrey,
+                  ),
+                  labelColor: CustomAppColor.of(context).txtVelvetPink,
+                  labelStyle: TextStyle(
+                    fontWeight: FontWeight.w700,
+                    fontSize: 16.setFontSize,
+                    fontFamily: Constant.fontFamily,
                     color: CustomAppColor.of(context).txtVelvetPink,
                   ),
+                  indicatorSize: TabBarIndicatorSize.tab,
+                  padding: EdgeInsets.symmetric(horizontal: 24.setWidth),
+                  indicatorWeight: 2.0, // Fixed invalid value
+                  indicator: UnderlineTabIndicator(
+                    borderSide: BorderSide(
+                      width: 2.0,
+                      color: CustomAppColor.of(context).txtVelvetPink,
+                    ),
+                  ),
+                  tabs: [
+                    Tab(
+                      child: CommonText(
+                        text: Languages.of(context).txtFAQ,
+                        fontWeight: FontWeight.w700,
+                        fontSize: 16.setFontSize,
+                        fontFamily: Constant.fontFamily,
+                        textColor: _tabController.index == 0 ? CustomAppColor.of(context).txtVelvetPink : CustomAppColor.of(context).txtGrey,
+                      ),
+                    ),
+                    Tab(
+                      child: CommonText(
+                        text: Languages.of(context).txtContactUs,
+                        fontWeight: FontWeight.w700,
+                        fontSize: 16.setFontSize,
+                        fontFamily: Constant.fontFamily,
+                        textColor: _tabController.index == 1 ? CustomAppColor.of(context).txtVelvetPink : CustomAppColor.of(context).txtGrey,
+                      ),
+                    ),
+                  ],
                 ),
-                tabs: [
-                  Tab(
-                    child: CommonText(
-                      text: Languages.of(context).txtFAQ,
-                      fontWeight: FontWeight.w700,
-                      fontSize: 16.setFontSize,
-                      fontFamily: Constant.fontFamily,
-                      textColor: _tabController.index == 0 ? CustomAppColor.of(context).txtVelvetPink : CustomAppColor.of(context).txtGrey,
-                    ),
-                  ),
-                  Tab(
-                    child: CommonText(
-                      text: Languages.of(context).txtContactUs,
-                      fontWeight: FontWeight.w700,
-                      fontSize: 16.setFontSize,
-                      fontFamily: Constant.fontFamily,
-                      textColor: _tabController.index == 1 ? CustomAppColor.of(context).txtVelvetPink : CustomAppColor.of(context).txtGrey,
-                    ),
-                  ),
-                ],
               ),
               Expanded(
                 child: TabBarView(
+                  physics: NeverScrollableScrollPhysics(),
                   controller: _tabController,
                   children: [
                     _buildFaqTab(),

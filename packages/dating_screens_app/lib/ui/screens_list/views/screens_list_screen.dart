@@ -9,6 +9,7 @@ import 'package:dating_screens_app_package/ui/edit_job_and_school/views/edit_job
 import 'package:dating_screens_app_package/ui/edit_language/views/edit_langauges_screen.dart';
 import 'package:dating_screens_app_package/ui/edit_passion/views/edit_passion_screen.dart';
 import 'package:dating_screens_app_package/ui/edit_profile/views/edit_profile_screen.dart';
+import 'package:dating_screens_app_package/ui/edit_social_links/views/edit_social_links_screen.dart';
 import 'package:dating_screens_app_package/ui/edit_system/views/edit_system_screen.dart';
 import 'package:dating_screens_app_package/ui/fill_up_information/views/fill_up_information_screen.dart';
 import 'package:dating_screens_app_package/ui/forgot_password/views/forgot_password_screen.dart';
@@ -128,14 +129,39 @@ class _DatingAppScreenListScreen extends State<DatingAppScreenListScreen> {
         onClick: () => Navigator.push(context, FillUpInformationScreen.route(currentIndex: 5)),
       ),
       ScreenListDataModel(
-        title: "Discover & NearBy",
+        title: "Home Screen : Discover",
         icon: AppAssets.icScreen,
-        onClick: () => Navigator.push(context, DashboardScreen.route(currentIndex: 0)),
+        onClick: () => Navigator.push(context, DashboardScreen.route(currentIndex: 0, currentIndexHomeScreen: 0)),
+      ),
+      ScreenListDataModel(
+        title: "Swipe Left For Like",
+        icon: AppAssets.icScreen,
+        onClick: () => Navigator.push(context, DashboardScreen.route(currentIndex: 0, currentIndexHomeScreen: 0, isAutomaticSwipeLeft: true)),
+      ),
+      ScreenListDataModel(
+        title: "Swipe Right For DisLike",
+        icon: AppAssets.icScreen,
+        onClick: () => Navigator.push(context, DashboardScreen.route(currentIndex: 0, currentIndexHomeScreen: 0, isAutomaticSwipeRight: true)),
+      ),
+      ScreenListDataModel(
+        title: "It's Match",
+        icon: AppAssets.icScreen,
+        onClick: () => Navigator.push(context, DashboardScreen.route(currentIndex: 0, isShownMatchAlert: true)),
+      ),
+      ScreenListDataModel(
+        title: "Home Screen : Nearby",
+        icon: AppAssets.icScreen,
+        onClick: () => Navigator.push(context, DashboardScreen.route(currentIndex: 0, currentIndexHomeScreen: 1)),
       ),
       ScreenListDataModel(
         title: "Profile details",
         icon: AppAssets.icScreen,
         onClick: () => Navigator.push(context, ProfileDetailsScreen.route()),
+      ),
+      ScreenListDataModel(
+        title: "Match Profile",
+        icon: AppAssets.icScreen,
+        onClick: () => Navigator.push(context, ProfileDetailsScreen.route(isShownMatchAlert: true)),
       ),
       ScreenListDataModel(
         title: "Likes",
@@ -151,6 +177,11 @@ class _DatingAppScreenListScreen extends State<DatingAppScreenListScreen> {
         title: "Search",
         icon: AppAssets.icScreen,
         onClick: () => Navigator.push(context, ChatsSearchScreen.route()),
+      ),
+      ScreenListDataModel(
+        title: "Search Not Found",
+        icon: AppAssets.icScreen,
+        onClick: () => Navigator.push(context, ChatsSearchScreen.route(isEmptySearch: true)),
       ),
       ScreenListDataModel(
         title: "Chat",
@@ -203,9 +234,24 @@ class _DatingAppScreenListScreen extends State<DatingAppScreenListScreen> {
         onClick: () => Navigator.push(context, EditPassionScreen.route()),
       ),
       ScreenListDataModel(
+        title: "Add Passion",
+        icon: AppAssets.icScreen,
+        onClick: () => Navigator.push(context, EditPassionScreen.route(isShowAddPassionDialog: true)),
+      ),
+      ScreenListDataModel(
         title: "Edit Language",
         icon: AppAssets.icScreen,
         onClick: () => Navigator.push(context, EditLanguagesScreen.route()),
+      ),
+      ScreenListDataModel(
+        title: "Add Language",
+        icon: AppAssets.icScreen,
+        onClick: () => Navigator.push(context, EditLanguagesScreen.route(isShowEditAlert: true)),
+      ),
+      ScreenListDataModel(
+        title: "Edit Social Media Links",
+        icon: AppAssets.icScreen,
+        onClick: () => Navigator.push(context, EditSocialLinksScreen.route()),
       ),
       ScreenListDataModel(
         title: "Subscription",
@@ -243,9 +289,24 @@ class _DatingAppScreenListScreen extends State<DatingAppScreenListScreen> {
         onClick: () => Navigator.push(context, SafetyTipsScreen.route()),
       ),
       ScreenListDataModel(
-        title: "Help & Support",
+        title: "Help",
         icon: AppAssets.icScreen,
-        onClick: () => Navigator.push(context, HelpSupportScreen.route()),
+        onClick: () => Navigator.push(context, HelpSupportScreen.route(currentIndex: 0)),
+      ),
+      ScreenListDataModel(
+        title: "Support",
+        icon: AppAssets.icScreen,
+        onClick: () => Navigator.push(context, HelpSupportScreen.route(currentIndex: 1)),
+      ),
+      ScreenListDataModel(
+        title: "Logout",
+        icon: AppAssets.icScreen,
+        onClick: () => Navigator.push(context, SettingsScreen.route(isShowLogoutAlert: true)),
+      ),
+      ScreenListDataModel(
+        title: "Delete Account",
+        icon: AppAssets.icScreen,
+        onClick: () => Navigator.push(context, SettingsScreen.route(isShowDeleteAccountAlert: true)),
       ),
     ];
   }

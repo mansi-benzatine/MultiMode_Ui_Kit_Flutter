@@ -10,11 +10,12 @@ import '../../../widgets/text/common_text.dart';
 import '../../chats_list/datamodels/chats_list_data.dart';
 
 class ChatsSearchScreen extends StatefulWidget {
-  static Route<void> route() {
-    return MaterialPageRoute(builder: (_) => const ChatsSearchScreen());
+  final bool isEmptySearch;
+  static Route<void> route({bool isEmptySearch = false}) {
+    return MaterialPageRoute(builder: (_) => ChatsSearchScreen(isEmptySearch: isEmptySearch));
   }
 
-  const ChatsSearchScreen({super.key});
+  const ChatsSearchScreen({super.key, this.isEmptySearch = false});
 
   @override
   State<ChatsSearchScreen> createState() => _ChatsSearchScreenState();
@@ -23,32 +24,38 @@ class ChatsSearchScreen extends StatefulWidget {
 class _ChatsSearchScreenState extends State<ChatsSearchScreen> {
   final TextEditingController _searchController = TextEditingController();
   List<ChatModel> filteredList = [];
-  final List<ChatModel> chatList = [
-    ChatModel(
-      name: "Rose Ward",
-      lastMessage: "I'm great, Thanks",
-      time: "",
-      date: "Yesterday",
-      unreadCount: 0,
-      image: AppAssets.imgProfile1,
-      isOnline: true,
-    ),
-    ChatModel(
-      name: "Rose Ward",
-      lastMessage: "That sounds awesome!!!",
-      time: "",
-      date: "7/2/20",
-      unreadCount: 3,
-      image: AppAssets.imgProfile1,
-      isOnline: true,
-    ),
-  ];
+  late List<ChatModel> chatList = [];
 
   @override
   void initState() {
     super.initState();
-    filteredList = chatList;
+
     _searchController.addListener(_filterSearchResults);
+    if (widget.isEmptySearch) {
+      chatList = [];
+    } else {
+      chatList = [
+        ChatModel(
+          name: "Rose Ward",
+          lastMessage: "I'm great, Thanks",
+          time: "",
+          date: "Yesterday",
+          unreadCount: 0,
+          image: AppAssets.imgProfile1,
+          isOnline: true,
+        ),
+        ChatModel(
+          name: "Rose Ward",
+          lastMessage: "That sounds awesome!!!",
+          time: "",
+          date: "7/2/20",
+          unreadCount: 3,
+          image: AppAssets.imgProfile1,
+          isOnline: true,
+        ),
+      ];
+      filteredList = chatList;
+    }
   }
 
   void _filterSearchResults() {
