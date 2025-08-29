@@ -126,11 +126,11 @@ class CommonTextFormField extends StatelessWidget {
             ),
             disabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(radius),
-              borderSide: BorderSide(color: CustomAppColor.of(context).black..withOpacityPercent(0.08)),
+              borderSide: BorderSide(color: CustomAppColor.of(context).black.withOpacityPercent(0.08)),
             ),
             errorBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(radius),
-              borderSide: BorderSide(color: CustomAppColor.of(context).black..withOpacityPercent(0.08)),
+              borderSide: BorderSide(color: CustomAppColor.of(context).black.withOpacityPercent(0.08)),
             ),
           ),
         ),
@@ -280,37 +280,27 @@ class CommonTextFormFieldWithPrefix extends StatelessWidget {
             contentPadding: EdgeInsets.only(right: 20.setWidth, left: 20.setWidth, top: 15.setHeight, bottom: 15.setHeight),
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(radius),
-              borderSide: BorderSide(
-                  color: borderColor ?? CustomAppColor.of(context).black
-                    ..withOpacityPercent(0.08)),
+              borderSide: BorderSide(color: borderColor ?? CustomAppColor.of(context).black.withOpacityPercent(0.08)),
             ),
             enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(radius),
-              borderSide: BorderSide(
-                  color: borderColor ?? CustomAppColor.of(context).black
-                    ..withOpacityPercent(0.08)),
+              borderSide: BorderSide(color: borderColor ?? CustomAppColor.of(context).black.withOpacityPercent(0.08)),
             ),
             focusedBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(radius),
-              borderSide: BorderSide(
-                  color: borderColor ?? CustomAppColor.of(context).black
-                    ..withOpacityPercent(0.08)),
+              borderSide: BorderSide(color: borderColor ?? CustomAppColor.of(context).black.withOpacityPercent(0.08)),
             ),
             focusedErrorBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(radius),
-              borderSide: BorderSide(
-                  color: borderColor ?? CustomAppColor.of(context).black
-                    ..withOpacityPercent(0.08)),
+              borderSide: BorderSide(color: borderColor ?? CustomAppColor.of(context).black.withOpacityPercent(0.08)),
             ),
             disabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(radius),
-              borderSide: BorderSide(
-                  color: borderColor ?? CustomAppColor.of(context).black
-                    ..withOpacityPercent(0.08)),
+              borderSide: BorderSide(color: borderColor ?? CustomAppColor.of(context).black.withOpacityPercent(0.08)),
             ),
             errorBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(radius),
-              borderSide: BorderSide(color: CustomAppColor.of(context).black..withOpacityPercent(0.08)),
+              borderSide: BorderSide(color: CustomAppColor.of(context).black.withOpacityPercent(0.08)),
             ),
           ),
         ),
@@ -469,27 +459,27 @@ class CommonTextFormFieldWithPrefixAndSuffix extends StatelessWidget {
             contentPadding: EdgeInsets.only(right: 20.setWidth, left: 20.setWidth, top: 15.setHeight, bottom: 15.setHeight),
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(radius),
-              borderSide: BorderSide(color: CustomAppColor.of(context).black..withOpacityPercent(0.08)),
+              borderSide: BorderSide(color: CustomAppColor.of(context).black.withOpacityPercent(0.08)),
             ),
             enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(radius),
-              borderSide: BorderSide(color: CustomAppColor.of(context).black..withOpacityPercent(0.08)),
+              borderSide: BorderSide(color: CustomAppColor.of(context).black.withOpacityPercent(0.08)),
             ),
             focusedBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(radius),
-              borderSide: BorderSide(color: CustomAppColor.of(context).black..withOpacityPercent(0.08)),
+              borderSide: BorderSide(color: CustomAppColor.of(context).black.withOpacityPercent(0.08)),
             ),
             focusedErrorBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(radius),
-              borderSide: BorderSide(color: CustomAppColor.of(context).black..withOpacityPercent(0.08)),
+              borderSide: BorderSide(color: CustomAppColor.of(context).black.withOpacityPercent(0.08)),
             ),
             disabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(radius),
-              borderSide: BorderSide(color: CustomAppColor.of(context).black..withOpacityPercent(0.08)),
+              borderSide: BorderSide(color: CustomAppColor.of(context).black.withOpacityPercent(0.08)),
             ),
             errorBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(radius),
-              borderSide: BorderSide(color: CustomAppColor.of(context).black..withOpacityPercent(0.08)),
+              borderSide: BorderSide(color: CustomAppColor.of(context).black.withOpacityPercent(0.08)),
             ),
           ),
         ),

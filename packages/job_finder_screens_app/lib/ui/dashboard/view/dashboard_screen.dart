@@ -23,23 +23,55 @@ class DashboardScreen extends StatefulWidget {
   final bool isFromSavedJobs;
   final bool isFromProfile;
   final bool isFromEmptyMessage;
+  final bool isFromEmptySavedJob;
+  final bool isShowAboutMeBs;
+  final bool isShowContactInfoBs;
+  final bool isShowWorkExperienceBs;
+  final bool isShowEducationQualificationBs;
+  final bool isShowTechnicalSkillBs;
+  final bool isShowAddTechnicalSkillsBs;
+  final bool isShowLanguagesBs;
+  final bool isShowAddLanguageBs;
+  final bool isShowResumeBs;
 
-  const DashboardScreen(
-      {super.key,
-      this.isFromHome = false,
-      required this.isFromMessage,
-      required this.isFromApplication,
-      required this.isFromSavedJobs,
-      required this.isFromProfile,
-      this.isFromEmptyMessage = false});
+  const DashboardScreen({
+    super.key,
+    this.isFromHome = false,
+    required this.isFromMessage,
+    required this.isFromApplication,
+    required this.isFromSavedJobs,
+    required this.isFromProfile,
+    this.isFromEmptyMessage = false,
+    this.isFromEmptySavedJob = false,
+    this.isShowAboutMeBs = false,
+    this.isShowAddLanguageBs = false,
+    this.isShowAddTechnicalSkillsBs = false,
+    this.isShowContactInfoBs = false,
+    this.isShowEducationQualificationBs = false,
+    this.isShowLanguagesBs = false,
+    this.isShowResumeBs = false,
+    this.isShowTechnicalSkillBs = false,
+    this.isShowWorkExperienceBs = false,
+  });
 
-  static Route<void> route(
-      {required bool isFromHome,
-      required bool isFromMessage,
-      required bool isFromApplication,
-      required bool isFromSavedJobs,
-      required bool isFromProfile,
-      required bool isFromEmptyMessage}) {
+  static Route<void> route({
+    required bool isFromHome,
+    required bool isFromMessage,
+    required bool isFromApplication,
+    required bool isFromSavedJobs,
+    required bool isFromProfile,
+    required bool isFromEmptyMessage,
+    bool isFromEmptySavedJob = false,
+    bool isShowAboutMeBs = false,
+    bool isShowContactInfoBs = false,
+    bool isShowWorkExperienceBs = false,
+    bool isShowEducationQualificationBs = false,
+    bool isShowTechnicalSkillBs = false,
+    bool isShowAddTechnicalSkillsBs = false,
+    bool isShowLanguagesBs = false,
+    bool isShowAddLanguageBs = false,
+    bool isShowResumeBs = false,
+  }) {
     return MaterialPageRoute(
         builder: (_) => DashboardScreen(
               isFromHome: isFromHome,
@@ -48,6 +80,16 @@ class DashboardScreen extends StatefulWidget {
               isFromProfile: isFromProfile,
               isFromSavedJobs: isFromSavedJobs,
               isFromEmptyMessage: isFromEmptyMessage,
+              isFromEmptySavedJob: isFromEmptySavedJob,
+              isShowAboutMeBs: isShowAboutMeBs,
+              isShowAddLanguageBs: isShowAddLanguageBs,
+              isShowAddTechnicalSkillsBs: isShowAddTechnicalSkillsBs,
+              isShowContactInfoBs: isShowContactInfoBs,
+              isShowEducationQualificationBs: isShowEducationQualificationBs,
+              isShowLanguagesBs: isShowLanguagesBs,
+              isShowResumeBs: isShowResumeBs,
+              isShowTechnicalSkillBs: isShowTechnicalSkillBs,
+              isShowWorkExperienceBs: isShowWorkExperienceBs,
             ));
   }
 
@@ -74,8 +116,18 @@ class _DashboardScreenState extends State<DashboardScreen> implements TopBarClic
       const HomeScreen(),
       const ApplicationScreen(),
       MessageScreen(isFromEmptyMessage: widget.isFromEmptyMessage),
-      const SavedJobsScreen(),
-      const ProfileScreen(),
+      SavedJobsScreen(isForEmptyView: widget.isFromEmptySavedJob),
+      ProfileScreen(
+        isShowAboutMeBs: widget.isShowAboutMeBs,
+        isShowAddLanguageBs: widget.isShowAddLanguageBs,
+        isShowAddTechnicalSkillsBs: widget.isShowAddTechnicalSkillsBs,
+        isShowContactInfoBs: widget.isShowContactInfoBs,
+        isShowEducationQualificationBs: widget.isShowEducationQualificationBs,
+        isShowLanguagesBs: widget.isShowLanguagesBs,
+        isShowResumeBs: widget.isShowResumeBs,
+        isShowTechnicalSkillBs: widget.isShowTechnicalSkillBs,
+        isShowWorkExperienceBs: widget.isShowWorkExperienceBs,
+      ),
     ];
     _setInitialTab();
   }

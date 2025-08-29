@@ -25,6 +25,7 @@ import 'package:job_finder_screens_app_package/ui/types_of_job_type/view/types_o
 import 'package:job_finder_screens_app_package/ui/update_password/view/update_password_screen.dart';
 import 'package:job_finder_screens_app_package/ui/video_call/view/video_call_screen.dart';
 import 'package:job_finder_screens_app_package/ui/voice_call/view/voice_call_screen.dart';
+import 'package:job_finder_screens_app_package/ui/welcome/view/welcome_screen.dart';
 import 'package:job_finder_screens_app_package/utils/sizer_utils.dart';
 
 import '../../../utils/app_assets.dart';
@@ -37,6 +38,7 @@ import '../datamodel/screens_list_data.dart';
 class ScreenListScreen extends StatefulWidget {
   final String title;
   final Function()? onBack;
+
   const ScreenListScreen({super.key, required this.title, this.onBack});
 
   static Route<void> route({required String title}) {
@@ -58,6 +60,11 @@ class _ScreenListScreenState extends State<ScreenListScreen> {
         onClick: () => Navigator.push(context, SplashScreen.route()),
       ),
       ScreenListDataModel(
+        title: "Welcome",
+        icon: AppAssets.icScreen,
+        onClick: () => Navigator.push(context, JobFinderWelcomeScreen.route()),
+      ),
+      ScreenListDataModel(
         title: "Onboarding 1",
         icon: AppAssets.icScreen,
         onClick: () => Navigator.push(context, OnBoardingScreen.route(index: 0)),
@@ -73,22 +80,22 @@ class _ScreenListScreenState extends State<ScreenListScreen> {
         onClick: () => Navigator.push(context, OnBoardingScreen.route(index: 2)),
       ),
       ScreenListDataModel(
-        title: "Select options",
+        title: "Select Options",
         icon: AppAssets.icScreen,
         onClick: () => Navigator.push(context, SelectYourOptionScreen.route()),
       ),
       ScreenListDataModel(
-        title: "Sign in",
+        title: "Sign In",
         icon: AppAssets.icScreen,
         onClick: () => Navigator.push(context, SignInScreen.route()),
       ),
       ScreenListDataModel(
-        title: "Sign up",
+        title: "Sign Up",
         icon: AppAssets.icScreen,
         onClick: () => Navigator.push(context, SignUpScreen.route()),
       ),
       ScreenListDataModel(
-        title: "Forgot password",
+        title: "Forgot Password",
         icon: AppAssets.icScreen,
         onClick: () => Navigator.push(context, ForgotPasswordScreen.route()),
       ),
@@ -121,6 +128,11 @@ class _ScreenListScreenState extends State<ScreenListScreen> {
         title: "Confirm new account",
         icon: AppAssets.icScreen,
         onClick: () => Navigator.push(context, ConfirmNewAccountScreen.route()),
+      ),
+      ScreenListDataModel(
+        title: "Created Account Successfully",
+        icon: AppAssets.icScreen,
+        onClick: () => Navigator.push(context, ConfirmNewAccountScreen.route(isShownAccountSetBs: true)),
       ),
       ScreenListDataModel(
         title: "Home",
@@ -199,7 +211,7 @@ class _ScreenListScreenState extends State<ScreenListScreen> {
         onClick: () => Navigator.push(context, DashboardScreen.route(isFromEmptyMessage: false, isFromMessage: false, isFromApplication: true, isFromSavedJobs: false, isFromProfile: false, isFromHome: false)),
       ),
       ScreenListDataModel(
-        title: "Job tracking application",
+        title: "Job Tracking Application",
         icon: AppAssets.icScreen,
         onClick: () => Navigator.push(context, AppliedJobDetailsScreen.route()),
       ),
@@ -241,12 +253,180 @@ class _ScreenListScreenState extends State<ScreenListScreen> {
       ScreenListDataModel(
         title: "Saved Jobs",
         icon: AppAssets.icScreen,
-        onClick: () => Navigator.push(context, DashboardScreen.route(isFromEmptyMessage: false, isFromHome: false, isFromApplication: false, isFromMessage: false, isFromProfile: false, isFromSavedJobs: true)),
+        onClick: () => Navigator.push(
+            context,
+            DashboardScreen.route(
+              isFromEmptyMessage: false,
+              isFromHome: false,
+              isFromApplication: false,
+              isFromMessage: false,
+              isFromProfile: false,
+              isFromSavedJobs: true,
+            )),
+      ),
+      ScreenListDataModel(
+        title: "Empty Saved Jobs",
+        icon: AppAssets.icScreen,
+        onClick: () => Navigator.push(
+            context,
+            DashboardScreen.route(
+              isFromEmptyMessage: false,
+              isFromHome: false,
+              isFromApplication: false,
+              isFromMessage: false,
+              isFromProfile: false,
+              isFromSavedJobs: true,
+              isFromEmptySavedJob: true,
+            )),
       ),
       ScreenListDataModel(
         title: "Profile",
         icon: AppAssets.icScreen,
-        onClick: () => Navigator.push(context, DashboardScreen.route(isFromEmptyMessage: false, isFromHome: false, isFromApplication: false, isFromMessage: false, isFromProfile: true, isFromSavedJobs: false)),
+        onClick: () => Navigator.push(
+            context,
+            DashboardScreen.route(
+              isFromEmptyMessage: false,
+              isFromHome: false,
+              isFromApplication: false,
+              isFromMessage: false,
+              isFromProfile: true,
+              isFromSavedJobs: false,
+            )),
+      ),
+      ScreenListDataModel(
+        title: "Edit About Me",
+        icon: AppAssets.icScreen,
+        onClick: () => Navigator.push(
+            context,
+            DashboardScreen.route(
+              isFromEmptyMessage: false,
+              isFromHome: false,
+              isFromApplication: false,
+              isFromMessage: false,
+              isFromProfile: true,
+              isFromSavedJobs: false,
+              isShowAboutMeBs: true,
+            )),
+      ),
+      ScreenListDataModel(
+        title: "Edit Contact Info",
+        icon: AppAssets.icScreen,
+        onClick: () => Navigator.push(
+            context,
+            DashboardScreen.route(
+              isFromEmptyMessage: false,
+              isFromHome: false,
+              isFromApplication: false,
+              isFromMessage: false,
+              isFromProfile: true,
+              isFromSavedJobs: false,
+              isShowContactInfoBs: true,
+            )),
+      ),
+      ScreenListDataModel(
+        title: "Work Experience",
+        icon: AppAssets.icScreen,
+        onClick: () => Navigator.push(
+            context,
+            DashboardScreen.route(
+              isFromEmptyMessage: false,
+              isFromHome: false,
+              isFromApplication: false,
+              isFromMessage: false,
+              isFromProfile: true,
+              isFromSavedJobs: false,
+              isShowWorkExperienceBs: true,
+            )),
+      ),
+      ScreenListDataModel(
+        title: "Edit Education Qualification",
+        icon: AppAssets.icScreen,
+        onClick: () => Navigator.push(
+            context,
+            DashboardScreen.route(
+              isFromEmptyMessage: false,
+              isFromHome: false,
+              isFromApplication: false,
+              isFromMessage: false,
+              isFromProfile: true,
+              isFromSavedJobs: false,
+              isShowEducationQualificationBs: true,
+            )),
+      ),
+      ScreenListDataModel(
+        title: "Edit Technical Skills",
+        icon: AppAssets.icScreen,
+        onClick: () => Navigator.push(
+            context,
+            DashboardScreen.route(
+              isFromEmptyMessage: false,
+              isFromHome: false,
+              isFromApplication: false,
+              isFromMessage: false,
+              isFromProfile: true,
+              isFromSavedJobs: false,
+              isShowTechnicalSkillBs: true,
+            )),
+      ),
+      ScreenListDataModel(
+        title: "Add Technical Skills",
+        icon: AppAssets.icScreen,
+        onClick: () => Navigator.push(
+            context,
+            DashboardScreen.route(
+              isFromEmptyMessage: false,
+              isFromHome: false,
+              isFromApplication: false,
+              isFromMessage: false,
+              isFromProfile: true,
+              isFromSavedJobs: false,
+              isShowAddTechnicalSkillsBs: true,
+            )),
+      ),
+      ScreenListDataModel(
+        title: "Edit Languages",
+        icon: AppAssets.icScreen,
+        onClick: () => Navigator.push(
+            context,
+            DashboardScreen.route(
+              isFromEmptyMessage: false,
+              isFromHome: false,
+              isFromApplication: false,
+              isFromMessage: false,
+              isFromProfile: true,
+              isFromSavedJobs: false,
+              isShowLanguagesBs: true,
+            )),
+      ),
+      ScreenListDataModel(
+        title: "Add Languages",
+        icon: AppAssets.icScreen,
+        onClick: () => Navigator.push(
+            context,
+            DashboardScreen.route(
+              isFromEmptyMessage: false,
+              isFromHome: false,
+              isFromApplication: false,
+              isFromMessage: false,
+              isFromProfile: true,
+              isFromSavedJobs: false,
+              isShowAddLanguageBs: true,
+            )),
+      ),
+      ScreenListDataModel(
+        title: "Add Resume/CV",
+        icon: AppAssets.icScreen,
+        onClick: () => Navigator.push(
+            context,
+            DashboardScreen.route(
+              isFromEmptyMessage: false,
+              isFromHome: false,
+              isFromApplication: false,
+              isFromMessage: false,
+              isFromProfile: true,
+              isFromSavedJobs: false,
+              isShowResumeBs: true,
+            )),
       ),
       ScreenListDataModel(
         title: "Settings",
@@ -264,9 +444,19 @@ class _ScreenListScreenState extends State<ScreenListScreen> {
         onClick: () => Navigator.push(context, TermsAndConditionsScreen.route()),
       ),
       ScreenListDataModel(
-        title: "update password",
+        title: "Update Password",
         icon: AppAssets.icScreen,
         onClick: () => Navigator.push(context, UpdatePasswordScreen.route()),
+      ),
+      ScreenListDataModel(
+        title: "Logout",
+        icon: AppAssets.icScreen,
+        onClick: () => Navigator.push(context, SettingsScreen.route(isForLogoutBs: true)),
+      ),
+      ScreenListDataModel(
+        title: "Delete Account",
+        icon: AppAssets.icScreen,
+        onClick: () => Navigator.push(context, SettingsScreen.route(isForDeleteAccount: true)),
       ),
     ];
   }
@@ -337,7 +527,7 @@ class _ModeGridView extends StatelessWidget {
         width: 0.screenWidth,
         margin: EdgeInsets.only(top: 10.setHeight),
         decoration: BoxDecoration(
-          color: CustomAppColor.of(context).whiteBlackBg,
+          color: CustomAppColor.of(context).txtWhite,
           borderRadius: const BorderRadius.vertical(top: Radius.circular(40)),
         ),
         child: Column(

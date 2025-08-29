@@ -168,13 +168,7 @@ class _SearchAndFilterView extends StatefulWidget {
   final bool isFromSearchJob;
   final String? defaultSearch;
   const _SearchAndFilterView(
-      {required this.recentSearch,
-      required this.recentSearches,
-      required this.recentViewed,
-      required this.isFromNoResultFound,
-      required this.isFromSearchResult,
-      required this.isFromSearchJob,
-      this.defaultSearch});
+      {required this.recentSearch, required this.recentSearches, required this.recentViewed, required this.isFromNoResultFound, required this.isFromSearchResult, required this.isFromSearchJob, this.defaultSearch});
 
   @override
   State<_SearchAndFilterView> createState() => _SearchAndFilterViewState();
@@ -317,9 +311,7 @@ class _SearchingView extends StatelessWidget {
               height: 44.setHeight,
               width: 280.setWidth,
               padding: EdgeInsets.symmetric(vertical: 10.setHeight),
-              decoration: BoxDecoration(
-                  color: CustomAppColor.of(context).bgScreenWhite,
-                  border: Border(bottom: BorderSide(color: CustomAppColor.of(context).containerGrey))),
+              decoration: BoxDecoration(color: CustomAppColor.of(context).bgScreenWhite, border: Border(bottom: BorderSide(color: CustomAppColor.of(context).containerGrey))),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
@@ -376,7 +368,7 @@ class _SearchingView extends StatelessWidget {
                     offset: const Offset(0, 8),
                     blurRadius: 20,
                     spreadRadius: 0,
-                    color: CustomAppColor.of(context).black..withOpacityPercent(.04),
+                    color: CustomAppColor.of(context).black.withOpacityPercent(.04),
                   ),
                 ],
                 borderRadius: BorderRadius.circular(10),
@@ -535,7 +527,7 @@ class _SearchedView extends StatelessWidget {
                       offset: const Offset(0, 8),
                       blurRadius: 20,
                       spreadRadius: 0,
-                      color: CustomAppColor.of(context).black..withOpacityPercent(.04),
+                      color: CustomAppColor.of(context).black.withOpacityPercent(.04),
                     ),
                   ],
                   borderRadius: BorderRadius.circular(10),

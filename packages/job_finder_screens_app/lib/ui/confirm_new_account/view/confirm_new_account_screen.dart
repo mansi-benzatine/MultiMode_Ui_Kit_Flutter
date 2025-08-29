@@ -14,11 +14,13 @@ import '../../../widgets/top_bar/topbar.dart';
 import '../../dashboard/view/dashboard_screen.dart';
 
 class ConfirmNewAccountScreen extends StatefulWidget {
-  const ConfirmNewAccountScreen({super.key});
+  final bool isShownAccountSetBs;
 
-  static Route<void> route() {
+  const ConfirmNewAccountScreen({super.key, this.isShownAccountSetBs = false});
+
+  static Route<void> route({bool isShownAccountSetBs = false}) {
     return MaterialPageRoute(
-      builder: (_) => const ConfirmNewAccountScreen(),
+      builder: (_) => ConfirmNewAccountScreen(isShownAccountSetBs: isShownAccountSetBs),
     );
   }
 
@@ -27,6 +29,90 @@ class ConfirmNewAccountScreen extends StatefulWidget {
 }
 
 class _ConfirmNewAccountScreenState extends State<ConfirmNewAccountScreen> {
+  bool _isBottomSheetOpen = false;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    if (widget.isShownAccountSetBs) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        showAccountSetBS();
+      });
+    }
+  }
+
+  void showAccountSetBS() {
+    setState(() {
+      _isBottomSheetOpen = true;
+    });
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      isDismissible: false,
+      enableDrag: false,
+      backgroundColor: CustomAppColor.of(context).bgScreenWhite,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(40)),
+      ),
+      builder: (context) {
+        return IgnorePointer(
+          ignoring: true,
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Container(
+                  width: 60.setWidth,
+                  height: 4.setHeight,
+                  decoration: BoxDecoration(color: CustomAppColor.of(context).bsDragHandle),
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.symmetric(vertical: 35.setHeight),
+                child: Image.asset(
+                  AppAssets.icCreateAccountSuccess,
+                  height: 120.setHeight,
+                  width: 120.setWidth,
+                ),
+              ),
+              CommonText(
+                text: Languages.of(context).txtYourAccountSetNow,
+                fontSize: 24.setFontSize,
+                fontWeight: FontWeight.w700,
+                textColor: CustomAppColor.of(context).txtSecondary,
+              ),
+              CommonText(
+                text: Languages.of(context).txtYourAccountSetNowDesc,
+                fontSize: 14.setFontSize,
+                fontWeight: FontWeight.w500,
+                textColor: CustomAppColor.of(context).txtGrey,
+              ),
+              SizedBox(height: 48.setHeight),
+              IgnorePointer(
+                ignoring: true,
+                child: _ContinueButtonView(
+                  backgroundColor: CustomAppColor.of(context).bgWhiteSecondary,
+                  buttonText: Languages.of(context).txtBackToHome,
+                  onTap: () => Navigator.push(context, DashboardScreen.route(isFromEmptyMessage: false, isFromHome: false, isFromApplication: false, isFromMessage: false, isFromProfile: false, isFromSavedJobs: false)),
+                ),
+              ),
+            ],
+          ),
+        );
+      },
+    ).whenComplete(() {
+      if (_isBottomSheetOpen) {
+        setState(() {
+          _isBottomSheetOpen = false;
+        });
+        Navigator.pop(context);
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return AnnotatedRegion<SystemUiOverlayStyle>(
@@ -35,14 +121,31 @@ class _ConfirmNewAccountScreenState extends State<ConfirmNewAccountScreen> {
         statusBarBrightness: Brightness.dark,
         statusBarColor: CustomAppColor.of(context).transparent,
       ),
-      child: Scaffold(
-        backgroundColor: CustomAppColor.of(context).bgScreenWhite,
-        body: Column(
-          children: [
-            const IgnorePointer(ignoring: true, child: _TopBarWithImageView()),
-            Expanded(child: _ProfileDetailView()),
-            _ContinueButtonView(buttonText: Languages.of(context).txtConfirmNow)
-          ],
+      child: PopScope(
+        canPop: !_isBottomSheetOpen,
+        onPopInvokedWithResult: (didPop, result) {
+          if (!didPop && _isBottomSheetOpen) {
+            Navigator.pop(context);
+            setState(() {
+              _isBottomSheetOpen = false;
+            });
+            Navigator.pop(context);
+          }
+        },
+        child: Scaffold(
+          backgroundColor: CustomAppColor.of(context).bgScreenWhite,
+          body: Column(
+            children: [
+              const IgnorePointer(
+                ignoring: true,
+                child: _TopBarWithImageView(),
+              ),
+              Expanded(child: _ProfileDetailView()),
+              _ContinueButtonView(
+                buttonText: Languages.of(context).txtConfirmNow,
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -184,12 +287,16 @@ class _ContinueButtonView extends StatelessWidget {
       padding: EdgeInsets.only(left: 25.setWidth, right: 25.setWidth, bottom: 10.setHeight, top: 15.setHeight),
       child: SafeArea(
         top: false,
-        child: CommonButton(
+        child: IgnorePointer(
+          ignoring: true,
+          child: CommonButton(
             text: buttonText,
             buttonTextSize: 18.setFontSize,
             buttonTextWeight: FontWeight.w500,
             buttonColor: CustomAppColor.of(context).txtSecondary,
-            onTap: onTap ?? () => _showConfirmationBottomSheet(context)),
+            onTap: onTap ?? () => _showConfirmationBottomSheet(context),
+          ),
+        ),
       ),
     );
   }
@@ -243,15 +350,7 @@ class _ContinueButtonView extends StatelessWidget {
                 child: _ContinueButtonView(
                   backgroundColor: CustomAppColor.of(context).bgWhiteSecondary,
                   buttonText: Languages.of(context).txtBackToHome,
-                  onTap: () => Navigator.push(
-                      context,
-                      DashboardScreen.route(
-                          isFromEmptyMessage: false,
-                          isFromHome: false,
-                          isFromApplication: false,
-                          isFromMessage: false,
-                          isFromProfile: false,
-                          isFromSavedJobs: false)),
+                  onTap: () => Navigator.push(context, DashboardScreen.route(isFromEmptyMessage: false, isFromHome: false, isFromApplication: false, isFromMessage: false, isFromProfile: false, isFromSavedJobs: false)),
                 ),
               ),
             ],

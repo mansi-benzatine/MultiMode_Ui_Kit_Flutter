@@ -12,11 +12,17 @@ import '../../home/datamodel/home_data.dart';
 import '../../job_details/view/job_details_screen.dart';
 
 class SavedJobsScreen extends StatefulWidget {
-  static Route<void> route() {
-    return MaterialPageRoute(builder: (_) => const SavedJobsScreen());
+  final bool isForEmptyView;
+
+  static Route<void> route({bool isForEmptyView = false}) {
+    return MaterialPageRoute(
+      builder: (_) => SavedJobsScreen(
+        isForEmptyView: isForEmptyView,
+      ),
+    );
   }
 
-  const SavedJobsScreen({super.key});
+  const SavedJobsScreen({super.key, this.isForEmptyView = false});
 
   @override
   State<SavedJobsScreen> createState() => _SavedJobsScreenState();
@@ -30,12 +36,15 @@ class _SavedJobsScreenState extends State<SavedJobsScreen> {
   @override
   void initState() {
     super.initState();
-    fillData();
-    filteredJobsList = List.from(savedJobsList);
-
-    searchController.addListener(() {
-      filterJobs(searchController.text);
-    });
+    if (widget.isForEmptyView) {
+      savedJobsList = [];
+    } else {
+      fillData();
+      filteredJobsList = List.from(savedJobsList);
+      searchController.addListener(() {
+        filterJobs(searchController.text);
+      });
+    }
   }
 
   void filterJobs(String query) {
@@ -199,7 +208,7 @@ class ApplicationsList extends StatelessWidget {
                     offset: const Offset(0, 4),
                     blurRadius: 20,
                     spreadRadius: 0,
-                    color: CustomAppColor.of(context).black..withOpacityPercent(.1),
+                    color: CustomAppColor.of(context).black.withOpacityPercent(.1),
                   ),
                 ],
                 borderRadius: BorderRadius.circular(10),

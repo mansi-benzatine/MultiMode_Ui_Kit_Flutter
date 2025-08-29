@@ -209,7 +209,7 @@ class SelectJobRoleAndTypesState extends State<SelectJobRoleAndTypes> {
               borderRadius: BorderRadius.circular(20),
               boxShadow: [
                 BoxShadow(
-                  color: CustomAppColor(context).black..withOpacityPercent(0.05),
+                  color: CustomAppColor(context).black.withOpacityPercent(0.05),
                   blurRadius: 9,
                   spreadRadius: 1,
                 ),
@@ -257,7 +257,7 @@ class _ContinueButtonView extends StatelessWidget {
             offset: const Offset(0, 4),
             blurRadius: 20,
             spreadRadius: 0,
-            color: CustomAppColor.of(context).black..withOpacityPercent(.08),
+            color: CustomAppColor.of(context).black.withOpacityPercent(.08),
           ),
         ],
       ),

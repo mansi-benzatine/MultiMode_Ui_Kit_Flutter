@@ -19,9 +19,28 @@ import '../../terms_and_conditions/view/terms_and_conditions_screen.dart';
 import '../../update_password/view/update_password_screen.dart';
 
 class SettingsScreen extends StatefulWidget {
-  const SettingsScreen({super.key});
-  static Route<void> route() {
-    return MaterialPageRoute(builder: (context) => const SettingsScreen());
+  final bool isForJobSeekingStatusBs;
+  final bool isForLogoutStatusBs;
+  final bool isForDeleteAccountStatusBs;
+
+  const SettingsScreen({
+    super.key,
+    this.isForDeleteAccountStatusBs = false,
+    this.isForJobSeekingStatusBs = false,
+    this.isForLogoutStatusBs = false,
+  });
+
+  static Route<void> route({
+    bool isFroJobSeekingBs = false,
+    bool isForLogoutBs = false,
+    bool isForDeleteAccount = false,
+  }) {
+    return MaterialPageRoute(
+        builder: (context) => SettingsScreen(
+              isForDeleteAccountStatusBs: isForDeleteAccount,
+              isForJobSeekingStatusBs: isFroJobSeekingBs,
+              isForLogoutStatusBs: isForLogoutBs,
+            ));
   }
 
   @override
@@ -30,6 +49,7 @@ class SettingsScreen extends StatefulWidget {
 
 class _SettingsScreenState extends State<SettingsScreen> implements TopBarClickListener {
   ValueNotifier<bool> isDarkMode = ValueNotifier(false);
+  bool _isBottomSheetOpen = false;
 
   _fillData() {
     bool isDarkModePref = Utils.isDarkTheme();
@@ -37,39 +57,240 @@ class _SettingsScreenState extends State<SettingsScreen> implements TopBarClickL
     isDarkMode.value = isDarkModePref;
   }
 
+  void showLogoutBS() {
+    setState(() {
+      _isBottomSheetOpen = true;
+    });
+    showModalBottomSheet(
+      context: context,
+      isDismissible: false,
+      enableDrag: false,
+      isScrollControlled: true,
+      backgroundColor: CustomAppColor.of(context).bgScreenWhite,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(40)),
+      ),
+      builder: (context) {
+        return Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Container(
+                width: 60.setWidth,
+                height: 4.setHeight,
+                decoration: BoxDecoration(color: CustomAppColor.of(context).bsDragHandle),
+              ),
+            ),
+            SizedBox(height: 20.setHeight),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 22.setWidth),
+              child: Align(
+                alignment: Alignment.topRight,
+                child: Image.asset(
+                  AppAssets.icCloseSquare,
+                  color: CustomAppColor.of(context).icPrimary,
+                  height: 40.setHeight,
+                  width: 40.setWidth,
+                ),
+              ),
+            ),
+            Image.asset(
+              AppAssets.imgBgLogout,
+              width: 112.setWidth,
+              height: 112.setHeight,
+            ),
+            SizedBox(height: 28.setHeight),
+            CommonText(
+              text: Languages.of(context).txtLogout,
+              fontSize: 24.setFontSize,
+              fontWeight: FontWeight.w700,
+              textColor: CustomAppColor.of(context).txtSecondary,
+            ),
+            SizedBox(height: 10.setHeight),
+            CommonText(
+              text: Languages.of(context).txtLogoutDesc,
+              fontSize: 14.setFontSize,
+              fontWeight: FontWeight.w500,
+              textColor: CustomAppColor.of(context).txtGrey,
+            ),
+            SizedBox(height: 28.setHeight),
+            IgnorePointer(
+              ignoring: true,
+              child: _ContinueButtonView(
+                buttonText: Languages.of(context).txtLogoutButtonDesc,
+                onTap: () => Navigator.pop(context),
+              ),
+            ),
+          ],
+        );
+      },
+    ).whenComplete(() {
+      if (_isBottomSheetOpen) {
+        setState(() {
+          _isBottomSheetOpen = false;
+        });
+        Navigator.pop(context);
+      }
+    });
+  }
+
+  void showDeleteAccountBS() {
+    setState(() {
+      _isBottomSheetOpen = true;
+    });
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      enableDrag: false,
+      isDismissible: false,
+      backgroundColor: CustomAppColor.of(context).bgScreenWhite,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(40)),
+      ),
+      builder: (context) {
+        return Wrap(
+          children: [
+            Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Container(
+                    width: 60.setWidth,
+                    height: 4.setHeight,
+                    decoration: BoxDecoration(color: CustomAppColor.of(context).bsDragHandle),
+                  ),
+                ),
+                SizedBox(height: 20.setHeight),
+                IgnorePointer(
+                  ignoring: true,
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 22.setWidth),
+                    child: Align(
+                      alignment: Alignment.topRight,
+                      child: GestureDetector(
+                        onTap: () => Navigator.pop(context),
+                        child: Image.asset(
+                          AppAssets.icCloseSquare,
+                          color: CustomAppColor.of(context).icPrimary,
+                          height: 40.setHeight,
+                          width: 40.setWidth,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                Image.asset(
+                  AppAssets.imgDeleteAccount,
+                  width: 112.setWidth,
+                  height: 112.setHeight,
+                ),
+                SizedBox(height: 28.setHeight),
+                CommonText(
+                  text: Languages.of(context).txtDeleteAccount,
+                  fontSize: 24.setFontSize,
+                  fontWeight: FontWeight.w700,
+                  textColor: CustomAppColor.of(context).txtSecondary,
+                ),
+                SizedBox(height: 10.setHeight),
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 20.setWidth),
+                  child: CommonText(
+                    text: Languages.of(context).txtAreYouSureYouWantToDeleteAccount,
+                    fontSize: 14.setFontSize,
+                    fontWeight: FontWeight.w500,
+                    textAlign: TextAlign.center,
+                    textColor: CustomAppColor.of(context).txtGrey,
+                  ),
+                ),
+                SizedBox(height: 28.setHeight),
+                IgnorePointer(
+                  ignoring: true,
+                  child: _ContinueButtonView(
+                    buttonText: Languages.of(context).txtYesDeleteAccount,
+                    onTap: () => Navigator.pop(context),
+                  ),
+                ),
+              ],
+            ),
+          ],
+        );
+      },
+    ).whenComplete(() {
+      if (_isBottomSheetOpen) {
+        setState(() {
+          _isBottomSheetOpen = false;
+        });
+        Navigator.pop(context);
+      }
+    });
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    if (widget.isForLogoutStatusBs) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        showLogoutBS();
+      });
+    }
+    if (widget.isForDeleteAccountStatusBs) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        showDeleteAccountBS();
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     _fillData();
-    return Scaffold(
-      backgroundColor: CustomAppColor.of(context).bgScreenWhite,
-      body: Column(
-        children: [
-          IgnorePointer(
-            ignoring: true,
-            child: TopBar(
-              this,
-              textColor: CustomAppColor.of(context).txtSecondaryWhite,
-              title: Languages.of(context).txtSettings,
-              isShowTitle: true,
-              isShowBack: true,
-              iconColor: CustomAppColor.of(context).bgDetailsCard,
-            ),
-          ),
-          SizedBox(height: 20.setHeight),
-          Expanded(
-            child: SingleChildScrollView(
-              child: Column(
-                children: [
-                  ProfileUpdateCardView(switchValue: isDarkMode),
-                  SizedBox(height: 10.setHeight),
-                  const AppContentCardView(),
-                  SizedBox(height: 10.setHeight),
-                  const DeleteAndLogoutCardView()
-                ],
+    return SafeArea(
+      top: false,
+      child: PopScope(
+        canPop: !_isBottomSheetOpen,
+        onPopInvokedWithResult: (didPop, result) {
+          if (!didPop && _isBottomSheetOpen) {
+            Navigator.pop(context);
+            setState(() {
+              _isBottomSheetOpen = false;
+            });
+            Navigator.pop(context);
+          }
+        },
+        child: Scaffold(
+          backgroundColor: CustomAppColor.of(context).bgScreenWhite,
+          body: Column(
+            children: [
+              IgnorePointer(
+                ignoring: true,
+                child: TopBar(
+                  this,
+                  textColor: CustomAppColor.of(context).txtSecondaryWhite,
+                  title: Languages.of(context).txtSettings,
+                  isShowTitle: true,
+                  isShowBack: true,
+                  iconColor: CustomAppColor.of(context).bgDetailsCard,
+                ),
               ),
-            ),
-          )
-        ],
+              SizedBox(height: 20.setHeight),
+              Expanded(
+                child: SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      ProfileUpdateCardView(switchValue: isDarkMode),
+                      SizedBox(height: 10.setHeight),
+                      const AppContentCardView(),
+                      SizedBox(height: 10.setHeight),
+                      const DeleteAndLogoutCardView(),
+                    ],
+                  ),
+                ),
+              )
+            ],
+          ),
+        ),
       ),
     );
   }
@@ -104,7 +325,7 @@ class _ProfileUpdateCardViewState extends State<ProfileUpdateCardView> {
             BoxShadow(
               spreadRadius: 1,
               blurRadius: 15,
-              color: CustomAppColor.of(context).black..withOpacityPercent(.08),
+              color: CustomAppColor.of(context).black.withOpacityPercent(.08),
             ),
           ],
         ),
@@ -124,7 +345,7 @@ class _ProfileUpdateCardViewState extends State<ProfileUpdateCardView> {
                           alignment: Alignment.center,
                           decoration: BoxDecoration(
                             shape: BoxShape.circle,
-                            color: CustomAppColor.of(context).bgContainerPrimaryShadow..withOpacityPercent(0.2),
+                            color: CustomAppColor.of(context).bgContainerPrimaryShadow.withOpacityPercent(0.2),
                           ),
                           child: Image.asset(
                             AppAssets.icStatus,
@@ -292,7 +513,7 @@ class _ProfileUpdateCardViewState extends State<ProfileUpdateCardView> {
                           JobFinderScreensApp.changeTheme(context, ThemeData.light());
                         },
                         activeColor: CustomAppColor.of(context).icPrimary,
-                        inactiveColor: CustomAppColor.of(context).grey..withOpacityPercent(0.5),
+                        inactiveColor: CustomAppColor.of(context).grey.withOpacityPercent(0.5),
                         activeToggleColor: CustomAppColor.of(context).white,
                         inactiveToggleColor: CustomAppColor.of(context).icPrimary,
                         width: 38.setWidth,
@@ -377,7 +598,7 @@ class AppContentCardView extends StatelessWidget {
                 offset: const Offset(0, 4),
                 blurRadius: 20,
                 spreadRadius: 0,
-                color: CustomAppColor.of(context).black..withOpacityPercent(.08),
+                color: CustomAppColor.of(context).black.withOpacityPercent(.08),
               ),
             ],
           ),
@@ -571,98 +792,101 @@ class DeleteAndLogoutCardView extends StatelessWidget {
               offset: const Offset(0, 4),
               blurRadius: 20,
               spreadRadius: 0,
-              color: CustomAppColor.of(context).black..withOpacityPercent(.08),
+              color: CustomAppColor.of(context).black.withOpacityPercent(.08),
             ),
           ],
         ),
-        child: Column(
-          children: [
-            GestureDetector(
-              onTap: () => _showLogoutBottomSheet(context),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Expanded(
-                    child: Row(
-                      children: [
-                        Container(
-                          width: 42.setWidth,
-                          height: 42.setHeight,
-                          alignment: Alignment.center,
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            color: CustomAppColor.of(context).bgContainerPrimaryShadow,
+        child: IgnorePointer(
+          ignoring: true,
+          child: Column(
+            children: [
+              GestureDetector(
+                onTap: () => _showLogoutBottomSheet(context),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Expanded(
+                      child: Row(
+                        children: [
+                          Container(
+                            width: 42.setWidth,
+                            height: 42.setHeight,
+                            alignment: Alignment.center,
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: CustomAppColor.of(context).bgContainerPrimaryShadow,
+                            ),
+                            child: Image.asset(
+                              AppAssets.icLogout,
+                              width: 21.setWidth,
+                              height: 21.setHeight,
+                              color: CustomAppColor.of(context).txtRed,
+                            ),
                           ),
-                          child: Image.asset(
-                            AppAssets.icLogout,
-                            width: 21.setWidth,
-                            height: 21.setHeight,
-                            color: CustomAppColor.of(context).txtRed,
+                          SizedBox(width: 12.setWidth),
+                          CommonText(
+                            text: Languages.of(context).txtLogout,
+                            fontWeight: FontWeight.w400,
+                            fontSize: 16.setFontSize,
+                            textColor: CustomAppColor.of(context).txtRed,
                           ),
-                        ),
-                        SizedBox(width: 12.setWidth),
-                        CommonText(
-                          text: Languages.of(context).txtLogout,
-                          fontWeight: FontWeight.w400,
-                          fontSize: 16.setFontSize,
-                          textColor: CustomAppColor.of(context).txtRed,
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
-                  ),
-                  Image.asset(
-                    AppAssets.icRightArrow,
-                    width: 14.setWidth,
-                    height: 14.setHeight,
-                    color: CustomAppColor.of(context).icGrey,
-                  )
-                ],
+                    Image.asset(
+                      AppAssets.icRightArrow,
+                      width: 14.setWidth,
+                      height: 14.setHeight,
+                      color: CustomAppColor.of(context).icGrey,
+                    )
+                  ],
+                ),
               ),
-            ),
-            SizedBox(height: 20.setHeight),
-            GestureDetector(
-              onTap: () => _showDeleteBottomSheet(context),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Expanded(
-                    child: Row(
-                      children: [
-                        Container(
-                          width: 42.setWidth,
-                          height: 42.setHeight,
-                          alignment: Alignment.center,
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            color: CustomAppColor.of(context).bgContainerPrimaryShadow,
+              SizedBox(height: 20.setHeight),
+              GestureDetector(
+                onTap: () => _showDeleteBottomSheet(context),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Expanded(
+                      child: Row(
+                        children: [
+                          Container(
+                            width: 42.setWidth,
+                            height: 42.setHeight,
+                            alignment: Alignment.center,
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: CustomAppColor.of(context).bgContainerPrimaryShadow,
+                            ),
+                            child: Image.asset(
+                              AppAssets.icFilledDelete,
+                              width: 21.setWidth,
+                              height: 21.setHeight,
+                              color: CustomAppColor.of(context).txtRed,
+                            ),
                           ),
-                          child: Image.asset(
-                            AppAssets.icFilledDelete,
-                            width: 21.setWidth,
-                            height: 21.setHeight,
-                            color: CustomAppColor.of(context).txtRed,
+                          SizedBox(width: 12.setWidth),
+                          CommonText(
+                            text: Languages.of(context).txtDeleteAccount,
+                            fontWeight: FontWeight.w400,
+                            fontSize: 16.setFontSize,
+                            textColor: CustomAppColor.of(context).txtRed,
                           ),
-                        ),
-                        SizedBox(width: 12.setWidth),
-                        CommonText(
-                          text: Languages.of(context).txtDeleteAccount,
-                          fontWeight: FontWeight.w400,
-                          fontSize: 16.setFontSize,
-                          textColor: CustomAppColor.of(context).txtRed,
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
-                  ),
-                  Image.asset(
-                    AppAssets.icRightArrow,
-                    width: 14.setWidth,
-                    height: 14.setHeight,
-                    color: CustomAppColor.of(context).icGrey,
-                  )
-                ],
+                    Image.asset(
+                      AppAssets.icRightArrow,
+                      width: 14.setWidth,
+                      height: 14.setHeight,
+                      color: CustomAppColor.of(context).icGrey,
+                    )
+                  ],
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
@@ -737,8 +961,7 @@ void _showConfirmationBottomSheet(BuildContext context) {
   );
 }
 
-Widget _buildSelectionContainer(BuildContext context,
-    {required bool isSelected, required String icon, required String title, required String description}) {
+Widget _buildSelectionContainer(BuildContext context, {required bool isSelected, required String icon, required String title, required String description}) {
   return Container(
     padding: EdgeInsets.symmetric(horizontal: 14.setWidth, vertical: 18.setHeight),
     decoration: BoxDecoration(
@@ -746,7 +969,7 @@ Widget _buildSelectionContainer(BuildContext context,
         BoxShadow(
           spreadRadius: 1,
           blurRadius: 15,
-          color: CustomAppColor.of(context).black..withOpacityPercent(.08),
+          color: CustomAppColor.of(context).black.withOpacityPercent(.08),
         ),
       ],
       color: isSelected ? CustomAppColor.of(context).bgContainerSecondary : CustomAppColor.of(context).bgScreenWhite,
@@ -940,7 +1163,7 @@ class _ContinueButtonView extends StatelessWidget {
             offset: const Offset(0, 4),
             blurRadius: 20,
             spreadRadius: 0,
-            color: CustomAppColor.of(context).black..withOpacityPercent(.08),
+            color: CustomAppColor.of(context).black.withOpacityPercent(.08),
           ),
         ],
       ),

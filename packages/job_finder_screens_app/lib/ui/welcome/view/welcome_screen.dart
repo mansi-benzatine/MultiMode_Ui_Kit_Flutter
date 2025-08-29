@@ -128,17 +128,20 @@ class _BottomNextButtonView extends StatelessWidget {
       padding: EdgeInsets.only(left: 25.setWidth, right: 25.setWidth, bottom: 10.setHeight, top: 15.setHeight),
       child: SafeArea(
         top: false,
-        child: CommonButton(
-          text: Languages.of(context).txtNext,
-          buttonTextSize: 18.setFontSize,
-          buttonTextWeight: FontWeight.w500,
-          image: AppAssets.icNextRound,
-          buttonColor: CustomAppColor.of(context).txtSecondary,
-          onTap: () {
-            if (!isPreview) {
-              Navigator.push(context, OnBoardingScreen.route());
-            }
-          },
+        child: IgnorePointer(
+          ignoring: true,
+          child: CommonButton(
+            text: Languages.of(context).txtNext,
+            buttonTextSize: 18.setFontSize,
+            buttonTextWeight: FontWeight.w500,
+            image: AppAssets.icNextRound,
+            buttonColor: CustomAppColor.of(context).txtSecondary,
+            onTap: () {
+              if (!isPreview) {
+                Navigator.push(context, OnBoardingScreen.route());
+              }
+            },
+          ),
         ),
       ),
     );

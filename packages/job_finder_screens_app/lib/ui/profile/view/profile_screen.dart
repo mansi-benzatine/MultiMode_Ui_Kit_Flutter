@@ -12,11 +12,32 @@ import '../../../widgets/button/common_button.dart';
 import '../datamodel/profile_data.dart';
 
 class ProfileScreen extends StatefulWidget {
+  final bool isShowAboutMeBs;
+  final bool isShowContactInfoBs;
+  final bool isShowWorkExperienceBs;
+  final bool isShowEducationQualificationBs;
+  final bool isShowTechnicalSkillBs;
+  final bool isShowAddTechnicalSkillsBs;
+  final bool isShowLanguagesBs;
+  final bool isShowAddLanguageBs;
+  final bool isShowResumeBs;
+
   static Route<void> route() {
     return MaterialPageRoute(builder: (_) => const ProfileScreen());
   }
 
-  const ProfileScreen({super.key});
+  const ProfileScreen({
+    super.key,
+    this.isShowAboutMeBs = false,
+    this.isShowAddLanguageBs = false,
+    this.isShowAddTechnicalSkillsBs = false,
+    this.isShowContactInfoBs = false,
+    this.isShowEducationQualificationBs = false,
+    this.isShowLanguagesBs = false,
+    this.isShowResumeBs = false,
+    this.isShowTechnicalSkillBs = false,
+    this.isShowWorkExperienceBs = false,
+  });
 
   @override
   State<ProfileScreen> createState() => _ProfileScreenState();
@@ -24,6 +45,8 @@ class ProfileScreen extends StatefulWidget {
 
 class _ProfileScreenState extends State<ProfileScreen> {
   late ProfileDetails profile;
+  bool _isBottomSheetOpen = false;
+
   void fillData() {
     profile = ProfileDetails(
       name: "Zack Stevens",
@@ -37,9 +60,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
       location: "New Yourk, United States",
       mail: "zackstevens@yourdomain.com",
       mobileNumber: "+91 - 0123456789",
-      workExperience: [
-        ExperienceData(previousCompany: "Amazon Inc", previousDuration: "March - 2016 to Present (7 Years)", previousExperience: "Product Designer")
-      ],
+      workExperience: [ExperienceData(previousCompany: "Amazon Inc", previousDuration: "March - 2016 to Present (7 Years)", previousExperience: "Product Designer")],
       educationQualification: [
         EducationQualificationData(
           degreeName: "Information Technology",
@@ -52,19 +73,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
         "Hindi",
         "Gujarati",
       ],
-      technicalSkill: [
-        "App Design",
-        "Web Design",
-        "UI/UX",
-        "Graphics Design",
-        "Wireframe Design",
-        "Adobe Xd",
-        "Figma",
-        "Prototyping",
-        "HTML/CSS",
-        "Bootstrap",
-        "Icons"
-      ],
+      technicalSkill: ["App Design", "Web Design", "UI/UX", "Graphics Design", "Wireframe Design", "Adobe Xd", "Figma", "Prototyping", "HTML/CSS", "Bootstrap", "Icons"],
     );
   }
 
@@ -72,6 +81,967 @@ class _ProfileScreenState extends State<ProfileScreen> {
   void initState() {
     super.initState();
     fillData();
+    if (widget.isShowAboutMeBs) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        showAboutMeBS();
+      });
+    }
+    if (widget.isShowContactInfoBs) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        showContactInfoBS();
+      });
+    }
+    if (widget.isShowWorkExperienceBs) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        showWorkExperienceBS();
+      });
+    }
+    if (widget.isShowEducationQualificationBs) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        showEducationQualificationsBS();
+      });
+    }
+    if (widget.isShowTechnicalSkillBs) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        showTechnicalSkillBS();
+      });
+    }
+    if (widget.isShowAddTechnicalSkillsBs) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        showAddTechnicalSkillBS();
+      });
+    }
+    if (widget.isShowLanguagesBs) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        showLanguageSkillBS();
+      });
+    }
+    if (widget.isShowAddLanguageBs) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        showAddLanguageSkillBS();
+      });
+    }
+    if (widget.isShowResumeBs) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        showResumeBS();
+      });
+    }
+  }
+
+  void showAboutMeBS() {
+    setState(() {
+      _isBottomSheetOpen = true;
+    });
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      enableDrag: false,
+      isDismissible: false,
+      backgroundColor: CustomAppColor.of(context).bgScreenWhite,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(40)),
+      ),
+      builder: (context) {
+        return Padding(
+          padding: EdgeInsets.only(
+            bottom: MediaQuery.of(context).viewInsets.bottom,
+          ),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 24.setWidth, vertical: 10.setHeight),
+                child: Container(
+                  width: 60.setWidth,
+                  height: 4.setHeight,
+                  decoration: BoxDecoration(color: CustomAppColor.of(context).bsDragHandle),
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.symmetric(vertical: 10.setHeight, horizontal: 24.setWidth),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Image.asset(
+                      AppAssets.icFilledDocument,
+                      color: CustomAppColor.of(context).icPrimary,
+                      height: 22.setHeight,
+                      width: 22.setWidth,
+                    ),
+                    SizedBox(width: 5.setWidth),
+                    CommonText(
+                      text: Languages.of(context).txtAboutMe,
+                      fontSize: 22.setFontSize,
+                      fontWeight: FontWeight.w700,
+                      textColor: CustomAppColor.of(context).txtSecondaryWhite,
+                    ),
+                  ],
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 24.setWidth),
+                child: Divider(color: CustomAppColor.of(context).containerGrey),
+              ),
+              SizedBox(height: 20.setHeight),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 24.setWidth),
+                child: Column(
+                  children: [
+                    CommonTextFormField(
+                      hintText: "",
+                      fillColor: CustomAppColor.of(context).bgTextFormFieldWhiteSecondary,
+                      maxLines: 8,
+                      controller: TextEditingController(
+                        text:
+                            "Expertise in Web Design UI/UX Design and Front End - Development. Extensive experience in creating initial web concepts and solutions using wireframes and rapid to high fidelity prototypes, integrating user-centered design, technologies, and business strategy.",
+                      ),
+                    ),
+                    SizedBox(height: 28.setHeight),
+                  ],
+                ),
+              ),
+              IgnorePointer(
+                ignoring: true,
+                child: _ContinueButtonView(
+                  secondButtonText: Languages.of(context).txtUpdate,
+                  firstButtonText: Languages.of(context).txtCancel,
+                ),
+              ),
+            ],
+          ),
+        );
+      },
+    ).whenComplete(() {
+      if (_isBottomSheetOpen) {
+        setState(() {
+          _isBottomSheetOpen = false;
+        });
+        Navigator.pop(context);
+      }
+    });
+  }
+
+  void showContactInfoBS() {
+    setState(() {
+      _isBottomSheetOpen = true;
+    });
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      enableDrag: false,
+      isDismissible: false,
+      backgroundColor: CustomAppColor.of(context).bgScreenWhite,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(40)),
+      ),
+      builder: (context) {
+        return Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 24.setWidth, vertical: 10.setHeight),
+              child: Container(
+                width: 60.setWidth,
+                height: 4.setHeight,
+                decoration: BoxDecoration(color: CustomAppColor.of(context).bsDragHandle),
+              ),
+            ),
+            Padding(
+              padding: EdgeInsets.symmetric(vertical: 10.setHeight, horizontal: 24.setWidth),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Image.asset(
+                    AppAssets.icProfile,
+                    color: CustomAppColor.of(context).icPrimary,
+                    height: 25.setHeight,
+                    width: 20.setWidth,
+                  ),
+                  SizedBox(width: 5.setWidth),
+                  CommonText(
+                    text: Languages.of(context).txtContactInfo,
+                    fontSize: 22.setFontSize,
+                    fontWeight: FontWeight.w700,
+                    textColor: CustomAppColor.of(context).txtSecondaryWhite,
+                  ),
+                ],
+              ),
+            ),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 24.setWidth),
+              child: Divider(color: CustomAppColor.of(context).containerGrey),
+            ),
+            SizedBox(height: 20.setHeight),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 24.setWidth),
+              child: Column(
+                children: [
+                  CommonTextFormFieldWithPrefix(
+                    prefixIcon: AppAssets.icLocation,
+                    hintText: "",
+                    controller: TextEditingController(text: "New Yourk, United States"),
+                    prefixIconColor: CustomAppColor.of(context).icPrimaryWhite,
+                  ),
+                  SizedBox(height: 28.setHeight),
+                  CommonTextFormFieldWithPrefix(
+                    controller: TextEditingController(text: "+91-0123456789"),
+                    prefixIcon: AppAssets.icCall,
+                    hintText: "",
+                    prefixIconColor: CustomAppColor.of(context).icPrimaryWhite,
+                  ),
+                  SizedBox(height: 28.setHeight),
+                  CommonTextFormFieldWithPrefix(
+                    controller: TextEditingController(text: "zackstevens@yourdomain.com"),
+                    prefixIcon: AppAssets.icEmail,
+                    hintText: "",
+                    prefixIconColor: CustomAppColor.of(context).icPrimaryWhite,
+                  ),
+                  SizedBox(height: 20.setHeight),
+                  CommonTextFormFieldWithPrefixAndSuffix(
+                    suffixIcon: AppAssets.icDownArrow,
+                    suffixIconColor: CustomAppColor.of(context).icGreyWhite,
+                    controller: TextEditingController(text: "September 06,1990"),
+                    prefixIcon: AppAssets.icCalender,
+                    hintText: "",
+                    prefixIconColor: CustomAppColor.of(context).icPrimaryWhite,
+                  ),
+                  SizedBox(height: 20.setHeight),
+                ],
+              ),
+            ),
+            _ContinueButtonView(
+              secondButtonText: Languages.of(context).txtUpdate,
+              firstButtonText: Languages.of(context).txtCancel,
+            ),
+          ],
+        );
+      },
+    ).whenComplete(() {
+      if (_isBottomSheetOpen) {
+        setState(() {
+          _isBottomSheetOpen = false;
+        });
+        Navigator.pop(context);
+      }
+    });
+  }
+
+  void showWorkExperienceBS() {
+    setState(() {
+      _isBottomSheetOpen = true;
+    });
+    showModalBottomSheet(
+      context: context,
+      enableDrag: false,
+      isDismissible: false,
+      isScrollControlled: false,
+      backgroundColor: CustomAppColor.of(context).bgScreenWhite,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(40)),
+      ),
+      builder: (context) {
+        return Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 24.setWidth, vertical: 10.setHeight),
+              child: Container(
+                width: 60.setWidth,
+                height: 4.setHeight,
+                decoration: BoxDecoration(color: CustomAppColor.of(context).bsDragHandle),
+              ),
+            ),
+            Padding(
+              padding: EdgeInsets.symmetric(vertical: 10.setHeight, horizontal: 24.setWidth),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Image.asset(
+                    AppAssets.icWorkExperience,
+                    color: CustomAppColor.of(context).icPrimary,
+                    height: 25.setHeight,
+                    width: 25.setWidth,
+                  ),
+                  SizedBox(width: 5.setWidth),
+                  CommonText(
+                    text: Languages.of(context).txtWorkExperience,
+                    fontSize: 22.setFontSize,
+                    fontWeight: FontWeight.w700,
+                    textColor: CustomAppColor.of(context).txtSecondaryWhite,
+                  ),
+                ],
+              ),
+            ),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 24.setWidth),
+              child: Divider(color: CustomAppColor.of(context).containerGrey),
+            ),
+            SizedBox(height: 20.setHeight),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 24.setWidth),
+              child: Column(
+                children: [
+                  CommonTextFormFieldWithPrefix(
+                    prefixIcon: AppAssets.icJobTitle,
+                    hintText: Languages.of(context).txtEnterYourJobTitle,
+                    controller: TextEditingController(),
+                  ),
+                  SizedBox(height: 28.setHeight),
+                  CommonTextFormFieldWithPrefix(
+                    controller: TextEditingController(),
+                    prefixIcon: AppAssets.icLocation,
+                    hintText: Languages.of(context).txtEnterCompanyName,
+                  ),
+                  SizedBox(height: 28.setHeight),
+                  CommonTextFormFieldWithPrefix(
+                    controller: TextEditingController(),
+                    prefixIcon: AppAssets.icCalender,
+                    hintText: Languages.of(context).txtEnterWorkDuration,
+                  ),
+                  SizedBox(height: 20.setHeight),
+                ],
+              ),
+            ),
+            _ContinueButtonView(
+              secondButtonText: Languages.of(context).txtAdd,
+              firstButtonText: Languages.of(context).txtCancel,
+            ),
+          ],
+        );
+      },
+    ).whenComplete(() {
+      if (_isBottomSheetOpen) {
+        setState(() {
+          _isBottomSheetOpen = false;
+        });
+        Navigator.pop(context);
+      }
+    });
+  }
+
+  void showEducationQualificationsBS() {
+    setState(() {
+      _isBottomSheetOpen = true;
+    });
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      isDismissible: false,
+      enableDrag: false,
+      backgroundColor: CustomAppColor.of(context).bgScreenWhite,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(40)),
+      ),
+      builder: (context) {
+        return Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 24.setWidth, vertical: 10.setHeight),
+              child: Container(
+                width: 60.setWidth,
+                height: 4.setHeight,
+                decoration: BoxDecoration(color: CustomAppColor.of(context).bsDragHandle),
+              ),
+            ),
+            Padding(
+              padding: EdgeInsets.symmetric(vertical: 10.setHeight, horizontal: 24.setWidth),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Image.asset(
+                    AppAssets.icEducationQualification,
+                    color: CustomAppColor.of(context).icPrimary,
+                    height: 23.setHeight,
+                    width: 28.setWidth,
+                  ),
+                  SizedBox(width: 5.setWidth),
+                  CommonText(
+                    text: Languages.of(context).txtEducationQualification,
+                    fontSize: 22.setFontSize,
+                    fontWeight: FontWeight.w700,
+                    textColor: CustomAppColor.of(context).txtSecondaryWhite,
+                  ),
+                ],
+              ),
+            ),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 24.setWidth),
+              child: Divider(color: CustomAppColor.of(context).containerGrey),
+            ),
+            SizedBox(height: 20.setHeight),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 24.setWidth),
+              child: Column(
+                children: [
+                  CommonTextFormFieldWithPrefix(
+                    prefixIcon: AppAssets.icEducationQualification,
+                    hintText: Languages.of(context).txtEnterYourField,
+                    controller: TextEditingController(),
+                  ),
+                  SizedBox(height: 28.setHeight),
+                  CommonTextFormFieldWithPrefix(
+                    controller: TextEditingController(),
+                    prefixIcon: AppAssets.icUniversity,
+                    hintText: Languages.of(context).txtEnterUniversityName,
+                  ),
+                  SizedBox(height: 28.setHeight),
+                  CommonTextFormFieldWithPrefix(
+                    controller: TextEditingController(),
+                    prefixIcon: AppAssets.icCalender,
+                    prefixIconColor: CustomAppColor.of(context).icPrimaryWhite,
+                    hintText: Languages.of(context).txtEnterDuration,
+                  ),
+                  SizedBox(height: 20.setHeight),
+                ],
+              ),
+            ),
+            _ContinueButtonView(
+              secondButtonText: Languages.of(context).txtAdd,
+              firstButtonText: Languages.of(context).txtCancel,
+            ),
+          ],
+        );
+      },
+    ).whenComplete(() {
+      if (_isBottomSheetOpen) {
+        setState(() {
+          _isBottomSheetOpen = false;
+        });
+        Navigator.pop(context);
+      }
+    });
+  }
+
+  void showTechnicalSkillBS() {
+    setState(() {
+      _isBottomSheetOpen = true;
+    });
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      enableDrag: false,
+      isDismissible: false,
+      backgroundColor: CustomAppColor.of(context).bgScreenWhite,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(40)),
+      ),
+      builder: (context) {
+        return SafeArea(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 24.setWidth, vertical: 10.setHeight),
+                child: Container(
+                  width: 60.setWidth,
+                  height: 4.setHeight,
+                  decoration: BoxDecoration(color: CustomAppColor.of(context).bsDragHandle),
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.symmetric(vertical: 10.setHeight, horizontal: 24.setWidth),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Image.asset(
+                      AppAssets.icTechnicalSkills,
+                      color: CustomAppColor.of(context).icPrimary,
+                      height: 30.setHeight,
+                      width: 30.setWidth,
+                    ),
+                    SizedBox(width: 5.setWidth),
+                    CommonText(
+                      text: Languages.of(context).txtTechnicalSkills,
+                      fontSize: 22.setFontSize,
+                      fontWeight: FontWeight.w700,
+                      textColor: CustomAppColor.of(context).txtSecondaryWhite,
+                    ),
+                  ],
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 24.setWidth),
+                child: Divider(color: CustomAppColor.of(context).containerGrey),
+              ),
+              SizedBox(height: 20.setHeight),
+              Wrap(
+                spacing: 8.setWidth,
+                runSpacing: 8.setHeight,
+                children: profile.technicalSkill.map((skill) {
+                  return Container(
+                    padding: EdgeInsets.symmetric(vertical: 8.setHeight, horizontal: 8.setWidth),
+                    decoration: BoxDecoration(
+                      color: CustomAppColor.of(context).icPrimary,
+                      borderRadius: BorderRadius.circular(100),
+                    ),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        CommonText(
+                          text: skill,
+                          fontSize: 14.setFontSize,
+                          fontWeight: FontWeight.w500,
+                          textColor: CustomAppColor.of(context).white,
+                        ),
+                        SizedBox(width: 5.setWidth),
+                        Image.asset(
+                          AppAssets.icCloseSquare,
+                          width: 20.setWidth,
+                          height: 20.setHeight,
+                          color: CustomAppColor.of(context).bgContainerPrimary,
+                        )
+                      ],
+                    ),
+                  );
+                }).toList(),
+              ),
+              SizedBox(height: 28.setHeight),
+              Padding(
+                padding: EdgeInsets.symmetric(vertical: 10.setHeight, horizontal: 24.setWidth),
+                child: IgnorePointer(
+                  ignoring: true,
+                  child: InkWell(
+                    onTap: () {
+                      Navigator.pop(context);
+                    },
+                    child: Container(
+                      padding: EdgeInsets.symmetric(vertical: 10.setHeight, horizontal: 24.setWidth),
+                      decoration: BoxDecoration(border: Border.all(color: CustomAppColor.of(context).icPrimary), borderRadius: BorderRadius.circular(100)),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Image.asset(
+                            AppAssets.icAdd,
+                            height: 20.setHeight,
+                            width: 20.setWidth,
+                          ),
+                          SizedBox(width: 5.setWidth),
+                          CommonText(
+                            text: Languages.of(context).txtAddNewSkill,
+                            fontSize: 14.setFontSize,
+                            fontWeight: FontWeight.w500,
+                            textColor: CustomAppColor.of(context).txtPrimaryWhite,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+              SizedBox(height: 28.setHeight),
+              _ContinueButtonView(
+                secondButtonText: Languages.of(context).txtUpdate,
+                firstButtonText: Languages.of(context).txtCancel,
+              ),
+            ],
+          ),
+        );
+      },
+    ).whenComplete(() {
+      if (_isBottomSheetOpen) {
+        setState(() {
+          _isBottomSheetOpen = false;
+        });
+        Navigator.pop(context);
+      }
+    });
+  }
+
+  void showAddTechnicalSkillBS() {
+    setState(() {
+      _isBottomSheetOpen = true;
+    });
+    showModalBottomSheet(
+        context: context,
+        isScrollControlled: true,
+        enableDrag: false,
+        isDismissible: false,
+        backgroundColor: CustomAppColor.of(context).bgScreenWhite,
+        shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.vertical(top: Radius.circular(40)),
+        ),
+        builder: (context) {
+          return Padding(
+            padding: EdgeInsets.only(
+              bottom: MediaQuery.of(context).viewInsets.bottom,
+            ),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 24.setWidth, vertical: 10.setHeight),
+                  child: Container(
+                    width: 60.setWidth,
+                    height: 4.setHeight,
+                    decoration: BoxDecoration(color: CustomAppColor.of(context).bsDragHandle),
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.symmetric(vertical: 10.setHeight, horizontal: 24.setWidth),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Image.asset(
+                        AppAssets.icTechnicalSkills,
+                        color: CustomAppColor.of(context).icPrimary,
+                        height: 30.setHeight,
+                        width: 30.setWidth,
+                      ),
+                      SizedBox(width: 5.setWidth),
+                      CommonText(
+                        text: Languages.of(context).txtAddNewSkill,
+                        fontSize: 22.setFontSize,
+                        fontWeight: FontWeight.w700,
+                        textColor: CustomAppColor.of(context).txtSecondaryWhite,
+                      ),
+                    ],
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 24.setWidth),
+                  child: Divider(color: CustomAppColor.of(context).containerGrey),
+                ),
+                SizedBox(height: 20.setHeight),
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 24.setWidth),
+                  child: CommonTextFormField(controller: TextEditingController(), hintText: Languages.of(context).txtAddLanguage),
+                ),
+                SizedBox(height: 40.setHeight),
+                _ContinueButtonView(
+                  secondButtonText: Languages.of(context).txtAdd,
+                  firstButtonText: Languages.of(context).txtCancel,
+                ),
+              ],
+            ),
+          );
+        }).whenComplete(() {
+      if (_isBottomSheetOpen) {
+        setState(() {
+          _isBottomSheetOpen = false;
+        });
+        Navigator.pop(context);
+      }
+    });
+  }
+
+  void showLanguageSkillBS() {
+    setState(() {
+      _isBottomSheetOpen = true;
+    });
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: false,
+      isDismissible: false,
+      enableDrag: false,
+      backgroundColor: CustomAppColor.of(context).bgScreenWhite,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(40)),
+      ),
+      builder: (context) {
+        return Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 24.setWidth, vertical: 10.setHeight),
+              child: Container(
+                width: 60.setWidth,
+                height: 4.setHeight,
+                decoration: BoxDecoration(color: CustomAppColor.of(context).bsDragHandle),
+              ),
+            ),
+            Padding(
+              padding: EdgeInsets.symmetric(vertical: 10.setHeight, horizontal: 24.setWidth),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Image.asset(
+                    AppAssets.icLanguages,
+                    color: CustomAppColor.of(context).icPrimary,
+                    height: 23.setHeight,
+                    width: 27.setWidth,
+                  ),
+                  SizedBox(width: 5.setWidth),
+                  CommonText(
+                    text: Languages.of(context).txtLanguages,
+                    fontSize: 22.setFontSize,
+                    fontWeight: FontWeight.w700,
+                    textColor: CustomAppColor.of(context).txtSecondaryWhite,
+                  ),
+                ],
+              ),
+            ),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 24.setWidth),
+              child: Divider(color: CustomAppColor.of(context).containerGrey),
+            ),
+            SizedBox(height: 20.setHeight),
+            Wrap(
+              spacing: 8.setWidth,
+              runSpacing: 8.setHeight,
+              children: profile.languages.map((skill) {
+                return Container(
+                  padding: EdgeInsets.symmetric(vertical: 8.setHeight, horizontal: 8.setWidth),
+                  decoration: BoxDecoration(
+                    color: CustomAppColor.of(context).icPrimary,
+                    borderRadius: BorderRadius.circular(100),
+                  ),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      CommonText(
+                        text: skill,
+                        fontSize: 14.setFontSize,
+                        fontWeight: FontWeight.w500,
+                        textColor: CustomAppColor.of(context).white,
+                      ),
+                      SizedBox(width: 5.setWidth),
+                      Image.asset(
+                        AppAssets.icCloseSquare,
+                        width: 20.setWidth,
+                        height: 20.setHeight,
+                        color: CustomAppColor.of(context).bgContainerPrimary,
+                      )
+                    ],
+                  ),
+                );
+              }).toList(),
+            ),
+            SizedBox(height: 28.setHeight),
+            Padding(
+              padding: EdgeInsets.symmetric(vertical: 10.setHeight, horizontal: 24.setWidth),
+              child: InkWell(
+                onTap: () {
+                  Navigator.pop(context);
+                },
+                child: Container(
+                  padding: EdgeInsets.symmetric(vertical: 10.setHeight, horizontal: 24.setWidth),
+                  decoration: BoxDecoration(border: Border.all(color: CustomAppColor.of(context).icPrimary), borderRadius: BorderRadius.circular(100)),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Image.asset(
+                        AppAssets.icAdd,
+                        height: 20.setHeight,
+                        width: 20.setWidth,
+                      ),
+                      SizedBox(width: 5.setWidth),
+                      CommonText(
+                        text: Languages.of(context).txtAddNewLanguage,
+                        fontSize: 14.setFontSize,
+                        fontWeight: FontWeight.w500,
+                        textColor: CustomAppColor.of(context).txtPrimaryWhite,
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+            SizedBox(height: 28.setHeight),
+            _ContinueButtonView(
+              secondButtonText: Languages.of(context).txtUpdate,
+              firstButtonText: Languages.of(context).txtCancel,
+            ),
+          ],
+        );
+      },
+    ).whenComplete(() {
+      if (_isBottomSheetOpen) {
+        setState(() {
+          _isBottomSheetOpen = false;
+        });
+        Navigator.pop(context);
+      }
+    });
+  }
+
+  void showAddLanguageSkillBS() {
+    setState(() {
+      _isBottomSheetOpen = true;
+    });
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      isDismissible: false,
+      enableDrag: false,
+      clipBehavior: Clip.none,
+      backgroundColor: CustomAppColor.of(context).bgScreenWhite,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(40)),
+      ),
+      builder: (context) {
+        return Padding(
+          padding: EdgeInsets.only(
+            bottom: MediaQuery.of(context).viewInsets.bottom,
+          ),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 24.setWidth, vertical: 10.setHeight),
+                child: Container(
+                  width: 60.setWidth,
+                  height: 4.setHeight,
+                  decoration: BoxDecoration(color: CustomAppColor.of(context).bsDragHandle),
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.symmetric(vertical: 10.setHeight, horizontal: 24.setWidth),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Image.asset(
+                      AppAssets.icLanguages,
+                      color: CustomAppColor.of(context).icPrimary,
+                      height: 23.setHeight,
+                      width: 27.setWidth,
+                    ),
+                    SizedBox(width: 5.setWidth),
+                    CommonText(
+                      text: Languages.of(context).txtLanguages,
+                      fontSize: 22.setFontSize,
+                      fontWeight: FontWeight.w700,
+                      textColor: CustomAppColor.of(context).txtSecondaryWhite,
+                    ),
+                  ],
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 24.setWidth),
+                child: Divider(color: CustomAppColor.of(context).containerGrey),
+              ),
+              SizedBox(height: 20.setHeight),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 24.setWidth),
+                child: CommonTextFormField(controller: TextEditingController(), hintText: Languages.of(context).txtAddLanguage),
+              ),
+              SizedBox(height: 40.setHeight),
+              _ContinueButtonView(
+                secondButtonText: Languages.of(context).txtAdd,
+                firstButtonText: Languages.of(context).txtCancel,
+              ),
+            ],
+          ),
+        );
+      },
+    ).whenComplete(() {
+      if (_isBottomSheetOpen) {
+        setState(() {
+          _isBottomSheetOpen = false;
+        });
+        Navigator.pop(context);
+      }
+    });
+  }
+
+  void showResumeBS() {
+    setState(() {
+      _isBottomSheetOpen = true;
+    });
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: false,
+      enableDrag: false,
+      isDismissible: false,
+      backgroundColor: CustomAppColor.of(context).bgScreenWhite,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(40)),
+      ),
+      builder: (context) {
+        return Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 24.setWidth),
+              child: Container(
+                width: 60.setWidth,
+                height: 4.setHeight,
+                decoration: BoxDecoration(color: CustomAppColor.of(context).bsDragHandle),
+              ),
+            ),
+            Padding(
+              padding: EdgeInsets.symmetric(vertical: 24.setHeight, horizontal: 24.setWidth),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Image.asset(
+                    AppAssets.icCV,
+                    color: CustomAppColor.of(context).icPrimary,
+                    width: 20.setWidth,
+                    height: 26.setHeight,
+                  ),
+                  SizedBox(width: 5.setWidth),
+                  CommonText(
+                    text: "My Resume / CV",
+                    fontSize: 22.setFontSize,
+                    fontWeight: FontWeight.w700,
+                    textColor: CustomAppColor.of(context).txtSecondaryWhite,
+                  ),
+                ],
+              ),
+            ),
+            Divider(color: CustomAppColor.of(context).containerGrey),
+            SizedBox(height: 20.setHeight),
+            Container(
+              height: 75.setHeight,
+              width: 327.setWidth,
+              alignment: Alignment.center,
+              decoration: ShapeDecoration(
+                color: CustomAppColor.of(context).bgWhiteSecondary,
+                shape: DashedBorder(
+                  borderRadius: BorderRadius.circular(10),
+                  color: CustomAppColor.of(context).grey,
+                  dashSize: 2.4,
+                  dashSpacing: 3,
+                ),
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Image.asset(
+                    AppAssets.icUpload,
+                    width: 24.setWidth,
+                    height: 24.setHeight,
+                  ),
+                  SizedBox(width: 10.setWidth),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      CommonText(
+                        text: Languages.of(context).txtUploadCVResume,
+                        textColor: CustomAppColor.of(context).txtGrey,
+                        fontWeight: FontWeight.w500,
+                        fontSize: 14.setFontSize,
+                      ),
+                      CommonText(
+                        text: Languages.of(context).txtFormatDocPdfJpgAccepted.toLowerCase(),
+                        textColor: CustomAppColor.of(context).txtGrey,
+                        fontWeight: FontWeight.w400,
+                        fontSize: 12.setFontSize,
+                      )
+                    ],
+                  ),
+                ],
+              ),
+            ),
+            SizedBox(height: 28.setHeight),
+            _ContinueButtonView(
+              secondButtonText: Languages.of(context).txtSubmit,
+              firstButtonText: Languages.of(context).txtCancel,
+            ),
+          ],
+        );
+      },
+    ).whenComplete(() {
+      if (_isBottomSheetOpen) {
+        setState(() {
+          _isBottomSheetOpen = false;
+        });
+        Navigator.pop(context);
+      }
+    });
   }
 
   @override
@@ -183,6 +1153,7 @@ class _TopBarWithImageView extends StatelessWidget {
 
 class ProfileDetailsCardView extends StatelessWidget {
   final ProfileDetails profileDetails;
+
   const ProfileDetailsCardView({super.key, required this.profileDetails});
 
   @override
@@ -291,6 +1262,7 @@ class ProfileDetailsCardView extends StatelessWidget {
 
 class AboutMeCardView extends StatelessWidget {
   final ProfileDetails profileDetails;
+
   const AboutMeCardView({super.key, required this.profileDetails});
 
   @override
@@ -308,7 +1280,7 @@ class AboutMeCardView extends StatelessWidget {
               offset: const Offset(0, 4),
               blurRadius: 20,
               spreadRadius: 0,
-              color: CustomAppColor.of(context).black..withOpacityPercent(.08),
+              color: CustomAppColor.of(context).black.withOpacityPercent(.08),
             ),
           ],
         ),
@@ -437,6 +1409,7 @@ class AboutMeCardView extends StatelessWidget {
 
 class ContactInfoCardView extends StatelessWidget {
   final ProfileDetails profileDetails;
+
   const ContactInfoCardView({super.key, required this.profileDetails});
 
   @override
@@ -453,7 +1426,7 @@ class ContactInfoCardView extends StatelessWidget {
               offset: const Offset(0, 4),
               blurRadius: 20,
               spreadRadius: 0,
-              color: CustomAppColor.of(context).black..withOpacityPercent(.08),
+              color: CustomAppColor.of(context).black.withOpacityPercent(.08),
             ),
           ],
         ),
@@ -481,12 +1454,15 @@ class ContactInfoCardView extends StatelessWidget {
                     ],
                   ),
                 ),
-                InkWell(
-                  onTap: () => _showContactInfoBottomSheet(context),
-                  child: Image.asset(
-                    AppAssets.icUpdate,
-                    width: 22.setWidth,
-                    height: 22.setHeight,
+                IgnorePointer(
+                  ignoring: true,
+                  child: InkWell(
+                    onTap: () => _showContactInfoBottomSheet(context),
+                    child: Image.asset(
+                      AppAssets.icUpdate,
+                      width: 22.setWidth,
+                      height: 22.setHeight,
+                    ),
                   ),
                 ),
               ],
@@ -671,6 +1647,7 @@ class ContactInfoCardView extends StatelessWidget {
 
 class WorkExperienceView extends StatelessWidget {
   final ProfileDetails profileDetails;
+
   const WorkExperienceView({super.key, required this.profileDetails});
 
   @override
@@ -687,7 +1664,7 @@ class WorkExperienceView extends StatelessWidget {
               offset: const Offset(0, 4),
               blurRadius: 20,
               spreadRadius: 0,
-              color: CustomAppColor.of(context).black..withOpacityPercent(.08),
+              color: CustomAppColor.of(context).black.withOpacityPercent(.08),
             ),
           ],
         ),
@@ -714,12 +1691,15 @@ class WorkExperienceView extends StatelessWidget {
                     ],
                   ),
                 ),
-                InkWell(
-                  onTap: () => _showAddWorkExperienceBottomSheet(context),
-                  child: Image.asset(
-                    AppAssets.icAdd,
-                    width: 22.setWidth,
-                    height: 22.setHeight,
+                IgnorePointer(
+                  ignoring: true,
+                  child: InkWell(
+                    onTap: () => _showAddWorkExperienceBottomSheet(context),
+                    child: Image.asset(
+                      AppAssets.icAdd,
+                      width: 22.setWidth,
+                      height: 22.setHeight,
+                    ),
                   ),
                 ),
               ],
@@ -944,6 +1924,7 @@ class WorkExperienceView extends StatelessWidget {
 
 class EducationQualificationView extends StatelessWidget {
   final ProfileDetails profileDetails;
+
   const EducationQualificationView({super.key, required this.profileDetails});
 
   @override
@@ -960,7 +1941,7 @@ class EducationQualificationView extends StatelessWidget {
               offset: const Offset(0, 4),
               blurRadius: 20,
               spreadRadius: 0,
-              color: CustomAppColor.of(context).black..withOpacityPercent(.08),
+              color: CustomAppColor.of(context).black.withOpacityPercent(.08),
             ),
           ],
         ),
@@ -987,12 +1968,15 @@ class EducationQualificationView extends StatelessWidget {
                     ],
                   ),
                 ),
-                InkWell(
-                  onTap: () => _showAddEductionBottomSheet(context),
-                  child: Image.asset(
-                    AppAssets.icAdd,
-                    width: 22.setWidth,
-                    height: 22.setHeight,
+                IgnorePointer(
+                  ignoring: true,
+                  child: InkWell(
+                    onTap: () => _showAddEductionBottomSheet(context),
+                    child: Image.asset(
+                      AppAssets.icAdd,
+                      width: 22.setWidth,
+                      height: 22.setHeight,
+                    ),
                   ),
                 ),
               ],
@@ -1222,6 +2206,7 @@ class EducationQualificationView extends StatelessWidget {
 
 class TechnicalSkillCardView extends StatelessWidget {
   final ProfileDetails profileDetails;
+
   const TechnicalSkillCardView({super.key, required this.profileDetails});
 
   @override
@@ -1237,7 +2222,7 @@ class TechnicalSkillCardView extends StatelessWidget {
             BoxShadow(
               blurRadius: 20,
               spreadRadius: 0,
-              color: CustomAppColor.of(context).black..withOpacityPercent(.08),
+              color: CustomAppColor.of(context).black.withOpacityPercent(.08),
             ),
           ],
         ),
@@ -1264,12 +2249,15 @@ class TechnicalSkillCardView extends StatelessWidget {
                     ],
                   ),
                 ),
-                InkWell(
-                  onTap: () => _showTechnicalSkillBottomSheet(context),
-                  child: Image.asset(
-                    AppAssets.icUpdate,
-                    width: 22.setWidth,
-                    height: 22.setHeight,
+                IgnorePointer(
+                  ignoring: true,
+                  child: InkWell(
+                    onTap: () => _showTechnicalSkillBottomSheet(context),
+                    child: Image.asset(
+                      AppAssets.icUpdate,
+                      width: 22.setWidth,
+                      height: 22.setHeight,
+                    ),
                   ),
                 ),
               ],
@@ -1389,8 +2377,7 @@ class TechnicalSkillCardView extends StatelessWidget {
                 },
                 child: Container(
                   padding: EdgeInsets.symmetric(vertical: 10.setHeight, horizontal: 24.setWidth),
-                  decoration:
-                      BoxDecoration(border: Border.all(color: CustomAppColor.of(context).icPrimary), borderRadius: BorderRadius.circular(100)),
+                  decoration: BoxDecoration(border: Border.all(color: CustomAppColor.of(context).icPrimary), borderRadius: BorderRadius.circular(100)),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -1486,6 +2473,7 @@ class TechnicalSkillCardView extends StatelessWidget {
 
 class LanguageCardView extends StatelessWidget {
   final ProfileDetails profileDetails;
+
   const LanguageCardView({super.key, required this.profileDetails});
 
   @override
@@ -1502,7 +2490,7 @@ class LanguageCardView extends StatelessWidget {
               offset: const Offset(0, 4),
               blurRadius: 20,
               spreadRadius: 0,
-              color: CustomAppColor.of(context).black..withOpacityPercent(.08),
+              color: CustomAppColor.of(context).black.withOpacityPercent(.08),
             ),
           ],
         ),
@@ -1529,12 +2517,15 @@ class LanguageCardView extends StatelessWidget {
                     ],
                   ),
                 ),
-                InkWell(
-                  onTap: () => _showLanguageBottomSheet(context),
-                  child: Image.asset(
-                    AppAssets.icUpdate,
-                    width: 22.setWidth,
-                    height: 22.setHeight,
+                IgnorePointer(
+                  ignoring: true,
+                  child: InkWell(
+                    onTap: () => _showLanguageBottomSheet(context),
+                    child: Image.asset(
+                      AppAssets.icUpdate,
+                      width: 22.setWidth,
+                      height: 22.setHeight,
+                    ),
                   ),
                 ),
               ],
@@ -1654,8 +2645,7 @@ class LanguageCardView extends StatelessWidget {
                 },
                 child: Container(
                   padding: EdgeInsets.symmetric(vertical: 10.setHeight, horizontal: 24.setWidth),
-                  decoration:
-                      BoxDecoration(border: Border.all(color: CustomAppColor.of(context).icPrimary), borderRadius: BorderRadius.circular(100)),
+                  decoration: BoxDecoration(border: Border.all(color: CustomAppColor.of(context).icPrimary), borderRadius: BorderRadius.circular(100)),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -1766,7 +2756,7 @@ class MyResumeCvCardView extends StatelessWidget {
               offset: const Offset(0, 4),
               blurRadius: 20,
               spreadRadius: 0,
-              color: CustomAppColor.of(context).black..withOpacityPercent(.08),
+              color: CustomAppColor.of(context).black.withOpacityPercent(.08),
             ),
           ],
         ),
@@ -1793,12 +2783,15 @@ class MyResumeCvCardView extends StatelessWidget {
                     ],
                   ),
                 ),
-                InkWell(
-                  onTap: () => _showLogoutBottomSheet(context),
-                  child: Image.asset(
-                    AppAssets.icAdd,
-                    width: 22.setWidth,
-                    height: 22.setHeight,
+                IgnorePointer(
+                  ignoring: true,
+                  child: InkWell(
+                    onTap: () => _showLogoutBottomSheet(context),
+                    child: Image.asset(
+                      AppAssets.icAdd,
+                      width: 22.setWidth,
+                      height: 22.setHeight,
+                    ),
                   ),
                 ),
               ],
@@ -1949,49 +2942,53 @@ class MyResumeCvCardView extends StatelessWidget {
 class _ContinueButtonView extends StatelessWidget {
   final String firstButtonText;
   final String secondButtonText;
+
   const _ContinueButtonView({required this.firstButtonText, required this.secondButtonText});
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        color: CustomAppColor.of(context).bgScreenWhite,
-        boxShadow: [
-          BoxShadow(
-            offset: const Offset(0, 4),
-            blurRadius: 20,
-            spreadRadius: 0,
-            color: CustomAppColor.of(context).black..withOpacityPercent(.08),
-          ),
-        ],
-      ),
-      padding: EdgeInsets.only(left: 25.setWidth, right: 25.setWidth, bottom: 10.setHeight, top: 15.setHeight),
-      child: SafeArea(
-        top: false,
-        child: Row(
-          children: [
-            Expanded(
-              child: CommonOutlineButton(
-                height: 50.setHeight,
-                text: firstButtonText,
-                buttonBorderColor: CustomAppColor.of(context).secondary,
-                buttonTextColor: CustomAppColor.of(context).txtSecondary,
-                buttonColor: CustomAppColor.of(context).bgScreenWhite,
-                onTap: () => Navigator.pop(context),
-              ),
-            ),
-            SizedBox(width: 15.setHeight),
-            Expanded(
-              child: CommonButton(
-                height: 50.setHeight,
-                text: secondButtonText,
-                buttonTextSize: 18.setFontSize,
-                buttonTextWeight: FontWeight.w500,
-                buttonColor: CustomAppColor.of(context).txtSecondary,
-                onTap: () => Navigator.pop(context),
-              ),
+    return IgnorePointer(
+      ignoring: true,
+      child: Container(
+        decoration: BoxDecoration(
+          color: CustomAppColor.of(context).bgScreenWhite,
+          boxShadow: [
+            BoxShadow(
+              offset: const Offset(0, 4),
+              blurRadius: 20,
+              spreadRadius: 0,
+              color: CustomAppColor.of(context).black.withOpacityPercent(.08),
             ),
           ],
+        ),
+        padding: EdgeInsets.only(left: 25.setWidth, right: 25.setWidth, bottom: 10.setHeight, top: 15.setHeight),
+        child: SafeArea(
+          top: false,
+          child: Row(
+            children: [
+              Expanded(
+                child: CommonOutlineButton(
+                  height: 50.setHeight,
+                  text: firstButtonText,
+                  buttonBorderColor: CustomAppColor.of(context).secondary,
+                  buttonTextColor: CustomAppColor.of(context).txtSecondary,
+                  buttonColor: CustomAppColor.of(context).bgScreenWhite,
+                  onTap: () => Navigator.pop(context),
+                ),
+              ),
+              SizedBox(width: 15.setHeight),
+              Expanded(
+                child: CommonButton(
+                  height: 50.setHeight,
+                  text: secondButtonText,
+                  buttonTextSize: 18.setFontSize,
+                  buttonTextWeight: FontWeight.w500,
+                  buttonColor: CustomAppColor.of(context).txtSecondary,
+                  onTap: () => Navigator.pop(context),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

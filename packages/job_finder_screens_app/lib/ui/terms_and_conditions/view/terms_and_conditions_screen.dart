@@ -69,8 +69,7 @@ class _TermsAndConditionsScreenState extends State<TermsAndConditionsScreen> imp
               child: Column(
                 children: [
                   CommonText(
-                    text:
-                        "Please read this Terms and Conditions it to make a type specimen book. It has been survived not only five steps centuries, but also the leap into electronic typesetting, remaining essentially.",
+                    text: "Please read this Terms and Conditions it to make a type specimen book. It has been survived not only five steps centuries, but also the leap into electronic typesetting, remaining essentially.",
                     fontWeight: FontWeight.w400,
                     maxLines: 60,
                     textColor: CustomAppColor.of(context).txtGrey,
@@ -163,7 +162,7 @@ class _ContinueButtonView extends StatelessWidget {
             offset: const Offset(0, 4),
             blurRadius: 20,
             spreadRadius: 0,
-            color: CustomAppColor.of(context).black..withOpacityPercent(.08),
+            color: CustomAppColor.of(context).black.withOpacityPercent(.08),
           ),
         ],
       ),

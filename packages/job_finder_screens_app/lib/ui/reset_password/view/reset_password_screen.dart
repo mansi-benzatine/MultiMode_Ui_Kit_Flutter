@@ -174,7 +174,7 @@ class _SendCodeButtonView extends StatelessWidget {
             offset: const Offset(0, 4),
             blurRadius: 20,
             spreadRadius: 0,
-            color: CustomAppColor.of(context).black..withOpacityPercent(.08),
+            color: CustomAppColor.of(context).black.withOpacityPercent(.08),
           ),
         ],
       ),

@@ -66,8 +66,8 @@ class IncomingCallView extends StatelessWidget {
                 begin: Alignment.bottomCenter,
                 end: Alignment.topCenter,
                 colors: [
-                  Colors.black..withOpacityPercent(0.9),
-                  Colors.black..withOpacityPercent(0.0),
+                  Colors.black.withOpacityPercent(0.9),
+                  Colors.black.withOpacityPercent(0.0),
                 ],
               ),
             ),
@@ -112,7 +112,7 @@ class IncomingCallView extends StatelessWidget {
                 alignment: Alignment.center,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(12),
-                  color: CustomAppColor.of(context).white..withOpacityPercent(0.3),
+                  color: CustomAppColor.of(context).white.withOpacityPercent(0.3),
                 ),
                 child: CommonText(
                   text: "00:21:45",

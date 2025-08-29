@@ -97,8 +97,7 @@ class CustomAppColor {
   }
 
   Color get containerGrey {
-    return (Theme.of(context).brightness == Brightness.light) ? const Color(0xFFE1E1E1) : const Color(0xFFFFFFFF)
-      ..withOpacityPercent(0.15);
+    return (Theme.of(context).brightness == Brightness.light) ? const Color(0xFFE1E1E1) : const Color(0xFFFFFFFF).withOpacityPercent(0.15);
   }
 
   Color get containerLightBlue {
@@ -158,8 +157,7 @@ class CustomAppColor {
   }
 
   Color get bgContainerPrimaryShadow {
-    return (Theme.of(context).brightness == Brightness.light) ? const Color(0xFFFE8280).withOpacityPercent(0.2) : const Color(0xFFFE8280)
-      ..withOpacityPercent(0.2);
+    return (Theme.of(context).brightness == Brightness.light) ? const Color(0xFFFE8280).withOpacityPercent(0.2) : const Color(0xFFFE8280).withOpacityPercent(0.2);
   }
 
   Color get bgTextFormField {
@@ -179,8 +177,7 @@ class CustomAppColor {
   }
 
   Color get borderWhite {
-    return (Theme.of(context).brightness == Brightness.light) ? const Color(0xFFFFFFFF) : const Color(0xFFFFFFFF)
-      ..withOpacityPercent(0.15);
+    return (Theme.of(context).brightness == Brightness.light) ? const Color(0xFFFFFFFF) : const Color(0xFFFFFFFF).withOpacityPercent(0.15);
   }
 
   Color get txtGreyWhite {
@@ -220,8 +217,7 @@ class CustomAppColor {
   }
 
   Color get greyHandle {
-    return (Theme.of(context).brightness == Brightness.light) ? const Color(0xff000000).withOpacityPercent(0.10) : const Color(0xFFFFFFFF)
-      ..withOpacityPercent(0.14);
+    return (Theme.of(context).brightness == Brightness.light) ? const Color(0xff000000).withOpacityPercent(0.10) : const Color(0xFFFFFFFF).withOpacityPercent(0.14);
   }
 
   Color get listTileColorScreenList {

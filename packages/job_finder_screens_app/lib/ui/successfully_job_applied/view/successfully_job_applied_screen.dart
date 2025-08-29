@@ -50,15 +50,7 @@ class _SuccessfullyJobAppliedScreenState extends State<SuccessfullyJobAppliedScr
               alignment: Alignment.bottomCenter,
               child: _ContinueButtonView(
                 onTap: () => Navigator.pushAndRemoveUntil(
-                    context,
-                    DashboardScreen.route(
-                        isFromEmptyMessage: false,
-                        isFromHome: false,
-                        isFromApplication: false,
-                        isFromMessage: false,
-                        isFromProfile: false,
-                        isFromSavedJobs: false),
-                    (route) => false),
+                    context, DashboardScreen.route(isFromEmptyMessage: false, isFromHome: false, isFromApplication: false, isFromMessage: false, isFromProfile: false, isFromSavedJobs: false), (route) => false),
               ),
             ),
           )
@@ -125,7 +117,7 @@ class _ContinueButtonView extends StatelessWidget {
             offset: const Offset(0, 4),
             blurRadius: 20,
             spreadRadius: 0,
-            color: CustomAppColor.of(context).black..withOpacityPercent(.08),
+            color: CustomAppColor.of(context).black.withOpacityPercent(.08),
           ),
         ],
       ),

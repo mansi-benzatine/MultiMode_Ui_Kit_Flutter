@@ -192,7 +192,7 @@ class _InputFieldsView extends StatelessWidget {
                           color: CustomAppColor.of(context).bgWhiteSecondary,
                           borderRadius: BorderRadius.circular(10),
                           border: Border.all(
-                            color: CustomAppColor.of(context).black..withOpacityPercent(0.08),
+                            color: CustomAppColor.of(context).black.withOpacityPercent(0.08),
                           ),
                         ),
                         padding: EdgeInsets.symmetric(horizontal: 15.setWidth, vertical: 12.setHeight),
@@ -228,7 +228,7 @@ class _InputFieldsView extends StatelessWidget {
                           color: CustomAppColor.of(context).bgWhiteSecondary,
                           borderRadius: BorderRadius.circular(10),
                           border: Border.all(
-                            color: CustomAppColor.of(context).black..withOpacityPercent(0.08),
+                            color: CustomAppColor.of(context).black.withOpacityPercent(0.08),
                           ),
                         ),
                         padding: EdgeInsets.symmetric(horizontal: 15.setWidth, vertical: 12.setHeight),
@@ -286,7 +286,7 @@ class _ContinueButtonView extends StatelessWidget {
             offset: const Offset(0, 4),
             blurRadius: 20,
             spreadRadius: 0,
-            color: CustomAppColor.of(context).black..withOpacityPercent(.08),
+            color: CustomAppColor.of(context).black.withOpacityPercent(.08),
           ),
         ],
       ),
