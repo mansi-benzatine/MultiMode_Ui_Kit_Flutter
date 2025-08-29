@@ -14,13 +14,18 @@ class ChatAiDashboardScreen extends StatefulWidget {
   final bool isFromHistory;
   final bool isFromProfile;
   final bool isFromEmptyHistoryScreen;
+  final bool isForLogoutScreen;
+  final int currentIndexInHistory;
+
   const ChatAiDashboardScreen(
       {super.key,
       required this.isFromHomeScreen,
       required this.isFromExplore,
       required this.isFromHistory,
       required this.isFromProfile,
-      required this.isFromEmptyHistoryScreen});
+      required this.isFromEmptyHistoryScreen,
+      this.currentIndexInHistory = 0,
+      this.isForLogoutScreen = false});
 
   static Route<void> route({
     required bool isFromHomeScreen,
@@ -28,6 +33,8 @@ class ChatAiDashboardScreen extends StatefulWidget {
     required bool isFromHistory,
     required bool isFromProfile,
     required bool isFromEmptyHistoryScreen,
+    int currentIndexInHistory = 0,
+    bool isForLogoutBs = false,
   }) {
     return MaterialPageRoute<void>(
         builder: (_) => ChatAiDashboardScreen(
@@ -36,6 +43,8 @@ class ChatAiDashboardScreen extends StatefulWidget {
               isFromExplore: isFromExplore,
               isFromHistory: isFromHistory,
               isFromEmptyHistoryScreen: isFromEmptyHistoryScreen,
+              currentIndexInHistory: currentIndexInHistory,
+              isForLogoutScreen: isForLogoutBs,
             ));
   }
 
@@ -46,12 +55,14 @@ class ChatAiDashboardScreen extends StatefulWidget {
 class _ChatAiDashboardScreenState extends State<ChatAiDashboardScreen> {
   late PageController _pageController;
   final ValueNotifier<int> _currentIndex = ValueNotifier<int>(0);
+  int currentIndex = 0;
+
   @override
   void initState() {
     super.initState();
 
     int initialIndex = 0;
-
+    currentIndex = widget.currentIndexInHistory;
     if (widget.isFromExplore) {
       initialIndex = 1;
     } else if (widget.isFromHistory) {
@@ -72,8 +83,13 @@ class _ChatAiDashboardScreenState extends State<ChatAiDashboardScreen> {
         selectedIndex: _currentIndex,
         pageController: _pageController,
         isFromHistoryEmpty: widget.isFromEmptyHistoryScreen,
+        currentIndex: currentIndex,
+        isLogoutBs: widget.isForLogoutScreen,
       ),
-      bottomNavigationBar: _BottomBarView(selectedIndex: _currentIndex, pageController: _pageController),
+      bottomNavigationBar: _BottomBarView(
+        selectedIndex: _currentIndex,
+        pageController: _pageController,
+      ),
     );
   }
 }
@@ -82,8 +98,16 @@ class _DashboardPagesView extends StatelessWidget {
   final ValueNotifier<int> selectedIndex;
   final PageController pageController;
   final bool isFromHistoryEmpty;
+  final bool isLogoutBs;
+  final int currentIndex;
 
-  const _DashboardPagesView({required this.selectedIndex, required this.pageController, required this.isFromHistoryEmpty});
+  const _DashboardPagesView({
+    required this.selectedIndex,
+    required this.pageController,
+    required this.isFromHistoryEmpty,
+    this.currentIndex = 0,
+    this.isLogoutBs = false,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -97,8 +121,11 @@ class _DashboardPagesView extends StatelessWidget {
         children: [
           HomeScreen(pageController: pageController),
           const ToolsScreen(),
-          HistoryScreen(isFromEmptyHistory: isFromHistoryEmpty),
-          const ProfileScreen(),
+          HistoryScreen(
+            isFromEmptyHistory: isFromHistoryEmpty,
+            currentIndex: currentIndex,
+          ),
+          ProfileScreen(isForLogoutBs: isLogoutBs),
         ],
       ),
     );
@@ -132,18 +159,10 @@ class _BottomBarView extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  _itemBottomBar(
-                      context: context, index: 0, image: selectedIndex.value == 0 ? AppAssets.icBottomFilledHome : AppAssets.icBottomUnFilledHome),
-                  _itemBottomBar(
-                      context: context, index: 1, image: selectedIndex.value == 1 ? AppAssets.icBottomFilledTools : AppAssets.icBottomUnFilledTools),
-                  _itemBottomBar(
-                      context: context,
-                      index: 2,
-                      image: selectedIndex.value == 2 ? AppAssets.icBottomFilledHistory : AppAssets.icBottomUnFilledHistory),
-                  _itemBottomBar(
-                      context: context,
-                      index: 3,
-                      image: selectedIndex.value == 3 ? AppAssets.icBottomFilledProfile : AppAssets.icBottomUnFilledProfile),
+                  _itemBottomBar(context: context, index: 0, image: selectedIndex.value == 0 ? AppAssets.icBottomFilledHome : AppAssets.icBottomUnFilledHome),
+                  _itemBottomBar(context: context, index: 1, image: selectedIndex.value == 1 ? AppAssets.icBottomFilledTools : AppAssets.icBottomUnFilledTools),
+                  _itemBottomBar(context: context, index: 2, image: selectedIndex.value == 2 ? AppAssets.icBottomFilledHistory : AppAssets.icBottomUnFilledHistory),
+                  _itemBottomBar(context: context, index: 3, image: selectedIndex.value == 3 ? AppAssets.icBottomFilledProfile : AppAssets.icBottomUnFilledProfile),
                 ],
               ),
             );

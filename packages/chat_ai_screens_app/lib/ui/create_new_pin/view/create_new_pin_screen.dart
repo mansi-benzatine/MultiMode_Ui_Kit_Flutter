@@ -14,10 +14,11 @@ import '../../../widgets/otp_field/otp_field_style.dart';
 import '../../../widgets/text/common_text.dart';
 
 class CreateNewPinScreen extends StatefulWidget {
-  const CreateNewPinScreen({super.key});
+  final bool isShowAlert;
+  const CreateNewPinScreen({super.key, this.isShowAlert = false});
 
-  static Route<void> route() {
-    return MaterialPageRoute<void>(builder: (_) => const CreateNewPinScreen());
+  static Route<void> route({bool isShowAlert = false}) {
+    return MaterialPageRoute<void>(builder: (_) => CreateNewPinScreen(isShowAlert: isShowAlert));
   }
 
   @override
@@ -25,38 +26,101 @@ class CreateNewPinScreen extends StatefulWidget {
 }
 
 class _CreateNewPinScreenState extends State<CreateNewPinScreen> {
+  bool _isDialogOpen = false;
+  void _showResetAlertDialog() {
+    setState(() {
+      _isDialogOpen = true;
+    });
+    showDialog(
+      barrierDismissible: false,
+      context: context,
+      builder: (_) {
+        return CommonDialog(
+          titleText: CommonText(
+            text: Languages.of(context).txtCongratulations,
+            fontWeight: FontWeight.bold,
+            fontSize: 24.setFontSize,
+            textColor: CustomAppColor.of(context).txtBlack,
+          ),
+          descriptionText: CommonText(
+            text: Languages.of(context).txtLoremIpsumDesc,
+            fontSize: 14.setFontSize,
+            fontWeight: FontWeight.w400,
+            textColor: CustomAppColor.of(context).txtBlack,
+          ),
+          icon: Image.asset(
+            AppAssets.icCongratulation,
+            height: 110.setHeight,
+          ),
+          showLoader: true,
+        );
+      },
+    ).then((_) {
+      if (_isDialogOpen) {
+        print('LogoutDialog dismissed: Popping MyProfileScreen');
+        setState(() {
+          _isDialogOpen = false;
+        });
+        Navigator.of(context).pop();
+      }
+    });
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    if(widget.isShowAlert){
+      WidgetsBinding.instance.addPostFrameCallback((_){
+        _showResetAlertDialog();
+      });
+    }
+  }
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: CustomAppColor.of(context).bgScreen,
-      body: SafeArea(
-        child: SingleChildScrollView(
-          physics: const ClampingScrollPhysics(),
-          child: Padding(
-            padding: EdgeInsets.symmetric(vertical: 10.setHeight),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 20.setHeight),
-                  child: IgnorePointer(
-                    ignoring: true,
-                    child: InkWell(
-                      onTap: () => Navigator.of(context).pop(),
-                      child: Image.asset(
-                        AppAssets.icBack,
-                        width: 24.setHeight,
-                        height: 24.setHeight,
-                        gaplessPlayback: true,
+    return PopScope(
+      canPop: !_isDialogOpen,
+      onPopInvokedWithResult: (didPop, result) {
+        if (!didPop && _isDialogOpen) {
+          print('PopScope: System back button pressed, isDialogOpen=$_isDialogOpen');
+          Navigator.of(context).pop(); // Pop the dialog
+          setState(() {
+            _isDialogOpen = false;
+          });
+          Navigator.of(context).pop(); // Pop MyProfileScreen
+        }
+      },
+      child: Scaffold(
+        backgroundColor: CustomAppColor.of(context).bgScreen,
+        body: SafeArea(
+          child: SingleChildScrollView(
+            physics: const ClampingScrollPhysics(),
+            child: Padding(
+              padding: EdgeInsets.symmetric(vertical: 10.setHeight),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 20.setHeight),
+                    child: IgnorePointer(
+                      ignoring: true,
+                      child: InkWell(
+                        onTap: () => Navigator.of(context).pop(),
+                        child: Image.asset(
+                          AppAssets.icBack,
+                          width: 24.setHeight,
+                          height: 24.setHeight,
+                          gaplessPlayback: true,
+                        ),
                       ),
                     ),
                   ),
-                ),
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 22.setHeight),
-                  child: const _CreateNewPinViewView(),
-                ),
-              ],
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 22.setHeight),
+                    child: const _CreateNewPinViewView(),
+                  ),
+                ],
+              ),
             ),
           ),
         ),
@@ -115,12 +179,7 @@ class _CreateNewPinViewViewState extends State<_CreateNewPinViewView> {
             focusBorderColor: CustomAppColor.of(context).primary,
             backgroundColor: CustomAppColor.of(context).transparent,
           ),
-          style: TextStyle(
-              color: CustomAppColor.of(context).primary,
-              fontSize: 32.setFontSize,
-              fontWeight: FontWeight.w800,
-              fontFamily: Constant.fontFamily,
-              height: 1),
+          style: TextStyle(color: CustomAppColor.of(context).primary, fontSize: 32.setFontSize, fontWeight: FontWeight.w800, fontFamily: Constant.fontFamily, height: 1),
           onChanged: (pin) {
             setState(() {
               currentPin = pin;

@@ -12,10 +12,14 @@ import '../../../widgets/top_bar/topbar.dart';
 import '../datamodel/help_center_data.dart';
 
 class HelpCenterScreen extends StatefulWidget {
-  const HelpCenterScreen({super.key});
+  final int currentIndex;
+  const HelpCenterScreen({super.key, this.currentIndex = 0});
 
-  static Route<void> route() {
-    return MaterialPageRoute<void>(builder: (_) => const HelpCenterScreen());
+  static Route<void> route({int currentIndex = 0}) {
+    return MaterialPageRoute<void>(
+        builder: (_) => HelpCenterScreen(
+              currentIndex: currentIndex,
+            ));
   }
 
   @override
@@ -24,13 +28,15 @@ class HelpCenterScreen extends StatefulWidget {
 
 class _HelpCenterScreenState extends State<HelpCenterScreen> with TickerProviderStateMixin implements TopBarClickListener {
   late TabController tabController;
-  final ValueNotifier<int> _currentTabIndex = ValueNotifier<int>(0);
+  late ValueNotifier<int> _currentTabIndex;
 
   @override
   void initState() {
     super.initState();
 
-    tabController = TabController(length: 2, vsync: this, initialIndex: 0);
+    tabController = TabController(length: 2, vsync: this, initialIndex: widget.currentIndex);
+
+    _currentTabIndex = ValueNotifier(widget.currentIndex);
   }
 
   @override
@@ -83,57 +89,60 @@ class _TabBarView extends StatelessWidget {
                   right: 15.setHeight,
                   top: 15.setHeight,
                 ),
-                child: TabBar(
-                  controller: tabController,
-                  padding: EdgeInsets.zero,
-                  dividerHeight: 0,
-                  splashBorderRadius: BorderRadius.circular(500),
-                  indicatorPadding: EdgeInsets.zero,
-                  labelPadding: EdgeInsets.zero,
-                  indicatorSize: TabBarIndicatorSize.tab,
-                  indicatorColor: CustomAppColor.of(context).transparent,
-                  physics: const NeverScrollableScrollPhysics(),
-                  onTap: (int i) {
-                    currentTabIndex.value = i;
-                  },
-                  tabs: [
-                    Container(
-                      height: 50.setHeight,
-                      width: 0.screenWidth,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(500),
-                        color: (value == 0) ? CustomAppColor.of(context).primary : CustomAppColor.of(context).unSelectedTabColor,
-                      ),
-                      margin: EdgeInsets.only(right: 8.setWidth),
-                      child: Tab(
+                child: IgnorePointer(
+                  ignoring: true,
+                  child: TabBar(
+                    controller: tabController,
+                    padding: EdgeInsets.zero,
+                    dividerHeight: 0,
+                    splashBorderRadius: BorderRadius.circular(500),
+                    indicatorPadding: EdgeInsets.zero,
+                    labelPadding: EdgeInsets.zero,
+                    indicatorSize: TabBarIndicatorSize.tab,
+                    indicatorColor: CustomAppColor.of(context).transparent,
+                    physics: const NeverScrollableScrollPhysics(),
+                    onTap: (int i) {
+                      currentTabIndex.value = i;
+                    },
+                    tabs: [
+                      Container(
                         height: 50.setHeight,
-                        child: CommonText(
-                          text: Languages.of(context).txtFaq,
-                          fontWeight: (value == 0) ? FontWeight.w600 : FontWeight.w700,
-                          fontSize: 18.setFontSize,
-                          textColor: (value == 0) ? CustomAppColor.of(context).black : CustomAppColor.of(context).txtBlack,
+                        width: 0.screenWidth,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(500),
+                          color: (value == 0) ? CustomAppColor.of(context).primary : CustomAppColor.of(context).unSelectedTabColor,
+                        ),
+                        margin: EdgeInsets.only(right: 8.setWidth),
+                        child: Tab(
+                          height: 50.setHeight,
+                          child: CommonText(
+                            text: Languages.of(context).txtFaq,
+                            fontWeight: (value == 0) ? FontWeight.w600 : FontWeight.w700,
+                            fontSize: 18.setFontSize,
+                            textColor: (value == 0) ? CustomAppColor.of(context).black : CustomAppColor.of(context).txtBlack,
+                          ),
                         ),
                       ),
-                    ),
-                    Container(
-                      height: 50.setHeight,
-                      width: 0.screenWidth,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(500),
-                        color: (value == 1) ? CustomAppColor.of(context).primary : CustomAppColor.of(context).unSelectedTabColor,
-                      ),
-                      margin: EdgeInsets.only(left: 8.setWidth),
-                      child: Tab(
+                      Container(
                         height: 50.setHeight,
-                        child: CommonText(
-                          text: Languages.of(context).txtContactUs,
-                          fontWeight: (value == 1) ? FontWeight.w600 : FontWeight.w700,
-                          fontSize: 18.setFontSize,
-                          textColor: (value == 1) ? CustomAppColor.of(context).black : CustomAppColor.of(context).txtBlack,
+                        width: 0.screenWidth,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(500),
+                          color: (value == 1) ? CustomAppColor.of(context).primary : CustomAppColor.of(context).unSelectedTabColor,
+                        ),
+                        margin: EdgeInsets.only(left: 8.setWidth),
+                        child: Tab(
+                          height: 50.setHeight,
+                          child: CommonText(
+                            text: Languages.of(context).txtContactUs,
+                            fontWeight: (value == 1) ? FontWeight.w600 : FontWeight.w700,
+                            fontSize: 18.setFontSize,
+                            textColor: (value == 1) ? CustomAppColor.of(context).black : CustomAppColor.of(context).txtBlack,
+                          ),
                         ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               );
             },

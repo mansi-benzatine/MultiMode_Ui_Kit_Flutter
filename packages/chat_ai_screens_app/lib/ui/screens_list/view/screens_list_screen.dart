@@ -84,7 +84,7 @@ class _ChatAiScreenListScreen extends State<ChatAiScreenListScreen> {
         onClick: () => Navigator.push(context, SignInScreen.route()),
       ),
       ScreenListDataModel(
-        title: "Sign up",
+        title: "Sign Up",
         icon: AppAssets.icScreen,
         onClick: () => Navigator.push(context, SignUpScreen.route()),
       ),
@@ -94,7 +94,7 @@ class _ChatAiScreenListScreen extends State<ChatAiScreenListScreen> {
         onClick: () => Navigator.push(context, ForgotPasswordScreen.route()),
       ),
       ScreenListDataModel(
-        title: "Enter otp",
+        title: "Enter Otp",
         icon: AppAssets.icScreen,
         onClick: () => Navigator.push(context, ForgotPasswordOtpScreen.route()),
       ),
@@ -102,6 +102,11 @@ class _ChatAiScreenListScreen extends State<ChatAiScreenListScreen> {
         title: "Reset Password",
         icon: AppAssets.icScreen,
         onClick: () => Navigator.push(context, ResetPasswordScreen.route()),
+      ),
+      ScreenListDataModel(
+        title: "Reset Password Successfully",
+        icon: AppAssets.icScreen,
+        onClick: () => Navigator.push(context, ResetPasswordScreen.route(isShownAlert: true)),
       ),
       ScreenListDataModel(
         title: "Create Profile",
@@ -112,6 +117,11 @@ class _ChatAiScreenListScreen extends State<ChatAiScreenListScreen> {
         title: "Create New Pin",
         icon: AppAssets.icScreen,
         onClick: () => Navigator.push(context, CreateNewPinScreen.route()),
+      ),
+      ScreenListDataModel(
+        title: "Profile Created Successfully",
+        icon: AppAssets.icScreen,
+        onClick: () => Navigator.push(context, CreateNewPinScreen.route(isShowAlert: true)),
       ),
       ScreenListDataModel(
         title: "Home",
@@ -133,6 +143,21 @@ class _ChatAiScreenListScreen extends State<ChatAiScreenListScreen> {
               isNewChat: false,
               chatTitle: "How can i help you today?",
             )),
+      ),
+      ScreenListDataModel(
+        title: "Rename Chat",
+        icon: AppAssets.icScreen,
+        onClick: () => Navigator.push(context, ChatScreen.route(isFromEmptyChatScreen: false, isNewChat: false, chatTitle: "How can i help you today?", isRenameChatBs: true)),
+      ),
+      ScreenListDataModel(
+        title: "Clear Chat",
+        icon: AppAssets.icScreen,
+        onClick: () => Navigator.push(context, ChatScreen.route(isFromEmptyChatScreen: false, isNewChat: false, chatTitle: "How can i help you today?", isClearChatBs: true)),
+      ),
+      ScreenListDataModel(
+        title: "Share Chat",
+        icon: AppAssets.icScreen,
+        onClick: () => Navigator.push(context, ChatScreen.route(isFromEmptyChatScreen: false, isNewChat: false, chatTitle: "How can i help you today?", isShareChatBs: true)),
       ),
       ScreenListDataModel(
         title: "Empty Chat",
@@ -264,14 +289,42 @@ class _ChatAiScreenListScreen extends State<ChatAiScreenListScreen> {
             )),
       ),
       ScreenListDataModel(
-        title: "History",
+        title: "All History",
         icon: AppAssets.icScreen,
-        onClick: () => Navigator.push(context, ChatAiDashboardScreen.route(isFromHomeScreen: false, isFromHistory: true, isFromExplore: false, isFromProfile: false, isFromEmptyHistoryScreen: false)),
+        onClick: () => Navigator.push(
+            context,
+            ChatAiDashboardScreen.route(
+              isFromHomeScreen: false,
+              isFromHistory: true,
+              isFromExplore: false,
+              isFromProfile: false,
+              isFromEmptyHistoryScreen: false,
+              currentIndexInHistory: 0,
+            )),
+      ),
+      ScreenListDataModel(
+        title: "Recent History",
+        icon: AppAssets.icScreen,
+        onClick: () => Navigator.push(
+            context,
+            ChatAiDashboardScreen.route(
+              isFromHomeScreen: false,
+              isFromHistory: true,
+              isFromExplore: false,
+              isFromProfile: false,
+              isFromEmptyHistoryScreen: false,
+              currentIndexInHistory: 1,
+            )),
       ),
       ScreenListDataModel(
         title: "Search",
         icon: AppAssets.icScreen,
         onClick: () => Navigator.push(context, SearchScreen.route()),
+      ),
+      ScreenListDataModel(
+        title: "Empty Search Screen",
+        icon: AppAssets.icScreen,
+        onClick: () => Navigator.push(context, SearchScreen.route(isEmptySearch: true)),
       ),
       ScreenListDataModel(
         title: "Profile",
@@ -299,6 +352,11 @@ class _ChatAiScreenListScreen extends State<ChatAiScreenListScreen> {
         onClick: () => Navigator.push(context, ReviewSummaryScreen.route()),
       ),
       ScreenListDataModel(
+        title: "Upgrade Plan Successfully",
+        icon: AppAssets.icScreen,
+        onClick: () => Navigator.push(context, ReviewSummaryScreen.route(isAlertShow: true)),
+      ),
+      ScreenListDataModel(
         title: "Edit Profile",
         icon: AppAssets.icScreen,
         onClick: () => Navigator.push(context, EditProfileScreen.route()),
@@ -324,9 +382,28 @@ class _ChatAiScreenListScreen extends State<ChatAiScreenListScreen> {
         onClick: () => Navigator.push(context, PrivacyPolicyScreen.route()),
       ),
       ScreenListDataModel(
-        title: "Help Center",
+        title: "Help Center : FAQ",
         icon: AppAssets.icScreen,
-        onClick: () => Navigator.push(context, HelpCenterScreen.route()),
+        onClick: () => Navigator.push(context, HelpCenterScreen.route(currentIndex: 0)),
+      ),
+      ScreenListDataModel(
+        title: "Help Center : Contact Us",
+        icon: AppAssets.icScreen,
+        onClick: () => Navigator.push(context, HelpCenterScreen.route(currentIndex: 1)),
+      ),
+      ScreenListDataModel(
+        title: "Logout",
+        icon: AppAssets.icScreen,
+        onClick: () => Navigator.push(
+            context,
+            ChatAiDashboardScreen.route(
+              isFromHomeScreen: false,
+              isFromHistory: false,
+              isFromExplore: false,
+              isFromProfile: true,
+              isFromEmptyHistoryScreen: false,
+              isForLogoutBs: true,
+            )),
       ),
     ];
   }

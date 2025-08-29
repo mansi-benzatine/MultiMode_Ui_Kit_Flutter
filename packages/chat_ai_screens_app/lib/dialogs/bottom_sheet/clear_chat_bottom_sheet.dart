@@ -16,41 +16,46 @@ class ClearChatBottomSheet extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        SizedBox(height: 25.setHeight),
-        CommonText(
-          text: Languages.of(context).txtAreYouSureYouWantToClearChat,
-          fontWeight: FontWeight.w500,
-          fontSize: 15.setFontSize,
-          textColor: CustomAppColor.of(context).txtBlack,
-        ),
-        SizedBox(height: 30.setHeight),
-        Row(
-          children: [
-            Expanded(
-              child: CommonButton(
-                buttonColor: CustomAppColor.of(context).unSelectedTabColor,
-                text: Languages.of(context).txtCancel,
-                buttonTextColor: CustomAppColor.of(context).txtBlack,
-                onTap: () {
-                  Navigator.pop(context);
-                },
-              ),
+    return SafeArea(
+      child: Column(
+        children: [
+          SizedBox(height: 25.setHeight),
+          CommonText(
+            text: Languages.of(context).txtAreYouSureYouWantToClearChat,
+            fontWeight: FontWeight.w500,
+            fontSize: 15.setFontSize,
+            textColor: CustomAppColor.of(context).txtBlack,
+          ),
+          SizedBox(height: 30.setHeight),
+          IgnorePointer(
+            ignoring: true,
+            child: Row(
+              children: [
+                Expanded(
+                  child: CommonButton(
+                    buttonColor: CustomAppColor.of(context).unSelectedTabColor,
+                    text: Languages.of(context).txtCancel,
+                    buttonTextColor: CustomAppColor.of(context).txtBlack,
+                    onTap: () {
+                      Navigator.pop(context);
+                    },
+                  ),
+                ),
+                SizedBox(width: 10.setWidth),
+                Expanded(
+                  child: CommonButton(
+                    buttonColor: CustomAppColor.of(context).primary,
+                    text: Languages.of(context).txtClearChat,
+                    onTap: () {
+                      onLogout?.call();
+                    },
+                  ),
+                ),
+              ],
             ),
-            SizedBox(width: 10.setWidth),
-            Expanded(
-              child: CommonButton(
-                buttonColor: CustomAppColor.of(context).primary,
-                text: Languages.of(context).txtClearChat,
-                onTap: () {
-                  onLogout?.call();
-                },
-              ),
-            ),
-          ],
-        ),
-      ],
+          ),
+        ],
+      ),
     );
   }
 }

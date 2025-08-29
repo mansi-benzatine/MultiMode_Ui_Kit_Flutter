@@ -21,7 +21,8 @@ import '../../security/view/security_screen.dart';
 import '../../upgrade_plan/view/upgrade_plan_screen.dart';
 
 class ProfileScreen extends StatefulWidget {
-  const ProfileScreen({super.key});
+  final bool isForLogoutBs;
+  const ProfileScreen({super.key, this.isForLogoutBs = false});
 
   @override
   State<ProfileScreen> createState() => _ProfileScreenState();
@@ -29,37 +30,85 @@ class ProfileScreen extends StatefulWidget {
 
 class _ProfileScreenState extends State<ProfileScreen> {
   ValueNotifier<bool> isDarkMode = ValueNotifier(false);
-
+  bool _isDialogOpen = false;
   _fillData() {
     bool isDarkModePref = Utils.isDarkTheme();
 
     isDarkMode.value = isDarkModePref;
   }
 
+  void _showLogoutDialog() {
+    setState(() {
+      _isDialogOpen = true;
+    });
+    Utils.showBottomSheetDialog(
+      context,
+      isDismissible: false,
+      isScrollControlled: false,
+      title: Languages.of(context).txtLogout,
+      titleColor: CustomAppColor.of(context).txtRed,
+      widgets: LogoutBottomDataSheet(
+        onLogout: () {},
+      ),
+    ).then((_) {
+      if (_isDialogOpen) {
+        print('LogoutDialog dismissed: Popping MyProfileScreen');
+        setState(() {
+          _isDialogOpen = false;
+        });
+        Navigator.of(context).pop();
+      }
+    });
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    if (widget.isForLogoutBs) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        _showLogoutDialog();
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     _fillData();
 
-    return Column(
-      children: [
-        SizedBox(height: 10.setHeight),
-        const _TopBarView(),
-        Expanded(
-          child: SingleChildScrollView(
-            physics: const AlwaysScrollableScrollPhysics(),
-            padding: EdgeInsets.symmetric(horizontal: 20.setWidth, vertical: 10.setHeight),
-            child: Column(
-              children: [
-                SizedBox(height: 15.setHeight),
-                const _ProfileDetailsView(),
-                SizedBox(height: 25.setHeight),
-                const _PurchaseCardView(),
-                _OptionView(isDarkMode),
-              ],
+    return PopScope(
+      canPop: !_isDialogOpen,
+      onPopInvokedWithResult: (didPop, result) {
+        if (!didPop && _isDialogOpen) {
+          print('PopScope: System back button pressed, isDialogOpen=$_isDialogOpen');
+          Navigator.of(context).pop(); // Pop the dialog
+          setState(() {
+            _isDialogOpen = false;
+          });
+          Navigator.of(context).pop(); // Pop MyProfileScreen
+        }
+      },
+      child: Column(
+        children: [
+          SizedBox(height: 10.setHeight),
+          const _TopBarView(),
+          Expanded(
+            child: SingleChildScrollView(
+              physics: const AlwaysScrollableScrollPhysics(),
+              padding: EdgeInsets.symmetric(horizontal: 20.setWidth, vertical: 10.setHeight),
+              child: Column(
+                children: [
+                  SizedBox(height: 15.setHeight),
+                  const _ProfileDetailsView(),
+                  SizedBox(height: 25.setHeight),
+                  const _PurchaseCardView(),
+                  _OptionView(isDarkMode),
+                ],
+              ),
             ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }
@@ -348,24 +397,27 @@ class _OptionView extends StatelessWidget {
             },
           ),
         ),
-        _itemOption(
-          context: context,
-          image: AppAssets.icLogout,
-          title: Languages.of(context).txtLogout,
-          textColor: CustomAppColor.of(context).txtRed,
-          onClick: () {
-            Utils.showBottomSheetDialog(
-              context,
-              title: Languages.of(context).txtLogout,
-              titleColor: CustomAppColor.of(context).txtRed,
-              widgets: LogoutBottomDataSheet(
-                onLogout: () {
-                  Navigator.pop(context);
-                },
-              ),
-            );
-          },
-        ),
+        IgnorePointer(
+          ignoring: true,
+          child: _itemOption(
+            context: context,
+            image: AppAssets.icLogout,
+            title: Languages.of(context).txtLogout,
+            textColor: CustomAppColor.of(context).txtRed,
+            onClick: () {
+              Utils.showBottomSheetDialog(
+                context,
+                title: Languages.of(context).txtLogout,
+                titleColor: CustomAppColor.of(context).txtRed,
+                widgets: LogoutBottomDataSheet(
+                  onLogout: () {
+                    Navigator.pop(context);
+                  },
+                ),
+              );
+            },
+          ),
+        )
       ],
     );
   }

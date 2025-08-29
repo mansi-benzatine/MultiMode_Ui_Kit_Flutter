@@ -10,10 +10,14 @@ import '../../../widgets/text/common_text.dart';
 import '../../../widgets/text_field/text_form_field.dart';
 
 class ResetPasswordScreen extends StatefulWidget {
-  const ResetPasswordScreen({super.key});
+  final bool isShownAlert;
+  const ResetPasswordScreen({super.key, this.isShownAlert = false});
 
-  static Route<void> route() {
-    return MaterialPageRoute<void>(builder: (_) => const ResetPasswordScreen());
+  static Route<void> route({bool isShownAlert = false}) {
+    return MaterialPageRoute<void>(
+        builder: (_) => ResetPasswordScreen(
+              isShownAlert: isShownAlert,
+            ));
   }
 
   @override
@@ -26,46 +30,110 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
 
   ValueNotifier<bool> isPasswordVisible = ValueNotifier<bool>(false);
   ValueNotifier<bool> isConfirmPasswordVisible = ValueNotifier<bool>(false);
+  bool _isDialogOpen = false;
+  void _showMatchDialog() {
+    setState(() {
+      _isDialogOpen = true;
+    });
+    showDialog(
+      barrierDismissible: false,
+      context: context,
+      builder: (context) {
+        return CommonDialog(
+          titleText: CommonText(
+            text: Languages.of(context).txtCongratulations,
+            fontWeight: FontWeight.bold,
+            fontSize: 24.setFontSize,
+            textColor: CustomAppColor.of(context).txtBlack,
+          ),
+          descriptionText: CommonText(
+            text: Languages.of(context).txtLoremIpsumDesc,
+            fontSize: 14.setFontSize,
+            fontWeight: FontWeight.w400,
+            textColor: CustomAppColor.of(context).txtBlack,
+          ),
+          icon: Image.asset(
+            AppAssets.icCongratulation,
+            height: 110.setHeight,
+          ),
+          showLoader: true,
+        );
+      },
+    ).then((_) {
+      if (_isDialogOpen) {
+        print('LogoutDialog dismissed: Popping MyProfileScreen');
+        setState(() {
+          _isDialogOpen = false;
+        });
+        Navigator.of(context).pop();
+      }
+    });
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    if(widget.isShownAlert){
+
+      WidgetsBinding.instance.addPostFrameCallback((_){
+        _showMatchDialog();
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: CustomAppColor.of(context).bgScreen,
-      body: SafeArea(
-        child: SingleChildScrollView(
-          physics: const ClampingScrollPhysics(),
-          padding: EdgeInsets.symmetric(vertical: 10.setHeight),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              IgnorePointer(
-                ignoring: true,
-                child: Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 20.setHeight),
-                  child: InkWell(
-                    onTap: () => Navigator.of(context).pop(),
-                    child: Image.asset(
-                      AppAssets.icBack,
-                      width: 24.setHeight,
-                      height: 24.setHeight,
-                      gaplessPlayback: true,
+    return PopScope(
+      canPop: !_isDialogOpen,
+      onPopInvokedWithResult: (didPop, result) {
+        if (!didPop && _isDialogOpen) {
+          print('PopScope: System back button pressed, isDialogOpen=$_isDialogOpen');
+          Navigator.of(context).pop(); // Pop the dialog
+          setState(() {
+            _isDialogOpen = false;
+          });
+          Navigator.of(context).pop(); // Pop MyProfileScreen
+        }
+      },
+      child: Scaffold(
+        backgroundColor: CustomAppColor.of(context).bgScreen,
+        body: SafeArea(
+          child: SingleChildScrollView(
+            physics: const ClampingScrollPhysics(),
+            padding: EdgeInsets.symmetric(vertical: 10.setHeight),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                IgnorePointer(
+                  ignoring: true,
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 20.setHeight),
+                    child: InkWell(
+                      onTap: () => Navigator.of(context).pop(),
+                      child: Image.asset(
+                        AppAssets.icBack,
+                        width: 24.setHeight,
+                        height: 24.setHeight,
+                        gaplessPlayback: true,
+                      ),
                     ),
                   ),
                 ),
-              ),
-              IgnorePointer(
-                ignoring: true,
-                child: Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 22.setHeight),
-                  child: _ForgotPasswordView(
-                    newPasswordController: _newPasswordController,
-                    confirmNewPasswordController: _confirmNewPasswordController,
-                    isPasswordVisible: isPasswordVisible,
-                    isConfirmPasswordVisible: isConfirmPasswordVisible,
+                IgnorePointer(
+                  ignoring: true,
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 22.setHeight),
+                    child: _ForgotPasswordView(
+                      newPasswordController: _newPasswordController,
+                      confirmNewPasswordController: _confirmNewPasswordController,
+                      isPasswordVisible: isPasswordVisible,
+                      isConfirmPasswordVisible: isConfirmPasswordVisible,
+                    ),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),

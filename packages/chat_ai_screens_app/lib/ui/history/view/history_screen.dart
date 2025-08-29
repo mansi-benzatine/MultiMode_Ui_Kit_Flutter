@@ -13,7 +13,8 @@ import '../../home/datamodel/home_data.dart';
 
 class HistoryScreen extends StatefulWidget {
   final bool isFromEmptyHistory;
-  const HistoryScreen({super.key, required this.isFromEmptyHistory});
+  final int currentIndex;
+  const HistoryScreen({super.key, required this.isFromEmptyHistory, this.currentIndex = 0});
 
   @override
   State<HistoryScreen> createState() => _HistoryScreenState();
@@ -21,7 +22,7 @@ class HistoryScreen extends StatefulWidget {
 
 class _HistoryScreenState extends State<HistoryScreen> with TickerProviderStateMixin {
   late TabController tabController;
-  final ValueNotifier<int> _currentTabIndex = ValueNotifier<int>(0);
+  late ValueNotifier<int> _currentTabIndex;
   List<MessageListData> recentChatList = [];
   void fillData() {
     recentChatList = [
@@ -61,7 +62,8 @@ class _HistoryScreenState extends State<HistoryScreen> with TickerProviderStateM
   @override
   void initState() {
     super.initState();
-    tabController = TabController(length: 2, vsync: this, initialIndex: 0);
+    tabController = TabController(length: 2, vsync: this, initialIndex: widget.currentIndex);
+    _currentTabIndex = ValueNotifier(widget.currentIndex);
     fillData();
   }
 
@@ -125,25 +127,28 @@ class _TopBarView extends StatelessWidget {
             ),
           ),
           SizedBox(width: 10.setWidth),
-          InkWell(
-            onTap: () {
-              Utils.showBottomSheetDialog(
-                context,
-                title: Languages.of(context).txtDelete,
-                widgets: DeleteBottomDataSheet(
-                  deleteMessage: Languages.of(context).txtAreYouSureWantToDeleteAllHistoryIncludingSaveHistory,
-                  onDelete: () {
-                    Navigator.pop(context);
-                  },
-                ),
-              );
-            },
-            child: Image.asset(
-              AppAssets.icTrash,
-              height: 22.setHeight,
-              width: 22.setHeight,
-              gaplessPlayback: true,
-              color: CustomAppColor.of(context).txtBlack,
+          IgnorePointer(
+            ignoring: true,
+            child: InkWell(
+              onTap: () {
+                Utils.showBottomSheetDialog(
+                  context,
+                  title: Languages.of(context).txtDelete,
+                  widgets: DeleteBottomDataSheet(
+                    deleteMessage: Languages.of(context).txtAreYouSureWantToDeleteAllHistoryIncludingSaveHistory,
+                    onDelete: () {
+                      Navigator.pop(context);
+                    },
+                  ),
+                );
+              },
+              child: Image.asset(
+                AppAssets.icTrash,
+                height: 22.setHeight,
+                width: 22.setHeight,
+                gaplessPlayback: true,
+                color: CustomAppColor.of(context).txtBlack,
+              ),
             ),
           ),
         ],
@@ -173,57 +178,60 @@ class _TabBarView extends StatelessWidget {
                   right: 15.setHeight,
                   top: 15.setHeight,
                 ),
-                child: TabBar(
-                  controller: tabController,
-                  padding: EdgeInsets.symmetric(horizontal: 10.setWidth),
-                  dividerHeight: 0,
-                  splashBorderRadius: BorderRadius.circular(500),
-                  indicatorPadding: EdgeInsets.zero,
-                  labelPadding: EdgeInsets.zero,
-                  indicatorSize: TabBarIndicatorSize.tab,
-                  indicatorColor: CustomAppColor.of(context).transparent,
-                  physics: const NeverScrollableScrollPhysics(),
-                  onTap: (int i) {
-                    currentTabIndex.value = i;
-                  },
-                  tabs: [
-                    Container(
-                      height: 50.setHeight,
-                      width: 0.screenWidth,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(500),
-                        color: (value == 0) ? CustomAppColor.of(context).primary : CustomAppColor.of(context).unSelectedTabColor,
-                      ),
-                      margin: EdgeInsets.only(right: 8.setWidth),
-                      child: Tab(
+                child: IgnorePointer(
+                  ignoring: true,
+                  child: TabBar(
+                    controller: tabController,
+                    padding: EdgeInsets.symmetric(horizontal: 10.setWidth),
+                    dividerHeight: 0,
+                    splashBorderRadius: BorderRadius.circular(500),
+                    indicatorPadding: EdgeInsets.zero,
+                    labelPadding: EdgeInsets.zero,
+                    indicatorSize: TabBarIndicatorSize.tab,
+                    indicatorColor: CustomAppColor.of(context).transparent,
+                    physics: const NeverScrollableScrollPhysics(),
+                    onTap: (int i) {
+                      currentTabIndex.value = i;
+                    },
+                    tabs: [
+                      Container(
                         height: 50.setHeight,
-                        child: CommonText(
-                          text: Languages.of(context).txtAll,
-                          fontWeight: (value == 0) ? FontWeight.w800 : FontWeight.w700,
-                          fontSize: 18.setFontSize,
-                          textColor: (value == 0) ? CustomAppColor.of(context).black : CustomAppColor.of(context).txtBlack,
+                        width: 0.screenWidth,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(500),
+                          color: (value == 0) ? CustomAppColor.of(context).primary : CustomAppColor.of(context).unSelectedTabColor,
+                        ),
+                        margin: EdgeInsets.only(right: 8.setWidth),
+                        child: Tab(
+                          height: 50.setHeight,
+                          child: CommonText(
+                            text: Languages.of(context).txtAll,
+                            fontWeight: (value == 0) ? FontWeight.w800 : FontWeight.w700,
+                            fontSize: 18.setFontSize,
+                            textColor: (value == 0) ? CustomAppColor.of(context).black : CustomAppColor.of(context).txtBlack,
+                          ),
                         ),
                       ),
-                    ),
-                    Container(
-                      height: 50.setHeight,
-                      width: 0.screenWidth,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(500),
-                        color: (value == 1) ? CustomAppColor.of(context).primary : CustomAppColor.of(context).unSelectedTabColor,
-                      ),
-                      margin: EdgeInsets.only(left: 8.setWidth),
-                      child: Tab(
+                      Container(
                         height: 50.setHeight,
-                        child: CommonText(
-                          text: "Recent",
-                          fontWeight: (value == 1) ? FontWeight.w800 : FontWeight.w700,
-                          fontSize: 18.setFontSize,
-                          textColor: (value == 1) ? CustomAppColor.of(context).black : CustomAppColor.of(context).txtBlack,
+                        width: 0.screenWidth,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(500),
+                          color: (value == 1) ? CustomAppColor.of(context).primary : CustomAppColor.of(context).unSelectedTabColor,
+                        ),
+                        margin: EdgeInsets.only(left: 8.setWidth),
+                        child: Tab(
+                          height: 50.setHeight,
+                          child: CommonText(
+                            text: "Recent",
+                            fontWeight: (value == 1) ? FontWeight.w800 : FontWeight.w700,
+                            fontSize: 18.setFontSize,
+                            textColor: (value == 1) ? CustomAppColor.of(context).black : CustomAppColor.of(context).txtBlack,
+                          ),
                         ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               );
             },

@@ -19,14 +19,36 @@ class ChatScreen extends StatefulWidget {
   final bool isFromEmptyChatScreen;
   final bool isNewChat;
   final String chatTitle;
-  const ChatScreen({super.key, required this.isFromEmptyChatScreen, required this.isNewChat, required this.chatTitle});
+  final bool isRenameChatBs;
+  final bool isClearChat;
+  final bool isShareChatBs;
 
-  static Route<void> route({required bool isFromEmptyChatScreen, required bool isNewChat, required String chatTitle}) {
+  const ChatScreen({
+    super.key,
+    required this.isFromEmptyChatScreen,
+    required this.isNewChat,
+    required this.chatTitle,
+    this.isClearChat = false,
+    this.isRenameChatBs = false,
+    this.isShareChatBs = false,
+  });
+
+  static Route<void> route({
+    required bool isFromEmptyChatScreen,
+    required bool isNewChat,
+    required String chatTitle,
+    bool isRenameChatBs = false,
+    bool isClearChatBs = false,
+    bool isShareChatBs = false,
+  }) {
     return MaterialPageRoute<void>(
       builder: (_) => ChatScreen(
         isFromEmptyChatScreen: isFromEmptyChatScreen,
         chatTitle: chatTitle,
         isNewChat: isNewChat,
+        isClearChat: isClearChatBs,
+        isRenameChatBs: isRenameChatBs,
+        isShareChatBs: isShareChatBs,
       ),
     );
   }
@@ -39,6 +61,7 @@ class _ChatScreenState extends State<ChatScreen> implements TopBarClickListener 
   List<ShareData> recentPeopleList = [];
   List<ShareData> socialMediaList = [];
   List<ChatMessage> chatMessages = [];
+  bool _isDialogOpen = false;
 
   void fillData() {
     recentPeopleList = [
@@ -76,18 +99,12 @@ class _ChatScreenState extends State<ChatScreen> implements TopBarClickListener 
       ShareData(socialPlatformName: "Telegram", socialPlatformUrl: AppAssets.icSquareTelegram),
     ];
     chatMessages = [
-      ChatMessage(
-          sender: ChatSender.user,
-          message:
-              "how can i figure out Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum is simply dummy text of  printing and typesetting industry."),
+      ChatMessage(sender: ChatSender.user, message: "how can i figure out Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum is simply dummy text of  printing and typesetting industry."),
       ChatMessage(
           sender: ChatSender.bot,
           message:
               "figure out Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum is simply dummy text of  printing and typesetting industry\n\n 1.how can i figure out Lorem Ipsum is simply dummy text of the printing and typesetting industry.\n\n 2.Lorem Ipsum is simply dummy text of  printing and typesetting industry.\n\n 3.simply dummy text of  printing and typesetting industry. simply dummy text of  printing and typesetting industry.\n\n 4.Lorem Ipsum is simply dummy text of  printing and typesetting industry."),
-      ChatMessage(
-          sender: ChatSender.user,
-          message:
-              "Lorem Ipsum is simply dummy text of  printing and typesetting industry. Lorem Ipsum is simply dummy text of  printing and typesetting industry. "),
+      ChatMessage(sender: ChatSender.user, message: "Lorem Ipsum is simply dummy text of  printing and typesetting industry. Lorem Ipsum is simply dummy text of  printing and typesetting industry. "),
       ChatMessage(
           sender: ChatSender.bot,
           message:
@@ -96,25 +113,134 @@ class _ChatScreenState extends State<ChatScreen> implements TopBarClickListener 
   }
 
   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+
+    if (widget.isClearChat) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        _showClearChatDialog();
+      });
+    }
+    if (widget.isRenameChatBs) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        _showRenameChatDialog();
+      });
+    }
+    if (widget.isShareChatBs) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        _showShareChatDialog();
+      });
+    }
+  }
+
+  void _showClearChatDialog() {
+    setState(() {
+      _isDialogOpen = true;
+    });
+    Utils.showBottomSheetDialog(
+      context,
+      isDismissible: false,
+      isScrollControlled: false,
+      title: Languages.of(context).txtClearChat,
+      titleColor: CustomAppColor.of(context).txtBlack,
+      widgets: ClearChatBottomSheet(
+        onLogout: () {},
+      ),
+    ).then((_) {
+      if (_isDialogOpen) {
+        print('LogoutDialog dismissed: Popping MyProfileScreen');
+        setState(() {
+          _isDialogOpen = false;
+        });
+        Navigator.of(context).pop();
+      }
+    });
+  }
+
+  void _showShareChatDialog() {
+    setState(() {
+      _isDialogOpen = true;
+    });
+    Utils.showBottomSheetDialog(
+      context,
+      isScrollControlled: false,
+      isDismissible: false,
+      title: Languages.of(context).txtShareChat,
+      titleColor: CustomAppColor.of(context).txtBlack,
+      widgets: ShareBottomSheet(
+        recentPeople: recentPeopleList,
+        socialMediaList: socialMediaList,
+        onLogout: () {},
+      ),
+    ).then((_) {
+      if (_isDialogOpen) {
+        print('LogoutDialog dismissed: Popping MyProfileScreen');
+        setState(() {
+          _isDialogOpen = false;
+        });
+        Navigator.of(context).pop();
+      }
+    });
+  }
+
+  void _showRenameChatDialog() {
+    setState(() {
+      _isDialogOpen = true;
+    });
+    Utils.showBottomSheetDialog(
+      context,
+      isDismissible: false,
+      isScrollControlled: false,
+      title: Languages.of(context).txtRename,
+      titleColor: CustomAppColor.of(context).txtBlack,
+      widgets: RenameBottomSheet(
+        onLogout: () {},
+      ),
+    ).then((_) {
+      if (_isDialogOpen) {
+        print('LogoutDialog dismissed: Popping MyProfileScreen');
+        setState(() {
+          _isDialogOpen = false;
+        });
+        Navigator.of(context).pop();
+      }
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
     fillData();
-    return Scaffold(
-      backgroundColor: CustomAppColor.of(context).bgScreen,
-      body: SafeArea(
-        bottom: false,
-        child: Column(
-          children: <Widget>[
-            TopBar(
-              this,
-              title: widget.chatTitle,
-              isShowMore: true,
-            ),
-            Expanded(
-              // child: _ChatEmptyView(),
-              child: (widget.isNewChat || widget.isFromEmptyChatScreen) ? const _ChatEmptyView() : _ChatListView(chatMessages: chatMessages),
-            ),
-            const _InputFieldView(),
-          ],
+    return PopScope(
+      canPop: !_isDialogOpen,
+      onPopInvokedWithResult: (didPop, result) {
+        if (!didPop && _isDialogOpen) {
+          print('PopScope: System back button pressed, isDialogOpen=$_isDialogOpen');
+          Navigator.of(context).pop(); // Pop the dialog
+          setState(() {
+            _isDialogOpen = false;
+          });
+          Navigator.of(context).pop(); // Pop MyProfileScreen
+        }
+      },
+      child: Scaffold(
+        backgroundColor: CustomAppColor.of(context).bgScreen,
+        body: SafeArea(
+          bottom: false,
+          child: Column(
+            children: <Widget>[
+              TopBar(
+                this,
+                title: widget.chatTitle,
+                isShowMore: true,
+              ),
+              Expanded(
+                // child: _ChatEmptyView(),
+                child: (widget.isNewChat || widget.isFromEmptyChatScreen) ? const _ChatEmptyView() : _ChatListView(chatMessages: chatMessages),
+              ),
+              const _InputFieldView(),
+            ],
+          ),
         ),
       ),
     );
@@ -123,7 +249,7 @@ class _ChatScreenState extends State<ChatScreen> implements TopBarClickListener 
   @override
   void onTopBarClick(String name, {bool value = true}) {
     if (name == Constant.strClearChat) {
-      Utils.showBottomSheetDialog(
+      /*Utils.showBottomSheetDialog(
         context,
         title: Languages.of(context).txtClearChat,
         titleColor: CustomAppColor.of(context).txtBlack,
@@ -132,13 +258,13 @@ class _ChatScreenState extends State<ChatScreen> implements TopBarClickListener 
             Navigator.pop(context);
           },
         ),
-      );
+      );*/
     }
     if (name == Constant.strBack) {
       // Navigator.pop(context);
     }
     if (name == Constant.strRename) {
-      Utils.showBottomSheetDialog(
+      /*Utils.showBottomSheetDialog(
         context,
         title: Languages.of(context).txtRename,
         titleColor: CustomAppColor.of(context).txtBlack,
@@ -148,10 +274,10 @@ class _ChatScreenState extends State<ChatScreen> implements TopBarClickListener 
             Navigator.pop(context);
           },
         ),
-      );
+      );*/
     }
     if (name == Constant.strShareChat) {
-      Utils.showBottomSheetDialog(
+      /*Utils.showBottomSheetDialog(
         context,
         title: Languages.of(context).txtShareChat,
         titleColor: CustomAppColor.of(context).txtBlack,
@@ -162,7 +288,7 @@ class _ChatScreenState extends State<ChatScreen> implements TopBarClickListener 
             Navigator.pop(context);
           },
         ),
-      );
+      );*/
     }
   }
 }

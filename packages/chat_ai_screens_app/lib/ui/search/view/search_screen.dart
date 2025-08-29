@@ -10,9 +10,10 @@ import '../../../widgets/view/search_empty_screen.dart';
 import '../../home/datamodel/home_data.dart';
 
 class SearchScreen extends StatefulWidget {
-  const SearchScreen({super.key});
-  static Route<void> route() {
-    return MaterialPageRoute<void>(builder: (_) => const SearchScreen());
+  final bool isEmptySearch;
+  const SearchScreen({super.key, this.isEmptySearch = false});
+  static Route<void> route({bool isEmptySearch = false}) {
+    return MaterialPageRoute<void>(builder: (_) => SearchScreen(isEmptySearch: isEmptySearch));
   }
 
   @override
@@ -21,13 +22,17 @@ class SearchScreen extends StatefulWidget {
 
 class _SearchScreenState extends State<SearchScreen> {
   final TextEditingController _searchController = TextEditingController();
-  final List<MessageListData> recentChatList = [];
+  List<MessageListData> recentChatList = [];
   List<MessageListData> filteredList = [];
 
   @override
   void initState() {
     super.initState();
-    fillData();
+    if (widget.isEmptySearch) {
+      recentChatList = [];
+    } else {
+      fillData();
+    }
     _searchController.addListener(_onSearchChanged);
   }
 

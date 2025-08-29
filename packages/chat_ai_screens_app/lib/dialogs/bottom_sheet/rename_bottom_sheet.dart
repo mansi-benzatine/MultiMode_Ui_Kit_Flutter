@@ -16,35 +16,40 @@ class RenameBottomSheet extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        CommonTextFormField(controller: TextEditingController(text: "12/05/2024"), hintText: ""),
-        SizedBox(height: 25.setHeight),
-        Row(
-          children: [
-            Expanded(
-              child: CommonButton(
-                buttonColor: CustomAppColor.of(context).unSelectedTabColor,
-                text: Languages.of(context).txtCancel,
-                buttonTextColor: CustomAppColor.of(context).txtBlack,
-                onTap: () {
-                  Navigator.pop(context);
-                },
-              ),
+    return SafeArea(
+      child: Column(
+        children: [
+          CommonTextFormField(controller: TextEditingController(text: "12/05/2024"), hintText: ""),
+          SizedBox(height: 25.setHeight),
+          IgnorePointer(
+            ignoring: true,
+            child: Row(
+              children: [
+                Expanded(
+                  child: CommonButton(
+                    buttonColor: CustomAppColor.of(context).unSelectedTabColor,
+                    text: Languages.of(context).txtCancel,
+                    buttonTextColor: CustomAppColor.of(context).txtBlack,
+                    onTap: () {
+                      Navigator.pop(context);
+                    },
+                  ),
+                ),
+                SizedBox(width: 10.setWidth),
+                Expanded(
+                  child: CommonButton(
+                    buttonColor: CustomAppColor.of(context).primary,
+                    text: Languages.of(context).txtRename,
+                    onTap: () {
+                      onLogout?.call();
+                    },
+                  ),
+                ),
+              ],
             ),
-            SizedBox(width: 10.setWidth),
-            Expanded(
-              child: CommonButton(
-                buttonColor: CustomAppColor.of(context).primary,
-                text: Languages.of(context).txtRename,
-                onTap: () {
-                  onLogout?.call();
-                },
-              ),
-            ),
-          ],
-        ),
-      ],
+          ),
+        ],
+      ),
     );
   }
 }

@@ -13,9 +13,13 @@ import '../../../widgets/text/common_text.dart';
 import '../../../widgets/top_bar/topbar.dart';
 
 class ReviewSummaryScreen extends StatefulWidget {
-  const ReviewSummaryScreen({super.key});
-  static Route<void> route() {
-    return MaterialPageRoute<void>(builder: (_) => const ReviewSummaryScreen());
+  final bool isAlertShow;
+  const ReviewSummaryScreen({super.key, this.isAlertShow = false});
+  static Route<void> route({bool isAlertShow = false}) {
+    return MaterialPageRoute<void>(
+        builder: (_) => ReviewSummaryScreen(
+              isAlertShow: isAlertShow,
+            ));
   }
 
   @override
@@ -23,6 +27,62 @@ class ReviewSummaryScreen extends StatefulWidget {
 }
 
 class _ReviewSummaryScreenState extends State<ReviewSummaryScreen> implements TopBarClickListener {
+  bool _isDialogOpen = false;
+
+  void _showUpgradeDialog() {
+    setState(() {
+      _isDialogOpen = true;
+    });
+    showDialog(
+      barrierDismissible: false,
+      context: context,
+      builder: (_) {
+        return CommonDialog(
+          titleText: CommonText(
+            text: Languages.of(context).txtUpgradePlanSuccessful,
+            fontWeight: FontWeight.w800,
+            fontSize: 22.setFontSize,
+            textColor: CustomAppColor.of(context).txtBlack,
+          ),
+          descriptionText: CommonText(
+            text: Languages.of(context).txtLoremIpsumDesc,
+            fontSize: 14.setFontSize,
+            fontWeight: FontWeight.w400,
+            textColor: CustomAppColor.of(context).txtBlack,
+          ),
+          icon: Image.asset(
+            AppAssets.imgKing,
+            height: 110.setHeight,
+          ),
+          button: CommonButton(
+            text: "ok",
+            onTap: () {},
+          ),
+        );
+      },
+    ).then((_) {
+      if (_isDialogOpen) {
+        print('LogoutDialog dismissed: Popping MyProfileScreen');
+        setState(() {
+          _isDialogOpen = false;
+        });
+        Navigator.of(context).pop();
+      }
+    });
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+
+    if (widget.isAlertShow) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        _showUpgradeDialog();
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -49,42 +109,45 @@ class _ReviewSummaryScreenState extends State<ReviewSummaryScreen> implements To
             ),
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 20.setWidth, vertical: 20.setHeight),
-              child: Align(
-                alignment: Alignment.bottomCenter,
-                child: CommonButton(
-                  text: Languages.of(context).txtConfirmPayment,
-                  onTap: () {
-                    showDialog(
-                      barrierDismissible: false,
-                      context: context,
-                      builder: (_) {
-                        return CommonDialog(
-                          titleText: CommonText(
-                            text: Languages.of(context).txtUpgradePlanSuccessful,
-                            fontWeight: FontWeight.w800,
-                            fontSize: 22.setFontSize,
-                            textColor: CustomAppColor.of(context).txtBlack,
-                          ),
-                          descriptionText: CommonText(
-                            text: Languages.of(context).txtLoremIpsumDesc,
-                            fontSize: 14.setFontSize,
-                            fontWeight: FontWeight.w400,
-                            textColor: CustomAppColor.of(context).txtBlack,
-                          ),
-                          icon: Image.asset(
-                            AppAssets.imgKing,
-                            height: 110.setHeight,
-                          ),
-                          button: CommonButton(
-                            text: "ok",
-                            onTap: () {
-                              Navigator.of(context, rootNavigator: true).pop();
-                            },
-                          ),
-                        );
-                      },
-                    );
-                  },
+              child: IgnorePointer(
+                ignoring: true,
+                child: Align(
+                  alignment: Alignment.bottomCenter,
+                  child: CommonButton(
+                    text: Languages.of(context).txtConfirmPayment,
+                    onTap: () {
+                      showDialog(
+                        barrierDismissible: false,
+                        context: context,
+                        builder: (_) {
+                          return CommonDialog(
+                            titleText: CommonText(
+                              text: Languages.of(context).txtUpgradePlanSuccessful,
+                              fontWeight: FontWeight.w800,
+                              fontSize: 22.setFontSize,
+                              textColor: CustomAppColor.of(context).txtBlack,
+                            ),
+                            descriptionText: CommonText(
+                              text: Languages.of(context).txtLoremIpsumDesc,
+                              fontSize: 14.setFontSize,
+                              fontWeight: FontWeight.w400,
+                              textColor: CustomAppColor.of(context).txtBlack,
+                            ),
+                            icon: Image.asset(
+                              AppAssets.imgKing,
+                              height: 110.setHeight,
+                            ),
+                            button: CommonButton(
+                              text: "ok",
+                              onTap: () {
+                                Navigator.of(context, rootNavigator: true).pop();
+                              },
+                            ),
+                          );
+                        },
+                      );
+                    },
+                  ),
                 ),
               ),
             )
