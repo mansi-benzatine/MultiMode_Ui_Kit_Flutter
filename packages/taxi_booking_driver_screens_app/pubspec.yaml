@@ -23,7 +23,7 @@ dependencies:
   flutter_rating_bar: ^4.0.1
   flutter_switch: ^0.3.2
   file_picker: ^10.2.0
-  fl_chart: ^1.0.0
+  fl_chart: 1.0.0
 dev_dependencies:
   flutter_test:
     sdk: flutter
