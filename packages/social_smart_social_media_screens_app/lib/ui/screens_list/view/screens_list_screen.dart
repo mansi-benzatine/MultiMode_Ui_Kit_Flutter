@@ -570,11 +570,13 @@ class _SocialSmartSocialMediaScreenListScreen extends State<SocialSmartSocialMed
               widget.onBack?.call();
             },
           ),
+          leadingWidth: AppSizes.setWidth(38),
           title: CommonText(
             text: "Social Media App",
-            fontSize: AppSizes.setFontSize(20),
+            fontSize: AppSizes.setFontSize(22),
             textColor: CustomAppColor.of(context).white,
             fontWeight: FontWeight.w700,
+            fontFamily: Constant.fontFamilyMontserratSemiBold,
           ),
         ),
         body: Container(

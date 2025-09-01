@@ -881,13 +881,14 @@ class _GoozzyECommerceScreenListScreen extends State<GoozzyECommerceScreenListSc
               widget.onBack?.call();
             },
           ),
+          leadingWidth: AppSizes.setWidth(38),
           title: CommonText(
             text: "Goozzy E-Commerce App",
-            fontSize: AppSizes.setFontSize(20),
+            fontSize: AppSizes.setFontSize(22),
             textColor: CustomAppColor.of(context).white,
             fontWeight: FontWeight.w700,
+            fontFamily: Constant.fontFamilyMontserratSemiBold,
           ),
-          leadingWidth: AppSizes.setWidth(38),
         ),
         body: Container(
           width: double.infinity,
