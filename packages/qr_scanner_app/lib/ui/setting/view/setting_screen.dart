@@ -276,7 +276,7 @@ class _GeneralSettingWidget extends StatelessWidget {
         showDialog(
             context: context,
             builder: (buildContext) => ChangeThemeDialog(
-                  parentContext: buildContext,
+                  parentContext: context,
                 )).then((value) {
           if (value != null) {
             getIt.get<LocalStorageService>().setBool(LocalStorageService.isLightTheme, value);
@@ -660,8 +660,8 @@ class _ScanControlWidget extends StatelessWidget {
       onTap: () {
         showDialog(
             context: context,
-            builder: (buildContext) => ChangeCameraTypeDialog(
-                  parentContext: buildContext,
+            builder: (_) => ChangeCameraTypeDialog(
+                  parentContext: context,
                 ));
       },
       child: Row(

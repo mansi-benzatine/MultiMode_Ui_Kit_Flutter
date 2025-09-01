@@ -43,45 +43,47 @@ class _EditSocialLinksScreenState extends State<EditSocialLinksScreen> implement
             Expanded(
               child: Padding(
                 padding: EdgeInsets.symmetric(horizontal: 24.setWidth),
-                child: Column(
-                  children: [
-                    SizedBox(height: 10.setHeight),
-                    CommonTextFormFieldWithPrefix(
-                      prefixIcon: AppAssets.icInstagram,
-                      controller: _instagramController,
-                      hintText: "https://www.instagram.com/username",
-                    ),
-                    SizedBox(height: 16.setHeight),
-                    CommonTextFormFieldWithPrefix(
-                      prefixIcon: AppAssets.icFacebook,
-                      controller: _facebookController,
-                      hintText: "https://www.facebook.com/username",
-                    ),
-                    SizedBox(height: 16.setHeight),
-                    CommonTextFormFieldWithPrefix(
-                      prefixIcon: AppAssets.icSnapchat,
-                      controller: _snapchatController,
-                      hintText: "https://www.snapchat.com/username",
-                    ),
-                    SizedBox(height: 16.setHeight),
-                    CommonTextFormFieldWithPrefix(
-                      prefixIcon: AppAssets.icTiktok,
-                      controller: _tiktokController,
-                      hintText: "https://www.tiktok.com/username",
-                    ),
-                    SizedBox(height: 16.setHeight),
-                    CommonTextFormFieldWithPrefix(
-                      prefixIcon: AppAssets.icTelegram,
-                      controller: _telegramController,
-                      hintText: "https://www.telegram.com/username",
-                    ),
-                  ],
+                child: SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      SizedBox(height: 10.setHeight),
+                      CommonTextFormFieldWithPrefix(
+                        prefixIcon: AppAssets.icInstagram,
+                        controller: _instagramController,
+                        hintText: "https://www.instagram.com/username",
+                      ),
+                      SizedBox(height: 16.setHeight),
+                      CommonTextFormFieldWithPrefix(
+                        prefixIcon: AppAssets.icFacebook,
+                        controller: _facebookController,
+                        hintText: "https://www.facebook.com/username",
+                      ),
+                      SizedBox(height: 16.setHeight),
+                      CommonTextFormFieldWithPrefix(
+                        prefixIcon: AppAssets.icSnapchat,
+                        controller: _snapchatController,
+                        hintText: "https://www.snapchat.com/username",
+                      ),
+                      SizedBox(height: 16.setHeight),
+                      CommonTextFormFieldWithPrefix(
+                        prefixIcon: AppAssets.icTiktok,
+                        controller: _tiktokController,
+                        hintText: "https://www.tiktok.com/username",
+                      ),
+                      SizedBox(height: 16.setHeight),
+                      CommonTextFormFieldWithPrefix(
+                        prefixIcon: AppAssets.icTelegram,
+                        controller: _telegramController,
+                        hintText: "https://www.telegram.com/username",
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),
             IgnorePointer(
-
-              ignoring:true,child: Padding(
+              ignoring: true,
+              child: Padding(
                 padding: EdgeInsets.symmetric(horizontal: 24.setWidth, vertical: 20.setHeight),
                 child: CommonButton(onTap: () => Navigator.pop(context), text: Languages.of(context).txtUpdate.toUpperCase()),
               ),

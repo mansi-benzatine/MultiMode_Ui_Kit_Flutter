@@ -26,9 +26,8 @@ class _PrivacyAndPolicyScreenState extends State<PrivacyAndPolicyScreen> impleme
     contentList = [
       {
         "title": "1. Introduction",
-        "content":
-            "The scrambled it to make a type specimen book. It has been survived not only five centuries, but also the leap into electronic typesetting, remaining essentially to the real text of the printing unchange.\n\n"
-                "Lorem Ipsum is simply dummy text of the printing of the typesetting industry. Lorem Ipsum has been the text into industry's standard dummy text ever since the 1500s, it when an text of the printing  typesetting to the biggest industry. unknown printer took a galley of type and the scrambled it to make a type specimen book. It has been survived not only five centuries, but also the leap into electronic typesetting, remaining essentially to the real unchange. Lorem Ipsum is simply dummy text of the new printing typesetting industry."
+        "content": "The scrambled it to make a type specimen book. It has been survived not only five centuries, but also the leap into electronic typesetting, remaining essentially to the real text of the printing unchange.\n\n"
+            "Lorem Ipsum is simply dummy text of the printing of the typesetting industry. Lorem Ipsum has been the text into industry's standard dummy text ever since the 1500s, it when an text of the printing  typesetting to the biggest industry. unknown printer took a galley of type and the scrambled it to make a type specimen book. It has been survived not only five centuries, but also the leap into electronic typesetting, remaining essentially to the real unchange. Lorem Ipsum is simply dummy text of the new printing typesetting industry."
       },
       {
         "title": "2. Use of Your Personal Data",
@@ -46,42 +45,45 @@ class _PrivacyAndPolicyScreenState extends State<PrivacyAndPolicyScreen> impleme
   @override
   Widget build(BuildContext context) {
     fillData();
-    return Scaffold(
-      backgroundColor: CustomAppColor.of(context).bgScreenWhite,
-      body: Column(
-        children: [
-          IgnorePointer(
-            ignoring: true,
-            child: TopBar(
-              this,
-              title: Languages.of(context).txtPrivacyAndPolicy,
-              isShowTitle: true,
-              isShowBack: true,
-              textColor: CustomAppColor.of(context).txtSecondaryWhite,
-              iconColor: CustomAppColor.of(context).bgDetailsCard,
-            ),
-          ),
-          SizedBox(height: 10.setHeight),
-          Expanded(
-            child: SingleChildScrollView(
-              padding: EdgeInsets.symmetric(horizontal: 24.setWidth, vertical: 10.setHeight),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: contentList
-                    .map(
-                      (section) => Padding(
-                        padding: const EdgeInsets.only(bottom: 20),
-                        child: ContentView(
-                          title: section["title"]!,
-                          content: section["content"]!,
-                        ),
-                      ),
-                    )
-                    .toList(),
+    return SafeArea(
+      top: false,
+      child: Scaffold(
+        backgroundColor: CustomAppColor.of(context).bgScreenWhite,
+        body: Column(
+          children: [
+            IgnorePointer(
+              ignoring: true,
+              child: TopBar(
+                this,
+                title: Languages.of(context).txtPrivacyAndPolicy,
+                isShowTitle: true,
+                isShowBack: true,
+                textColor: CustomAppColor.of(context).txtSecondaryWhite,
+                iconColor: CustomAppColor.of(context).bgDetailsCard,
               ),
             ),
-          ),
-        ],
+            SizedBox(height: 10.setHeight),
+            Expanded(
+              child: SingleChildScrollView(
+                padding: EdgeInsets.symmetric(horizontal: 24.setWidth, vertical: 10.setHeight),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: contentList
+                      .map(
+                        (section) => Padding(
+                          padding: const EdgeInsets.only(bottom: 20),
+                          child: ContentView(
+                            title: section["title"]!,
+                            content: section["content"]!,
+                          ),
+                        ),
+                      )
+                      .toList(),
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

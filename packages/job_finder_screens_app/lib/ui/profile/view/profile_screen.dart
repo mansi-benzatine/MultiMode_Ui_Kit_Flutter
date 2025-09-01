@@ -235,85 +235,90 @@ class _ProfileScreenState extends State<ProfileScreen> {
         borderRadius: BorderRadius.vertical(top: Radius.circular(40)),
       ),
       builder: (context) {
-        return Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 24.setWidth, vertical: 10.setHeight),
-              child: Container(
-                width: 60.setWidth,
-                height: 4.setHeight,
-                decoration: BoxDecoration(color: CustomAppColor.of(context).bsDragHandle),
+        return Padding(
+          padding: EdgeInsets.only(
+            bottom: MediaQuery.of(context).viewInsets.bottom,
+          ),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 24.setWidth, vertical: 10.setHeight),
+                child: Container(
+                  width: 60.setWidth,
+                  height: 4.setHeight,
+                  decoration: BoxDecoration(color: CustomAppColor.of(context).bsDragHandle),
+                ),
               ),
-            ),
-            Padding(
-              padding: EdgeInsets.symmetric(vertical: 10.setHeight, horizontal: 24.setWidth),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Image.asset(
-                    AppAssets.icProfile,
-                    color: CustomAppColor.of(context).icPrimary,
-                    height: 25.setHeight,
-                    width: 20.setWidth,
-                  ),
-                  SizedBox(width: 5.setWidth),
-                  CommonText(
-                    text: Languages.of(context).txtContactInfo,
-                    fontSize: 22.setFontSize,
-                    fontWeight: FontWeight.w700,
-                    textColor: CustomAppColor.of(context).txtSecondaryWhite,
-                  ),
-                ],
+              Padding(
+                padding: EdgeInsets.symmetric(vertical: 10.setHeight, horizontal: 24.setWidth),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Image.asset(
+                      AppAssets.icProfile,
+                      color: CustomAppColor.of(context).icPrimary,
+                      height: 25.setHeight,
+                      width: 20.setWidth,
+                    ),
+                    SizedBox(width: 5.setWidth),
+                    CommonText(
+                      text: Languages.of(context).txtContactInfo,
+                      fontSize: 22.setFontSize,
+                      fontWeight: FontWeight.w700,
+                      textColor: CustomAppColor.of(context).txtSecondaryWhite,
+                    ),
+                  ],
+                ),
               ),
-            ),
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 24.setWidth),
-              child: Divider(color: CustomAppColor.of(context).containerGrey),
-            ),
-            SizedBox(height: 20.setHeight),
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 24.setWidth),
-              child: Column(
-                children: [
-                  CommonTextFormFieldWithPrefix(
-                    prefixIcon: AppAssets.icLocation,
-                    hintText: "",
-                    controller: TextEditingController(text: "New Yourk, United States"),
-                    prefixIconColor: CustomAppColor.of(context).icPrimaryWhite,
-                  ),
-                  SizedBox(height: 28.setHeight),
-                  CommonTextFormFieldWithPrefix(
-                    controller: TextEditingController(text: "+91-0123456789"),
-                    prefixIcon: AppAssets.icCall,
-                    hintText: "",
-                    prefixIconColor: CustomAppColor.of(context).icPrimaryWhite,
-                  ),
-                  SizedBox(height: 28.setHeight),
-                  CommonTextFormFieldWithPrefix(
-                    controller: TextEditingController(text: "zackstevens@yourdomain.com"),
-                    prefixIcon: AppAssets.icEmail,
-                    hintText: "",
-                    prefixIconColor: CustomAppColor.of(context).icPrimaryWhite,
-                  ),
-                  SizedBox(height: 20.setHeight),
-                  CommonTextFormFieldWithPrefixAndSuffix(
-                    suffixIcon: AppAssets.icDownArrow,
-                    suffixIconColor: CustomAppColor.of(context).icGreyWhite,
-                    controller: TextEditingController(text: "September 06,1990"),
-                    prefixIcon: AppAssets.icCalender,
-                    hintText: "",
-                    prefixIconColor: CustomAppColor.of(context).icPrimaryWhite,
-                  ),
-                  SizedBox(height: 20.setHeight),
-                ],
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 24.setWidth),
+                child: Divider(color: CustomAppColor.of(context).containerGrey),
               ),
-            ),
-            _ContinueButtonView(
-              secondButtonText: Languages.of(context).txtUpdate,
-              firstButtonText: Languages.of(context).txtCancel,
-            ),
-          ],
+              SizedBox(height: 20.setHeight),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 24.setWidth),
+                child: Column(
+                  children: [
+                    CommonTextFormFieldWithPrefix(
+                      prefixIcon: AppAssets.icLocation,
+                      hintText: "",
+                      controller: TextEditingController(text: "New Yourk, United States"),
+                      prefixIconColor: CustomAppColor.of(context).icPrimaryWhite,
+                    ),
+                    SizedBox(height: 28.setHeight),
+                    CommonTextFormFieldWithPrefix(
+                      controller: TextEditingController(text: "+91-0123456789"),
+                      prefixIcon: AppAssets.icCall,
+                      hintText: "",
+                      prefixIconColor: CustomAppColor.of(context).icPrimaryWhite,
+                    ),
+                    SizedBox(height: 28.setHeight),
+                    CommonTextFormFieldWithPrefix(
+                      controller: TextEditingController(text: "zackstevens@yourdomain.com"),
+                      prefixIcon: AppAssets.icEmail,
+                      hintText: "",
+                      prefixIconColor: CustomAppColor.of(context).icPrimaryWhite,
+                    ),
+                    SizedBox(height: 20.setHeight),
+                    CommonTextFormFieldWithPrefixAndSuffix(
+                      suffixIcon: AppAssets.icDownArrow,
+                      suffixIconColor: CustomAppColor.of(context).icGreyWhite,
+                      controller: TextEditingController(text: "September 06,1990"),
+                      prefixIcon: AppAssets.icCalender,
+                      hintText: "",
+                      prefixIconColor: CustomAppColor.of(context).icPrimaryWhite,
+                    ),
+                    SizedBox(height: 20.setHeight),
+                  ],
+                ),
+              ),
+              _ContinueButtonView(
+                secondButtonText: Languages.of(context).txtUpdate,
+                firstButtonText: Languages.of(context).txtCancel,
+              ),
+            ],
+          ),
         );
       },
     ).whenComplete(() {
@@ -334,79 +339,84 @@ class _ProfileScreenState extends State<ProfileScreen> {
       context: context,
       enableDrag: false,
       isDismissible: false,
-      isScrollControlled: false,
+      isScrollControlled: true,
       backgroundColor: CustomAppColor.of(context).bgScreenWhite,
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(top: Radius.circular(40)),
       ),
       builder: (context) {
-        return Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 24.setWidth, vertical: 10.setHeight),
-              child: Container(
-                width: 60.setWidth,
-                height: 4.setHeight,
-                decoration: BoxDecoration(color: CustomAppColor.of(context).bsDragHandle),
+        return Padding(
+          padding: EdgeInsets.only(
+            bottom: MediaQuery.of(context).viewInsets.bottom,
+          ),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 24.setWidth, vertical: 10.setHeight),
+                child: Container(
+                  width: 60.setWidth,
+                  height: 4.setHeight,
+                  decoration: BoxDecoration(color: CustomAppColor.of(context).bsDragHandle),
+                ),
               ),
-            ),
-            Padding(
-              padding: EdgeInsets.symmetric(vertical: 10.setHeight, horizontal: 24.setWidth),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Image.asset(
-                    AppAssets.icWorkExperience,
-                    color: CustomAppColor.of(context).icPrimary,
-                    height: 25.setHeight,
-                    width: 25.setWidth,
-                  ),
-                  SizedBox(width: 5.setWidth),
-                  CommonText(
-                    text: Languages.of(context).txtWorkExperience,
-                    fontSize: 22.setFontSize,
-                    fontWeight: FontWeight.w700,
-                    textColor: CustomAppColor.of(context).txtSecondaryWhite,
-                  ),
-                ],
+              Padding(
+                padding: EdgeInsets.symmetric(vertical: 10.setHeight, horizontal: 24.setWidth),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Image.asset(
+                      AppAssets.icWorkExperience,
+                      color: CustomAppColor.of(context).icPrimary,
+                      height: 25.setHeight,
+                      width: 25.setWidth,
+                    ),
+                    SizedBox(width: 5.setWidth),
+                    CommonText(
+                      text: Languages.of(context).txtWorkExperience,
+                      fontSize: 22.setFontSize,
+                      fontWeight: FontWeight.w700,
+                      textColor: CustomAppColor.of(context).txtSecondaryWhite,
+                    ),
+                  ],
+                ),
               ),
-            ),
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 24.setWidth),
-              child: Divider(color: CustomAppColor.of(context).containerGrey),
-            ),
-            SizedBox(height: 20.setHeight),
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 24.setWidth),
-              child: Column(
-                children: [
-                  CommonTextFormFieldWithPrefix(
-                    prefixIcon: AppAssets.icJobTitle,
-                    hintText: Languages.of(context).txtEnterYourJobTitle,
-                    controller: TextEditingController(),
-                  ),
-                  SizedBox(height: 28.setHeight),
-                  CommonTextFormFieldWithPrefix(
-                    controller: TextEditingController(),
-                    prefixIcon: AppAssets.icLocation,
-                    hintText: Languages.of(context).txtEnterCompanyName,
-                  ),
-                  SizedBox(height: 28.setHeight),
-                  CommonTextFormFieldWithPrefix(
-                    controller: TextEditingController(),
-                    prefixIcon: AppAssets.icCalender,
-                    hintText: Languages.of(context).txtEnterWorkDuration,
-                  ),
-                  SizedBox(height: 20.setHeight),
-                ],
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 24.setWidth),
+                child: Divider(color: CustomAppColor.of(context).containerGrey),
               ),
-            ),
-            _ContinueButtonView(
-              secondButtonText: Languages.of(context).txtAdd,
-              firstButtonText: Languages.of(context).txtCancel,
-            ),
-          ],
+              SizedBox(height: 20.setHeight),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 24.setWidth),
+                child: Column(
+                  children: [
+                    CommonTextFormFieldWithPrefix(
+                      prefixIcon: AppAssets.icJobTitle,
+                      hintText: Languages.of(context).txtEnterYourJobTitle,
+                      controller: TextEditingController(),
+                    ),
+                    SizedBox(height: 28.setHeight),
+                    CommonTextFormFieldWithPrefix(
+                      controller: TextEditingController(),
+                      prefixIcon: AppAssets.icLocation,
+                      hintText: Languages.of(context).txtEnterCompanyName,
+                    ),
+                    SizedBox(height: 28.setHeight),
+                    CommonTextFormFieldWithPrefix(
+                      controller: TextEditingController(),
+                      prefixIcon: AppAssets.icCalender,
+                      hintText: Languages.of(context).txtEnterWorkDuration,
+                    ),
+                    SizedBox(height: 20.setHeight),
+                  ],
+                ),
+              ),
+              _ContinueButtonView(
+                secondButtonText: Languages.of(context).txtAdd,
+                firstButtonText: Languages.of(context).txtCancel,
+              ),
+            ],
+          ),
         );
       },
     ).whenComplete(() {
@@ -433,74 +443,79 @@ class _ProfileScreenState extends State<ProfileScreen> {
         borderRadius: BorderRadius.vertical(top: Radius.circular(40)),
       ),
       builder: (context) {
-        return Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 24.setWidth, vertical: 10.setHeight),
-              child: Container(
-                width: 60.setWidth,
-                height: 4.setHeight,
-                decoration: BoxDecoration(color: CustomAppColor.of(context).bsDragHandle),
+        return Padding(
+          padding: EdgeInsets.only(
+            bottom: MediaQuery.of(context).viewInsets.bottom,
+          ),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 24.setWidth, vertical: 10.setHeight),
+                child: Container(
+                  width: 60.setWidth,
+                  height: 4.setHeight,
+                  decoration: BoxDecoration(color: CustomAppColor.of(context).bsDragHandle),
+                ),
               ),
-            ),
-            Padding(
-              padding: EdgeInsets.symmetric(vertical: 10.setHeight, horizontal: 24.setWidth),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Image.asset(
-                    AppAssets.icEducationQualification,
-                    color: CustomAppColor.of(context).icPrimary,
-                    height: 23.setHeight,
-                    width: 28.setWidth,
-                  ),
-                  SizedBox(width: 5.setWidth),
-                  CommonText(
-                    text: Languages.of(context).txtEducationQualification,
-                    fontSize: 22.setFontSize,
-                    fontWeight: FontWeight.w700,
-                    textColor: CustomAppColor.of(context).txtSecondaryWhite,
-                  ),
-                ],
+              Padding(
+                padding: EdgeInsets.symmetric(vertical: 10.setHeight, horizontal: 24.setWidth),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Image.asset(
+                      AppAssets.icEducationQualification,
+                      color: CustomAppColor.of(context).icPrimary,
+                      height: 23.setHeight,
+                      width: 28.setWidth,
+                    ),
+                    SizedBox(width: 5.setWidth),
+                    CommonText(
+                      text: Languages.of(context).txtEducationQualification,
+                      fontSize: 22.setFontSize,
+                      fontWeight: FontWeight.w700,
+                      textColor: CustomAppColor.of(context).txtSecondaryWhite,
+                    ),
+                  ],
+                ),
               ),
-            ),
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 24.setWidth),
-              child: Divider(color: CustomAppColor.of(context).containerGrey),
-            ),
-            SizedBox(height: 20.setHeight),
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 24.setWidth),
-              child: Column(
-                children: [
-                  CommonTextFormFieldWithPrefix(
-                    prefixIcon: AppAssets.icEducationQualification,
-                    hintText: Languages.of(context).txtEnterYourField,
-                    controller: TextEditingController(),
-                  ),
-                  SizedBox(height: 28.setHeight),
-                  CommonTextFormFieldWithPrefix(
-                    controller: TextEditingController(),
-                    prefixIcon: AppAssets.icUniversity,
-                    hintText: Languages.of(context).txtEnterUniversityName,
-                  ),
-                  SizedBox(height: 28.setHeight),
-                  CommonTextFormFieldWithPrefix(
-                    controller: TextEditingController(),
-                    prefixIcon: AppAssets.icCalender,
-                    prefixIconColor: CustomAppColor.of(context).icPrimaryWhite,
-                    hintText: Languages.of(context).txtEnterDuration,
-                  ),
-                  SizedBox(height: 20.setHeight),
-                ],
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 24.setWidth),
+                child: Divider(color: CustomAppColor.of(context).containerGrey),
               ),
-            ),
-            _ContinueButtonView(
-              secondButtonText: Languages.of(context).txtAdd,
-              firstButtonText: Languages.of(context).txtCancel,
-            ),
-          ],
+              SizedBox(height: 20.setHeight),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 24.setWidth),
+                child: Column(
+                  children: [
+                    CommonTextFormFieldWithPrefix(
+                      prefixIcon: AppAssets.icEducationQualification,
+                      hintText: Languages.of(context).txtEnterYourField,
+                      controller: TextEditingController(),
+                    ),
+                    SizedBox(height: 28.setHeight),
+                    CommonTextFormFieldWithPrefix(
+                      controller: TextEditingController(),
+                      prefixIcon: AppAssets.icUniversity,
+                      hintText: Languages.of(context).txtEnterUniversityName,
+                    ),
+                    SizedBox(height: 28.setHeight),
+                    CommonTextFormFieldWithPrefix(
+                      controller: TextEditingController(),
+                      prefixIcon: AppAssets.icCalender,
+                      prefixIconColor: CustomAppColor.of(context).icPrimaryWhite,
+                      hintText: Languages.of(context).txtEnterDuration,
+                    ),
+                    SizedBox(height: 20.setHeight),
+                  ],
+                ),
+              ),
+              _ContinueButtonView(
+                secondButtonText: Languages.of(context).txtAdd,
+                firstButtonText: Languages.of(context).txtCancel,
+              ),
+            ],
+          ),
         );
       },
     ).whenComplete(() {
@@ -528,113 +543,118 @@ class _ProfileScreenState extends State<ProfileScreen> {
       ),
       builder: (context) {
         return SafeArea(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: 24.setWidth, vertical: 10.setHeight),
-                child: Container(
-                  width: 60.setWidth,
-                  height: 4.setHeight,
-                  decoration: BoxDecoration(color: CustomAppColor.of(context).bsDragHandle),
+          child: Padding(
+            padding: EdgeInsets.only(
+              bottom: MediaQuery.of(context).viewInsets.bottom,
+            ),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 24.setWidth, vertical: 10.setHeight),
+                  child: Container(
+                    width: 60.setWidth,
+                    height: 4.setHeight,
+                    decoration: BoxDecoration(color: CustomAppColor.of(context).bsDragHandle),
+                  ),
                 ),
-              ),
-              Padding(
-                padding: EdgeInsets.symmetric(vertical: 10.setHeight, horizontal: 24.setWidth),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Image.asset(
-                      AppAssets.icTechnicalSkills,
-                      color: CustomAppColor.of(context).icPrimary,
-                      height: 30.setHeight,
-                      width: 30.setWidth,
-                    ),
-                    SizedBox(width: 5.setWidth),
-                    CommonText(
-                      text: Languages.of(context).txtTechnicalSkills,
-                      fontSize: 22.setFontSize,
-                      fontWeight: FontWeight.w700,
-                      textColor: CustomAppColor.of(context).txtSecondaryWhite,
-                    ),
-                  ],
+                Padding(
+                  padding: EdgeInsets.symmetric(vertical: 10.setHeight, horizontal: 24.setWidth),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Image.asset(
+                        AppAssets.icTechnicalSkills,
+                        color: CustomAppColor.of(context).icPrimary,
+                        height: 30.setHeight,
+                        width: 30.setWidth,
+                      ),
+                      SizedBox(width: 5.setWidth),
+                      CommonText(
+                        text: Languages.of(context).txtTechnicalSkills,
+                        fontSize: 22.setFontSize,
+                        fontWeight: FontWeight.w700,
+                        textColor: CustomAppColor.of(context).txtSecondaryWhite,
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: 24.setWidth),
-                child: Divider(color: CustomAppColor.of(context).containerGrey),
-              ),
-              SizedBox(height: 20.setHeight),
-              Wrap(
-                spacing: 8.setWidth,
-                runSpacing: 8.setHeight,
-                children: profile.technicalSkill.map((skill) {
-                  return Container(
-                    padding: EdgeInsets.symmetric(vertical: 8.setHeight, horizontal: 8.setWidth),
-                    decoration: BoxDecoration(
-                      color: CustomAppColor.of(context).icPrimary,
-                      borderRadius: BorderRadius.circular(100),
-                    ),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        CommonText(
-                          text: skill,
-                          fontSize: 14.setFontSize,
-                          fontWeight: FontWeight.w500,
-                          textColor: CustomAppColor.of(context).white,
-                        ),
-                        SizedBox(width: 5.setWidth),
-                        Image.asset(
-                          AppAssets.icCloseSquare,
-                          width: 20.setWidth,
-                          height: 20.setHeight,
-                          color: CustomAppColor.of(context).bgContainerPrimary,
-                        )
-                      ],
-                    ),
-                  );
-                }).toList(),
-              ),
-              SizedBox(height: 28.setHeight),
-              Padding(
-                padding: EdgeInsets.symmetric(vertical: 10.setHeight, horizontal: 24.setWidth),
-                child: IgnorePointer(
-                  ignoring: true,
-                  child: InkWell(
-                    onTap: () {
-                      Navigator.pop(context);
-                    },
-                    child: Container(
-                      padding: EdgeInsets.symmetric(vertical: 10.setHeight, horizontal: 24.setWidth),
-                      decoration: BoxDecoration(border: Border.all(color: CustomAppColor.of(context).icPrimary), borderRadius: BorderRadius.circular(100)),
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 24.setWidth),
+                  child: Divider(color: CustomAppColor.of(context).containerGrey),
+                ),
+                SizedBox(height: 20.setHeight),
+                Wrap(
+                  spacing: 8.setWidth,
+                  runSpacing: 8.setHeight,
+                  children: profile.technicalSkill.map((skill) {
+                    return Container(
+                      padding: EdgeInsets.symmetric(vertical: 8.setHeight, horizontal: 8.setWidth),
+                      decoration: BoxDecoration(
+                        color: CustomAppColor.of(context).icPrimary,
+                        borderRadius: BorderRadius.circular(100),
+                      ),
                       child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
+                        mainAxisSize: MainAxisSize.min,
                         children: [
-                          Image.asset(
-                            AppAssets.icAdd,
-                            height: 20.setHeight,
-                            width: 20.setWidth,
-                          ),
-                          SizedBox(width: 5.setWidth),
                           CommonText(
-                            text: Languages.of(context).txtAddNewSkill,
+                            text: skill,
                             fontSize: 14.setFontSize,
                             fontWeight: FontWeight.w500,
-                            textColor: CustomAppColor.of(context).txtPrimaryWhite,
+                            textColor: CustomAppColor.of(context).white,
                           ),
+                          SizedBox(width: 5.setWidth),
+                          Image.asset(
+                            AppAssets.icCloseSquare,
+                            width: 20.setWidth,
+                            height: 20.setHeight,
+                            color: CustomAppColor.of(context).bgContainerPrimary,
+                          )
                         ],
+                      ),
+                    );
+                  }).toList(),
+                ),
+                SizedBox(height: 28.setHeight),
+                Padding(
+                  padding: EdgeInsets.symmetric(vertical: 10.setHeight, horizontal: 24.setWidth),
+                  child: IgnorePointer(
+                    ignoring: true,
+                    child: InkWell(
+                      onTap: () {
+                        Navigator.pop(context);
+                      },
+                      child: Container(
+                        padding: EdgeInsets.symmetric(vertical: 10.setHeight, horizontal: 24.setWidth),
+                        decoration: BoxDecoration(border: Border.all(color: CustomAppColor.of(context).icPrimary), borderRadius: BorderRadius.circular(100)),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Image.asset(
+                              AppAssets.icAdd,
+                              height: 20.setHeight,
+                              width: 20.setWidth,
+                            ),
+                            SizedBox(width: 5.setWidth),
+                            CommonText(
+                              text: Languages.of(context).txtAddNewSkill,
+                              fontSize: 14.setFontSize,
+                              fontWeight: FontWeight.w500,
+                              textColor: CustomAppColor.of(context).txtPrimaryWhite,
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ),
                 ),
-              ),
-              SizedBox(height: 28.setHeight),
-              _ContinueButtonView(
-                secondButtonText: Languages.of(context).txtUpdate,
-                firstButtonText: Languages.of(context).txtCancel,
-              ),
-            ],
+                SizedBox(height: 28.setHeight),
+                _ContinueButtonView(
+                  secondButtonText: Languages.of(context).txtUpdate,
+                  firstButtonText: Languages.of(context).txtCancel,
+                ),
+              ],
+            ),
           ),
         );
       },

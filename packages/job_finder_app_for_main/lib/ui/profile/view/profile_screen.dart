@@ -37,9 +37,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
       location: "New Yourk, United States",
       mail: "zackstevens@yourdomain.com",
       mobileNumber: "+91 - 0123456789",
-      workExperience: [
-        ExperienceData(previousCompany: "Amazon Inc", previousDuration: "March - 2016 to Present (7 Years)", previousExperience: "Product Designer")
-      ],
+      workExperience: [ExperienceData(previousCompany: "Amazon Inc", previousDuration: "March - 2016 to Present (7 Years)", previousExperience: "Product Designer")],
       educationQualification: [
         EducationQualificationData(
           degreeName: "Information Technology",
@@ -52,19 +50,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
         "Hindi",
         "Gujarati",
       ],
-      technicalSkill: [
-        "App Design",
-        "Web Design",
-        "UI/UX",
-        "Graphics Design",
-        "Wireframe Design",
-        "Adobe Xd",
-        "Figma",
-        "Prototyping",
-        "HTML/CSS",
-        "Bootstrap",
-        "Icons"
-      ],
+      technicalSkill: ["App Design", "Web Design", "UI/UX", "Graphics Design", "Wireframe Design", "Adobe Xd", "Figma", "Prototyping", "HTML/CSS", "Bootstrap", "Icons"],
     );
   }
 
@@ -584,85 +570,90 @@ class ContactInfoCardView extends StatelessWidget {
         borderRadius: BorderRadius.vertical(top: Radius.circular(40)),
       ),
       builder: (context) {
-        return Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 24.setWidth, vertical: 10.setHeight),
-              child: Container(
-                width: 60.setWidth,
-                height: 4.setHeight,
-                decoration: BoxDecoration(color: CustomAppColor.of(context).bsDragHandle),
+        return Padding(
+          padding: EdgeInsets.only(
+            bottom: MediaQuery.of(context).viewInsets.bottom,
+          ),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 24.setWidth, vertical: 10.setHeight),
+                child: Container(
+                  width: 60.setWidth,
+                  height: 4.setHeight,
+                  decoration: BoxDecoration(color: CustomAppColor.of(context).bsDragHandle),
+                ),
               ),
-            ),
-            Padding(
-              padding: EdgeInsets.symmetric(vertical: 10.setHeight, horizontal: 24.setWidth),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Image.asset(
-                    AppAssets.icProfile,
-                    color: CustomAppColor.of(context).icPrimary,
-                    height: 25.setHeight,
-                    width: 20.setWidth,
-                  ),
-                  SizedBox(width: 5.setWidth),
-                  CommonText(
-                    text: Languages.of(context).txtContactInfo,
-                    fontSize: 22.setFontSize,
-                    fontWeight: FontWeight.w700,
-                    textColor: CustomAppColor.of(context).txtSecondaryWhite,
-                  ),
-                ],
+              Padding(
+                padding: EdgeInsets.symmetric(vertical: 10.setHeight, horizontal: 24.setWidth),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Image.asset(
+                      AppAssets.icProfile,
+                      color: CustomAppColor.of(context).icPrimary,
+                      height: 25.setHeight,
+                      width: 20.setWidth,
+                    ),
+                    SizedBox(width: 5.setWidth),
+                    CommonText(
+                      text: Languages.of(context).txtContactInfo,
+                      fontSize: 22.setFontSize,
+                      fontWeight: FontWeight.w700,
+                      textColor: CustomAppColor.of(context).txtSecondaryWhite,
+                    ),
+                  ],
+                ),
               ),
-            ),
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 24.setWidth),
-              child: Divider(color: CustomAppColor.of(context).containerGrey),
-            ),
-            SizedBox(height: 20.setHeight),
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 24.setWidth),
-              child: Column(
-                children: [
-                  CommonTextFormFieldWithPrefix(
-                    prefixIcon: AppAssets.icLocation,
-                    hintText: "",
-                    controller: TextEditingController(text: "New Yourk, United States"),
-                    prefixIconColor: CustomAppColor.of(context).icPrimaryWhite,
-                  ),
-                  SizedBox(height: 28.setHeight),
-                  CommonTextFormFieldWithPrefix(
-                    controller: TextEditingController(text: "+91-0123456789"),
-                    prefixIcon: AppAssets.icCall,
-                    hintText: "",
-                    prefixIconColor: CustomAppColor.of(context).icPrimaryWhite,
-                  ),
-                  SizedBox(height: 28.setHeight),
-                  CommonTextFormFieldWithPrefix(
-                    controller: TextEditingController(text: "zackstevens@yourdomain.com"),
-                    prefixIcon: AppAssets.icEmail,
-                    hintText: "",
-                    prefixIconColor: CustomAppColor.of(context).icPrimaryWhite,
-                  ),
-                  SizedBox(height: 20.setHeight),
-                  CommonTextFormFieldWithPrefixAndSuffix(
-                    suffixIcon: AppAssets.icDownArrow,
-                    suffixIconColor: CustomAppColor.of(context).icGreyWhite,
-                    controller: TextEditingController(text: "September 06,1990"),
-                    prefixIcon: AppAssets.icCalender,
-                    hintText: "",
-                    prefixIconColor: CustomAppColor.of(context).icPrimaryWhite,
-                  ),
-                  SizedBox(height: 20.setHeight),
-                ],
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 24.setWidth),
+                child: Divider(color: CustomAppColor.of(context).containerGrey),
               ),
-            ),
-            _ContinueButtonView(
-              secondButtonText: Languages.of(context).txtUpdate,
-              firstButtonText: Languages.of(context).txtCancel,
-            ),
-          ],
+              SizedBox(height: 20.setHeight),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 24.setWidth),
+                child: Column(
+                  children: [
+                    CommonTextFormFieldWithPrefix(
+                      prefixIcon: AppAssets.icLocation,
+                      hintText: "",
+                      controller: TextEditingController(text: "New Yourk, United States"),
+                      prefixIconColor: CustomAppColor.of(context).icPrimaryWhite,
+                    ),
+                    SizedBox(height: 28.setHeight),
+                    CommonTextFormFieldWithPrefix(
+                      controller: TextEditingController(text: "+91-0123456789"),
+                      prefixIcon: AppAssets.icCall,
+                      hintText: "",
+                      prefixIconColor: CustomAppColor.of(context).icPrimaryWhite,
+                    ),
+                    SizedBox(height: 28.setHeight),
+                    CommonTextFormFieldWithPrefix(
+                      controller: TextEditingController(text: "zackstevens@yourdomain.com"),
+                      prefixIcon: AppAssets.icEmail,
+                      hintText: "",
+                      prefixIconColor: CustomAppColor.of(context).icPrimaryWhite,
+                    ),
+                    SizedBox(height: 20.setHeight),
+                    CommonTextFormFieldWithPrefixAndSuffix(
+                      suffixIcon: AppAssets.icDownArrow,
+                      suffixIconColor: CustomAppColor.of(context).icGreyWhite,
+                      controller: TextEditingController(text: "September 06,1990"),
+                      prefixIcon: AppAssets.icCalender,
+                      hintText: "",
+                      prefixIconColor: CustomAppColor.of(context).icPrimaryWhite,
+                    ),
+                    SizedBox(height: 20.setHeight),
+                  ],
+                ),
+              ),
+              _ContinueButtonView(
+                secondButtonText: Languages.of(context).txtUpdate,
+                firstButtonText: Languages.of(context).txtCancel,
+              ),
+            ],
+          ),
         );
       },
     );
@@ -785,76 +776,81 @@ class WorkExperienceView extends StatelessWidget {
         borderRadius: BorderRadius.vertical(top: Radius.circular(40)),
       ),
       builder: (context) {
-        return Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 24.setWidth, vertical: 10.setHeight),
-              child: Container(
-                width: 60.setWidth,
-                height: 4.setHeight,
-                decoration: BoxDecoration(color: CustomAppColor.of(context).bsDragHandle),
+        return Padding(
+          padding: EdgeInsets.only(
+            bottom: MediaQuery.of(context).viewInsets.bottom,
+          ),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 24.setWidth, vertical: 10.setHeight),
+                child: Container(
+                  width: 60.setWidth,
+                  height: 4.setHeight,
+                  decoration: BoxDecoration(color: CustomAppColor.of(context).bsDragHandle),
+                ),
               ),
-            ),
-            Padding(
-              padding: EdgeInsets.symmetric(vertical: 10.setHeight, horizontal: 24.setWidth),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Image.asset(
-                    AppAssets.icWorkExperience,
-                    color: CustomAppColor.of(context).icPrimary,
-                    height: 25.setHeight,
-                    width: 25.setWidth,
-                  ),
-                  SizedBox(width: 5.setWidth),
-                  CommonText(
-                    text: Languages.of(context).txtWorkExperience,
-                    fontSize: 22.setFontSize,
-                    fontWeight: FontWeight.w700,
-                    textColor: CustomAppColor.of(context).txtSecondaryWhite,
-                  ),
-                ],
+              Padding(
+                padding: EdgeInsets.symmetric(vertical: 10.setHeight, horizontal: 24.setWidth),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Image.asset(
+                      AppAssets.icWorkExperience,
+                      color: CustomAppColor.of(context).icPrimary,
+                      height: 25.setHeight,
+                      width: 25.setWidth,
+                    ),
+                    SizedBox(width: 5.setWidth),
+                    CommonText(
+                      text: Languages.of(context).txtWorkExperience,
+                      fontSize: 22.setFontSize,
+                      fontWeight: FontWeight.w700,
+                      textColor: CustomAppColor.of(context).txtSecondaryWhite,
+                    ),
+                  ],
+                ),
               ),
-            ),
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 24.setWidth),
-              child: Divider(color: CustomAppColor.of(context).containerGrey),
-            ),
-            SizedBox(height: 20.setHeight),
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 24.setWidth),
-              child: Column(
-                children: [
-                  CommonTextFormFieldWithPrefix(
-                    prefixIcon: AppAssets.icJobTitle,
-                    hintText: "",
-                    controller: TextEditingController(text: "Product Designer"),
-                    prefixIconColor: CustomAppColor.of(context).icPrimaryWhite,
-                  ),
-                  SizedBox(height: 28.setHeight),
-                  CommonTextFormFieldWithPrefix(
-                    controller: TextEditingController(text: "Amazon Inc"),
-                    prefixIcon: AppAssets.icLocation,
-                    hintText: "",
-                    prefixIconColor: CustomAppColor.of(context).icPrimaryWhite,
-                  ),
-                  SizedBox(height: 28.setHeight),
-                  CommonTextFormFieldWithPrefix(
-                    controller: TextEditingController(text: "March - 2016 to Present (7 Years)"),
-                    prefixIcon: AppAssets.icCalender,
-                    hintText: "",
-                    prefixIconColor: CustomAppColor.of(context).icPrimaryWhite,
-                  ),
-                  SizedBox(height: 20.setHeight),
-                ],
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 24.setWidth),
+                child: Divider(color: CustomAppColor.of(context).containerGrey),
               ),
-            ),
-            _ContinueButtonView(
-              secondButtonText: Languages.of(context).txtUpdate,
-              firstButtonText: Languages.of(context).txtCancel,
-            ),
-          ],
+              SizedBox(height: 20.setHeight),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 24.setWidth),
+                child: Column(
+                  children: [
+                    CommonTextFormFieldWithPrefix(
+                      prefixIcon: AppAssets.icJobTitle,
+                      hintText: "",
+                      controller: TextEditingController(text: "Product Designer"),
+                      prefixIconColor: CustomAppColor.of(context).icPrimaryWhite,
+                    ),
+                    SizedBox(height: 28.setHeight),
+                    CommonTextFormFieldWithPrefix(
+                      controller: TextEditingController(text: "Amazon Inc"),
+                      prefixIcon: AppAssets.icLocation,
+                      hintText: "",
+                      prefixIconColor: CustomAppColor.of(context).icPrimaryWhite,
+                    ),
+                    SizedBox(height: 28.setHeight),
+                    CommonTextFormFieldWithPrefix(
+                      controller: TextEditingController(text: "March - 2016 to Present (7 Years)"),
+                      prefixIcon: AppAssets.icCalender,
+                      hintText: "",
+                      prefixIconColor: CustomAppColor.of(context).icPrimaryWhite,
+                    ),
+                    SizedBox(height: 20.setHeight),
+                  ],
+                ),
+              ),
+              _ContinueButtonView(
+                secondButtonText: Languages.of(context).txtUpdate,
+                firstButtonText: Languages.of(context).txtCancel,
+              ),
+            ],
+          ),
         );
       },
     );
@@ -869,73 +865,78 @@ class WorkExperienceView extends StatelessWidget {
         borderRadius: BorderRadius.vertical(top: Radius.circular(40)),
       ),
       builder: (context) {
-        return Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 24.setWidth, vertical: 10.setHeight),
-              child: Container(
-                width: 60.setWidth,
-                height: 4.setHeight,
-                decoration: BoxDecoration(color: CustomAppColor.of(context).bsDragHandle),
+        return Padding(
+          padding: EdgeInsets.only(
+            bottom: MediaQuery.of(context).viewInsets.bottom,
+          ),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 24.setWidth, vertical: 10.setHeight),
+                child: Container(
+                  width: 60.setWidth,
+                  height: 4.setHeight,
+                  decoration: BoxDecoration(color: CustomAppColor.of(context).bsDragHandle),
+                ),
               ),
-            ),
-            Padding(
-              padding: EdgeInsets.symmetric(vertical: 10.setHeight, horizontal: 24.setWidth),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Image.asset(
-                    AppAssets.icWorkExperience,
-                    color: CustomAppColor.of(context).icPrimary,
-                    height: 25.setHeight,
-                    width: 25.setWidth,
-                  ),
-                  SizedBox(width: 5.setWidth),
-                  CommonText(
-                    text: Languages.of(context).txtWorkExperience,
-                    fontSize: 22.setFontSize,
-                    fontWeight: FontWeight.w700,
-                    textColor: CustomAppColor.of(context).txtSecondaryWhite,
-                  ),
-                ],
+              Padding(
+                padding: EdgeInsets.symmetric(vertical: 10.setHeight, horizontal: 24.setWidth),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Image.asset(
+                      AppAssets.icWorkExperience,
+                      color: CustomAppColor.of(context).icPrimary,
+                      height: 25.setHeight,
+                      width: 25.setWidth,
+                    ),
+                    SizedBox(width: 5.setWidth),
+                    CommonText(
+                      text: Languages.of(context).txtWorkExperience,
+                      fontSize: 22.setFontSize,
+                      fontWeight: FontWeight.w700,
+                      textColor: CustomAppColor.of(context).txtSecondaryWhite,
+                    ),
+                  ],
+                ),
               ),
-            ),
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 24.setWidth),
-              child: Divider(color: CustomAppColor.of(context).containerGrey),
-            ),
-            SizedBox(height: 20.setHeight),
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 24.setWidth),
-              child: Column(
-                children: [
-                  CommonTextFormFieldWithPrefix(
-                    prefixIcon: AppAssets.icJobTitle,
-                    hintText: Languages.of(context).txtEnterYourJobTitle,
-                    controller: TextEditingController(),
-                  ),
-                  SizedBox(height: 28.setHeight),
-                  CommonTextFormFieldWithPrefix(
-                    controller: TextEditingController(),
-                    prefixIcon: AppAssets.icLocation,
-                    hintText: Languages.of(context).txtEnterCompanyName,
-                  ),
-                  SizedBox(height: 28.setHeight),
-                  CommonTextFormFieldWithPrefix(
-                    controller: TextEditingController(),
-                    prefixIcon: AppAssets.icCalender,
-                    hintText: Languages.of(context).txtEnterWorkDuration,
-                  ),
-                  SizedBox(height: 20.setHeight),
-                ],
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 24.setWidth),
+                child: Divider(color: CustomAppColor.of(context).containerGrey),
               ),
-            ),
-            _ContinueButtonView(
-              secondButtonText: Languages.of(context).txtAdd,
-              firstButtonText: Languages.of(context).txtCancel,
-            ),
-          ],
+              SizedBox(height: 20.setHeight),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 24.setWidth),
+                child: Column(
+                  children: [
+                    CommonTextFormFieldWithPrefix(
+                      prefixIcon: AppAssets.icJobTitle,
+                      hintText: Languages.of(context).txtEnterYourJobTitle,
+                      controller: TextEditingController(),
+                    ),
+                    SizedBox(height: 28.setHeight),
+                    CommonTextFormFieldWithPrefix(
+                      controller: TextEditingController(),
+                      prefixIcon: AppAssets.icLocation,
+                      hintText: Languages.of(context).txtEnterCompanyName,
+                    ),
+                    SizedBox(height: 28.setHeight),
+                    CommonTextFormFieldWithPrefix(
+                      controller: TextEditingController(),
+                      prefixIcon: AppAssets.icCalender,
+                      hintText: Languages.of(context).txtEnterWorkDuration,
+                    ),
+                    SizedBox(height: 20.setHeight),
+                  ],
+                ),
+              ),
+              _ContinueButtonView(
+                secondButtonText: Languages.of(context).txtAdd,
+                firstButtonText: Languages.of(context).txtCancel,
+              ),
+            ],
+          ),
         );
       },
     );
@@ -1058,80 +1059,85 @@ class EducationQualificationView extends StatelessWidget {
         borderRadius: BorderRadius.vertical(top: Radius.circular(40)),
       ),
       builder: (context) {
-        return Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 24.setWidth, vertical: 10.setHeight),
-              child: Container(
-                width: 60.setWidth,
-                height: 4.setHeight,
-                decoration: BoxDecoration(color: CustomAppColor.of(context).bsDragHandle),
+        return Padding(
+          padding: EdgeInsets.only(
+            bottom: MediaQuery.of(context).viewInsets.bottom,
+          ),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 24.setWidth, vertical: 10.setHeight),
+                child: Container(
+                  width: 60.setWidth,
+                  height: 4.setHeight,
+                  decoration: BoxDecoration(color: CustomAppColor.of(context).bsDragHandle),
+                ),
               ),
-            ),
-            Padding(
-              padding: EdgeInsets.symmetric(vertical: 10.setHeight, horizontal: 24.setWidth),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Image.asset(
-                    AppAssets.icEducationQualification,
-                    color: CustomAppColor.of(context).icPrimary,
-                    height: 23.setHeight,
-                    width: 28.setWidth,
-                  ),
-                  SizedBox(width: 5.setWidth),
-                  CommonText(
-                    text: Languages.of(context).txtEducationQualification,
-                    fontSize: 22.setFontSize,
-                    fontWeight: FontWeight.w700,
-                    textColor: CustomAppColor.of(context).txtSecondaryWhite,
-                  ),
-                ],
+              Padding(
+                padding: EdgeInsets.symmetric(vertical: 10.setHeight, horizontal: 24.setWidth),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Image.asset(
+                      AppAssets.icEducationQualification,
+                      color: CustomAppColor.of(context).icPrimary,
+                      height: 23.setHeight,
+                      width: 28.setWidth,
+                    ),
+                    SizedBox(width: 5.setWidth),
+                    CommonText(
+                      text: Languages.of(context).txtEducationQualification,
+                      fontSize: 22.setFontSize,
+                      fontWeight: FontWeight.w700,
+                      textColor: CustomAppColor.of(context).txtSecondaryWhite,
+                    ),
+                  ],
+                ),
               ),
-            ),
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 24.setWidth),
-              child: Divider(color: CustomAppColor.of(context).containerGrey),
-            ),
-            SizedBox(height: 20.setHeight),
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 24.setWidth),
-              child: Column(
-                children: [
-                  CommonTextFormFieldWithPrefix(
-                    controller: TextEditingController(
-                      text: "Information Technology",
-                    ),
-                    prefixIcon: AppAssets.icEducationQualification,
-                    hintText: "",
-                  ),
-                  SizedBox(height: 28.setHeight),
-                  CommonTextFormFieldWithPrefix(
-                    controller: TextEditingController(
-                      text: "University Of Oxford",
-                    ),
-                    prefixIcon: AppAssets.icUniversity,
-                    hintText: "",
-                  ),
-                  SizedBox(height: 28.setHeight),
-                  CommonTextFormFieldWithPrefix(
-                    controller: TextEditingController(
-                      text: "Jul 2010 - April 2015 (5 Years)",
-                    ),
-                    prefixIcon: AppAssets.icCalender,
-                    prefixIconColor: CustomAppColor.of(context).icPrimaryWhite,
-                    hintText: "",
-                  ),
-                  SizedBox(height: 20.setHeight),
-                ],
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 24.setWidth),
+                child: Divider(color: CustomAppColor.of(context).containerGrey),
               ),
-            ),
-            _ContinueButtonView(
-              secondButtonText: Languages.of(context).txtUpdate,
-              firstButtonText: Languages.of(context).txtCancel,
-            ),
-          ],
+              SizedBox(height: 20.setHeight),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 24.setWidth),
+                child: Column(
+                  children: [
+                    CommonTextFormFieldWithPrefix(
+                      controller: TextEditingController(
+                        text: "Information Technology",
+                      ),
+                      prefixIcon: AppAssets.icEducationQualification,
+                      hintText: "",
+                    ),
+                    SizedBox(height: 28.setHeight),
+                    CommonTextFormFieldWithPrefix(
+                      controller: TextEditingController(
+                        text: "University Of Oxford",
+                      ),
+                      prefixIcon: AppAssets.icUniversity,
+                      hintText: "",
+                    ),
+                    SizedBox(height: 28.setHeight),
+                    CommonTextFormFieldWithPrefix(
+                      controller: TextEditingController(
+                        text: "Jul 2010 - April 2015 (5 Years)",
+                      ),
+                      prefixIcon: AppAssets.icCalender,
+                      prefixIconColor: CustomAppColor.of(context).icPrimaryWhite,
+                      hintText: "",
+                    ),
+                    SizedBox(height: 20.setHeight),
+                  ],
+                ),
+              ),
+              _ContinueButtonView(
+                secondButtonText: Languages.of(context).txtUpdate,
+                firstButtonText: Languages.of(context).txtCancel,
+              ),
+            ],
+          ),
         );
       },
     );
@@ -1146,74 +1152,79 @@ class EducationQualificationView extends StatelessWidget {
         borderRadius: BorderRadius.vertical(top: Radius.circular(40)),
       ),
       builder: (context) {
-        return Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 24.setWidth, vertical: 10.setHeight),
-              child: Container(
-                width: 60.setWidth,
-                height: 4.setHeight,
-                decoration: BoxDecoration(color: CustomAppColor.of(context).bsDragHandle),
+        return Padding(
+          padding: EdgeInsets.only(
+            bottom: MediaQuery.of(context).viewInsets.bottom,
+          ),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 24.setWidth, vertical: 10.setHeight),
+                child: Container(
+                  width: 60.setWidth,
+                  height: 4.setHeight,
+                  decoration: BoxDecoration(color: CustomAppColor.of(context).bsDragHandle),
+                ),
               ),
-            ),
-            Padding(
-              padding: EdgeInsets.symmetric(vertical: 10.setHeight, horizontal: 24.setWidth),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Image.asset(
-                    AppAssets.icEducationQualification,
-                    color: CustomAppColor.of(context).icPrimary,
-                    height: 23.setHeight,
-                    width: 28.setWidth,
-                  ),
-                  SizedBox(width: 5.setWidth),
-                  CommonText(
-                    text: Languages.of(context).txtEducationQualification,
-                    fontSize: 22.setFontSize,
-                    fontWeight: FontWeight.w700,
-                    textColor: CustomAppColor.of(context).txtSecondaryWhite,
-                  ),
-                ],
+              Padding(
+                padding: EdgeInsets.symmetric(vertical: 10.setHeight, horizontal: 24.setWidth),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Image.asset(
+                      AppAssets.icEducationQualification,
+                      color: CustomAppColor.of(context).icPrimary,
+                      height: 23.setHeight,
+                      width: 28.setWidth,
+                    ),
+                    SizedBox(width: 5.setWidth),
+                    CommonText(
+                      text: Languages.of(context).txtEducationQualification,
+                      fontSize: 22.setFontSize,
+                      fontWeight: FontWeight.w700,
+                      textColor: CustomAppColor.of(context).txtSecondaryWhite,
+                    ),
+                  ],
+                ),
               ),
-            ),
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 24.setWidth),
-              child: Divider(color: CustomAppColor.of(context).containerGrey),
-            ),
-            SizedBox(height: 20.setHeight),
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 24.setWidth),
-              child: Column(
-                children: [
-                  CommonTextFormFieldWithPrefix(
-                    prefixIcon: AppAssets.icEducationQualification,
-                    hintText: Languages.of(context).txtEnterYourField,
-                    controller: TextEditingController(),
-                  ),
-                  SizedBox(height: 28.setHeight),
-                  CommonTextFormFieldWithPrefix(
-                    controller: TextEditingController(),
-                    prefixIcon: AppAssets.icUniversity,
-                    hintText: Languages.of(context).txtEnterUniversityName,
-                  ),
-                  SizedBox(height: 28.setHeight),
-                  CommonTextFormFieldWithPrefix(
-                    controller: TextEditingController(),
-                    prefixIcon: AppAssets.icCalender,
-                    prefixIconColor: CustomAppColor.of(context).icPrimaryWhite,
-                    hintText: Languages.of(context).txtEnterDuration,
-                  ),
-                  SizedBox(height: 20.setHeight),
-                ],
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 24.setWidth),
+                child: Divider(color: CustomAppColor.of(context).containerGrey),
               ),
-            ),
-            _ContinueButtonView(
-              secondButtonText: Languages.of(context).txtAdd,
-              firstButtonText: Languages.of(context).txtCancel,
-            ),
-          ],
+              SizedBox(height: 20.setHeight),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 24.setWidth),
+                child: Column(
+                  children: [
+                    CommonTextFormFieldWithPrefix(
+                      prefixIcon: AppAssets.icEducationQualification,
+                      hintText: Languages.of(context).txtEnterYourField,
+                      controller: TextEditingController(),
+                    ),
+                    SizedBox(height: 28.setHeight),
+                    CommonTextFormFieldWithPrefix(
+                      controller: TextEditingController(),
+                      prefixIcon: AppAssets.icUniversity,
+                      hintText: Languages.of(context).txtEnterUniversityName,
+                    ),
+                    SizedBox(height: 28.setHeight),
+                    CommonTextFormFieldWithPrefix(
+                      controller: TextEditingController(),
+                      prefixIcon: AppAssets.icCalender,
+                      prefixIconColor: CustomAppColor.of(context).icPrimaryWhite,
+                      hintText: Languages.of(context).txtEnterDuration,
+                    ),
+                    SizedBox(height: 20.setHeight),
+                  ],
+                ),
+              ),
+              _ContinueButtonView(
+                secondButtonText: Languages.of(context).txtAdd,
+                firstButtonText: Languages.of(context).txtCancel,
+              ),
+            ],
+          ),
         );
       },
     );
@@ -1389,8 +1400,7 @@ class TechnicalSkillCardView extends StatelessWidget {
                 },
                 child: Container(
                   padding: EdgeInsets.symmetric(vertical: 10.setHeight, horizontal: 24.setWidth),
-                  decoration:
-                      BoxDecoration(border: Border.all(color: CustomAppColor.of(context).icPrimary), borderRadius: BorderRadius.circular(100)),
+                  decoration: BoxDecoration(border: Border.all(color: CustomAppColor.of(context).icPrimary), borderRadius: BorderRadius.circular(100)),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -1654,8 +1664,7 @@ class LanguageCardView extends StatelessWidget {
                 },
                 child: Container(
                   padding: EdgeInsets.symmetric(vertical: 10.setHeight, horizontal: 24.setWidth),
-                  decoration:
-                      BoxDecoration(border: Border.all(color: CustomAppColor.of(context).icPrimary), borderRadius: BorderRadius.circular(100)),
+                  decoration: BoxDecoration(border: Border.all(color: CustomAppColor.of(context).icPrimary), borderRadius: BorderRadius.circular(100)),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [

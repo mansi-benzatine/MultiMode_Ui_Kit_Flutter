@@ -73,55 +73,58 @@ class _ChatScreenState extends State<ChatScreen> implements TopBarClickListener 
         statusBarBrightness: Utils.isDarkTheme() ? Brightness.dark : Brightness.light,
         statusBarColor: CustomAppColor.of(context).transparent,
       ),
-      child: Scaffold(
-        resizeToAvoidBottomInset: true,
-        backgroundColor: CustomAppColor.of(context).bgScreenWhite,
-        body: Column(
-          children: [
-            IgnorePointer(
-              ignoring: true,
-              child: TopBar(
-                this,
-                isShowChatUserDetails: true,
-                chatUserName: "Julie Young",
-                isShowCall: true,
-                isShowVideoCall: true,
-                chatUserProfilePath: AppAssets.imgAvatarMessage3,
-                chatStatusColor: CustomAppColor.of(context).txtGreen,
-                chatStatus: "Online",
-                iconColor: CustomAppColor.of(context).bgDetailsCard,
-              ),
-            ),
-            Expanded(
-              child: ListView.builder(
-                reverse: true,
-                padding: EdgeInsets.only(
-                  left: 16.setWidth,
-                  right: 16.setWidth,
-                  top: 8.setHeight,
-                  bottom: 16.setHeight,
+      child: SafeArea(
+        top: false,
+        child: Scaffold(
+          resizeToAvoidBottomInset: true,
+          backgroundColor: CustomAppColor.of(context).bgScreenWhite,
+          body: Column(
+            children: [
+              IgnorePointer(
+                ignoring: true,
+                child: TopBar(
+                  this,
+                  isShowChatUserDetails: true,
+                  chatUserName: "Julie Young",
+                  isShowCall: true,
+                  isShowVideoCall: true,
+                  chatUserProfilePath: AppAssets.imgAvatarMessage3,
+                  chatStatusColor: CustomAppColor.of(context).txtGreen,
+                  chatStatus: "Online",
+                  iconColor: CustomAppColor.of(context).bgDetailsCard,
                 ),
-                itemCount: chatList.length + 1,
-                itemBuilder: (context, index) {
-                  if (index == chatList.length) {
-                    return Padding(
-                      padding: EdgeInsets.only(top: 100.setHeight, bottom: 10.setHeight),
-                      child: Center(
-                        child: CommonText(
-                          text: "Today",
-                          textColor: CustomAppColor.of(context).txtGrey,
-                          fontSize: 14.setFontSize,
-                        ),
-                      ),
-                    );
-                  }
-                  final message = chatList[index];
-                  return ChatBubble(message: message);
-                },
               ),
-            ),
-            const InputTextFieldView(),
-          ],
+              Expanded(
+                child: ListView.builder(
+                  reverse: true,
+                  padding: EdgeInsets.only(
+                    left: 16.setWidth,
+                    right: 16.setWidth,
+                    top: 8.setHeight,
+                    bottom: 16.setHeight,
+                  ),
+                  itemCount: chatList.length + 1,
+                  itemBuilder: (context, index) {
+                    if (index == chatList.length) {
+                      return Padding(
+                        padding: EdgeInsets.only(top: 100.setHeight, bottom: 10.setHeight),
+                        child: Center(
+                          child: CommonText(
+                            text: "Today",
+                            textColor: CustomAppColor.of(context).txtGrey,
+                            fontSize: 14.setFontSize,
+                          ),
+                        ),
+                      );
+                    }
+                    final message = chatList[index];
+                    return ChatBubble(message: message);
+                  },
+                ),
+              ),
+              const InputTextFieldView(),
+            ],
+          ),
         ),
       ),
     );

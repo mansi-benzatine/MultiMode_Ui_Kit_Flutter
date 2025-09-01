@@ -22,28 +22,31 @@ class VoiceCallScreen extends StatelessWidget {
         statusBarBrightness: Brightness.dark,
         statusBarColor: CustomAppColor.of(context).transparent,
       ),
-      child: Scaffold(
-          backgroundColor: CustomAppColor.of(context).bgContainerPrimary,
-          body: IgnorePointer(
-            ignoring: true,
-            child: Stack(
-              children: [
-                const IncomingCallView(),
-                Positioned(
-                  top: 59.setHeight,
-                  left: 23.setWidth,
-                  child: IconButton(
-                      onPressed: () => Navigator.pop(context),
-                      icon: Image.asset(
-                        AppAssets.icCloseSquare,
-                        width: 40.setWidth,
-                        height: 40.setHeight,
-                      )),
-                ),
-                const Positioned(bottom: 0, left: 0, right: 0, child: BottomActionView())
-              ],
-            ),
-          )),
+      child: SafeArea(
+        top: false,
+        child: Scaffold(
+            backgroundColor: CustomAppColor.of(context).bgContainerPrimary,
+            body: IgnorePointer(
+              ignoring: true,
+              child: Stack(
+                children: [
+                  const IncomingCallView(),
+                  Positioned(
+                    top: 59.setHeight,
+                    left: 23.setWidth,
+                    child: IconButton(
+                        onPressed: () => Navigator.pop(context),
+                        icon: Image.asset(
+                          AppAssets.icCloseSquare,
+                          width: 40.setWidth,
+                          height: 40.setHeight,
+                        )),
+                  ),
+                  const Positioned(bottom: 0, left: 0, right: 0, child: BottomActionView())
+                ],
+              ),
+            )),
+      ),
     );
   }
 }

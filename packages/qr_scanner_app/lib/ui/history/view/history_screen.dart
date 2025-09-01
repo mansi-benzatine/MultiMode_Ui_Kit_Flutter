@@ -294,8 +294,8 @@ class _HistoryScreenState extends State<HistoryScreen> implements TopBarClickLis
   void showDeleteDialog() {
     showDialog(
         context: context,
-        builder: (buildContext) => HistoryDeleteConfirmationDialog(
-              parentContext: buildContext,
+        builder: (_) => HistoryDeleteConfirmationDialog(
+              parentContext: context,
             )).then((value) {
       if (value == true) {
         historyList?.removeWhere((element) => element['isSelected'] == true);

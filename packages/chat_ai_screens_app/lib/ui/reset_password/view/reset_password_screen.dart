@@ -38,7 +38,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
     showDialog(
       barrierDismissible: false,
       context: context,
-      builder: (context) {
+      builder: (_) {
         return CommonDialog(
           titleText: CommonText(
             text: Languages.of(context).txtCongratulations,
@@ -74,9 +74,8 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    if(widget.isShownAlert){
-
-      WidgetsBinding.instance.addPostFrameCallback((_){
+    if (widget.isShownAlert) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
         _showMatchDialog();
       });
     }

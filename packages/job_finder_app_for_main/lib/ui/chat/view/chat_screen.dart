@@ -97,54 +97,57 @@ class _ChatScreenState extends State<ChatScreen> implements TopBarClickListener 
         statusBarBrightness: Utils.isLightTheme() ? Brightness.dark : Brightness.light,
         statusBarColor: CustomAppColor.of(context).transparent,
       ),
-      child: Scaffold(
-        resizeToAvoidBottomInset: true,
-        backgroundColor: CustomAppColor.of(context).bgScreenWhite,
-        body: Column(children: [
-          TopBar(
-            this,
-            isShowChatUserDetails: true,
-            chatUserName: widget.userName,
-            isShowCall: true,
-            isShowVideoCall: true,
-            chatUserProfilePath: widget.userProfile,
-            chatStatusColor: CustomAppColor.of(context).txtGreen,
-            chatStatus: "Online",
-            iconColor: CustomAppColor.of(context).bgDetailsCard,
-          ),
-          Expanded(
-            child: ListView.builder(
-              reverse: true,
-              padding: EdgeInsets.only(
-                left: 16.setWidth,
-                right: 16.setWidth,
-                top: 8.setHeight,
-                bottom: 16.setHeight,
-              ),
-              itemCount: chatList.length + 1,
-              itemBuilder: (context, index) {
-                if (index == chatList.length) {
-                  return Padding(
-                    padding: EdgeInsets.only(top: 100.setHeight, bottom: 10.setHeight),
-                    child: Center(
-                      child: CommonText(
-                        text: "Today",
-                        textColor: CustomAppColor.of(context).txtGrey,
-                        fontSize: 14.setFontSize,
-                      ),
-                    ),
-                  );
-                }
-                final message = chatList[index];
-                return ChatBubble(
-                  message: message,
-                  userProfile: widget.userProfile,
-                );
-              },
+      child: SafeArea(
+        top: false,
+        child: Scaffold(
+          resizeToAvoidBottomInset: true,
+          backgroundColor: CustomAppColor.of(context).bgScreenWhite,
+          body: Column(children: [
+            TopBar(
+              this,
+              isShowChatUserDetails: true,
+              chatUserName: widget.userName,
+              isShowCall: true,
+              isShowVideoCall: true,
+              chatUserProfilePath: widget.userProfile,
+              chatStatusColor: CustomAppColor.of(context).txtGreen,
+              chatStatus: "Online",
+              iconColor: CustomAppColor.of(context).bgDetailsCard,
             ),
-          ),
-          const InputTextFieldView(),
-        ]),
+            Expanded(
+              child: ListView.builder(
+                reverse: true,
+                padding: EdgeInsets.only(
+                  left: 16.setWidth,
+                  right: 16.setWidth,
+                  top: 8.setHeight,
+                  bottom: 16.setHeight,
+                ),
+                itemCount: chatList.length + 1,
+                itemBuilder: (context, index) {
+                  if (index == chatList.length) {
+                    return Padding(
+                      padding: EdgeInsets.only(top: 100.setHeight, bottom: 10.setHeight),
+                      child: Center(
+                        child: CommonText(
+                          text: "Today",
+                          textColor: CustomAppColor.of(context).txtGrey,
+                          fontSize: 14.setFontSize,
+                        ),
+                      ),
+                    );
+                  }
+                  final message = chatList[index];
+                  return ChatBubble(
+                    message: message,
+                    userProfile: widget.userProfile,
+                  );
+                },
+              ),
+            ),
+            const InputTextFieldView(),
+          ]),
+        ),
       ),
     );
   }

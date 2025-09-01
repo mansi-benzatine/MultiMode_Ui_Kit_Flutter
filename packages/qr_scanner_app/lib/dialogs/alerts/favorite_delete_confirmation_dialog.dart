@@ -11,22 +11,17 @@ import '../../widgets/text/common_text.dart';
 class FavoriteDeleteConfirmationDialog extends StatefulWidget {
   final BuildContext parentContext; // Add parentContext
 
-  const FavoriteDeleteConfirmationDialog(
-      {super.key, required this.parentContext});
+  const FavoriteDeleteConfirmationDialog({super.key, required this.parentContext});
 
   @override
-  State<FavoriteDeleteConfirmationDialog> createState() =>
-      _FavoriteDeleteConfirmationDialogState();
+  State<FavoriteDeleteConfirmationDialog> createState() => _FavoriteDeleteConfirmationDialogState();
 }
 
-class _FavoriteDeleteConfirmationDialogState
-    extends State<FavoriteDeleteConfirmationDialog> {
+class _FavoriteDeleteConfirmationDialogState extends State<FavoriteDeleteConfirmationDialog> {
   @override
   Widget build(BuildContext context) {
     return Dialog(
-      backgroundColor: CustomAppColor.of(widget.parentContext)
-          .txtBlack
-          .withOpacityPercent(.6),
+      backgroundColor: CustomAppColor.of(widget.parentContext).txtBlack.withOpacityPercent(.6),
       child: Container(
         padding: EdgeInsets.all(20.setWidth),
         decoration: BoxDecoration(
@@ -37,8 +32,7 @@ class _FavoriteDeleteConfirmationDialogState
           mainAxisSize: MainAxisSize.min,
           children: [
             CommonText(
-              text: Languages.of(widget.parentContext)
-                  .txtDeleteFavorite, // Use parentContext
+              text: Languages.of(widget.parentContext).txtDeleteFavorite, // Use parentContext
               fontSize: 20.setFontSize,
               fontWeight: FontWeight.w600,
               textColor: CustomAppColor.of(widget.parentContext).primary,
@@ -53,8 +47,7 @@ class _FavoriteDeleteConfirmationDialogState
             ),
             SizedBox(height: 35.setHeight),
             CommonText(
-              text: Languages.of(widget.parentContext)
-                  .txtDeleteThisFavoriteMsg, // Use parentContext
+              text: Languages.of(widget.parentContext).txtDeleteThisFavoriteMsg, // Use parentContext
               fontSize: 13.setFontSize,
               fontWeight: FontWeight.w500,
               textColor: CustomAppColor.of(widget.parentContext).txtBlack,
@@ -68,16 +61,11 @@ class _FavoriteDeleteConfirmationDialogState
                     onTap: () {
                       Navigator.pop(context, false);
                     },
-                    text: Languages.of(widget.parentContext)
-                        .txtCancel
-                        .toUpperCase(), // Use parentContext
-                    buttonColor:
-                        CustomAppColor.of(widget.parentContext).transparent,
-                    borderColor:
-                        CustomAppColor.of(widget.parentContext).primary,
+                    text: Languages.of(widget.parentContext).txtCancel.toUpperCase(), // Use parentContext
+                    buttonColor: CustomAppColor.of(widget.parentContext).transparent,
+                    borderColor: CustomAppColor.of(widget.parentContext).primary,
                     buttonFontStyle: FontStyle.normal,
-                    buttonTextColor:
-                        CustomAppColor.of(widget.parentContext).primary,
+                    buttonTextColor: CustomAppColor.of(widget.parentContext).primary,
                     buttonTextSize: 14.setFontSize,
                     buttonTextWeight: FontWeight.w500,
                     height: 40.setHeight,
@@ -89,13 +77,9 @@ class _FavoriteDeleteConfirmationDialogState
                     onTap: () {
                       Navigator.pop(context, true);
                     },
-                    text: Languages.of(widget.parentContext)
-                        .txtOk
-                        .toUpperCase(), // Use parentContext
-                    buttonColor:
-                        CustomAppColor.of(widget.parentContext).primary,
-                    buttonTextColor:
-                        CustomAppColor.of(widget.parentContext).white,
+                    text: Languages.of(widget.parentContext).txtOk.toUpperCase(), // Use parentContext
+                    buttonColor: CustomAppColor.of(widget.parentContext).primary,
+                    buttonTextColor: CustomAppColor.of(widget.parentContext).white,
                     height: 40.setHeight,
                     buttonTextSize: 14.setFontSize,
                     buttonTextWeight: FontWeight.w500,

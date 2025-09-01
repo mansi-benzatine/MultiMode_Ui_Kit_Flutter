@@ -87,54 +87,56 @@ class _ManageAccountScreenState extends State<ManageAccountScreen> {
         borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
       ),
       builder: (context) {
-        return Container(
-          padding: EdgeInsets.symmetric(horizontal: AppSizes.setWidth(20), vertical: AppSizes.setHeight(8)),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              CommonText(
-                text: Languages.of(context).logout,
-                fontWeight: FontWeight.w700,
-                fontSize: AppSizes.setFontSize(22),
-                textAlign: TextAlign.center,
-                textColor: AppColor.txtPurple,
-              ),
-              const Divider(),
-              Padding(
-                padding: EdgeInsets.symmetric(vertical: AppSizes.setHeight(10)),
-                child: CommonText(
-                  text: Languages.of(context).areYouSureToLogout,
+        return SafeArea(
+          child: Container(
+            padding: EdgeInsets.symmetric(horizontal: AppSizes.setWidth(20), vertical: AppSizes.setHeight(8)),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                CommonText(
+                  text: Languages.of(context).logout,
                   fontWeight: FontWeight.w700,
-                  fontSize: AppSizes.setFontSize(16),
+                  fontSize: AppSizes.setFontSize(22),
                   textAlign: TextAlign.center,
+                  textColor: AppColor.txtPurple,
                 ),
-              ),
-              Padding(
-                padding: EdgeInsets.symmetric(vertical: AppSizes.setHeight(18)),
-                child: Row(
-                  children: [
-                    Flexible(
-                      child: CommonButton(
-                        useSimpleStyle: true,
-                        radius: 20,
-                        child: CommonText(
-                          text: Languages.of(context).cancel,
-                          fontWeight: FontWeight.w700,
-                          textColor: CustomAppColor.of(context).txtPurple,
-                          fontSize: AppSizes.setFontSize(14),
+                const Divider(),
+                Padding(
+                  padding: EdgeInsets.symmetric(vertical: AppSizes.setHeight(10)),
+                  child: CommonText(
+                    text: Languages.of(context).areYouSureToLogout,
+                    fontWeight: FontWeight.w700,
+                    fontSize: AppSizes.setFontSize(16),
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.symmetric(vertical: AppSizes.setHeight(18)),
+                  child: Row(
+                    children: [
+                      Flexible(
+                        child: CommonButton(
+                          useSimpleStyle: true,
+                          radius: 20,
+                          child: CommonText(
+                            text: Languages.of(context).cancel,
+                            fontWeight: FontWeight.w700,
+                            textColor: CustomAppColor.of(context).txtPurple,
+                            fontSize: AppSizes.setFontSize(14),
+                          ),
                         ),
                       ),
-                    ),
-                    SizedBox(width: AppSizes.setWidth(12)),
-                    Expanded(
-                      child: CommonButton(
-                        btnText: Languages.of(context).logout,
+                      SizedBox(width: AppSizes.setWidth(12)),
+                      Expanded(
+                        child: CommonButton(
+                          btnText: Languages.of(context).logout,
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         );
       },

@@ -22,9 +22,7 @@ class _ChangeThemeDialogState extends State<ChangeThemeDialog> {
   @override
   Widget build(BuildContext context) {
     return Dialog(
-      backgroundColor: CustomAppColor.of(widget.parentContext)
-          .txtBlack
-          .withOpacityPercent(0.6),
+      backgroundColor: CustomAppColor.of(widget.parentContext).txtBlack.withOpacityPercent(0.6),
       child: Container(
         padding: EdgeInsets.all(20.setWidth),
         decoration: BoxDecoration(
@@ -35,8 +33,7 @@ class _ChangeThemeDialogState extends State<ChangeThemeDialog> {
           mainAxisSize: MainAxisSize.min,
           children: [
             CommonText(
-              text: Languages.of(widget.parentContext)
-                  .txtTheme, // Use parentContext
+              text: Languages.of(widget.parentContext).txtTheme, // Use parentContext
               fontSize: 20.setFontSize,
               fontWeight: FontWeight.w600,
               textColor: CustomAppColor.of(widget.parentContext).primary,
@@ -61,8 +58,7 @@ class _ChangeThemeDialogState extends State<ChangeThemeDialog> {
                       child: Radio(
                         value: true,
                         groupValue: value,
-                        activeColor:
-                            CustomAppColor.of(widget.parentContext).primary,
+                        activeColor: CustomAppColor.of(widget.parentContext).primary,
                         onChanged: (bool? value) {
                           if (value != null) {
                             isLight.value = value;
@@ -73,12 +69,10 @@ class _ChangeThemeDialogState extends State<ChangeThemeDialog> {
                   },
                 ),
                 CommonText(
-                  text: Languages.of(widget.parentContext)
-                      .txtLight, // Use parentContext
+                  text: Languages.of(widget.parentContext).txtLight, // Use parentContext
                   fontSize: 15.setFontSize,
                   fontWeight: FontWeight.w500,
-                  textColor:
-                      CustomAppColor.of(widget.parentContext).txtDarkGray,
+                  textColor: CustomAppColor.of(widget.parentContext).txtDarkGray,
                 ),
                 SizedBox(width: 30.setWidth),
                 ValueListenableBuilder(
@@ -90,8 +84,7 @@ class _ChangeThemeDialogState extends State<ChangeThemeDialog> {
                       child: Radio(
                         value: false,
                         groupValue: value,
-                        activeColor:
-                            CustomAppColor.of(widget.parentContext).primary,
+                        activeColor: CustomAppColor.of(widget.parentContext).primary,
                         onChanged: (bool? value) {
                           if (value != null) {
                             isLight.value = value;
@@ -102,12 +95,10 @@ class _ChangeThemeDialogState extends State<ChangeThemeDialog> {
                   },
                 ),
                 CommonText(
-                  text: Languages.of(widget.parentContext)
-                      .txtDark, // Use parentContext
+                  text: Languages.of(widget.parentContext).txtDark, // Use parentContext
                   fontSize: 15.setFontSize,
                   fontWeight: FontWeight.w500,
-                  textColor:
-                      CustomAppColor.of(widget.parentContext).txtDarkGray,
+                  textColor: CustomAppColor.of(widget.parentContext).txtDarkGray,
                 ),
               ],
             ),
@@ -119,16 +110,11 @@ class _ChangeThemeDialogState extends State<ChangeThemeDialog> {
                     onTap: () {
                       Navigator.pop(context, false);
                     },
-                    text: Languages.of(widget.parentContext)
-                        .txtCancel
-                        .toUpperCase(), // Use parentContext
-                    buttonColor:
-                        CustomAppColor.of(widget.parentContext).transparent,
-                    borderColor:
-                        CustomAppColor.of(widget.parentContext).primary,
+                    text: Languages.of(widget.parentContext).txtCancel.toUpperCase(), // Use parentContext
+                    buttonColor: CustomAppColor.of(widget.parentContext).transparent,
+                    borderColor: CustomAppColor.of(widget.parentContext).primary,
                     buttonFontStyle: FontStyle.normal,
-                    buttonTextColor:
-                        CustomAppColor.of(widget.parentContext).primary,
+                    buttonTextColor: CustomAppColor.of(widget.parentContext).primary,
                     buttonTextSize: 14.setFontSize,
                     buttonTextWeight: FontWeight.w500,
                     height: 40.setHeight,
@@ -140,13 +126,9 @@ class _ChangeThemeDialogState extends State<ChangeThemeDialog> {
                     onTap: () {
                       Navigator.pop(context, isLight.value);
                     },
-                    text: Languages.of(widget.parentContext)
-                        .txtOk
-                        .toUpperCase(), // Use parentContext
-                    buttonColor:
-                        CustomAppColor.of(widget.parentContext).primary,
-                    buttonTextColor:
-                        CustomAppColor.of(widget.parentContext).white,
+                    text: Languages.of(widget.parentContext).txtOk.toUpperCase(), // Use parentContext
+                    buttonColor: CustomAppColor.of(widget.parentContext).primary,
+                    buttonTextColor: CustomAppColor.of(widget.parentContext).white,
                     height: 40.setHeight,
                     buttonTextSize: 14.setFontSize,
                     buttonTextWeight: FontWeight.w500,
