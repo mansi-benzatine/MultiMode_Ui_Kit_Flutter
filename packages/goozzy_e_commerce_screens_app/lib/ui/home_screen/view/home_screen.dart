@@ -18,7 +18,24 @@ import '../../view_product/view/view_product_screen.dart';
 import '../datamodel/home_screen_data.dart';
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
+  final bool isShowSortByBs;
+  final bool isShowCategoryBs;
+  final bool isShowGenderBs;
+  final bool isShowFilterByColorBs;
+  final bool isShowFilterBySizeBs;
+  final int currentIndex;
+  final String label;
+
+  const HomeScreen({
+    super.key,
+    this.isShowCategoryBs = false,
+    this.isShowFilterByColorBs = false,
+    this.isShowFilterBySizeBs = false,
+    this.isShowGenderBs = false,
+    this.isShowSortByBs = false,
+    this.currentIndex = 0,
+    this.label = "",
+  });
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -32,6 +49,8 @@ class _HomeScreenState extends State<HomeScreen> {
   List<CategoryList> categoryList = [];
 
   List<SortByData> filterList = [];
+  bool _isBottomSheetOpen = false;
+
   void fillData() {
     sortByList = [
       SortByData(label: Languages.of(context).mostRelevant, isSelected: true),
@@ -250,91 +269,1125 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+
+    if (widget.isShowSortByBs) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        showSortByBS();
+      });
+    }
+    if (widget.isShowCategoryBs) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        showCategoryBS();
+      });
+    }
+    if (widget.isShowGenderBs) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        showGenderBS();
+      });
+    }
+    if (widget.isShowFilterByColorBs) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        showFilterBS(label: widget.label);
+      });
+    }
+  }
+
+  void showSortByBS() {
+    setState(() {
+      _isBottomSheetOpen = true;
+    });
+    customBottomSheet(
+      isDone: false,
+      maxHeightRatio: 0.45,
+      context: context,
+      title: Languages.of(context).sortBy,
+      content: ListView.builder(
+        shrinkWrap: true,
+        physics: const AlwaysScrollableScrollPhysics(),
+        itemCount: sortByList.length,
+        itemBuilder: (context, index) {
+          final sortByData = sortByList[index];
+          return Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              CommonText(
+                text: sortByData.label ?? '',
+                fontSize: AppSizes.setFontSize(15),
+                fontWeight: sortByData.isSelected ?? false ? FontWeight.bold : FontWeight.normal,
+                textColor: sortByData.isSelected ?? false ? CustomAppColor.of(context).txtBlack : CustomAppColor.of(context).txtGrey,
+              ),
+              Radio<bool>(
+                value: true,
+                groupValue: sortByData.isSelected,
+                onChanged: (value) {},
+                activeColor: CustomAppColor.of(context).borderPurple,
+              ),
+            ],
+          );
+        },
+      ),
+    ).whenComplete(() {
+      if (_isBottomSheetOpen) {
+        setState(() {
+          _isBottomSheetOpen = false;
+        });
+        Navigator.pop(context);
+      }
+    });
+  }
+
+  void showCategoryBS() {
+    setState(() {
+      _isBottomSheetOpen = true;
+    });
+    customBottomSheet(
+      context: context,
+      title: Languages.of(context).category,
+      maxHeightRatio: 0.8,
+      content: ListView.builder(
+        shrinkWrap: true,
+        itemCount: productsCategoryList.length,
+        itemBuilder: (context, index) {
+          final categoryData = productsCategoryList[index];
+          return Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              CommonText(
+                text: categoryData.label ?? '',
+                fontSize: AppSizes.setFontSize(15),
+                fontWeight: categoryData.isSelected ?? false ? FontWeight.w600 : FontWeight.w500,
+                textColor: categoryData.isSelected ?? false ? CustomAppColor.of(context).txtBlack : CustomAppColor.of(context).txtGrey,
+              ),
+              Checkbox(
+                value: categoryData.isSelected,
+                onChanged: (value) {},
+                activeColor: CustomAppColor.of(context).borderPurple,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(4),
+                ),
+              ),
+            ],
+          );
+        },
+      ),
+      onDone: () {
+        Navigator.pop(context);
+      },
+    ).whenComplete(() {
+      if (_isBottomSheetOpen) {
+        setState(() {
+          _isBottomSheetOpen = false;
+        });
+        Navigator.pop(context);
+      }
+    });
+  }
+
+  void showGenderBS() {
+    setState(() {
+      _isBottomSheetOpen = true;
+    });
+    customBottomSheet(
+      context: context,
+      title: Languages.of(context).gender,
+      maxHeightRatio: 0.7,
+      content: GridView.builder(
+        physics: const NeverScrollableScrollPhysics(),
+        padding: EdgeInsets.symmetric(vertical: AppSizes.setHeight(22)),
+        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 2,
+          crossAxisSpacing: 18,
+          mainAxisSpacing: 16,
+        ),
+        itemCount: genderList.length,
+        itemBuilder: (context, index) {
+          final genderData = genderList[index];
+          return Container(
+            padding: EdgeInsets.symmetric(horizontal: AppSizes.setWidth(15)),
+            width: AppSizes.setWidth(150),
+            height: AppSizes.setHeight(171),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(15),
+              border: Border.all(color: CustomAppColor.of(context).borderGrey),
+            ),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    CommonText(
+                      text: genderData.label ?? '',
+                      fontSize: AppSizes.setFontSize(15),
+                      fontWeight: FontWeight.w500,
+                      textColor: CustomAppColor.of(context).txtGrey,
+                    ),
+                    Radio<bool>(
+                      value: true,
+                      groupValue: genderData.isSelected,
+                      onChanged: (value) {
+                        Navigator.pop(context);
+                      },
+                      activeColor: CustomAppColor.of(context).borderPurple,
+                    ),
+                  ],
+                ),
+                Expanded(
+                  child: Image.asset(
+                    genderData.imagePath ?? '',
+                    height: AppSizes.setHeight(115),
+                    width: AppSizes.setWidth(100),
+                    fit: BoxFit.fill,
+                    alignment: Alignment.bottomCenter,
+                  ),
+                ),
+              ],
+            ),
+          );
+        },
+      ),
+      onDone: () {},
+    ).whenComplete(() {
+      if (_isBottomSheetOpen) {
+        setState(() {
+          _isBottomSheetOpen = false;
+        });
+        Navigator.pop(context);
+      }
+    });
+  }
+
+  void showFilterBS({required String label}) {
+    setState(() {
+      _isBottomSheetOpen = true;
+    });
+
+    int selectedIndex = filterList.indexWhere((filter) => filter.label == label);
+    if (selectedIndex == -1) {
+      selectedIndex = 0;
+    }
+
+    for (var filter in filterList) {
+      filter.isSelected = (filter.label == label);
+    }
+
+    customBottomSheet(
+      catalogCount: AppStrings.catalogs2,
+      isClearVisible: true,
+      maxHeightRatio: 0.90,
+      context: context,
+      isPaddingRequired: false,
+      isDone: true,
+      title: Languages.of(context).filter.toUpperCase(),
+      content: StatefulBuilder(
+        builder: (context, setState) {
+          return Row(
+            children: [
+              SizedBox(
+                width: AppSizes.setWidth(152),
+                child: ListView.builder(
+                  padding: EdgeInsets.zero,
+                  itemCount: filterList.length,
+                  itemBuilder: (context, index) {
+                    final filter = filterList[index];
+                    return IgnorePointer(
+                      ignoring: true,
+                      child: InkWell(
+                        onTap: () {
+                          setState(() {
+                            selectedIndex = index;
+
+                            for (var i = 0; i < filterList.length; i++) {
+                              filterList[i].isSelected = (i == index);
+                            }
+                          });
+                        },
+                        child: Container(
+                          margin: EdgeInsets.zero,
+                          padding: EdgeInsets.symmetric(
+                            vertical: AppSizes.setHeight(12),
+                            horizontal: AppSizes.setWidth(12),
+                          ),
+                          decoration: BoxDecoration(
+                            color: selectedIndex == index ? CustomAppColor.of(context).bgFilter : CustomAppColor.of(context).bgContainerGrey.withOpacityPercent(0.2),
+                            border: selectedIndex == index
+                                ? Border(
+                                    left: BorderSide(
+                                      color: CustomAppColor.of(context).borderPurple,
+                                      width: 5,
+                                    ),
+                                  )
+                                : Border(
+                                    bottom: BorderSide(
+                                      color: CustomAppColor.of(context).bgContainerGrey.withOpacityPercent(0.5),
+                                      width: 0.5,
+                                    ),
+                                    top: BorderSide(
+                                      color: CustomAppColor.of(context).bgContainerGrey.withOpacityPercent(0.5),
+                                      width: 0.5,
+                                    ),
+                                  ),
+                          ),
+                          child: Row(
+                            children: [
+                              Expanded(
+                                child: CommonText(
+                                  text: filter.label ?? '',
+                                  textColor: selectedIndex == index ? CustomAppColor.of(context).txtPurple : CustomAppColor.of(context).txtGrey,
+                                  textAlign: TextAlign.start,
+                                  fontWeight: FontWeight.w500,
+                                  overflow: TextOverflow.ellipsis,
+                                  fontSize: AppSizes.setFontSize(14),
+                                  maxLines: 1,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    );
+                  },
+                ),
+              ),
+              Expanded(
+                child: Padding(
+                  padding: EdgeInsets.symmetric(horizontal: AppSizes.setWidth(10)),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      CommonText(
+                        text: filterList[selectedIndex].label?.toUpperCase() ?? ' ',
+                        fontWeight: FontWeight.w700,
+                        fontSize: AppSizes.setFontSize(17),
+                      ),
+                      const SizedBox(height: 12),
+                      if (filterList[selectedIndex].label == Languages.of(context).colors) ...[
+                        Wrap(
+                          spacing: 8,
+                          runSpacing: 8,
+                          children: [
+                            ...List.generate(
+                              colorList.length,
+                              (index) => FilterOptionChip(
+                                label: "${colorList[index].label ?? ''} ",
+                                isSelected: colorList[index].isSelected ?? false,
+                                onTap: () {},
+                              ),
+                            ),
+                          ],
+                        ),
+                      ] else if (filterList[selectedIndex].label == 'Size') ...[
+                        Expanded(
+                          child: Column(
+                            children: [
+                              CommonTextFormField(
+                                radius: 4,
+                                borderColor: CustomAppColor.of(context).bgContainerGrey.withOpacityPercent(0.3),
+                                leadingIcon: Image.asset(
+                                  AppAssets.icSearch,
+                                  height: AppSizes.setHeight(24),
+                                  width: AppSizes.setWidth(24),
+                                  color: CustomAppColor.of(context).txtGrey,
+                                ),
+                                hintText: Languages.of(context).search,
+                                hintStyle: TextStyle(
+                                  fontWeight: FontWeight.w600,
+                                  fontSize: AppSizes.setFontSize(15),
+                                  color: CustomAppColor.of(context).txtGrey,
+                                ),
+                              ),
+                              Expanded(
+                                child: ListView.builder(
+                                  shrinkWrap: true,
+                                  itemCount: sizeList.length,
+                                  itemBuilder: (context, index) {
+                                    return Row(
+                                      mainAxisAlignment: MainAxisAlignment.start,
+                                      children: [
+                                        Checkbox(
+                                          value: sizeList[index].isSelected,
+                                          onChanged: (value) {},
+                                          activeColor: CustomAppColor.of(context).borderPurple,
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius: BorderRadius.circular(4),
+                                          ),
+                                        ),
+                                        CommonText(
+                                          text: sizeList[index].label ?? '',
+                                          fontSize: AppSizes.setFontSize(15),
+                                          fontWeight: sizeList[index].isSelected ?? false ? FontWeight.w600 : FontWeight.w500,
+                                          textColor: sizeList[index].isSelected ?? false ? CustomAppColor.of(context).txtBlack : CustomAppColor.of(context).txtGrey,
+                                        ),
+                                      ],
+                                    );
+                                  },
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ] else if (filterList[selectedIndex].label == 'Category') ...[
+                        Expanded(
+                          child: Column(
+                            children: [
+                              CommonTextFormField(
+                                radius: 4,
+                                borderColor: CustomAppColor.of(context).bgContainerGrey.withOpacityPercent(0.3),
+                                leadingIcon: Image.asset(
+                                  AppAssets.icSearch,
+                                  height: AppSizes.setHeight(24),
+                                  width: AppSizes.setWidth(24),
+                                  color: CustomAppColor.of(context).txtGrey,
+                                ),
+                                hintText: Languages.of(context).search,
+                                hintStyle: TextStyle(
+                                  fontWeight: FontWeight.w600,
+                                  fontSize: AppSizes.setFontSize(15),
+                                  color: CustomAppColor.of(context).txtGrey,
+                                ),
+                              ),
+                              Expanded(
+                                child: ListView.builder(
+                                  shrinkWrap: true,
+                                  padding: EdgeInsets.zero,
+                                  itemCount: filterCategoryList.length,
+                                  itemBuilder: (context, index) {
+                                    return Row(
+                                      mainAxisAlignment: MainAxisAlignment.start,
+                                      children: [
+                                        Checkbox(
+                                          value: filterCategoryList[index].isSelected,
+                                          onChanged: (value) {},
+                                          activeColor: CustomAppColor.of(context).borderPurple,
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius: BorderRadius.circular(4),
+                                          ),
+                                        ),
+                                        CommonText(
+                                          text: filterCategoryList[index].label ?? '',
+                                          fontSize: AppSizes.setFontSize(15),
+                                          fontWeight: filterCategoryList[index].isSelected ?? false ? FontWeight.w600 : FontWeight.w500,
+                                          textColor: filterCategoryList[index].isSelected ?? false ? CustomAppColor.of(context).txtBlack : CustomAppColor.of(context).txtGrey,
+                                        ),
+                                      ],
+                                    );
+                                  },
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ] else if (filterList[selectedIndex].label == 'Fabric') ...[
+                        Expanded(
+                          child: Column(
+                            children: [
+                              CommonTextFormField(
+                                radius: 6,
+                                borderColor: CustomAppColor.of(context).bgContainerGrey.withOpacityPercent(0.3),
+                                leadingIcon: Image.asset(
+                                  AppAssets.icSearch,
+                                  height: AppSizes.setHeight(24),
+                                  width: AppSizes.setWidth(24),
+                                  color: CustomAppColor.of(context).txtGrey,
+                                ),
+                                hintText: Languages.of(context).search,
+                                hintStyle: TextStyle(
+                                  fontWeight: FontWeight.w600,
+                                  fontSize: AppSizes.setFontSize(15),
+                                  color: CustomAppColor.of(context).txtGrey,
+                                ),
+                              ),
+                              Expanded(
+                                child: ListView.builder(
+                                  shrinkWrap: true,
+                                  itemCount: fabricList.length,
+                                  itemBuilder: (context, index) {
+                                    return Row(
+                                      mainAxisAlignment: MainAxisAlignment.start,
+                                      children: [
+                                        Checkbox(
+                                          value: fabricList[index].isSelected,
+                                          onChanged: (value) {},
+                                          activeColor: CustomAppColor.of(context).borderPurple,
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius: BorderRadius.circular(4),
+                                          ),
+                                        ),
+                                        CommonText(
+                                          text: fabricList[index].label ?? '',
+                                          fontSize: AppSizes.setFontSize(15),
+                                          fontWeight: fabricList[index].isSelected ?? false ? FontWeight.w600 : FontWeight.w500,
+                                          textColor: fabricList[index].isSelected ?? false ? CustomAppColor.of(context).txtBlack : CustomAppColor.of(context).txtGrey,
+                                        ),
+                                      ],
+                                    );
+                                  },
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ] else if (filterList[selectedIndex].label == 'Gender') ...[
+                        Expanded(
+                          child: ListView.builder(
+                            shrinkWrap: true,
+                            itemCount: filterGenderList.length,
+                            itemBuilder: (context, index) {
+                              return Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  Checkbox(
+                                    value: filterGenderList[index].isSelected,
+                                    onChanged: (value) {},
+                                    activeColor: CustomAppColor.of(context).borderPurple,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(4),
+                                    ),
+                                  ),
+                                  CommonText(
+                                    text: filterGenderList[index].label ?? '',
+                                    fontSize: AppSizes.setFontSize(15),
+                                    fontWeight: filterGenderList[index].isSelected ?? false ? FontWeight.w600 : FontWeight.w500,
+                                    textColor: filterGenderList[index].isSelected ?? false ? CustomAppColor.of(context).txtBlack : CustomAppColor.of(context).txtGrey,
+                                  ),
+                                ],
+                              );
+                            },
+                          ),
+                        ),
+                      ] else if (filterList[selectedIndex].label == 'Price') ...[
+                        Expanded(
+                          child: ListView(
+                            physics: const AlwaysScrollableScrollPhysics(),
+                            children: [
+                              Wrap(
+                                spacing: 8,
+                                runSpacing: 8,
+                                children: List.generate(
+                                  priceList.length,
+                                  (index) => FilterOptionChip(
+                                    label: priceList[index].label ?? '',
+                                    isSelected: priceList[index].isSelected ?? false,
+                                    onTap: () {},
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ] else if (filterList[selectedIndex].label == 'Rating') ...[
+                        Expanded(
+                          child: ListView.builder(
+                            shrinkWrap: true,
+                            itemCount: ratingList.length,
+                            itemBuilder: (context, index) {
+                              return Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  Checkbox(
+                                    value: ratingList[index].isSelected,
+                                    onChanged: (value) {},
+                                    activeColor: CustomAppColor.of(context).borderPurple,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(4),
+                                    ),
+                                  ),
+                                  CommonText(
+                                    text: ratingList[index].label ?? '',
+                                    fontSize: AppSizes.setFontSize(15),
+                                    fontWeight: ratingList[index].isSelected ?? false ? FontWeight.w600 : FontWeight.w500,
+                                    textColor: ratingList[index].isSelected ?? false ? CustomAppColor.of(context).txtBlack : CustomAppColor.of(context).txtGrey,
+                                  ),
+                                ],
+                              );
+                            },
+                          ),
+                        ),
+                      ] else if (filterList[selectedIndex].label == 'Occasion') ...[
+                        Expanded(
+                          child: ListView.builder(
+                            shrinkWrap: true,
+                            itemCount: occasionList.length,
+                            itemBuilder: (context, index) {
+                              return Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  Checkbox(
+                                    value: occasionList[index].isSelected,
+                                    onChanged: (value) {},
+                                    activeColor: CustomAppColor.of(context).borderPurple,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(4),
+                                    ),
+                                  ),
+                                  CommonText(
+                                    text: occasionList[index].label ?? '',
+                                    fontSize: AppSizes.setFontSize(15),
+                                    fontWeight: occasionList[index].isSelected ?? false ? FontWeight.w600 : FontWeight.w500,
+                                    textColor: occasionList[index].isSelected ?? false ? CustomAppColor.of(context).txtBlack : CustomAppColor.of(context).txtGrey,
+                                  ),
+                                ],
+                              );
+                            },
+                          ),
+                        ),
+                      ] else if (filterList[selectedIndex].label == 'Combo') ...[
+                        Expanded(
+                          child: ListView.builder(
+                            shrinkWrap: true,
+                            itemCount: comboList.length,
+                            itemBuilder: (context, index) {
+                              return Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  Checkbox(
+                                    value: comboList[index].isSelected,
+                                    onChanged: (value) {},
+                                    activeColor: CustomAppColor.of(context).borderPurple,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(4),
+                                    ),
+                                  ),
+                                  CommonText(
+                                    text: comboList[index].label ?? '',
+                                    fontSize: AppSizes.setFontSize(15),
+                                    fontWeight: comboList[index].isSelected ?? false ? FontWeight.w600 : FontWeight.w500,
+                                    textColor: comboList[index].isSelected ?? false ? CustomAppColor.of(context).txtBlack : CustomAppColor.of(context).txtGrey,
+                                  ),
+                                ],
+                              );
+                            },
+                          ),
+                        ),
+                      ] else if (filterList[selectedIndex].label == 'Discount') ...[
+                        Wrap(
+                          spacing: 4,
+                          runSpacing: 4,
+                          children: List.generate(
+                            discountList.length,
+                            (index) => FilterOptionChip(
+                              label: discountList[index].label ?? '',
+                              isSelected: discountList[index].isSelected ?? false,
+                              onTap: () {},
+                            ),
+                          ),
+                        ),
+                      ] else if (filterList[selectedIndex].label == 'Reversible') ...[
+                        Wrap(
+                          spacing: 8,
+                          runSpacing: 8,
+                          children: List.generate(
+                            reversibleList.length,
+                            (index) => FilterOptionChip(
+                              label: reversibleList[index].label ?? '',
+                              isSelected: reversibleList[index].isSelected ?? false,
+                              onTap: () {},
+                            ),
+                          ),
+                        ),
+                      ] else if (filterList[selectedIndex].label == 'Fit/Shape') ...[
+                        Expanded(
+                          child: ListView.builder(
+                            shrinkWrap: true,
+                            itemCount: fitShapeList.length,
+                            itemBuilder: (context, index) {
+                              return Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  Checkbox(
+                                    value: fitShapeList[index].isSelected,
+                                    onChanged: (value) {},
+                                    activeColor: CustomAppColor.of(context).borderPurple,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(4),
+                                    ),
+                                  ),
+                                  CommonText(
+                                    text: fitShapeList[index].label ?? '',
+                                    fontSize: AppSizes.setFontSize(15),
+                                    fontWeight: fitShapeList[index].isSelected ?? false ? FontWeight.w600 : FontWeight.w500,
+                                    textColor: fitShapeList[index].isSelected ?? false ? CustomAppColor.of(context).txtBlack : CustomAppColor.of(context).txtGrey,
+                                  ),
+                                ],
+                              );
+                            },
+                          ),
+                        ),
+                      ] else if (filterList[selectedIndex].label == 'Material') ...[
+                        Expanded(
+                          child: ListView.builder(
+                            shrinkWrap: true,
+                            itemCount: materialList.length,
+                            itemBuilder: (context, index) {
+                              return Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  Checkbox(
+                                    value: materialList[index].isSelected,
+                                    onChanged: (value) {},
+                                    activeColor: CustomAppColor.of(context).borderPurple,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(4),
+                                    ),
+                                  ),
+                                  CommonText(
+                                    text: materialList[index].label ?? '',
+                                    fontSize: AppSizes.setFontSize(15),
+                                    fontWeight: materialList[index].isSelected ?? false ? FontWeight.w600 : FontWeight.w500,
+                                    textColor: materialList[index].isSelected ?? false ? CustomAppColor.of(context).txtBlack : CustomAppColor.of(context).txtGrey,
+                                  ),
+                                ],
+                              );
+                            },
+                          ),
+                        ),
+                      ] else if (filterList[selectedIndex].label == 'Pattern Type') ...[
+                        Expanded(
+                          child: ListView.builder(
+                            shrinkWrap: true,
+                            itemCount: patternList.length,
+                            itemBuilder: (context, index) {
+                              return Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  Checkbox(
+                                    value: patternList[index].isSelected,
+                                    onChanged: (value) {},
+                                    activeColor: CustomAppColor.of(context).borderPurple,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(4),
+                                    ),
+                                  ),
+                                  CommonText(
+                                    text: patternList[index].label ?? '',
+                                    fontSize: AppSizes.setFontSize(15),
+                                    fontWeight: patternList[index].isSelected ?? false ? FontWeight.w600 : FontWeight.w500,
+                                    textColor: patternList[index].isSelected ?? false ? CustomAppColor.of(context).txtBlack : CustomAppColor.of(context).txtGrey,
+                                  ),
+                                ],
+                              );
+                            },
+                          ),
+                        ),
+                      ] else if (filterList[selectedIndex].label == 'Shade') ...[
+                        Expanded(
+                          child: ListView.builder(
+                            shrinkWrap: true,
+                            itemCount: shadeList.length,
+                            itemBuilder: (context, index) {
+                              return Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  Checkbox(
+                                    value: shadeList[index].isSelected,
+                                    onChanged: (value) {},
+                                    activeColor: CustomAppColor.of(context).borderPurple,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(4),
+                                    ),
+                                  ),
+                                  CommonText(
+                                    text: shadeList[index].label ?? '',
+                                    fontSize: AppSizes.setFontSize(15),
+                                    fontWeight: shadeList[index].isSelected ?? false ? FontWeight.w600 : FontWeight.w500,
+                                    textColor: shadeList[index].isSelected ?? false ? CustomAppColor.of(context).txtBlack : CustomAppColor.of(context).txtGrey,
+                                  ),
+                                ],
+                              );
+                            },
+                          ),
+                        ),
+                      ] else if (filterList[selectedIndex].label == 'Type Of Skin') ...[
+                        Expanded(
+                          child: ListView.builder(
+                            shrinkWrap: true,
+                            itemCount: typeOfSkinList.length,
+                            itemBuilder: (context, index) {
+                              return Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  Checkbox(
+                                    value: typeOfSkinList[index].isSelected,
+                                    onChanged: (value) {},
+                                    activeColor: CustomAppColor.of(context).borderPurple,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(4),
+                                    ),
+                                  ),
+                                  CommonText(
+                                    text: typeOfSkinList[index].label ?? '',
+                                    fontSize: AppSizes.setFontSize(15),
+                                    fontWeight: typeOfSkinList[index].isSelected ?? false ? FontWeight.w600 : FontWeight.w500,
+                                    textColor: typeOfSkinList[index].isSelected ?? false ? CustomAppColor.of(context).txtBlack : CustomAppColor.of(context).txtGrey,
+                                  ),
+                                ],
+                              );
+                            },
+                          ),
+                        ),
+                      ] else if (filterList[selectedIndex].label == 'Concern') ...[
+                        Expanded(
+                          child: ListView.builder(
+                            shrinkWrap: true,
+                            itemCount: concernList.length,
+                            itemBuilder: (context, index) {
+                              return Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  Checkbox(
+                                    value: concernList[index].isSelected,
+                                    onChanged: (value) {},
+                                    activeColor: CustomAppColor.of(context).borderPurple,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(4),
+                                    ),
+                                  ),
+                                  CommonText(
+                                    text: concernList[index].label ?? '',
+                                    fontSize: AppSizes.setFontSize(15),
+                                    fontWeight: concernList[index].isSelected ?? false ? FontWeight.w600 : FontWeight.w500,
+                                    textColor: concernList[index].isSelected ?? false ? CustomAppColor.of(context).txtBlack : CustomAppColor.of(context).txtGrey,
+                                  ),
+                                ],
+                              );
+                            },
+                          ),
+                        ),
+                      ] else if (filterList[selectedIndex].label == 'Heel Type') ...[
+                        Wrap(
+                          spacing: 8,
+                          runSpacing: 8,
+                          children: List.generate(
+                            heelTypeList.length,
+                            (index) => FilterOptionChip(
+                              label: heelTypeList[index].label ?? '',
+                              isSelected: heelTypeList[index].isSelected ?? false,
+                              onTap: () {},
+                            ),
+                          ),
+                        ),
+                      ] else if (filterList[selectedIndex].label == 'Bottom Type') ...[
+                        Wrap(
+                          spacing: 4,
+                          runSpacing: 4,
+                          children: List.generate(
+                            bottomTypeList.length,
+                            (index) => FilterOptionChip(
+                              label: bottomTypeList[index].label ?? '',
+                              isSelected: bottomTypeList[index].isSelected ?? false,
+                              onTap: () {},
+                            ),
+                          ),
+                        ),
+                      ] else if (filterList[selectedIndex].label == 'Warranty Period') ...[
+                        Wrap(
+                          spacing: 4,
+                          runSpacing: 4,
+                          children: List.generate(
+                            warrantyList.length,
+                            (index) => FilterOptionChip(
+                              label: warrantyList[index].label ?? '',
+                              isSelected: warrantyList[index].isSelected ?? false,
+                              onTap: () {},
+                            ),
+                          ),
+                        ),
+                      ] else if (filterList[selectedIndex].label == 'Brand') ...[
+                        Expanded(
+                          child: ListView.builder(
+                            shrinkWrap: true,
+                            itemCount: warrantyList.length,
+                            itemBuilder: (context, index) {
+                              return Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  Checkbox(
+                                    value: warrantyList[index].isSelected,
+                                    onChanged: (value) {},
+                                    activeColor: CustomAppColor.of(context).borderPurple,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(4),
+                                    ),
+                                  ),
+                                  CommonText(
+                                    text: warrantyList[index].label ?? '',
+                                    fontSize: AppSizes.setFontSize(15),
+                                    fontWeight: warrantyList[index].isSelected ?? false ? FontWeight.w600 : FontWeight.w500,
+                                    textColor: warrantyList[index].isSelected ?? false ? CustomAppColor.of(context).txtBlack : CustomAppColor.of(context).txtGrey,
+                                  ),
+                                ],
+                              );
+                            },
+                          ),
+                        ),
+                      ] else if (filterList[selectedIndex].label == 'Top Type') ...[
+                        Expanded(
+                          child: ListView.builder(
+                            shrinkWrap: true,
+                            itemCount: topTypeList.length,
+                            itemBuilder: (context, index) {
+                              return Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  Checkbox(
+                                    value: topTypeList[index].isSelected,
+                                    onChanged: (value) {},
+                                    activeColor: CustomAppColor.of(context).borderPurple,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(4),
+                                    ),
+                                  ),
+                                  CommonText(
+                                    text: topTypeList[index].label ?? '',
+                                    fontSize: AppSizes.setFontSize(15),
+                                    fontWeight: topTypeList[index].isSelected ?? false ? FontWeight.w600 : FontWeight.w500,
+                                    textColor: topTypeList[index].isSelected ?? false ? CustomAppColor.of(context).txtBlack : CustomAppColor.of(context).txtGrey,
+                                  ),
+                                ],
+                              );
+                            },
+                          ),
+                        ),
+                      ] else if (filterList[selectedIndex].label == 'BackType') ...[
+                        Expanded(
+                          child: ListView.builder(
+                            shrinkWrap: true,
+                            itemCount: backTypeList.length,
+                            itemBuilder: (context, index) {
+                              return Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  Checkbox(
+                                    value: backTypeList[index].isSelected,
+                                    onChanged: (value) {},
+                                    activeColor: CustomAppColor.of(context).borderPurple,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(4),
+                                    ),
+                                  ),
+                                  CommonText(
+                                    text: backTypeList[index].label ?? '',
+                                    fontSize: AppSizes.setFontSize(15),
+                                    fontWeight: backTypeList[index].isSelected ?? false ? FontWeight.w600 : FontWeight.w500,
+                                    textColor: backTypeList[index].isSelected ?? false ? CustomAppColor.of(context).txtBlack : CustomAppColor.of(context).txtGrey,
+                                  ),
+                                ],
+                              );
+                            },
+                          ),
+                        ),
+                      ] else if (filterList[selectedIndex].label == 'Border') ...[
+                        Expanded(
+                          child: ListView.builder(
+                            shrinkWrap: true,
+                            itemCount: borderList.length,
+                            itemBuilder: (context, index) {
+                              return Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  Checkbox(
+                                    value: borderList[index].isSelected,
+                                    onChanged: (value) {},
+                                    activeColor: CustomAppColor.of(context).borderPurple,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(4),
+                                    ),
+                                  ),
+                                  CommonText(
+                                    text: borderList[index].label ?? '',
+                                    fontSize: AppSizes.setFontSize(15),
+                                    fontWeight: borderList[index].isSelected ?? false ? FontWeight.w600 : FontWeight.w500,
+                                    textColor: borderList[index].isSelected ?? false ? CustomAppColor.of(context).txtBlack : CustomAppColor.of(context).txtGrey,
+                                  ),
+                                ],
+                              );
+                            },
+                          ),
+                        ),
+                      ] else if (filterList[selectedIndex].label == 'Bottom Pattern Type') ...[
+                        Expanded(
+                          child: ListView.builder(
+                            shrinkWrap: true,
+                            itemCount: bottomPatternTypeList.length,
+                            itemBuilder: (context, index) {
+                              return Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  Checkbox(
+                                    value: bottomPatternTypeList[index].isSelected,
+                                    onChanged: (value) {},
+                                    activeColor: CustomAppColor.of(context).borderPurple,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(4),
+                                    ),
+                                  ),
+                                  CommonText(
+                                    text: bottomPatternTypeList[index].label ?? '',
+                                    fontSize: AppSizes.setFontSize(15),
+                                    fontWeight: bottomPatternTypeList[index].isSelected ?? false ? FontWeight.w600 : FontWeight.w500,
+                                    textColor: bottomPatternTypeList[index].isSelected ?? false ? CustomAppColor.of(context).txtBlack : CustomAppColor.of(context).txtGrey,
+                                  ),
+                                ],
+                              );
+                            },
+                          ),
+                        ),
+                      ] else if (filterList[selectedIndex].label == 'Bottomwear Fabric') ...[
+                        Expanded(
+                          child: ListView.builder(
+                            shrinkWrap: true,
+                            itemCount: bottomWearFabricList.length,
+                            itemBuilder: (context, index) {
+                              return Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  Checkbox(
+                                    value: bottomWearFabricList[index].isSelected,
+                                    onChanged: (value) {},
+                                    activeColor: CustomAppColor.of(context).borderPurple,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(4),
+                                    ),
+                                  ),
+                                  CommonText(
+                                    text: bottomWearFabricList[index].label ?? '',
+                                    fontSize: AppSizes.setFontSize(15),
+                                    fontWeight: bottomWearFabricList[index].isSelected ?? false ? FontWeight.w600 : FontWeight.w500,
+                                    textColor: bottomWearFabricList[index].isSelected ?? false ? CustomAppColor.of(context).txtBlack : CustomAppColor.of(context).txtGrey,
+                                  ),
+                                ],
+                              );
+                            },
+                          ),
+                        ),
+                      ],
+                    ],
+                  ),
+                ),
+              )
+            ],
+          );
+        },
+      ),
+      onDone: () {
+        Navigator.pop(context);
+      },
+    ).whenComplete(() {
+      if (_isBottomSheetOpen) {
+        setState(() {
+          _isBottomSheetOpen = false;
+        });
+        Navigator.pop(context);
+      }
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
     fillData();
-    return Container(
-      color: CustomAppColor.of(context).bgTopBar,
-      child: Column(
-        children: [
-          Padding(
-            padding: EdgeInsets.symmetric(vertical: AppSizes.setHeight(14), horizontal: AppSizes.setWidth(21)),
-            child: Container(
-              decoration: BoxDecoration(
-                boxShadow: [
-                  BoxShadow(
-                    color: CustomAppColor.of(context).black.withOpacityPercent(0.1),
-                    blurRadius: AppSizes.setHeight(10),
-                    offset: Offset(0, AppSizes.setHeight(4)),
+    return PopScope(
+      canPop: !_isBottomSheetOpen,
+      onPopInvokedWithResult: (didPop, result) {
+        if (!didPop && _isBottomSheetOpen) {
+          Navigator.pop(context);
+          setState(() {
+            _isBottomSheetOpen = false;
+          });
+          Navigator.pop(context);
+        }
+      },
+      child: Container(
+        color: CustomAppColor.of(context).bgTopBar,
+        child: Column(
+          children: [
+            Padding(
+              padding: EdgeInsets.symmetric(vertical: AppSizes.setHeight(14), horizontal: AppSizes.setWidth(21)),
+              child: Container(
+                decoration: BoxDecoration(
+                  boxShadow: [
+                    BoxShadow(
+                      color: CustomAppColor.of(context).black.withOpacityPercent(0.1),
+                      blurRadius: AppSizes.setHeight(10),
+                      offset: Offset(0, AppSizes.setHeight(4)),
+                    ),
+                  ],
+                ),
+                child: CommonTextFormField(
+                  leadingIcon: Image.asset(
+                    AppAssets.icSearch,
+                    height: AppSizes.setHeight(18),
+                    width: AppSizes.setWidth(18),
                   ),
-                ],
-              ),
-              child: CommonTextFormField(
-                leadingIcon: Image.asset(
-                  AppAssets.icSearch,
-                  height: AppSizes.setHeight(18),
-                  width: AppSizes.setWidth(18),
+                  suffixIcon: Image.asset(
+                    AppAssets.icVoice,
+                    scale: 3,
+                  ),
+                  borderColor: CustomAppColor.of(context).transparent,
+                  hintText: Languages.of(context).searchHere,
                 ),
-                suffixIcon: Image.asset(
-                  AppAssets.icVoice,
-                  scale: 3,
-                ),
-                borderColor: CustomAppColor.of(context).transparent,
-                hintText: Languages.of(context).searchHere,
               ),
             ),
-          ),
-          imageSlider(),
-          Expanded(
-            child: SingleChildScrollView(
-              child: Column(
-                children: [
-                  Padding(
-                    padding: EdgeInsets.only(bottom: AppSizes.setHeight(12)),
-                    child: Heading(
-                      title: Languages.of(context).categories.toUpperCase(),
-                      navigationTitle: Languages.of(context).seeAll.toUpperCase(),
+            imageSlider(),
+            Expanded(
+              child: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.only(bottom: AppSizes.setHeight(12)),
+                      child: Heading(
+                        title: Languages.of(context).categories.toUpperCase(),
+                        navigationTitle: Languages.of(context).seeAll.toUpperCase(),
+                      ),
                     ),
-                  ),
-                  categoryCard(),
-                  Padding(
-                    padding: EdgeInsets.symmetric(vertical: AppSizes.setHeight(12)),
-                    child: Heading(
-                      title: Languages.of(context).treadingDeal.toUpperCase(),
-                      navigationTitle: Languages.of(context).seeAll.toUpperCase(),
+                    categoryCard(),
+                    Padding(
+                      padding: EdgeInsets.symmetric(vertical: AppSizes.setHeight(12)),
+                      child: Heading(
+                        title: Languages.of(context).treadingDeal.toUpperCase(),
+                        navigationTitle: Languages.of(context).seeAll.toUpperCase(),
+                      ),
                     ),
-                  ),
-                  trendingCard(),
-                  Padding(
-                    padding: EdgeInsets.only(top: AppSizes.setHeight(16)),
-                    child: CommonActionWidget.action(
-                      context,
-                      sortByTap: () {
-                        showSortByBottomSheet(context);
-                      },
-                      categoryTap: () {
-                        showCategoryBottomSheet(context);
-                      },
-                      genderTap: () {
-                        showGenderBottomSheet(context);
-                      },
-                      filterTap: () {
-                        showFilterBottomSheet(context);
-                      },
+                    trendingCard(),
+                    IgnorePointer(
+                      ignoring: true,
+                      child: Padding(
+                        padding: EdgeInsets.only(top: AppSizes.setHeight(16)),
+                        child: CommonActionWidget.action(
+                          context,
+                          sortByTap: () {
+                            showSortByBottomSheet(context);
+                          },
+                          categoryTap: () {
+                            showCategoryBottomSheet(context);
+                          },
+                          genderTap: () {
+                            showGenderBottomSheet(context);
+                          },
+                          filterTap: () {
+                            // showFilterBottomSheet(context);
+                          },
+                        ),
+                      ),
                     ),
-                  ),
-                  IgnorePointer(
-                    ignoring: true,
-                    child: ProductsDetail(
-                      onTap: () => Navigator.push(context, ViewProductScreen.route()),
-                      productsList: productsList,
-                      btnText: Languages.of(context).viewProduct,
-                    ),
-                  )
-                ],
+                    IgnorePointer(
+                      ignoring: true,
+                      child: ProductsDetail(
+                        onTap: () => Navigator.push(context, ViewProductScreen.route()),
+                        productsList: productsList,
+                        btnText: Languages.of(context).viewProduct,
+                      ),
+                    )
+                  ],
+                ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

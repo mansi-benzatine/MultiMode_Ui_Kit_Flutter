@@ -8,7 +8,7 @@ import '../../utils/string_constant.dart';
 import '../button/common_button.dart';
 import '../text/common_text.dart';
 
-void customBottomSheet({
+Future<T?> customBottomSheet<T>({
   required BuildContext context,
   required String title,
   required Widget content,
@@ -19,9 +19,12 @@ void customBottomSheet({
   bool? isPaddingRequired = true,
   String? catalogCount,
 }) {
-  showModalBottomSheet(
+  return showModalBottomSheet<T>(
     scrollControlDisabledMaxHeightRatio: maxHeightRatio ?? 0.6,
     context: context,
+    isDismissible: false,
+    enableDrag: false,
+    isScrollControlled: false,
     backgroundColor: CustomAppColor.of(context).bgScaffold,
     shape: const RoundedRectangleBorder(
       borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
@@ -41,12 +44,15 @@ void customBottomSheet({
                     fontWeight: FontWeight.w700,
                     fontSize: AppSizes.setFontSize(18),
                   ),
-                  GestureDetector(
-                    onTap: () => Navigator.of(context).pop(),
-                    child: Icon(
-                      Icons.clear,
-                      weight: AppSizes.setWidth(24),
-                      color: CustomAppColor.of(context).txtGrey,
+                  IgnorePointer(
+                    ignoring: true,
+                    child: GestureDetector(
+                      onTap: () => Navigator.of(context).pop(),
+                      child: Icon(
+                        Icons.clear,
+                        weight: AppSizes.setWidth(24),
+                        color: CustomAppColor.of(context).txtGrey,
+                      ),
                     ),
                   ),
                 ],
@@ -87,27 +93,33 @@ void customBottomSheet({
                       ),
                       Visibility(
                         visible: isClearVisible ?? false,
-                        child: Padding(
-                          padding: EdgeInsets.only(left: AppSizes.setWidth(33), right: AppSizes.setWidth(15)),
-                          child: CommonButton(
-                            width: AppSizes.setWidth(93),
-                            height: AppSizes.setHeight(34),
-                            radius: 3,
-                            borderColor: CustomAppColor.of(context).bgContainerGrey,
-                            onTap: onDone,
-                            buttonColor: CustomAppColor.of(context).btnWhite,
-                            child: CommonText(
-                              text: Languages.of(context).clearFilter,
+                        child: IgnorePointer(
+                          ignoring: true,
+                          child: Padding(
+                            padding: EdgeInsets.only(left: AppSizes.setWidth(33), right: AppSizes.setWidth(15)),
+                            child: CommonButton(
+                              width: AppSizes.setWidth(93),
+                              height: AppSizes.setHeight(34),
+                              radius: 3,
+                              borderColor: CustomAppColor.of(context).bgContainerGrey,
+                              onTap: onDone,
+                              buttonColor: CustomAppColor.of(context).btnWhite,
+                              child: CommonText(
+                                text: Languages.of(context).clearFilter,
+                              ),
                             ),
                           ),
                         ),
                       ),
-                      CommonButton(
-                        width: AppSizes.setWidth(93),
-                        height: AppSizes.setHeight(34),
-                        btnText: Languages.of(context).done,
-                        radius: 3,
-                        onTap: onDone,
+                      IgnorePointer(
+                        ignoring: true,
+                        child: CommonButton(
+                          width: AppSizes.setWidth(93),
+                          height: AppSizes.setHeight(34),
+                          btnText: Languages.of(context).done,
+                          radius: 3,
+                          onTap: onDone,
+                        ),
                       )
                     ],
                   ),

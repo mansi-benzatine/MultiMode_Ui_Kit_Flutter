@@ -23,10 +23,12 @@ import '../../wishlist/view/wishlist_screen.dart';
 import '../datamodel/view_product_data.dart';
 
 class ViewProductScreen extends StatefulWidget {
-  const ViewProductScreen({super.key});
+  final bool isShowReviewBs;
 
-  static Route route() {
-    return MaterialPageRoute(builder: (context) => const ViewProductScreen());
+  const ViewProductScreen({super.key, this.isShowReviewBs = false});
+
+  static Route route({bool isShowReviewBs = false}) {
+    return MaterialPageRoute(builder: (context) => ViewProductScreen(isShowReviewBs: isShowReviewBs));
   }
 
   @override
@@ -35,6 +37,8 @@ class ViewProductScreen extends StatefulWidget {
 
 class _ViewProductScreenState extends State<ViewProductScreen> implements TopBarClickListener {
   List<RatingData> mockRatings = [];
+  bool _isBottomSheetOpen = false;
+
   void fillData() {
     mockRatings = [
       RatingData(
@@ -66,100 +70,155 @@ class _ViewProductScreenState extends State<ViewProductScreen> implements TopBar
   }
 
   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    if (widget.isShowReviewBs) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        showSeeReviewsBS();
+      });
+    }
+  }
+
+  void showSeeReviewsBS() {
+    setState(() {
+      _isBottomSheetOpen = true;
+    });
+    customBottomSheet(
+        isDone: false,
+        isPaddingRequired: false,
+        maxHeightRatio: 0.9,
+        context: context,
+        title: AppStrings.trendyAttractiveSarees.toUpperCase(),
+        content: SingleChildScrollView(
+          child: Column(
+            children: [
+              CategoryReviewWidget(
+                forBottomSheet: true,
+                images: imageList,
+                ratings: mockRatings,
+                ratingScore: 4.5,
+              ),
+              ReviewsWidget(reviews: reviewList),
+            ],
+          ),
+        )).whenComplete(() {
+      if (_isBottomSheetOpen) {
+        setState(() {
+          _isBottomSheetOpen = false;
+        });
+        Navigator.pop(context);
+      }
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
     fillData();
-    return SafeArea(
-      bottom: true,
-      top: false,
-      child: Scaffold(
-        backgroundColor: CustomAppColor.of(context).bgTopBar,
-        body: Column(
-          children: [
-            IgnorePointer(
-              ignoring: true,
-              child: TopBar(
-                this,
-                isShowBack: true,
-                isShowSearchField: true,
-                isShowLike: true,
-                isShowCart: true,
-                isShowCartCount: false,
-                isShowTitle: false,
-                topBarColor: CustomAppColor.of(context).txtWhite,
-              ),
-            ),
-            Expanded(
-              child: SingleChildScrollView(
-                child: Column(
-                  children: [
-                    productDetails(context),
-                    IgnorePointer(
-                      ignoring: true,
-                      child: ProductsDetail(
-                        onTap: () => Navigator.push(context, ViewInnerProductScreen.route()),
-                        productsList: anniDesignerSareeList,
-                        isShowMrp: true,
-                        isShowTrusted: true,
-                        isRatingShown: false,
-                        btnText: Languages.of(context).buyNow,
-                      ),
-                    ),
-                    serviceHighlights(context),
-                    CategoryReviewWidget(
-                      forBottomSheet: false,
-                      images: imageList,
-                      ratings: mockRatings,
-                      ratingScore: 4.5,
-                      onTap: () => catalogReviewBottomSheet(context),
-                    ),
-                    ReviewsWidget(reviews: reviewList),
-                    Padding(
-                      padding: EdgeInsets.symmetric(vertical: AppSizes.setHeight(36)),
-                      child: Column(
-                        children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Image.asset(
-                                AppAssets.icTrust,
-                                height: AppSizes.setHeight(24),
-                                width: AppSizes.setWidth(24),
-                              ),
-                              SizedBox(width: AppSizes.setWidth(8)),
-                              Container(
-                                width: AppSizes.setWidth(73),
-                                height: AppSizes.setHeight(24),
-                                padding: const EdgeInsets.all(2),
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(2),
-                                  color: CustomAppColor.of(context).txtPurple.withOpacityPercent(0.2),
-                                ),
-                                child: CommonText(
-                                  text: Languages.of(context).trusted,
-                                  fontWeight: FontWeight.w500,
-                                  fontSize: AppSizes.setFontSize(13),
-                                  textColor: CustomAppColor.of(context).txtPurple,
-                                ),
-                              ),
-                            ],
-                          ),
-                          Padding(
-                            padding: EdgeInsets.only(top: AppSizes.setHeight(23), bottom: AppSizes.setHeight(20)),
-                            child: CommonText(
-                              text: Languages.of(context).bestQualityProductFromTrustedSuppliers,
-                              fontWeight: FontWeight.w600,
-                              fontSize: AppSizes.setFontSize(13),
-                              textColor: CustomAppColor.of(context).txtBlack,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
+    return PopScope(
+      canPop: !_isBottomSheetOpen,
+      onPopInvokedWithResult: (didPop, result) {
+        if (!didPop && _isBottomSheetOpen) {
+          Navigator.pop(context);
+          setState(() {
+            _isBottomSheetOpen = false;
+          });
+          Navigator.pop(context);
+        }
+      },
+      child: SafeArea(
+        bottom: true,
+        top: false,
+        child: Scaffold(
+          backgroundColor: CustomAppColor.of(context).bgTopBar,
+          body: Column(
+            children: [
+              IgnorePointer(
+                ignoring: true,
+                child: TopBar(
+                  this,
+                  isShowBack: true,
+                  isShowSearchField: true,
+                  isShowLike: true,
+                  isShowCart: true,
+                  isShowCartCount: false,
+                  isShowTitle: false,
+                  topBarColor: CustomAppColor.of(context).txtWhite,
                 ),
               ),
-            )
-          ],
+              Expanded(
+                child: SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      productDetails(context),
+                      IgnorePointer(
+                        ignoring: true,
+                        child: ProductsDetail(
+                          onTap: () => Navigator.push(context, ViewInnerProductScreen.route()),
+                          productsList: anniDesignerSareeList,
+                          isShowMrp: true,
+                          isShowTrusted: true,
+                          isRatingShown: false,
+                          btnText: Languages.of(context).buyNow,
+                        ),
+                      ),
+                      serviceHighlights(context),
+                      CategoryReviewWidget(
+                        forBottomSheet: false,
+                        images: imageList,
+                        ratings: mockRatings,
+                        ratingScore: 4.5,
+                        onTap: () => catalogReviewBottomSheet(context),
+                      ),
+                      ReviewsWidget(reviews: reviewList),
+                      Padding(
+                        padding: EdgeInsets.symmetric(vertical: AppSizes.setHeight(36)),
+                        child: Column(
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Image.asset(
+                                  AppAssets.icTrust,
+                                  height: AppSizes.setHeight(24),
+                                  width: AppSizes.setWidth(24),
+                                ),
+                                SizedBox(width: AppSizes.setWidth(8)),
+                                Container(
+                                  width: AppSizes.setWidth(73),
+                                  height: AppSizes.setHeight(24),
+                                  padding: const EdgeInsets.all(2),
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(2),
+                                    color: CustomAppColor.of(context).txtPurple.withOpacityPercent(0.2),
+                                  ),
+                                  child: CommonText(
+                                    text: Languages.of(context).trusted,
+                                    fontWeight: FontWeight.w500,
+                                    fontSize: AppSizes.setFontSize(13),
+                                    textColor: CustomAppColor.of(context).txtPurple,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            Padding(
+                              padding: EdgeInsets.only(top: AppSizes.setHeight(23), bottom: AppSizes.setHeight(20)),
+                              child: CommonText(
+                                text: Languages.of(context).bestQualityProductFromTrustedSuppliers,
+                                fontWeight: FontWeight.w600,
+                                fontSize: AppSizes.setFontSize(13),
+                                textColor: CustomAppColor.of(context).txtBlack,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              )
+            ],
+          ),
         ),
       ),
     );

@@ -22,21 +22,83 @@ class DashboardScreen extends StatefulWidget {
   final bool isFromCategory;
   final bool isFromOrders;
   final bool isFromAccount;
+  final bool isShowSortByBs;
+  final bool isShowCategoryBs;
+  final bool isShowGenderBs;
+  final bool isShowFilterByColorBs;
+  final bool isShowFilterBySizeBs;
+  final int currentIndex;
+  final String filterType;
+  final bool isForReasonOfCancellationBs;
+  final bool isForOrderCancelBs;
+  final bool isEnterReferralCodeBs;
+  final bool isSignupToContinueBs;
+  final bool isOtpVerificationBs;
+  final bool isAccountCreatedBs;
+  final bool isLogoutBs;
+
   const DashboardScreen({
     super.key,
     required this.isFromHome,
     required this.isFromCategory,
     required this.isFromOrders,
     required this.isFromAccount,
+    this.isShowCategoryBs = false,
+    this.isShowFilterByColorBs = false,
+    this.isShowFilterBySizeBs = false,
+    this.isShowGenderBs = false,
+    this.isShowSortByBs = false,
+    this.currentIndex = 0,
+    this.filterType = "",
+    this.isForOrderCancelBs = false,
+    this.isForReasonOfCancellationBs = false,
+    this.isEnterReferralCodeBs = false,
+    this.isAccountCreatedBs = false,
+    this.isLogoutBs = false,
+    this.isOtpVerificationBs = false,
+    this.isSignupToContinueBs = false,
   });
 
-  static Route route({required bool isFromHome, required bool isFromCategory, required bool isFromOrders, required bool isFromAccount}) {
+  static Route route({
+    required bool isFromHome,
+    required bool isFromCategory,
+    required bool isFromOrders,
+    required bool isFromAccount,
+    bool isShowSortByBs = false,
+    bool isShowCategoryBs = false,
+    bool isShowGenderBs = false,
+    bool isShowFilterByColorBs = false,
+    bool isShowFilterBySizeBs = false,
+    int currentIndex = 0,
+    String filterType = "",
+    bool isForReasonOfCancellationBs = false,
+    bool isForOrderCancelBs = false,
+    bool isEnterReferralCodeBs = false,
+    bool isSignupToContinueBs = false,
+    bool isOtpVerificationBs = false,
+    bool isAccountCreatedBs = false,
+    bool isLogoutBs = false,
+  }) {
     return MaterialPageRoute(
         builder: (context) => DashboardScreen(
               isFromHome: isFromHome,
               isFromAccount: isFromAccount,
               isFromCategory: isFromCategory,
               isFromOrders: isFromOrders,
+              isShowSortByBs: isShowSortByBs,
+              isShowCategoryBs: isShowCategoryBs,
+              isShowFilterByColorBs: isShowFilterByColorBs,
+              isShowFilterBySizeBs: isShowFilterBySizeBs,
+              isShowGenderBs: isShowGenderBs,
+              currentIndex: currentIndex,
+              filterType: filterType,
+              isForReasonOfCancellationBs: isForReasonOfCancellationBs,
+              isForOrderCancelBs: isForOrderCancelBs,
+              isEnterReferralCodeBs: isEnterReferralCodeBs,
+              isLogoutBs: isLogoutBs,
+              isAccountCreatedBs: isAccountCreatedBs,
+              isOtpVerificationBs: isOtpVerificationBs,
+              isSignupToContinueBs: isSignupToContinueBs,
             ));
   }
 
@@ -47,6 +109,7 @@ class DashboardScreen extends StatefulWidget {
 class _DashboardScreenState extends State<DashboardScreen> with SingleTickerProviderStateMixin implements TopBarClickListener {
   int selectedBottomIndex = 0;
   late TabController _tabController;
+
   @override
   void initState() {
     super.initState();
@@ -90,7 +153,15 @@ class _DashboardScreenState extends State<DashboardScreen> with SingleTickerProv
       BottomNavigationBarData(
         title: Languages.of(context).home,
         image: AppAssets.icHome,
-        screen: const HomeScreen(),
+        screen: HomeScreen(
+          isShowGenderBs: widget.isShowGenderBs,
+          isShowSortByBs: widget.isShowSortByBs,
+          isShowFilterBySizeBs: widget.isShowFilterBySizeBs,
+          isShowFilterByColorBs: widget.isShowFilterByColorBs,
+          isShowCategoryBs: widget.isShowCategoryBs,
+          currentIndex: widget.currentIndex,
+          label: widget.filterType,
+        ),
       ),
       BottomNavigationBarData(
         title: Languages.of(context).category,
@@ -100,12 +171,18 @@ class _DashboardScreenState extends State<DashboardScreen> with SingleTickerProv
       BottomNavigationBarData(
         title: Languages.of(context).orders,
         image: AppAssets.icBag,
-        screen: const OrdersScreen(),
+        screen: OrdersScreen(isForReasonOfCancellationBs: widget.isForReasonOfCancellationBs, isForOrderCancelBs: widget.isForOrderCancelBs),
       ),
       BottomNavigationBarData(
         title: Languages.of(context).account,
         image: AppAssets.icProfile,
-        screen: const AccountScreen(),
+        screen: AccountScreen(
+          isSignupToContinueBs: widget.isSignupToContinueBs,
+          isAccountCreatedBs: widget.isAccountCreatedBs,
+          isLogoutBs: widget.isLogoutBs,
+          isEnterReferralCodeBs: widget.isEnterReferralCodeBs,
+          isOtpVerificationBs: widget.isOtpVerificationBs,
+        ),
       ),
     ];
 

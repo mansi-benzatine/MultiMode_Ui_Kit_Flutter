@@ -13,10 +13,11 @@ import '../../app/my_app.dart';
 import '../datamodel/notification_data.dart';
 
 class NotificationsScreen extends StatefulWidget {
-  const NotificationsScreen({super.key});
+  final bool isEmptyScreen;
+  const NotificationsScreen({super.key, this.isEmptyScreen = false});
 
-  static Route route() {
-    return MaterialPageRoute(builder: (context) => const NotificationsScreen());
+  static Route route({bool isEmptyScreen = false}) {
+    return MaterialPageRoute(builder: (context) => NotificationsScreen(isEmptyScreen: isEmptyScreen));
   }
 
   @override
@@ -70,80 +71,82 @@ class NotificationsScreenState extends State<NotificationsScreen> with TickerPro
                 children: [
                   _tabBar(),
                   Expanded(
-                    child: TabBarView(
-                      controller: _tabController,
-                      children: tabList.map((tab) {
-                        if (tab == Languages.of(context).allOrder) {
-                          return ListView.builder(
-                            padding: EdgeInsets.zero,
-                            itemCount: notifications.length,
-                            itemBuilder: (context, index) {
-                              final notification = notifications[index];
-                              return _buildNotificationCard(notification);
-                            },
-                          );
-                        } else if (tab == Languages.of(context).orderInfo) {
-                          final orderInfo = notifications.where((notifications) => notifications.type == Languages.of(context).orderInfo).toList();
+                    child: widget.isEmptyScreen
+                        ? Center(child: _emptyHistory(context))
+                        : TabBarView(
+                            controller: _tabController,
+                            children: tabList.map((tab) {
+                              if (tab == Languages.of(context).allOrder) {
+                                return ListView.builder(
+                                  padding: EdgeInsets.zero,
+                                  itemCount: notifications.length,
+                                  itemBuilder: (context, index) {
+                                    final notification = notifications[index];
+                                    return _buildNotificationCard(notification);
+                                  },
+                                );
+                              } else if (tab == Languages.of(context).orderInfo) {
+                                final orderInfo = notifications.where((notifications) => notifications.type == Languages.of(context).orderInfo).toList();
 
-                          if (orderInfo.isEmpty) {
-                            return Center(
-                              child: _emptyHistory(context),
-                            );
-                          }
+                                if (orderInfo.isEmpty) {
+                                  return Center(
+                                    child: _emptyHistory(context),
+                                  );
+                                }
 
-                          return ListView.builder(
-                            padding: EdgeInsets.zero,
-                            itemCount: orderInfo.length,
-                            itemBuilder: (context, index) {
-                              final order = orderInfo[index];
-                              return _buildNotificationCard(order);
-                            },
-                          );
-                        } else if (tab == Languages.of(context).offers) {
-                          final offers = notifications.where((notifications) => notifications.type == Languages.of(context).offers).toList();
+                                return ListView.builder(
+                                  padding: EdgeInsets.zero,
+                                  itemCount: orderInfo.length,
+                                  itemBuilder: (context, index) {
+                                    final order = orderInfo[index];
+                                    return _buildNotificationCard(order);
+                                  },
+                                );
+                              } else if (tab == Languages.of(context).offers) {
+                                final offers = notifications.where((notifications) => notifications.type == Languages.of(context).offers).toList();
 
-                          if (offers.isEmpty) {
-                            return Center(
-                              child: _emptyHistory(context),
-                            );
-                          }
+                                if (offers.isEmpty) {
+                                  return Center(
+                                    child: _emptyHistory(context),
+                                  );
+                                }
 
-                          return ListView.builder(
-                            padding: EdgeInsets.zero,
-                            itemCount: offers.length,
-                            itemBuilder: (context, index) {
-                              final order = offers[index];
-                              return _buildNotificationCard(order);
-                            },
-                          );
-                        } else if (tab == Languages.of(context).payment) {
-                          final payments = notifications.where((notifications) => notifications.type == Languages.of(context).payment).toList();
+                                return ListView.builder(
+                                  padding: EdgeInsets.zero,
+                                  itemCount: offers.length,
+                                  itemBuilder: (context, index) {
+                                    final order = offers[index];
+                                    return _buildNotificationCard(order);
+                                  },
+                                );
+                              } else if (tab == Languages.of(context).payment) {
+                                final payments = notifications.where((notifications) => notifications.type == Languages.of(context).payment).toList();
 
-                          if (payments.isNotEmpty) {
-                            return Center(
-                              child: _emptyHistory(context),
-                            );
-                          }
+                                if (payments.isNotEmpty) {
+                                  return Center(
+                                    child: _emptyHistory(context),
+                                  );
+                                }
 
-                          return ListView.builder(
-                            padding: EdgeInsets.zero,
-                            itemCount: payments.length,
-                            itemBuilder: (context, index) {
-                              final payment = payments[index];
-                              return _buildNotificationCard(payment);
-                            },
-                          );
-                        } else {
-                          return ListView.builder(
-                            padding: const EdgeInsets.all(8.0),
-                            itemCount: notifications.length,
-                            itemBuilder: (context, index) {
-                              return _buildNotificationCard(notifications[index]);
-                            },
-                          );
-                        }
-                      }).toList(),
-                    ),
+                                return ListView.builder(
+                                  padding: EdgeInsets.zero,
+                                  itemCount: payments.length,
+                                  itemBuilder: (context, index) {
+                                    final payment = payments[index];
+                                    return _buildNotificationCard(payment);
+                                  },
+                                );
+                              } else {
+                                return ListView.builder(
+                                  padding: const EdgeInsets.all(8.0),
+                                  itemCount: notifications.length,
+                                  itemBuilder: (context, index) {
+                                    return _buildNotificationCard(notifications[index]);
+                                  },
+                                );
+                              }
+                            }).toList(),
+                          ),
                   ),
                 ],
               ),

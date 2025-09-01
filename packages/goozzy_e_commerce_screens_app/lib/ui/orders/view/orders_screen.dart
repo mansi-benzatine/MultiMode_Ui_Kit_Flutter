@@ -15,9 +15,15 @@ import '../../../widgets/bottom_sheet/bottom_sheet.dart';
 import '../datamodel/orders_data.dart';
 
 class OrdersScreen extends StatefulWidget {
-  const OrdersScreen({super.key});
-  static Route route() {
-    return MaterialPageRoute(builder: (context) => const OrdersScreen());
+  final bool isForReasonOfCancellationBs;
+  final bool isForOrderCancelBs;
+  const OrdersScreen({super.key, this.isForOrderCancelBs = false, this.isForReasonOfCancellationBs = false});
+  static Route route({bool isForReasonOfCancellationBs = false, bool isForOrderCancelBs = false}) {
+    return MaterialPageRoute(
+        builder: (context) => OrdersScreen(
+              isForOrderCancelBs: isForOrderCancelBs,
+              isForReasonOfCancellationBs: isForReasonOfCancellationBs,
+            ));
   }
 
   @override
@@ -31,10 +37,22 @@ class _OrdersScreenState extends State<OrdersScreen> with TickerProviderStateMix
   List<OrderModel> orders = [];
 
   List<ReasonOfCancellationData> reasons = [];
+  bool _isBottomSheetOpen = false;
   @override
   void initState() {
     super.initState();
     _tabController = TabController(length: 4, vsync: this);
+
+    if (widget.isForOrderCancelBs) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        showOrderCancelBS();
+      });
+    }
+    if (widget.isForReasonOfCancellationBs) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        showReasonOrderCancelBS();
+      });
+    }
   }
 
   @override
@@ -139,89 +157,278 @@ class _OrdersScreenState extends State<OrdersScreen> with TickerProviderStateMix
     ];
   }
 
+  void showReasonOrderCancelBS() {
+    setState(() {
+      _isBottomSheetOpen = true;
+    });
+    String? selectedReason;
+
+    customBottomSheet(
+      isPaddingRequired: false,
+      isDone: false,
+      context: context,
+      title: Languages.of(context).reasonOfCancellation.toUpperCase(),
+      content: StatefulBuilder(
+        builder: (context, setState) {
+          return ListView(
+            physics: const AlwaysScrollableScrollPhysics(),
+            children: [
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: AppSizes.setWidth(22)),
+                child: CommonText(
+                  text: Languages.of(context).pleaseTellUsCorrectReasonOfCancellation,
+                  textColor: CustomAppColor.of(context).txtGrey,
+                  fontSize: AppSizes.setFontSize(15),
+                  fontWeight: FontWeight.w500,
+                  textAlign: TextAlign.start,
+                ),
+              ),
+              SizedBox(height: AppSizes.setHeight(10)),
+              Theme(
+                data: Theme.of(context).copyWith(
+                  unselectedWidgetColor: Colors.grey,
+                  radioTheme: RadioThemeData(
+                    fillColor: WidgetStateProperty.resolveWith<Color>(
+                      (Set<WidgetState> states) {
+                        return states.contains(WidgetState.selected) ? CustomAppColor.of(context).txtPurple : CustomAppColor.of(context).txtGrey;
+                      },
+                    ),
+                  ),
+                ),
+                child: Padding(
+                  padding: EdgeInsets.symmetric(horizontal: AppSizes.setWidth(16)),
+                  child: Column(
+                    children: reasons.map((reason) {
+                      return RadioListTile<String>(
+                        title: CommonText(
+                          text: reason.reason,
+                          textColor: CustomAppColor.of(context).txtGrey,
+                          textAlign: TextAlign.start,
+                        ),
+                        value: reason.reason,
+                        groupValue: selectedReason,
+                        onChanged: (String? value) {
+                          setState(() {
+                            // This updates the state inside the bottom sheet
+                            selectedReason = value;
+                          });
+                        },
+                        dense: true,
+                        visualDensity: VisualDensity.compact,
+                        contentPadding: EdgeInsets.zero,
+                      );
+                    }).toList(),
+                  ),
+                ),
+              ),
+              SizedBox(height: AppSizes.setHeight(10)),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: AppSizes.setWidth(24)),
+                child: CommonTextFormField(
+                  radius: 6,
+                  hintText: Languages.of(context).enterAdditionalCommentsHere,
+                  hintStyle: TextStyle(
+                    color: CustomAppColor.of(context).txtGrey,
+                    fontSize: AppSizes.setFontSize(15),
+                    fontWeight: FontWeight.w500,
+                  ),
+                  maxLines: 4,
+                ),
+              ),
+              SizedBox(height: AppSizes.setHeight(10)),
+              Container(
+                decoration: BoxDecoration(
+                  color: CustomAppColor.of(context).bgBlackWhiteScaffold,
+                  border: Border(
+                    top: BorderSide(color: CustomAppColor.of(context).txtGrey.withOpacityPercent(0.5)),
+                  ),
+                ),
+                padding: EdgeInsets.symmetric(horizontal: AppSizes.setWidth(22), vertical: AppSizes.setHeight(18)),
+                child: IgnorePointer(
+                  ignoring: true,
+                  child: CommonButton(
+                    height: AppSizes.setHeight(44),
+                    radius: 3,
+                    btnText: Languages.of(context).cancelNow,
+                    onTap: () {
+                      // Navigator.pop(context);
+                      orderCancelled(context);
+                    },
+                  ),
+                ),
+              ),
+            ],
+          );
+        },
+      ),
+    ).whenComplete(() {
+      if (_isBottomSheetOpen) {
+        setState(() {
+          _isBottomSheetOpen = false;
+        });
+        Navigator.pop(context);
+      }
+    });
+  }
+
+  void showOrderCancelBS() {
+    setState(() {
+      _isBottomSheetOpen = true;
+    });
+    customBottomSheet(
+      isPaddingRequired: false,
+      maxHeightRatio: 0.52,
+      isDone: false,
+      context: context,
+      title: Languages.of(context).orderCancelled.toUpperCase(),
+      content: Wrap(
+        children: [
+          Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Padding(
+                padding: EdgeInsets.symmetric(vertical: AppSizes.setHeight(20)),
+                child: Image.asset(
+                  AppAssets.imgOrderCancelled,
+                  width: AppSizes.setWidth(200),
+                  height: AppSizes.setHeight(146),
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.only(bottom: AppSizes.setHeight(20)),
+                child: CommonText(
+                  text: Languages.of(context).yourOrderCancelledNow,
+                  textColor: CustomAppColor.of(context).txtGrey,
+                  fontWeight: FontWeight.w500,
+                  fontSize: AppSizes.setFontSize(15),
+                ),
+              ),
+              SizedBox(height: AppSizes.setHeight(10)),
+              IgnorePointer(
+                ignoring: true,
+                child: Container(
+                  decoration: BoxDecoration(color: CustomAppColor.of(context).bgBlackWhiteScaffold, border: Border(top: BorderSide(color: CustomAppColor.of(context).txtGrey.withOpacityPercent(0.5)))),
+                  padding: EdgeInsets.symmetric(horizontal: AppSizes.setWidth(22), vertical: AppSizes.setHeight(10)),
+                  child: CommonButton(
+                    height: AppSizes.setHeight(44),
+                    radius: 3,
+                    btnText: Languages.of(context).done,
+                    onTap: () {
+                      Navigator.pop(context);
+                      Navigator.pop(context);
+                    },
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
+    ).whenComplete(() {
+      if (_isBottomSheetOpen) {
+        setState(() {
+          _isBottomSheetOpen = false;
+        });
+        Navigator.pop(context);
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     fillData();
-    return Scaffold(
-      backgroundColor: CustomAppColor.of(context).bgTopBar,
-      body: Column(
-        children: [
-          _tabBar(),
-          Expanded(
-            child: TabBarView(
-              controller: _tabController,
-              children: tabList.map((tab) {
-                if (tab == Languages.of(context).allOrder) {
-                  return ListView.builder(
-                    padding: EdgeInsets.zero,
-                    itemCount: orders.length,
-                    itemBuilder: (context, index) {
-                      final order = orders[index];
-                      return _buildOrderCard(order, context);
-                    },
-                  );
-                } else if (tab == Languages.of(context).pending) {
-                  final pendingOrders = orders.where((order) => order.status == Languages.of(context).orderPending).toList();
+    return PopScope(
+      canPop: !_isBottomSheetOpen,
+      onPopInvokedWithResult: (didPop, result) {
+        if (!didPop && _isBottomSheetOpen) {
+          Navigator.pop(context);
+          setState(() {
+            _isBottomSheetOpen = false;
+          });
+          Navigator.pop(context);
+        }
+      },
+      child: Scaffold(
+        backgroundColor: CustomAppColor.of(context).bgTopBar,
+        body: Column(
+          children: [
+            _tabBar(),
+            Expanded(
+              child: TabBarView(
+                controller: _tabController,
+                children: tabList.map((tab) {
+                  if (tab == Languages.of(context).allOrder) {
+                    return ListView.builder(
+                      padding: EdgeInsets.zero,
+                      itemCount: orders.length,
+                      itemBuilder: (context, index) {
+                        final order = orders[index];
+                        return _buildOrderCard(order, context);
+                      },
+                    );
+                  } else if (tab == Languages.of(context).pending) {
+                    final pendingOrders = orders.where((order) => order.status == Languages.of(context).orderPending).toList();
 
-                  if (pendingOrders.isEmpty) {
+                    if (pendingOrders.isEmpty) {
+                      return Center(
+                        child: _emptyHistory(context),
+                      );
+                    }
+
+                    return ListView.builder(
+                      padding: EdgeInsets.zero,
+                      itemCount: pendingOrders.length,
+                      itemBuilder: (context, index) {
+                        final order = pendingOrders[index];
+                        return _buildOrderCard(order, context);
+                      },
+                    );
+                  } else if (tab == Languages.of(context).processing) {
+                    final pendingOrders = orders.where((order) => order.status == Languages.of(context).orderProcessing).toList();
+
+                    if (pendingOrders.isEmpty) {
+                      return Center(
+                        child: _emptyHistory(context),
+                      );
+                    }
+
+                    return ListView.builder(
+                      padding: EdgeInsets.zero,
+                      itemCount: pendingOrders.length,
+                      itemBuilder: (context, index) {
+                        final order = pendingOrders[index];
+                        return _buildOrderCard(order, context);
+                      },
+                    );
+                  } else if (tab == Languages.of(context).delivered) {
+                    final deliveredOrder = orders.where((order) => order.status == Languages.of(context).orderDelivered).toList();
+
+                    if (deliveredOrder.isNotEmpty) {
+                      return Center(
+                        child: _emptyHistory(context),
+                      );
+                    }
+
+                    return ListView.builder(
+                      padding: EdgeInsets.zero,
+                      itemCount: deliveredOrder.length,
+                      itemBuilder: (context, index) {
+                        final order = deliveredOrder[index];
+                        return _buildOrderCard(order, context);
+                      },
+                    );
+                  } else {
                     return Center(
-                      child: _emptyHistory(context),
+                      child: SingleChildScrollView(
+                        child: _emptyHistory(context),
+                      ),
                     );
                   }
-
-                  return ListView.builder(
-                    padding: EdgeInsets.zero,
-                    itemCount: pendingOrders.length,
-                    itemBuilder: (context, index) {
-                      final order = pendingOrders[index];
-                      return _buildOrderCard(order, context);
-                    },
-                  );
-                } else if (tab == Languages.of(context).processing) {
-                  final pendingOrders = orders.where((order) => order.status == Languages.of(context).orderProcessing).toList();
-
-                  if (pendingOrders.isEmpty) {
-                    return Center(
-                      child: _emptyHistory(context),
-                    );
-                  }
-
-                  return ListView.builder(
-                    padding: EdgeInsets.zero,
-                    itemCount: pendingOrders.length,
-                    itemBuilder: (context, index) {
-                      final order = pendingOrders[index];
-                      return _buildOrderCard(order, context);
-                    },
-                  );
-                } else if (tab == Languages.of(context).delivered) {
-                  final deliveredOrder = orders.where((order) => order.status == Languages.of(context).orderDelivered).toList();
-
-                  if (deliveredOrder.isNotEmpty) {
-                    return Center(
-                      child: _emptyHistory(context),
-                    );
-                  }
-
-                  return ListView.builder(
-                    padding: EdgeInsets.zero,
-                    itemCount: deliveredOrder.length,
-                    itemBuilder: (context, index) {
-                      final order = deliveredOrder[index];
-                      return _buildOrderCard(order, context);
-                    },
-                  );
-                } else {
-                  return Center(
-                    child: SingleChildScrollView(
-                      child: _emptyHistory(context),
-                    ),
-                  );
-                }
-              }).toList(),
+                }).toList(),
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
@@ -412,29 +619,25 @@ class _OrdersScreenState extends State<OrdersScreen> with TickerProviderStateMix
                       .map((action) => Expanded(
                             child: Padding(
                               padding: EdgeInsets.symmetric(horizontal: AppSizes.setWidth(15), vertical: AppSizes.setHeight(10)),
-                              child: CommonButton(
-                                  height: AppSizes.setHeight(30),
-                                  width: AppSizes.setWidth(158),
-                                  radius: 2,
-                                  borderColor: action == (Languages.of(context).track) || action == (Languages.of(context).reviewNow)
-                                      ? CustomAppColor.of(context).btnPurple
-                                      : CustomAppColor.of(context).btnPurple,
-                                  buttonColor: action == (Languages.of(context).track) || action == (Languages.of(context).reviewNow)
-                                      ? CustomAppColor.of(context).btnPurple
-                                      : CustomAppColor.of(context).bgScaffold,
-                                  isButtonShadow:
-                                      action == (Languages.of(context).track) || action == (Languages.of(context).reviewNow) ? true : false,
-                                  child: CommonText(
-                                    text: action.toUpperCase(),
-                                    textColor: action == (Languages.of(context).track) || action == (Languages.of(context).reviewNow)
-                                        ? CustomAppColor.of(context).white
-                                        : CustomAppColor.of(context).btnPurple,
-                                    fontWeight: FontWeight.w600,
-                                    fontSize: AppSizes.setFontSize(12),
-                                  ),
-                                  onTap: () => action == Languages.of(context).cancel ? reasonOfCancellation(context) : null
-                                  // : Navigator.push(context, TrackOrderScreen.route()),
-                                  ),
+                              child: IgnorePointer(
+                                ignoring: true,
+                                child: CommonButton(
+                                    height: AppSizes.setHeight(30),
+                                    width: AppSizes.setWidth(158),
+                                    radius: 2,
+                                    borderColor: action == (Languages.of(context).track) || action == (Languages.of(context).reviewNow) ? CustomAppColor.of(context).btnPurple : CustomAppColor.of(context).btnPurple,
+                                    buttonColor: action == (Languages.of(context).track) || action == (Languages.of(context).reviewNow) ? CustomAppColor.of(context).btnPurple : CustomAppColor.of(context).bgScaffold,
+                                    isButtonShadow: action == (Languages.of(context).track) || action == (Languages.of(context).reviewNow) ? true : false,
+                                    child: CommonText(
+                                      text: action.toUpperCase(),
+                                      textColor: action == (Languages.of(context).track) || action == (Languages.of(context).reviewNow) ? CustomAppColor.of(context).white : CustomAppColor.of(context).btnPurple,
+                                      fontWeight: FontWeight.w600,
+                                      fontSize: AppSizes.setFontSize(12),
+                                    ),
+                                    onTap: () => action == Languages.of(context).cancel ? reasonOfCancellation(context) : null
+                                    // : Navigator.push(context, TrackOrderScreen.route()),
+                                    ),
+                              ),
                             ),
                           ))
                       .toList()
@@ -597,9 +800,7 @@ class _OrdersScreenState extends State<OrdersScreen> with TickerProviderStateMix
               ),
               SizedBox(height: AppSizes.setHeight(10)),
               Container(
-                decoration: BoxDecoration(
-                    color: CustomAppColor.of(context).bgBlackWhiteScaffold,
-                    border: Border(top: BorderSide(color: CustomAppColor.of(context).txtGrey.withOpacityPercent(0.5)))),
+                decoration: BoxDecoration(color: CustomAppColor.of(context).bgBlackWhiteScaffold, border: Border(top: BorderSide(color: CustomAppColor.of(context).txtGrey.withOpacityPercent(0.5)))),
                 padding: EdgeInsets.symmetric(horizontal: AppSizes.setWidth(22), vertical: AppSizes.setHeight(10)),
                 child: CommonButton(
                   height: AppSizes.setHeight(44),

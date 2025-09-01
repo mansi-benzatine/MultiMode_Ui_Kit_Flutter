@@ -18,9 +18,13 @@ import '../../home_screen/datamodel/home_screen_data.dart';
 import '../../view_inner_product/view/view_inner_product_screen.dart';
 
 class MyCatalogsScreen extends StatefulWidget {
-  const MyCatalogsScreen({super.key});
-  static Route route() {
-    return MaterialPageRoute(builder: (context) => const MyCatalogsScreen());
+  final int currentIndex;
+  const MyCatalogsScreen({super.key, this.currentIndex = 0});
+  static Route route({int currentIndex = 0}) {
+    return MaterialPageRoute(
+        builder: (context) => MyCatalogsScreen(
+              currentIndex: currentIndex,
+            ));
   }
 
   @override
@@ -34,7 +38,7 @@ class _MyCatalogsScreenState extends State<MyCatalogsScreen> with TickerProvider
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(length: 2, vsync: this);
+    _tabController = TabController(initialIndex: widget.currentIndex, length: 2, vsync: this);
   }
 
   @override
@@ -71,6 +75,7 @@ class _MyCatalogsScreenState extends State<MyCatalogsScreen> with TickerProvider
             _tabBar(context),
             Expanded(
               child: TabBarView(
+                physics: const NeverScrollableScrollPhysics(),
                 controller: _tabController,
                 children: [
                   _centeredContent(_wishlistList()),
@@ -148,27 +153,30 @@ class _MyCatalogsScreenState extends State<MyCatalogsScreen> with TickerProvider
   _tabBar(BuildContext context) {
     return Container(
       color: CustomAppColor.of(context).bgTopBar,
-      child: TabBar(
-        controller: _tabController,
-        tabAlignment: TabAlignment.start,
-        labelPadding: EdgeInsets.symmetric(horizontal: AppSizes.setWidth(19), vertical: AppSizes.setHeight(12)),
-        isScrollable: true,
-        unselectedLabelColor: AppColor.txtGrey,
-        labelStyle: TextStyle(
-          fontFamily: Constant.fontFamilyUrbanist,
-          fontSize: AppSizes.setFontSize(18),
-          fontWeight: FontWeight.w600,
+      child: IgnorePointer(
+        ignoring: true,
+        child: TabBar(
+          controller: _tabController,
+          tabAlignment: TabAlignment.start,
+          labelPadding: EdgeInsets.symmetric(horizontal: AppSizes.setWidth(19), vertical: AppSizes.setHeight(12)),
+          isScrollable: true,
+          unselectedLabelColor: AppColor.txtGrey,
+          labelStyle: TextStyle(
+            fontFamily: Constant.fontFamilyUrbanist,
+            fontSize: AppSizes.setFontSize(18),
+            fontWeight: FontWeight.w600,
+          ),
+          labelColor: AppColor.txtPurple,
+          indicator: UnderlineTabIndicator(
+            borderSide: BorderSide(width: AppSizes.setWidth(3), color: AppColor.txtPurple),
+            insets: EdgeInsets.symmetric(horizontal: AppSizes.setWidth(18)),
+          ),
+          tabs: tabList.map((tab) {
+            return Tab(
+              text: tab,
+            );
+          }).toList(),
         ),
-        labelColor: AppColor.txtPurple,
-        indicator: UnderlineTabIndicator(
-          borderSide: BorderSide(width: AppSizes.setWidth(3), color: AppColor.txtPurple),
-          insets: EdgeInsets.symmetric(horizontal: AppSizes.setWidth(18)),
-        ),
-        tabs: tabList.map((tab) {
-          return Tab(
-            text: tab,
-          );
-        }).toList(),
       ),
     );
   }

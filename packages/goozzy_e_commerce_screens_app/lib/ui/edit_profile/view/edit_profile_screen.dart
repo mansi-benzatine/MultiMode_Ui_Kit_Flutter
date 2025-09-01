@@ -17,10 +17,12 @@ import '../../../widgets/textfield/common_textformfield.dart';
 import '../../app/my_app.dart';
 
 class EditProfileScreen extends StatefulWidget {
-  const EditProfileScreen({super.key});
+  final int currentIndex;
+  final bool isShowAddEducationBs;
+  const EditProfileScreen({super.key, this.currentIndex = 0, this.isShowAddEducationBs = false});
 
-  static Route route() {
-    return MaterialPageRoute(builder: (context) => const EditProfileScreen());
+  static Route route({int currentIndex = 0, bool isShowAddEducataionBs = false}) {
+    return MaterialPageRoute(builder: (context) => EditProfileScreen(currentIndex: currentIndex, isShowAddEducationBs: isShowAddEducataionBs));
   }
 
   @override
@@ -30,11 +32,82 @@ class EditProfileScreen extends StatefulWidget {
 class _EditProfileScreenState extends State<EditProfileScreen> with TickerProviderStateMixin implements TopBarClickListener {
   late TabController _tabController;
   List<String> tabList = [];
-
+  bool _isBottomSheetOpen = false;
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(length: 3, vsync: this);
+    _tabController = TabController(initialIndex: widget.currentIndex, length: 3, vsync: this);
+
+    if (widget.isShowAddEducationBs) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        showAddEducationBS();
+      });
+    }
+  }
+
+  void showAddEducationBS() {
+    setState(() {
+      _isBottomSheetOpen = true;
+    });
+    customBottomSheet(
+      isPaddingRequired: false,
+      isDone: false,
+      context: context,
+      maxHeightRatio: 0.55,
+      title: Languages.of(context).addEducation,
+      content: Padding(
+        padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Padding(
+              padding: EdgeInsets.symmetric(vertical: AppSizes.setHeight(16), horizontal: AppSizes.setWidth(16)),
+              child: CommonTextFormField(
+                hintText: Languages.of(context).nameOfSchoolCollage,
+                isRequiredHint: true,
+                radius: 8,
+              ),
+            ),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: AppSizes.setWidth(16)),
+              child: CommonTextFormField(
+                hintText: Languages.of(context).subject,
+                isRequiredHint: true,
+                radius: 8,
+              ),
+            ),
+            Padding(
+              padding: EdgeInsets.symmetric(vertical: AppSizes.setHeight(16), horizontal: AppSizes.setWidth(16)),
+              child: CommonTextFormField(
+                hintText: Languages.of(context).endYear,
+                isRequiredHint: true,
+                radius: 8,
+              ),
+            ),
+            const Divider(),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: AppSizes.setWidth(20), vertical: AppSizes.setHeight(6)),
+              child: IgnorePointer(
+                ignoring: true,
+                child: CommonButton(
+                    radius: 3,
+                    btnText: Languages.of(context).save,
+                    onTap: () {
+                      Navigator.pop(context);
+                    }),
+              ),
+            ),
+          ],
+        ),
+      ),
+    ).whenComplete(() {
+      if (_isBottomSheetOpen) {
+        setState(() {
+          _isBottomSheetOpen = false;
+        });
+        Navigator.pop(context);
+      }
+    });
   }
 
   @override
@@ -52,46 +125,82 @@ class _EditProfileScreenState extends State<EditProfileScreen> with TickerProvid
     return SafeArea(
       bottom: true,
       top: false,
-      child: Scaffold(
-        backgroundColor: CustomAppColor.of(context).bgTopBar,
-        body: Column(
-          children: [
-            IgnorePointer(
-              ignoring: true,
-              child: TopBar(
-                this,
-                title: Languages.of(context).editProfile,
-                isShowBack: true,
-                isShowShadow: false,
-                textColor: CustomAppColor.of(context).txtBlack,
-                topBarColor: CustomAppColor.of(context).bgTopBar,
+      child: PopScope(
+        canPop: !_isBottomSheetOpen,
+        onPopInvokedWithResult: (didPop, result) {
+          if (!didPop && _isBottomSheetOpen) {
+            Navigator.pop(context);
+            setState(() {
+              _isBottomSheetOpen = false;
+            });
+            Navigator.pop(context);
+          }
+        },
+        child: Scaffold(
+          backgroundColor: CustomAppColor.of(context).bgTopBar,
+          body: Column(
+            children: [
+              IgnorePointer(
+                ignoring: true,
+                child: TopBar(
+                  this,
+                  title: Languages.of(context).editProfile,
+                  isShowBack: true,
+                  isShowShadow: false,
+                  textColor: CustomAppColor.of(context).txtBlack,
+                  topBarColor: CustomAppColor.of(context).bgTopBar,
+                ),
               ),
-            ),
-            Expanded(
-                child: Column(
-              children: [
-                _tabBar(),
-                Expanded(
-                  child: TabBarView(
-                    controller: _tabController,
-                    children: tabList.map((tab) {
-                      if (tab == Languages.of(context).primary) {
-                        return SingleChildScrollView(
-                          child: Container(
-                            padding: EdgeInsets.symmetric(vertical: AppSizes.setHeight(16), horizontal: AppSizes.setWidth(16)),
-                            child: _primaryFields(),
-                          ),
-                        );
-                      } else if (tab == Languages.of(context).otherInfo) {
-                        return SingleChildScrollView(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              _informationFields(),
-                              SizedBox(height: AppSizes.setHeight(12)),
-                              InkWell(
-                                onTap: () => addEducationBottomSheet(context),
-                                child: Container(
+              Expanded(
+                  child: Column(
+                children: [
+                  _tabBar(),
+                  Expanded(
+                    child: TabBarView(
+                      physics: NeverScrollableScrollPhysics(),
+                      controller: _tabController,
+                      children: tabList.map((tab) {
+                        if (tab == Languages.of(context).primary) {
+                          return SingleChildScrollView(
+                            child: Container(
+                              padding: EdgeInsets.symmetric(vertical: AppSizes.setHeight(16), horizontal: AppSizes.setWidth(16)),
+                              child: _primaryFields(),
+                            ),
+                          );
+                        } else if (tab == Languages.of(context).otherInfo) {
+                          return SingleChildScrollView(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                _informationFields(),
+                                SizedBox(height: AppSizes.setHeight(12)),
+                                IgnorePointer(
+                                  ignoring: true,
+                                  child: InkWell(
+                                    onTap: () => addEducationBottomSheet(context),
+                                    child: Container(
+                                      color: CustomAppColor.of(context).bgScaffold,
+                                      padding: EdgeInsets.symmetric(vertical: AppSizes.setHeight(23), horizontal: AppSizes.setWidth(16)),
+                                      child: Row(
+                                        children: [
+                                          Image.asset(
+                                            AppAssets.icAdd,
+                                            width: AppSizes.setWidth(24),
+                                            height: AppSizes.setHeight(24),
+                                          ),
+                                          SizedBox(width: AppSizes.setWidth(30)),
+                                          CommonText(
+                                            text: Languages.of(context).addEducation,
+                                            fontWeight: FontWeight.w600,
+                                            fontSize: AppSizes.setFontSize(16),
+                                          )
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                SizedBox(height: AppSizes.setHeight(12)),
+                                Container(
                                   color: CustomAppColor.of(context).bgScaffold,
                                   padding: EdgeInsets.symmetric(vertical: AppSizes.setHeight(23), horizontal: AppSizes.setWidth(16)),
                                   child: Row(
@@ -103,57 +212,37 @@ class _EditProfileScreenState extends State<EditProfileScreen> with TickerProvid
                                       ),
                                       SizedBox(width: AppSizes.setWidth(30)),
                                       CommonText(
-                                        text: Languages.of(context).addEducation,
+                                        text: Languages.of(context).addAWorkplace,
                                         fontWeight: FontWeight.w600,
                                         fontSize: AppSizes.setFontSize(16),
                                       )
                                     ],
                                   ),
                                 ),
-                              ),
-                              SizedBox(height: AppSizes.setHeight(12)),
-                              Container(
-                                color: CustomAppColor.of(context).bgScaffold,
-                                padding: EdgeInsets.symmetric(vertical: AppSizes.setHeight(23), horizontal: AppSizes.setWidth(16)),
-                                child: Row(
-                                  children: [
-                                    Image.asset(
-                                      AppAssets.icAdd,
-                                      width: AppSizes.setWidth(24),
-                                      height: AppSizes.setHeight(24),
-                                    ),
-                                    SizedBox(width: AppSizes.setWidth(30)),
-                                    CommonText(
-                                      text: Languages.of(context).addAWorkplace,
-                                      fontWeight: FontWeight.w600,
-                                      fontSize: AppSizes.setFontSize(16),
-                                    )
-                                  ],
-                                ),
-                              ),
-                              SizedBox(height: AppSizes.setHeight(12)),
-                              Container(
-                                  color: CustomAppColor.of(context).bgScaffold,
-                                  padding: EdgeInsets.symmetric(vertical: AppSizes.setHeight(23), horizontal: AppSizes.setWidth(16)),
-                                  child: CommonButton(
-                                    btnText: Languages.of(context).save,
-                                  )),
-                            ],
-                          ),
-                        );
-                      } else {
-                        return SingleChildScrollView(
-                          child: Column(
-                            children: [_settingsFields()],
-                          ),
-                        );
-                      }
-                    }).toList(),
+                                SizedBox(height: AppSizes.setHeight(12)),
+                                Container(
+                                    color: CustomAppColor.of(context).bgScaffold,
+                                    padding: EdgeInsets.symmetric(vertical: AppSizes.setHeight(23), horizontal: AppSizes.setWidth(16)),
+                                    child: CommonButton(
+                                      btnText: Languages.of(context).save,
+                                    )),
+                              ],
+                            ),
+                          );
+                        } else {
+                          return SingleChildScrollView(
+                            child: Column(
+                              children: [_settingsFields()],
+                            ),
+                          );
+                        }
+                      }).toList(),
+                    ),
                   ),
-                ),
-              ],
-            ))
-          ],
+                ],
+              ))
+            ],
+          ),
         ),
       ),
     );
@@ -471,27 +560,30 @@ class _EditProfileScreenState extends State<EditProfileScreen> with TickerProvid
   }
 
   _tabBar() {
-    return TabBar(
-      controller: _tabController,
-      tabAlignment: TabAlignment.start,
-      labelPadding: EdgeInsets.symmetric(horizontal: AppSizes.setWidth(14)),
-      isScrollable: true,
-      unselectedLabelColor: AppColor.txtGrey,
-      labelStyle: TextStyle(
-        fontFamily: Constant.fontFamilyUrbanist,
-        fontSize: AppSizes.setFontSize(18),
-        fontWeight: FontWeight.w600,
+    return IgnorePointer(
+      ignoring: true,
+      child: TabBar(
+        controller: _tabController,
+        tabAlignment: TabAlignment.start,
+        labelPadding: EdgeInsets.symmetric(horizontal: AppSizes.setWidth(14)),
+        isScrollable: true,
+        unselectedLabelColor: AppColor.txtGrey,
+        labelStyle: TextStyle(
+          fontFamily: Constant.fontFamilyUrbanist,
+          fontSize: AppSizes.setFontSize(18),
+          fontWeight: FontWeight.w600,
+        ),
+        labelColor: AppColor.txtPurple,
+        indicator: UnderlineTabIndicator(
+          borderSide: BorderSide(width: AppSizes.setWidth(3), color: AppColor.txtPurple),
+          insets: EdgeInsets.symmetric(horizontal: AppSizes.setWidth(20)),
+        ),
+        tabs: tabList.map((tab) {
+          return Tab(
+            text: tab,
+          );
+        }).toList(),
       ),
-      labelColor: AppColor.txtPurple,
-      indicator: UnderlineTabIndicator(
-        borderSide: BorderSide(width: AppSizes.setWidth(3), color: AppColor.txtPurple),
-        insets: EdgeInsets.symmetric(horizontal: AppSizes.setWidth(20)),
-      ),
-      tabs: tabList.map((tab) {
-        return Tab(
-          text: tab,
-        );
-      }).toList(),
     );
   }
 

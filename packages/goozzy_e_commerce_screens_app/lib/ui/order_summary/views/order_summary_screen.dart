@@ -14,10 +14,240 @@ import '../../../widgets/text/common_text.dart';
 import '../../../widgets/topbar/topbar.dart';
 import '../../app/my_app.dart';
 
-class OrderSummaryScreen extends StatelessWidget implements TopBarClickListener {
-  const OrderSummaryScreen({super.key});
-  static Route route() {
-    return MaterialPageRoute(builder: (context) => const OrderSummaryScreen());
+class OrderSummaryScreen extends StatefulWidget {
+  final bool orderSuccessBs;
+  final bool paymentFailedBs;
+
+  const OrderSummaryScreen({super.key, this.orderSuccessBs = false, this.paymentFailedBs = false});
+  static Route route({bool orderSuccessBs = false, bool paymentFailedBs = false}) {
+    return MaterialPageRoute(
+      builder: (context) => OrderSummaryScreen(
+        paymentFailedBs: paymentFailedBs,
+        orderSuccessBs: orderSuccessBs,
+      ),
+    );
+  }
+
+  @override
+  State<OrderSummaryScreen> createState() => _OrderSummaryScreenState();
+}
+
+class _OrderSummaryScreenState extends State<OrderSummaryScreen> implements TopBarClickListener {
+  bool _isBottomSheetOpen = false;
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    if (widget.paymentFailedBs) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        showPaymentCancelBS();
+      });
+    }
+    if (widget.orderSuccessBs) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        showOrderSuccessBS();
+      });
+    }
+  }
+
+  void showOrderSuccessBS() {
+    setState(() {
+      _isBottomSheetOpen = true;
+    });
+
+    customBottomSheet(
+      isPaddingRequired: false,
+      isDone: false,
+      context: context,
+      title: Languages.of(context).orderSuccess.toUpperCase(),
+      content: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Padding(
+            padding: EdgeInsets.symmetric(vertical: AppSizes.setHeight(25)),
+            child: Image.asset(
+              AppAssets.imgOrderSuccessfully,
+              height: AppSizes.setHeight(194),
+              width: AppSizes.setWidth(250),
+            ),
+          ),
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: AppSizes.setWidth(20), vertical: AppSizes.setHeight(10)),
+            child: CommonText(
+              text: Languages.of(context).yourOrderIsSuccessfully,
+              fontSize: AppSizes.setFontSize(20),
+              fontWeight: FontWeight.w700,
+            ),
+          ),
+          Padding(
+            padding: EdgeInsets.symmetric(
+              horizontal: AppSizes.setWidth(20),
+              vertical: AppSizes.setHeight(10),
+            ),
+            child: RichText(
+              textAlign: TextAlign.center,
+              text: TextSpan(
+                text: "You can track the delivery in the ",
+                style: TextStyle(
+                  fontWeight: FontWeight.w500,
+                  fontSize: AppSizes.setFontSize(18),
+                  color: CustomAppColor.of(context).txtGrey,
+                  fontFamily: Constant.fontFamilyUrbanist,
+                ),
+                children: [
+                  TextSpan(
+                    text: "\nOrder",
+                    style: TextStyle(
+                      color: CustomAppColor.of(context).borderPurple,
+                      fontWeight: FontWeight.w500,
+                      fontSize: AppSizes.setFontSize(18),
+                      fontFamily: Constant.fontFamilyUrbanist,
+                    ),
+                  ),
+                  TextSpan(
+                    text: " section",
+                    style: TextStyle(
+                      fontWeight: FontWeight.w500,
+                      fontSize: AppSizes.setFontSize(18),
+                      color: CustomAppColor.of(context).txtGrey,
+                      fontFamily: Constant.fontFamilyUrbanist,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+          Padding(padding: EdgeInsets.only(top: AppSizes.setHeight(20), bottom: AppSizes.setHeight(10)), child: const Divider()),
+          IgnorePointer(
+            ignoring: true,
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: AppSizes.setWidth(20), vertical: AppSizes.setHeight(6)),
+              child: CommonButton(
+                  borderColor: CustomAppColor.of(context).borderPurple,
+                  buttonColor: CustomAppColor.of(context).bgScaffold,
+                  radius: 3,
+                  isButtonShadow: false,
+                  height: AppSizes.setHeight(44),
+                  child: CommonText(
+                    text: Languages.of(context).goToOrderStatus,
+                    textColor: CustomAppColor.of(context).txtPurple,
+                    fontSize: AppSizes.setFontSize(16),
+                    fontWeight: FontWeight.w600,
+                  ),
+                  onTap: () {
+                    Navigator.pop(context);
+                  }),
+            ),
+          ),
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: AppSizes.setWidth(20), vertical: AppSizes.setHeight(6)),
+            child: IgnorePointer(
+              ignoring: true,
+              child: CommonButton(
+                  radius: 3,
+                  height: AppSizes.setHeight(44),
+                  btnText: Languages.of(context).continueShopping,
+                  onTap: () {
+                    Navigator.pop(context);
+                    paymentFailed(context);
+                  }),
+            ),
+          ),
+        ],
+      ),
+    ).whenComplete(() {
+      if (_isBottomSheetOpen) {
+        setState(() {
+          _isBottomSheetOpen = false;
+        });
+        Navigator.pop(context);
+      }
+    });
+  }
+
+  void showPaymentCancelBS() {
+    setState(() {
+      _isBottomSheetOpen = true;
+    });
+
+    customBottomSheet(
+      isPaddingRequired: false,
+      isDone: false,
+      context: context,
+      title: Languages.of(context).paymentFailed.toUpperCase(),
+      content: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Padding(
+            padding: EdgeInsets.symmetric(vertical: AppSizes.setHeight(25)),
+            child: Image.asset(
+              AppAssets.imgPaymentFailed,
+              height: AppSizes.setHeight(194),
+              width: AppSizes.setWidth(250),
+            ),
+          ),
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: AppSizes.setWidth(20), vertical: AppSizes.setHeight(5)),
+            child: CommonText(
+              text: Languages.of(context).somethingWentWrong,
+              fontSize: AppSizes.setFontSize(20),
+              fontWeight: FontWeight.w700,
+            ),
+          ),
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: AppSizes.setWidth(20), vertical: AppSizes.setHeight(10)),
+            child: CommonText(
+              text: Languages.of(context).sorryWeWereNotAbleToProcess,
+              fontSize: AppSizes.setFontSize(18),
+              fontWeight: FontWeight.w500,
+              textColor: CustomAppColor.of(context).txtGrey,
+            ),
+          ),
+          Padding(padding: EdgeInsets.only(top: AppSizes.setHeight(20), bottom: AppSizes.setHeight(10)), child: const Divider()),
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: AppSizes.setWidth(20), vertical: AppSizes.setHeight(6)),
+            child: IgnorePointer(
+              ignoring: true,
+              child: CommonButton(
+                  borderColor: CustomAppColor.of(context).borderPurple,
+                  buttonColor: CustomAppColor.of(context).bgScaffold,
+                  radius: 3,
+                  height: AppSizes.setHeight(44),
+                  isButtonShadow: false,
+                  child: CommonText(
+                    text: Languages.of(context).viewOrderStatus,
+                    textColor: CustomAppColor.of(context).txtPurple,
+                    fontSize: AppSizes.setFontSize(16),
+                    fontWeight: FontWeight.w600,
+                  ),
+                  onTap: () {
+                    Navigator.pop(context);
+                  }),
+            ),
+          ),
+          IgnorePointer(
+            ignoring: true,
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: AppSizes.setWidth(20), vertical: AppSizes.setHeight(6)),
+              child: CommonButton(
+                  height: AppSizes.setHeight(44),
+                  radius: 3,
+                  btnText: Languages.of(context).tryAgainNow,
+                  onTap: () {
+                    Navigator.pop(context);
+                  }),
+            ),
+          ),
+        ],
+      ),
+    ).whenComplete(() {
+      if (_isBottomSheetOpen) {
+        setState(() {
+          _isBottomSheetOpen = false;
+        });
+        Navigator.pop(context);
+      }
+    });
   }
 
   @override
@@ -25,64 +255,76 @@ class OrderSummaryScreen extends StatelessWidget implements TopBarClickListener 
     return SafeArea(
       bottom: true,
       top: false,
-      child: Scaffold(
-        backgroundColor: CustomAppColor.of(context).bgTopBar,
-        body: Column(
-          children: [
-            IgnorePointer(
-              ignoring: true,
-              child: TopBar(
-                this,
-                isShowBack: true,
-                title: Languages.of(context).orderSummary,
-                textColor: CustomAppColor.of(context).txtBlack,
-                topBarColor: CustomAppColor.of(context).bgBlackWhiteScaffold,
-              ),
-            ),
-            Expanded(
-              child: SingleChildScrollView(
-                child: Column(
-                  children: [
-                    _senderInformation(context),
-                    Padding(
-                      padding: EdgeInsets.only(top: AppSizes.setHeight(10)),
-                      child: Container(
-                        padding: EdgeInsets.symmetric(horizontal: AppSizes.setWidth(12), vertical: AppSizes.setHeight(12)),
-                        color: CustomAppColor.of(context).bgPurpleBlack,
-                        child: CommonText(
-                          text: Languages.of(context).thisInfoWillBeDisplayedInThePackageSent,
-                          fontWeight: FontWeight.w500,
-                          fontSize: AppSizes.setFontSize(14),
-                          textAlign: TextAlign.start,
-                        ),
-                      ),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.only(top: AppSizes.setHeight(10)),
-                      child: _estimateDate(context),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.only(top: AppSizes.setHeight(10)),
-                      child: _cartProducts(context),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.only(top: AppSizes.setHeight(10)),
-                      child: _supplierDetail(context),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.only(top: AppSizes.setHeight(10)),
-                      child: _priceBreakUp(context),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.only(top: AppSizes.setHeight(10)),
-                      child: _shippingAddress(context),
-                    ),
-                  ],
+      child: PopScope(
+        canPop: !_isBottomSheetOpen,
+        onPopInvokedWithResult: (didPop, result) {
+          if (!didPop && _isBottomSheetOpen) {
+            Navigator.pop(context);
+            setState(() {
+              _isBottomSheetOpen = false;
+            });
+            Navigator.pop(context);
+          }
+        },
+        child: Scaffold(
+          backgroundColor: CustomAppColor.of(context).bgTopBar,
+          body: Column(
+            children: [
+              IgnorePointer(
+                ignoring: true,
+                child: TopBar(
+                  this,
+                  isShowBack: true,
+                  title: Languages.of(context).orderSummary,
+                  textColor: CustomAppColor.of(context).txtBlack,
+                  topBarColor: CustomAppColor.of(context).bgBlackWhiteScaffold,
                 ),
               ),
-            ),
-            _totalPrice(context),
-          ],
+              Expanded(
+                child: SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      _senderInformation(context),
+                      Padding(
+                        padding: EdgeInsets.only(top: AppSizes.setHeight(10)),
+                        child: Container(
+                          padding: EdgeInsets.symmetric(horizontal: AppSizes.setWidth(12), vertical: AppSizes.setHeight(12)),
+                          color: CustomAppColor.of(context).bgPurpleBlack,
+                          child: CommonText(
+                            text: Languages.of(context).thisInfoWillBeDisplayedInThePackageSent,
+                            fontWeight: FontWeight.w500,
+                            fontSize: AppSizes.setFontSize(14),
+                            textAlign: TextAlign.start,
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(top: AppSizes.setHeight(10)),
+                        child: _estimateDate(context),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(top: AppSizes.setHeight(10)),
+                        child: _cartProducts(context),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(top: AppSizes.setHeight(10)),
+                        child: _supplierDetail(context),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(top: AppSizes.setHeight(10)),
+                        child: _priceBreakUp(context),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(top: AppSizes.setHeight(10)),
+                        child: _shippingAddress(context),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              _totalPrice(context),
+            ],
+          ),
         ),
       ),
     );

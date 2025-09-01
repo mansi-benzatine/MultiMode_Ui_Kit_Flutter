@@ -116,6 +116,11 @@ class _GoozzyECommerceScreenListScreen extends State<GoozzyECommerceScreenListSc
         onClick: () => Navigator.push(context, CreateNewPasswordScreen.route()),
       ),
       ScreenListDataModel(
+        title: "Created New Password Successfully",
+        icon: AppAssets.icScreens,
+        onClick: () => Navigator.push(context, CreateNewPasswordScreen.route(isShowAlert: true)),
+      ),
+      ScreenListDataModel(
         title: "Forgot Password With Phone Number",
         icon: AppAssets.icScreens,
         onClick: () => Navigator.push(context, ForgotPasswordScreen.route(isFromEmail: false)),
@@ -124,6 +129,11 @@ class _GoozzyECommerceScreenListScreen extends State<GoozzyECommerceScreenListSc
         title: "Verify Code",
         icon: AppAssets.icScreens,
         onClick: () => Navigator.push(context, VerifyCodeScreen.route()),
+      ),
+      ScreenListDataModel(
+        title: "Verify Code Successfully",
+        icon: AppAssets.icScreens,
+        onClick: () => Navigator.push(context, VerifyCodeScreen.route(isShowAlert: true)),
       ),
       ScreenListDataModel(
         title: "Home",
@@ -138,9 +148,469 @@ class _GoozzyECommerceScreenListScreen extends State<GoozzyECommerceScreenListSc
             )),
       ),
       ScreenListDataModel(
+        title: "Sort By",
+        icon: AppAssets.icScreens,
+        onClick: () => Navigator.push(
+            context,
+            DashboardScreen.route(
+              isFromHome: true,
+              isFromAccount: false,
+              isFromCategory: false,
+              isFromOrders: false,
+              isShowSortByBs: true,
+            )),
+      ),
+      ScreenListDataModel(
+        title: "Filter : Category",
+        icon: AppAssets.icScreens,
+        onClick: () => Navigator.push(
+            context,
+            DashboardScreen.route(
+              isFromHome: true,
+              isFromAccount: false,
+              isFromCategory: false,
+              isFromOrders: false,
+              isShowCategoryBs: true,
+            )),
+      ),
+      ScreenListDataModel(
+        title: "Filter : Gender",
+        icon: AppAssets.icScreens,
+        onClick: () => Navigator.push(
+            context,
+            DashboardScreen.route(
+              isFromHome: true,
+              isFromAccount: false,
+              isFromCategory: false,
+              isFromOrders: false,
+              isShowGenderBs: true,
+            )),
+      ),
+      ScreenListDataModel(
+        title: "Filter By Category",
+        icon: AppAssets.icScreens,
+        onClick: () => Navigator.push(
+            context,
+            DashboardScreen.route(
+              isFromHome: true,
+              isFromAccount: false,
+              isFromCategory: false,
+              isFromOrders: false,
+              isShowGenderBs: false,
+              isShowFilterByColorBs: true,
+              currentIndex: 1,
+              filterType: "Category",
+            )),
+      ),
+      ScreenListDataModel(
+        title: "Filter By Gender",
+        icon: AppAssets.icScreens,
+        onClick: () => Navigator.push(
+            context,
+            DashboardScreen.route(
+              isFromHome: true,
+              isFromAccount: false,
+              isFromCategory: false,
+              isFromOrders: false,
+              isShowGenderBs: false,
+              isShowFilterByColorBs: true,
+              currentIndex: 1,
+              filterType: "Gender",
+            )),
+      ),
+      ScreenListDataModel(
+        title: "Filter By Colors",
+        icon: AppAssets.icScreens,
+        onClick: () => Navigator.push(
+            context,
+            DashboardScreen.route(
+              isFromHome: true,
+              isFromAccount: false,
+              isFromCategory: false,
+              isFromOrders: false,
+              isShowGenderBs: false,
+              isShowFilterByColorBs: true,
+              currentIndex: 1,
+              filterType: "Colors",
+            )),
+      ),
+      ScreenListDataModel(
+        title: "Filter By Size",
+        icon: AppAssets.icScreens,
+        onClick: () => Navigator.push(
+            context,
+            DashboardScreen.route(
+              isFromHome: true,
+              isFromAccount: false,
+              isFromCategory: false,
+              isFromOrders: false,
+              isShowGenderBs: false,
+              isShowFilterByColorBs: true,
+              currentIndex: 1,
+              filterType: "Size",
+            )),
+      ),
+      ScreenListDataModel(
+        title: "Filter By Fabric",
+        icon: AppAssets.icScreens,
+        onClick: () => Navigator.push(
+            context,
+            DashboardScreen.route(
+              isFromHome: true,
+              isFromAccount: false,
+              isFromCategory: false,
+              isFromOrders: false,
+              isShowGenderBs: false,
+              isShowFilterByColorBs: true,
+              currentIndex: 1,
+              filterType: "Fabric",
+            )),
+      ),
+      ScreenListDataModel(
+        title: "Filter By Price",
+        icon: AppAssets.icScreens,
+        onClick: () => Navigator.push(
+            context,
+            DashboardScreen.route(
+              isFromHome: true,
+              isFromAccount: false,
+              isFromCategory: false,
+              isFromOrders: false,
+              isShowGenderBs: false,
+              isShowFilterByColorBs: true,
+              currentIndex: 1,
+              filterType: "Price",
+            )),
+      ),
+      ScreenListDataModel(
+        title: "Filter By Rating",
+        icon: AppAssets.icScreens,
+        onClick: () => Navigator.push(
+            context,
+            DashboardScreen.route(
+              isFromHome: true,
+              isFromAccount: false,
+              isFromCategory: false,
+              isFromOrders: false,
+              isShowGenderBs: false,
+              isShowFilterByColorBs: true,
+              currentIndex: 1,
+              filterType: "Rating",
+            )),
+      ),
+      ScreenListDataModel(
+        title: "Filter By Occasion",
+        icon: AppAssets.icScreens,
+        onClick: () => Navigator.push(
+            context,
+            DashboardScreen.route(
+              isFromHome: true,
+              isFromAccount: false,
+              isFromCategory: false,
+              isFromOrders: false,
+              isShowGenderBs: false,
+              isShowFilterByColorBs: true,
+              currentIndex: 1,
+              filterType: "Occasion",
+            )),
+      ),
+      ScreenListDataModel(
+        title: "Filter By Combo",
+        icon: AppAssets.icScreens,
+        onClick: () => Navigator.push(
+            context,
+            DashboardScreen.route(
+              isFromHome: true,
+              isFromAccount: false,
+              isFromCategory: false,
+              isFromOrders: false,
+              isShowGenderBs: false,
+              isShowFilterByColorBs: true,
+              currentIndex: 1,
+              filterType: "Combo",
+            )),
+      ),
+      ScreenListDataModel(
+        title: "Filter By Discount",
+        icon: AppAssets.icScreens,
+        onClick: () => Navigator.push(
+            context,
+            DashboardScreen.route(
+              isFromHome: true,
+              isFromAccount: false,
+              isFromCategory: false,
+              isFromOrders: false,
+              isShowGenderBs: false,
+              isShowFilterByColorBs: true,
+              currentIndex: 1,
+              filterType: "Discount",
+            )),
+      ),
+      ScreenListDataModel(
+        title: "Filter By Reversible",
+        icon: AppAssets.icScreens,
+        onClick: () => Navigator.push(
+            context,
+            DashboardScreen.route(
+              isFromHome: true,
+              isFromAccount: false,
+              isFromCategory: false,
+              isFromOrders: false,
+              isShowGenderBs: false,
+              isShowFilterByColorBs: true,
+              currentIndex: 1,
+              filterType: "Reversible",
+            )),
+      ),
+      ScreenListDataModel(
+        title: "Filter By Fit/Shape",
+        icon: AppAssets.icScreens,
+        onClick: () => Navigator.push(
+            context,
+            DashboardScreen.route(
+              isFromHome: true,
+              isFromAccount: false,
+              isFromCategory: false,
+              isFromOrders: false,
+              isShowGenderBs: false,
+              isShowFilterByColorBs: true,
+              currentIndex: 1,
+              filterType: "Fit/Shape",
+            )),
+      ),
+      ScreenListDataModel(
+        title: "Filter By Material",
+        icon: AppAssets.icScreens,
+        onClick: () => Navigator.push(
+            context,
+            DashboardScreen.route(
+              isFromHome: true,
+              isFromAccount: false,
+              isFromCategory: false,
+              isFromOrders: false,
+              isShowGenderBs: false,
+              isShowFilterByColorBs: true,
+              currentIndex: 1,
+              filterType: "Material",
+            )),
+      ),
+      ScreenListDataModel(
+        title: "Filter By Pattern Type",
+        icon: AppAssets.icScreens,
+        onClick: () => Navigator.push(
+            context,
+            DashboardScreen.route(
+              isFromHome: true,
+              isFromAccount: false,
+              isFromCategory: false,
+              isFromOrders: false,
+              isShowGenderBs: false,
+              isShowFilterByColorBs: true,
+              currentIndex: 1,
+              filterType: "Pattern Type",
+            )),
+      ),
+      ScreenListDataModel(
+        title: "Filter By Bottomwear Fabric",
+        icon: AppAssets.icScreens,
+        onClick: () => Navigator.push(
+            context,
+            DashboardScreen.route(
+              isFromHome: true,
+              isFromAccount: false,
+              isFromCategory: false,
+              isFromOrders: false,
+              isShowGenderBs: false,
+              isShowFilterByColorBs: true,
+              currentIndex: 1,
+              filterType: "Bottomwear Fabric",
+            )),
+      ),
+      ScreenListDataModel(
+        title: "Filter By Bottom Pattern Type",
+        icon: AppAssets.icScreens,
+        onClick: () => Navigator.push(
+            context,
+            DashboardScreen.route(
+              isFromHome: true,
+              isFromAccount: false,
+              isFromCategory: false,
+              isFromOrders: false,
+              isShowGenderBs: false,
+              isShowFilterByColorBs: true,
+              currentIndex: 1,
+              filterType: "Bottom Pattern Type",
+            )),
+      ),
+      ScreenListDataModel(
+        title: "Filter By Border",
+        icon: AppAssets.icScreens,
+        onClick: () => Navigator.push(
+            context,
+            DashboardScreen.route(
+              isFromHome: true,
+              isFromAccount: false,
+              isFromCategory: false,
+              isFromOrders: false,
+              isShowGenderBs: false,
+              isShowFilterByColorBs: true,
+              currentIndex: 1,
+              filterType: "Border",
+            )),
+      ),
+      ScreenListDataModel(
+        title: "Filter By Back type",
+        icon: AppAssets.icScreens,
+        onClick: () => Navigator.push(
+            context,
+            DashboardScreen.route(
+              isFromHome: true,
+              isFromAccount: false,
+              isFromCategory: false,
+              isFromOrders: false,
+              isShowGenderBs: false,
+              isShowFilterByColorBs: true,
+              currentIndex: 1,
+              filterType: "Back Type",
+            )),
+      ),
+      ScreenListDataModel(
+        title: "Filter By Top type",
+        icon: AppAssets.icScreens,
+        onClick: () => Navigator.push(
+            context,
+            DashboardScreen.route(
+              isFromHome: true,
+              isFromAccount: false,
+              isFromCategory: false,
+              isFromOrders: false,
+              isShowGenderBs: false,
+              isShowFilterByColorBs: true,
+              currentIndex: 1,
+              filterType: "Top Type",
+            )),
+      ),
+      ScreenListDataModel(
+        title: "Filter By Brand",
+        icon: AppAssets.icScreens,
+        onClick: () => Navigator.push(
+            context,
+            DashboardScreen.route(
+              isFromHome: true,
+              isFromAccount: false,
+              isFromCategory: false,
+              isFromOrders: false,
+              isShowGenderBs: false,
+              isShowFilterByColorBs: true,
+              currentIndex: 1,
+              filterType: "Brand",
+            )),
+      ),
+      ScreenListDataModel(
+        title: "Filter By Warranty Period",
+        icon: AppAssets.icScreens,
+        onClick: () => Navigator.push(
+            context,
+            DashboardScreen.route(
+              isFromHome: true,
+              isFromAccount: false,
+              isFromCategory: false,
+              isFromOrders: false,
+              isShowGenderBs: false,
+              isShowFilterByColorBs: true,
+              currentIndex: 1,
+              filterType: "Warranty Period",
+            )),
+      ),
+      ScreenListDataModel(
+        title: "Filter By Bottom Type",
+        icon: AppAssets.icScreens,
+        onClick: () => Navigator.push(
+            context,
+            DashboardScreen.route(
+              isFromHome: true,
+              isFromAccount: false,
+              isFromCategory: false,
+              isFromOrders: false,
+              isShowGenderBs: false,
+              isShowFilterByColorBs: true,
+              currentIndex: 1,
+              filterType: "Bottom Type",
+            )),
+      ),
+      ScreenListDataModel(
+        title: "Filter By Heel Type",
+        icon: AppAssets.icScreens,
+        onClick: () => Navigator.push(
+            context,
+            DashboardScreen.route(
+              isFromHome: true,
+              isFromAccount: false,
+              isFromCategory: false,
+              isFromOrders: false,
+              isShowGenderBs: false,
+              isShowFilterByColorBs: true,
+              currentIndex: 1,
+              filterType: "Heel Type",
+            )),
+      ),
+      ScreenListDataModel(
+        title: "Filter By Concern",
+        icon: AppAssets.icScreens,
+        onClick: () => Navigator.push(
+            context,
+            DashboardScreen.route(
+              isFromHome: true,
+              isFromAccount: false,
+              isFromCategory: false,
+              isFromOrders: false,
+              isShowGenderBs: false,
+              isShowFilterByColorBs: true,
+              currentIndex: 1,
+              filterType: "Concern",
+            )),
+      ),
+      ScreenListDataModel(
+        title: "Filter By Type Of Skin",
+        icon: AppAssets.icScreens,
+        onClick: () => Navigator.push(
+            context,
+            DashboardScreen.route(
+              isFromHome: true,
+              isFromAccount: false,
+              isFromCategory: false,
+              isFromOrders: false,
+              isShowGenderBs: false,
+              isShowFilterByColorBs: true,
+              currentIndex: 1,
+              filterType: "Type Of Skin",
+            )),
+      ),
+      ScreenListDataModel(
+        title: "Filter By Shade",
+        icon: AppAssets.icScreens,
+        onClick: () => Navigator.push(
+            context,
+            DashboardScreen.route(
+              isFromHome: true,
+              isFromAccount: false,
+              isFromCategory: false,
+              isFromOrders: false,
+              isShowGenderBs: false,
+              isShowFilterByColorBs: true,
+              currentIndex: 1,
+              filterType: "Shade",
+            )),
+      ),
+      ScreenListDataModel(
         title: "View Product",
         icon: AppAssets.icScreens,
         onClick: () => Navigator.push(context, ViewProductScreen.route()),
+      ),
+      ScreenListDataModel(
+        title: "See All Reviews",
+        icon: AppAssets.icScreens,
+        onClick: () => Navigator.push(context, ViewProductScreen.route(isShowReviewBs: true)),
       ),
       ScreenListDataModel(
         title: "View Inner Product",
@@ -177,9 +647,76 @@ class _GoozzyECommerceScreenListScreen extends State<GoozzyECommerceScreenListSc
             )),
       ),
       ScreenListDataModel(
-        title: "Edit Profile",
+        title: "Sign Up To Continue",
         icon: AppAssets.icScreens,
-        onClick: () => Navigator.push(context, EditProfileScreen.route()),
+        onClick: () => Navigator.push(
+            context,
+            DashboardScreen.route(
+              isFromHome: false,
+              isFromAccount: true,
+              isFromCategory: false,
+              isFromOrders: false,
+              isSignupToContinueBs: true,
+            )),
+      ),
+      ScreenListDataModel(
+        title: "Otp Verification",
+        icon: AppAssets.icScreens,
+        onClick: () => Navigator.push(
+            context,
+            DashboardScreen.route(
+              isFromHome: false,
+              isFromAccount: true,
+              isFromCategory: false,
+              isFromOrders: false,
+              isOtpVerificationBs: true,
+            )),
+      ),
+      ScreenListDataModel(
+        title: "Account Created",
+        icon: AppAssets.icScreens,
+        onClick: () => Navigator.push(
+            context,
+            DashboardScreen.route(
+              isFromHome: false,
+              isFromAccount: true,
+              isFromCategory: false,
+              isFromOrders: false,
+              isAccountCreatedBs: true,
+            )),
+      ),
+      ScreenListDataModel(
+        title: "Logout",
+        icon: AppAssets.icScreens,
+        onClick: () => Navigator.push(
+            context,
+            DashboardScreen.route(
+              isFromHome: false,
+              isFromAccount: true,
+              isFromCategory: false,
+              isFromOrders: false,
+              isLogoutBs: true,
+            )),
+      ),
+      ScreenListDataModel(
+        title: "Edit Profile : Primary Information",
+        icon: AppAssets.icScreens,
+        onClick: () => Navigator.push(context, EditProfileScreen.route(currentIndex: 0)),
+      ),
+      ScreenListDataModel(
+        title: "Edit Profile : Other Information",
+        icon: AppAssets.icScreens,
+        onClick: () => Navigator.push(context, EditProfileScreen.route(currentIndex: 1)),
+      ),
+      ScreenListDataModel(
+        title: "Edit Profile : Add Education",
+        icon: AppAssets.icScreens,
+        onClick: () => Navigator.push(context, EditProfileScreen.route(isShowAddEducataionBs: true)),
+      ),
+      ScreenListDataModel(
+        title: "Edit Profile : Setting",
+        icon: AppAssets.icScreens,
+        onClick: () => Navigator.push(context, EditProfileScreen.route(currentIndex: 2)),
       ),
       ScreenListDataModel(
         title: "Profile",
@@ -192,14 +729,32 @@ class _GoozzyECommerceScreenListScreen extends State<GoozzyECommerceScreenListSc
         onClick: () => Navigator.push(context, BankDetailsScreen.route()),
       ),
       ScreenListDataModel(
-        title: "My Catalogs",
+        title: "My Catalogs : Wishlist",
         icon: AppAssets.icScreens,
-        onClick: () => Navigator.push(context, MyCatalogsScreen.route()),
+        onClick: () => Navigator.push(context, MyCatalogsScreen.route(currentIndex: 0)),
+      ),
+      ScreenListDataModel(
+        title: "My Catalogs : Shared",
+        icon: AppAssets.icScreens,
+        onClick: () => Navigator.push(context, MyCatalogsScreen.route(currentIndex: 1)),
       ),
       ScreenListDataModel(
         title: "Refer And Earn",
         icon: AppAssets.icScreens,
         onClick: () => Navigator.push(context, ReferAndEarnScreen.route()),
+      ),
+      ScreenListDataModel(
+        title: "Enter Referral Code",
+        icon: AppAssets.icScreens,
+        onClick: () => Navigator.push(
+            context,
+            DashboardScreen.route(
+              isFromHome: false,
+              isFromAccount: true,
+              isFromCategory: false,
+              isFromOrders: false,
+              isEnterReferralCodeBs: true,
+            )),
       ),
       ScreenListDataModel(
         title: "Settings",
@@ -232,6 +787,16 @@ class _GoozzyECommerceScreenListScreen extends State<GoozzyECommerceScreenListSc
         onClick: () => Navigator.push(context, OrderSummaryScreen.route()),
       ),
       ScreenListDataModel(
+        title: "Order Success",
+        icon: AppAssets.icScreens,
+        onClick: () => Navigator.push(context, OrderSummaryScreen.route(orderSuccessBs: true)),
+      ),
+      ScreenListDataModel(
+        title: "Payment Failed",
+        icon: AppAssets.icScreens,
+        onClick: () => Navigator.push(context, OrderSummaryScreen.route(paymentFailedBs: true)),
+      ),
+      ScreenListDataModel(
         title: "Order History",
         icon: AppAssets.icScreens,
         onClick: () => Navigator.push(
@@ -244,6 +809,32 @@ class _GoozzyECommerceScreenListScreen extends State<GoozzyECommerceScreenListSc
             )),
       ),
       ScreenListDataModel(
+        title: "Reason Of Cancellation",
+        icon: AppAssets.icScreens,
+        onClick: () => Navigator.push(
+            context,
+            DashboardScreen.route(
+              isFromHome: false,
+              isFromCategory: false,
+              isFromOrders: true,
+              isFromAccount: false,
+              isForReasonOfCancellationBs: true,
+            )),
+      ),
+      ScreenListDataModel(
+        title: "Order Cancelled",
+        icon: AppAssets.icScreens,
+        onClick: () => Navigator.push(
+            context,
+            DashboardScreen.route(
+              isFromHome: false,
+              isFromCategory: false,
+              isFromOrders: true,
+              isFromAccount: false,
+              isForOrderCancelBs: true,
+            )),
+      ),
+      ScreenListDataModel(
         title: "Track Order",
         icon: AppAssets.icScreens,
         onClick: () => Navigator.push(context, TrackOrderScreen.route()),
@@ -252,6 +843,11 @@ class _GoozzyECommerceScreenListScreen extends State<GoozzyECommerceScreenListSc
         title: "Notification",
         icon: AppAssets.icScreens,
         onClick: () => Navigator.push(context, NotificationsScreen.route()),
+      ),
+      ScreenListDataModel(
+        title: "No Notification",
+        icon: AppAssets.icScreens,
+        onClick: () => Navigator.push(context, NotificationsScreen.route(isEmptyScreen: true)),
       ),
       ScreenListDataModel(
         title: "Wishlist",

@@ -43,7 +43,7 @@ class Products {
 
 class SortByData {
   final String? label;
-  final bool? isSelected;
+  bool? isSelected;
   final bool? isDotVisible;
   final String? imagePath;
 

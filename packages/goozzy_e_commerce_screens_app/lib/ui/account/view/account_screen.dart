@@ -17,10 +17,36 @@ import '../../../widgets/textfield/common_textformfield.dart';
 import '../datamodel/account_data.dart';
 
 class AccountScreen extends StatefulWidget {
-  const AccountScreen({super.key});
+  final bool isEnterReferralCodeBs;
+  final bool isSignupToContinueBs;
+  final bool isOtpVerificationBs;
+  final bool isAccountCreatedBs;
+  final bool isLogoutBs;
 
-  static Route route() {
-    return MaterialPageRoute(builder: (context) => const AccountScreen());
+  const AccountScreen({
+    super.key,
+    this.isEnterReferralCodeBs = false,
+    this.isAccountCreatedBs = false,
+    this.isLogoutBs = false,
+    this.isOtpVerificationBs = false,
+    this.isSignupToContinueBs = false,
+  });
+
+  static Route route({
+    bool isEnterReferralCodeBs = false,
+    bool isSignupToContinueBs = false,
+    bool isOtpVerificationBs = false,
+    bool isAccountCreatedBs = false,
+    bool isLogoutBs = false,
+  }) {
+    return MaterialPageRoute(
+        builder: (context) => AccountScreen(
+              isEnterReferralCodeBs: isEnterReferralCodeBs,
+              isLogoutBs: isLogoutBs,
+              isAccountCreatedBs: isAccountCreatedBs,
+              isOtpVerificationBs: isOtpVerificationBs,
+              isSignupToContinueBs: isSignupToContinueBs,
+            ));
   }
 
   @override
@@ -30,11 +56,44 @@ class AccountScreen extends StatefulWidget {
 class _AccountScreenState extends State<AccountScreen> implements TopBarClickListener {
   bool isAccountCreated = false;
   List<AccountData> accountList = [];
+  bool _isBottomSheetOpen = false;
 
   void accountCreated() {
     setState(() {
       isAccountCreated = !isAccountCreated;
     });
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+
+    if (widget.isSignupToContinueBs) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        showSignUpToContinueBS();
+      });
+    }
+    if (widget.isOtpVerificationBs) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        showOtpVerificationBS();
+      });
+    }
+    if (widget.isAccountCreatedBs) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        showAccountCreatedBS();
+      });
+    }
+    if (widget.isLogoutBs) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        showLogoutBS();
+      });
+    }
+    if (widget.isEnterReferralCodeBs) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        showEnterReferalCodeBS();
+      });
+    }
   }
 
   void fillData() {
@@ -53,22 +112,449 @@ class _AccountScreenState extends State<AccountScreen> implements TopBarClickLis
     ];
   }
 
+  void showLogoutBS() {
+    setState(() {
+      _isBottomSheetOpen = true;
+    });
+    customBottomSheet(
+      isPaddingRequired: false,
+      isDone: false,
+      maxHeightRatio: 0.4,
+      context: context,
+      title: Languages.of(context).logout,
+      content: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          Center(
+            child: CommonText(
+              text: Languages.of(context).areYouSureYouWantToLogout,
+              fontSize: AppSizes.setFontSize(18),
+              fontWeight: FontWeight.w500,
+              textColor: CustomAppColor.of(context).txtGrey,
+              textAlign: TextAlign.center,
+            ),
+          ),
+          SizedBox(height: AppSizes.setHeight(24)),
+          Container(
+            decoration: BoxDecoration(
+              color: CustomAppColor.of(context).btnWhite,
+              border: Border(
+                top: BorderSide(
+                  color: CustomAppColor.of(context).borderGrey.withOpacityPercent(0.4),
+                ),
+              ),
+            ),
+            padding: EdgeInsets.symmetric(vertical: AppSizes.setHeight(6)),
+            margin: EdgeInsets.zero,
+            child: IgnorePointer(
+              ignoring: true,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: AppSizes.setWidth(20), vertical: AppSizes.setHeight(12)),
+                    child: CommonButton(
+                      height: AppSizes.setHeight(44),
+                      btnText: Languages.of(context).cancel,
+                      onTap: () {},
+                      buttonColor: CustomAppColor.of(context).btnWhite,
+                      borderColor: CustomAppColor.of(context).borderPurple,
+                      radius: 3,
+                      child: CommonText(
+                        text: Languages.of(context).cancel,
+                        textColor: CustomAppColor.of(context).txtPurple,
+                        fontSize: AppSizes.setFontSize(16),
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: AppSizes.setWidth(20), vertical: AppSizes.setHeight(6)),
+                    child: IgnorePointer(
+                      ignoring: true,
+                      child: CommonButton(
+                          radius: 3,
+                          height: AppSizes.setHeight(44),
+                          btnText: Languages.of(context).logout,
+                          onTap: () {
+                            accountCreated();
+                            Navigator.pop(context);
+                          }),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ],
+      ),
+    ).whenComplete(() {
+      if (_isBottomSheetOpen) {
+        setState(() {
+          _isBottomSheetOpen = false;
+        });
+        Navigator.pop(context);
+      }
+    });
+  }
+
+  void showAccountCreatedBS() {
+    setState(() {
+      _isBottomSheetOpen = true;
+    });
+    customBottomSheet(
+      isDone: false,
+      context: context,
+      title: Languages.of(context).accountCreated,
+      content: Padding(
+        padding: EdgeInsets.symmetric(horizontal: AppSizes.setWidth(10)),
+        child: Column(
+          children: [
+            Padding(
+              padding: EdgeInsets.only(
+                top: AppSizes.setHeight(1),
+                left: AppSizes.setWidth(22),
+                right: AppSizes.setWidth(22),
+              ),
+              child: Image.asset(
+                AppAssets.imgAccountCreated,
+                width: AppSizes.setWidth(200),
+                height: AppSizes.setHeight(200),
+              ),
+            ),
+            Padding(
+              padding: EdgeInsets.only(top: AppSizes.setHeight(25)),
+              child: CommonText(
+                text: Languages.of(context).yourAccountCreated,
+                fontSize: AppSizes.setFontSize(15),
+                fontWeight: FontWeight.w600,
+                textColor: CustomAppColor.of(context).txtGrey,
+              ),
+            ),
+            IgnorePointer(
+              ignoring: true,
+              child: Padding(
+                padding: EdgeInsets.only(top: AppSizes.setHeight(20), bottom: AppSizes.setHeight(20)),
+                child: CommonButton(
+                    btnText: Languages.of(context).txtContinue,
+                    onTap: () {
+                      Navigator.pop(context);
+                    }),
+              ),
+            ),
+            Padding(
+              padding: EdgeInsets.only(top: AppSizes.setHeight(20), left: AppSizes.setWidth(41), right: AppSizes.setWidth(30)),
+              child: CommonText(
+                text: Languages.of(context).byContinuingYouAgreeToGoozzy,
+                fontSize: AppSizes.setFontSize(15),
+                fontWeight: FontWeight.w600,
+                textColor: CustomAppColor.of(context).txtGrey,
+              ),
+            ),
+            CommonRichText(
+              firstText: Languages.of(context).termsAndCondition,
+              middleText: Languages.of(context).and,
+              lastText: Languages.of(context).privacyPolicy,
+            )
+          ],
+        ),
+      ),
+    ).whenComplete(() {
+      if (_isBottomSheetOpen) {
+        setState(() {
+          _isBottomSheetOpen = false;
+        });
+        Navigator.pop(context);
+      }
+    });
+  }
+
+  void showOtpVerificationBS() {
+    setState(() {
+      _isBottomSheetOpen = true;
+    });
+    customBottomSheet(
+      isDone: false,
+      maxHeightRatio: 0.55,
+      context: context,
+      title: Languages.of(context).otpVerification,
+      content: Column(
+        children: [
+          Padding(
+            padding: EdgeInsets.only(top: AppSizes.setHeight(7)),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                CommonText(
+                  text: Languages.of(context).codeIsSentTo,
+                  fontSize: AppSizes.setFontSize(15),
+                  fontWeight: FontWeight.w600,
+                  textColor: CustomAppColor.of(context).txtGrey,
+                ),
+                CommonText(
+                  text: AppStrings.phoneNumber,
+                  fontSize: AppSizes.setFontSize(15),
+                  fontWeight: FontWeight.w600,
+                  textColor: CustomAppColor.of(context).txtBlack,
+                ),
+              ],
+            ),
+          ),
+          Padding(
+            padding: EdgeInsets.symmetric(vertical: AppSizes.setHeight(25)),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                SizedBox(
+                  width: AppSizes.setWidth(58),
+                  height: AppSizes.setHeight(60),
+                  child: SingleDigitTextField(
+                    controller: TextEditingController(),
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.only(left: AppSizes.setWidth(32)),
+                  child: SizedBox(
+                    width: AppSizes.setWidth(58),
+                    height: AppSizes.setHeight(60),
+                    child: SingleDigitTextField(
+                      controller: TextEditingController(),
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.only(left: AppSizes.setWidth(32)),
+                  child: SizedBox(
+                    width: AppSizes.setWidth(58),
+                    height: AppSizes.setHeight(60),
+                    child: SingleDigitTextField(
+                      controller: TextEditingController(),
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.only(left: AppSizes.setWidth(32)),
+                  child: SizedBox(
+                    width: AppSizes.setWidth(58),
+                    height: AppSizes.setHeight(60),
+                    child: SingleDigitTextField(
+                      controller: TextEditingController(),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          IgnorePointer(
+            ignoring: true,
+            child: CommonButton(
+              btnText: Languages.of(context).proceed,
+              onTap: () {
+                Navigator.pop(context);
+              },
+            ),
+          ),
+          Padding(
+            padding: EdgeInsets.only(top: AppSizes.setHeight(26)),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                CommonText(
+                  text: Languages.of(context).didntReceiveTheCode,
+                  fontSize: AppSizes.setFontSize(15),
+                  fontWeight: FontWeight.w600,
+                  textColor: CustomAppColor.of(context).txtGrey,
+                ),
+                CommonText(
+                  text: Languages.of(context).resendOtp,
+                  fontSize: AppSizes.setFontSize(15),
+                  fontWeight: FontWeight.w600,
+                  textColor: CustomAppColor.of(context).txtPurple,
+                ),
+              ],
+            ),
+          ),
+          Padding(
+            padding: EdgeInsets.only(top: AppSizes.setHeight(39), left: AppSizes.setWidth(41), right: AppSizes.setWidth(30)),
+            child: CommonText(
+              text: Languages.of(context).byContinuingYouAgreeToGoozzy,
+              fontSize: AppSizes.setFontSize(15),
+              fontWeight: FontWeight.w600,
+              textColor: CustomAppColor.of(context).txtGrey,
+            ),
+          ),
+          CommonRichText(
+            firstText: Languages.of(context).termsAndCondition,
+            middleText: Languages.of(context).and,
+            lastText: Languages.of(context).privacyPolicy,
+          )
+        ],
+      ),
+    ).whenComplete(() {
+      if (_isBottomSheetOpen) {
+        setState(() {
+          _isBottomSheetOpen = false;
+        });
+        Navigator.pop(context);
+      }
+    });
+  }
+
+  void showSignUpToContinueBS() {
+    setState(() {
+      _isBottomSheetOpen = true;
+    });
+    customBottomSheet(
+      isDone: false,
+      maxHeightRatio: 0.55,
+      context: context,
+      title: Languages.of(context).signUpToContinue,
+      content: Padding(
+        padding: EdgeInsets.only(top: AppSizes.setHeight(60)),
+        child: Column(
+          children: [
+            Row(
+              children: [
+                Flexible(
+                  flex: 3,
+                  child: CommonTextFormField(
+                    isCountryLabelVisible: true,
+                    isPhoneNumberField: true,
+                    labelText: Languages.of(context).country,
+                  ),
+                ),
+                SizedBox(width: AppSizes.setWidth(10)),
+                Flexible(
+                  flex: 6,
+                  child: CommonTextFormField(
+                    fillColor: CustomAppColor.of(context).bgScaffold,
+                    labelText: Languages.of(context).phoneNumber,
+                  ),
+                ),
+              ],
+            ),
+            IgnorePointer(
+              ignoring: true,
+              child: Padding(
+                padding: EdgeInsets.symmetric(vertical: AppSizes.setHeight(35)),
+                child: CommonButton(
+                    btnText: Languages.of(context).sendOtp,
+                    onTap: () {
+                      Navigator.pop(context);
+                    }),
+              ),
+            ),
+            Padding(
+              padding: EdgeInsets.only(top: AppSizes.setHeight(10)),
+              child: CommonText(
+                text: Languages.of(context).byContinuingYouAgreeToGoozzy,
+                fontWeight: FontWeight.w600,
+                textColor: CustomAppColor.of(context).txtGrey,
+                fontSize: AppSizes.setFontSize(15),
+              ),
+            ),
+            CommonRichText(
+              firstText: Languages.of(context).termsAndCondition,
+              middleText: Languages.of(context).and,
+              lastText: Languages.of(context).privacyPolicy,
+            )
+          ],
+        ),
+      ),
+    ).whenComplete(() {
+      if (_isBottomSheetOpen) {
+        setState(() {
+          _isBottomSheetOpen = false;
+        });
+        Navigator.pop(context);
+      }
+    });
+  }
+
+  void showEnterReferalCodeBS() {
+    setState(() {
+      _isBottomSheetOpen = true;
+    });
+    customBottomSheet(
+      isPaddingRequired: false,
+      isDone: false,
+      maxHeightRatio: 0.45,
+      context: context,
+      title: Languages.of(context).enterReferralCode.toUpperCase(),
+      content: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: AppSizes.setWidth(20), vertical: AppSizes.setHeight(10)),
+            child: CommonText(
+              text: AppStrings.getExtra,
+              fontSize: AppSizes.setFontSize(18),
+              fontWeight: FontWeight.w600,
+              textAlign: TextAlign.start,
+              textColor: CustomAppColor.of(context).txtGrey,
+            ),
+          ),
+          Padding(
+              padding: EdgeInsets.symmetric(horizontal: AppSizes.setWidth(20), vertical: AppSizes.setHeight(16)),
+              child: CommonTextFormField(
+                hintText: Languages.of(context).enterReferralCode,
+                radius: 8,
+              )),
+          Padding(padding: EdgeInsets.symmetric(vertical: AppSizes.setHeight(6)), child: const Divider()),
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: AppSizes.setWidth(20), vertical: AppSizes.setHeight(6)),
+            child: IgnorePointer(
+              ignoring: true,
+              child: CommonButton(
+                  radius: 3,
+                  btnText: Languages.of(context).submit,
+                  onTap: () {
+                    accountCreated();
+                    Navigator.pop(context);
+                  }),
+            ),
+          ),
+        ],
+      ),
+    ).whenComplete(() {
+      if (_isBottomSheetOpen) {
+        setState(() {
+          _isBottomSheetOpen = false;
+        });
+        Navigator.pop(context);
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     fillData();
-    return Scaffold(
-      backgroundColor: CustomAppColor.of(context).bgTopBar,
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            if (!isAccountCreated) _profileDetail(),
-            if (isAccountCreated) _profileDetailHorizontal(),
-            Padding(
-              padding: EdgeInsets.only(top: AppSizes.setHeight(15), bottom: isAccountCreated ? AppSizes.setHeight(0) : AppSizes.setHeight(5)),
-              child: _accountActionList(isAccountCreated),
-            ),
-            _appVersionInfo(),
-          ],
+    return PopScope(
+      canPop: !_isBottomSheetOpen,
+      onPopInvokedWithResult: (didPop, result) {
+        if (!didPop && _isBottomSheetOpen) {
+          Navigator.pop(context);
+          setState(() {
+            _isBottomSheetOpen = false;
+          });
+          Navigator.pop(context);
+        }
+      },
+      child: Scaffold(
+        backgroundColor: CustomAppColor.of(context).bgTopBar,
+        body: SingleChildScrollView(
+          child: Column(
+            children: [
+              if (!isAccountCreated) _profileDetail(),
+              if (isAccountCreated) _profileDetailHorizontal(),
+              Padding(
+                padding: EdgeInsets.only(top: AppSizes.setHeight(15), bottom: isAccountCreated ? AppSizes.setHeight(0) : AppSizes.setHeight(5)),
+                child: _accountActionList(isAccountCreated),
+              ),
+              _appVersionInfo(),
+            ],
+          ),
         ),
       ),
     );
@@ -93,13 +579,16 @@ class _AccountScreenState extends State<AccountScreen> implements TopBarClickLis
               ),
             ),
           ),
-          CommonButton(
-            width: AppSizes.setWidth(93),
-            height: AppSizes.setHeight(34),
-            btnText: Languages.of(context).signUp,
-            fontSize: AppSizes.setFontSize(14),
-            radius: 4,
-            onTap: () => signUpBottomSheet(context),
+          IgnorePointer(
+            ignoring: true,
+            child: CommonButton(
+              width: AppSizes.setWidth(93),
+              height: AppSizes.setHeight(34),
+              btnText: Languages.of(context).signUp,
+              fontSize: AppSizes.setFontSize(14),
+              radius: 4,
+              onTap: () => signUpBottomSheet(context),
+            ),
           ),
           Padding(
             padding: EdgeInsets.only(top: AppSizes.setHeight(10), bottom: AppSizes.setHeight(22)),
@@ -193,7 +682,7 @@ class _AccountScreenState extends State<AccountScreen> implements TopBarClickLis
               contentPadding: EdgeInsets.symmetric(horizontal: AppSizes.setWidth(16)),
               onTap: () {
                 if (accountData.label == Languages.of(context).logout) {
-                  logoutBottomSheet(context);
+                  /*  logoutBottomSheet(context);*/
                 } else if (accountData.label == Languages.of(context).myBankDetails) {
                   // Navigator.push(context, BankDetailsScreen.route());
                 } else if (accountData.label == Languages.of(context).mySharedCatalogs) {
@@ -307,14 +796,17 @@ class _AccountScreenState extends State<AccountScreen> implements TopBarClickLis
                 ),
               ],
             ),
-            Padding(
-              padding: EdgeInsets.symmetric(vertical: AppSizes.setHeight(35)),
-              child: CommonButton(
-                  btnText: Languages.of(context).sendOtp,
-                  onTap: () {
-                    Navigator.pop(context);
-                    sendOtpBottomSheet(context);
-                  }),
+            IgnorePointer(
+              ignoring: true,
+              child: Padding(
+                padding: EdgeInsets.symmetric(vertical: AppSizes.setHeight(35)),
+                child: CommonButton(
+                    btnText: Languages.of(context).sendOtp,
+                    onTap: () {
+                      Navigator.pop(context);
+                      sendOtpBottomSheet(context);
+                    }),
+              ),
             ),
             Padding(
               padding: EdgeInsets.only(top: AppSizes.setHeight(10)),
@@ -409,12 +901,15 @@ class _AccountScreenState extends State<AccountScreen> implements TopBarClickLis
               ],
             ),
           ),
-          CommonButton(
-            btnText: Languages.of(context).proceed,
-            onTap: () {
-              Navigator.pop(context);
-              accountCreatedBottomSheet(context);
-            },
+          IgnorePointer(
+            ignoring: true,
+            child: CommonButton(
+              btnText: Languages.of(context).proceed,
+              onTap: () {
+                Navigator.pop(context);
+                accountCreatedBottomSheet(context);
+              },
+            ),
           ),
           Padding(
             padding: EdgeInsets.only(top: AppSizes.setHeight(26)),
@@ -485,14 +980,17 @@ class _AccountScreenState extends State<AccountScreen> implements TopBarClickLis
                 textColor: CustomAppColor.of(context).txtGrey,
               ),
             ),
-            Padding(
-              padding: EdgeInsets.only(top: AppSizes.setHeight(20), bottom: AppSizes.setHeight(20)),
-              child: CommonButton(
-                  btnText: Languages.of(context).txtContinue,
-                  onTap: () {
-                    accountCreated();
-                    Navigator.pop(context);
-                  }),
+            IgnorePointer(
+              ignoring: true,
+              child: Padding(
+                padding: EdgeInsets.only(top: AppSizes.setHeight(20), bottom: AppSizes.setHeight(20)),
+                child: CommonButton(
+                    btnText: Languages.of(context).txtContinue,
+                    onTap: () {
+                      accountCreated();
+                      Navigator.pop(context);
+                    }),
+              ),
             ),
             Padding(
               padding: EdgeInsets.only(top: AppSizes.setHeight(20), left: AppSizes.setWidth(41), right: AppSizes.setWidth(30)),
@@ -568,14 +1066,17 @@ class _AccountScreenState extends State<AccountScreen> implements TopBarClickLis
                 ),
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: AppSizes.setWidth(20), vertical: AppSizes.setHeight(6)),
-                  child: CommonButton(
-                      radius: 3,
-                      height: AppSizes.setHeight(44),
-                      btnText: Languages.of(context).logout,
-                      onTap: () {
-                        accountCreated();
-                        Navigator.pop(context);
-                      }),
+                  child: IgnorePointer(
+                    ignoring: true,
+                    child: CommonButton(
+                        radius: 3,
+                        height: AppSizes.setHeight(44),
+                        btnText: Languages.of(context).logout,
+                        onTap: () {
+                          accountCreated();
+                          Navigator.pop(context);
+                        }),
+                  ),
                 ),
               ],
             ),
@@ -614,13 +1115,16 @@ class _AccountScreenState extends State<AccountScreen> implements TopBarClickLis
           Padding(padding: EdgeInsets.symmetric(vertical: AppSizes.setHeight(6)), child: const Divider()),
           Padding(
             padding: EdgeInsets.symmetric(horizontal: AppSizes.setWidth(20), vertical: AppSizes.setHeight(6)),
-            child: CommonButton(
-                radius: 3,
-                btnText: Languages.of(context).submit,
-                onTap: () {
-                  accountCreated();
-                  Navigator.pop(context);
-                }),
+            child: IgnorePointer(
+              ignoring: true,
+              child: CommonButton(
+                  radius: 3,
+                  btnText: Languages.of(context).submit,
+                  onTap: () {
+                    accountCreated();
+                    Navigator.pop(context);
+                  }),
+            ),
           ),
         ],
       ),
