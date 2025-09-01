@@ -16,10 +16,12 @@ import '../../../widgets/text/common_text.dart';
 import '../../../widgets/textfield/common_textformfield.dart';
 
 class DashboardScreen extends StatefulWidget {
-  const DashboardScreen({super.key});
-  static Route route() {
+  final bool isForCommentBs;
+  final bool isForShareTo;
+  const DashboardScreen({super.key, this.isForShareTo = false, this.isForCommentBs = false});
+  static Route route({bool isForCommentBs = false, bool isForShareToBs = false}) {
     return MaterialPageRoute(
-      builder: (context) => const DashboardScreen(),
+      builder: (context) => DashboardScreen(isForCommentBs: isForCommentBs, isForShareTo: isForShareToBs),
     );
   }
 
@@ -35,12 +37,318 @@ class _DashboardScreenState extends State<DashboardScreen> with TickerProviderSt
   bool isLoading = true;
   List<DashboardItems> items = [];
   late AnimationController animationController;
+  bool _isBottomSheetOpen = false;
   @override
   void initState() {
     super.initState();
     loadVideos();
     animationController = AnimationController(duration: const Duration(seconds: 2), vsync: this);
     animationController.repeat();
+
+    if (widget.isForCommentBs) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        showCommentBS();
+      });
+    }
+    if (widget.isForShareTo) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        showShareToBS();
+      });
+    }
+  }
+
+  void showCommentBS() {
+    setState(() {
+      _isBottomSheetOpen = true;
+    });
+    final commentList = comments(context);
+    final view = View.of(context);
+    showModalBottomSheet(
+      backgroundColor: CustomAppColor.of(context).bgBottomSheet,
+      scrollControlDisabledMaxHeightRatio: 0.8,
+      isDismissible: false,
+      enableDrag: false,
+      isScrollControlled: false,
+      showDragHandle: true,
+      context: context,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+      ),
+      builder: (context) {
+        return StatefulBuilder(builder: (context, setModalState) {
+          return SafeArea(
+            child: Container(
+                padding: EdgeInsets.only(
+                  bottom: AppSizes.setHeight(view.viewInsets.bottom / view.devicePixelRatio),
+                  left: AppSizes.setWidth(16),
+                  right: AppSizes.setWidth(16),
+                ),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    CommonText(
+                      text: AppStrings.commentCount,
+                      fontSize: AppSizes.setFontSize(22),
+                      fontWeight: FontWeight.w600,
+                    ),
+                    const Divider(color: AppColor.btnLightGrey, thickness: 0.4),
+                    SizedBox(height: AppSizes.setHeight(10)),
+                    Expanded(
+                      child: ListView.builder(
+                        itemCount: commentList.length,
+                        itemBuilder: (context, index) {
+                          final comment = commentList[index];
+                          return Padding(
+                            padding: EdgeInsets.symmetric(vertical: AppSizes.setHeight(10)),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Row(
+                                  children: [
+                                    CircleAvatar(
+                                      radius: 22,
+                                      backgroundImage: AssetImage(comment.avatar),
+                                    ),
+                                    SizedBox(width: AppSizes.setWidth(14)),
+                                    CommonText(
+                                      text: comment.name,
+                                      fontWeight: FontWeight.w700,
+                                      fontSize: AppSizes.setFontSize(15),
+                                    ),
+                                  ],
+                                ),
+                                SizedBox(height: AppSizes.setHeight(12)),
+                                CommonText(
+                                  text: comment.text,
+                                  fontWeight: FontWeight.w400,
+                                  fontSize: AppSizes.setFontSize(13),
+                                  textAlign: TextAlign.start,
+                                  letterSpacing: 0.1,
+                                ),
+                                SizedBox(height: AppSizes.setHeight(12)),
+                                SizedBox(
+                                  width: AppSizes.setWidth(180),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Row(
+                                        children: [
+                                          GestureDetector(
+                                            onTap: () {
+                                              setModalState(() {
+                                                comment.isLiked = !(comment.isLiked ?? false);
+                                              });
+                                            },
+                                            child: Image.asset(
+                                              comment.isLiked ?? false ? AppAssets.icLike : AppAssets.icHeartFilled,
+                                              width: AppSizes.setWidth(24),
+                                              height: AppSizes.setHeight(24),
+                                            ),
+                                          ),
+                                          SizedBox(width: AppSizes.setWidth(4)),
+                                          CommonText(
+                                            text: "${comment.likes}",
+                                            fontWeight: FontWeight.w300,
+                                            fontSize: AppSizes.setFontSize(10),
+                                          ),
+                                        ],
+                                      ),
+                                      CommonText(
+                                        text: comment.timeAgo ?? '',
+                                        fontWeight: FontWeight.w300,
+                                        fontSize: AppSizes.setFontSize(10),
+                                      ),
+                                      CommonText(
+                                        text: Languages.of(context).reply,
+                                        fontWeight: FontWeight.w300,
+                                        fontSize: AppSizes.setFontSize(10),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                SizedBox(height: AppSizes.setHeight(10)),
+                              ],
+                            ),
+                          );
+                        },
+                      ),
+                    ),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: CommonTextFormField(
+                            fillColor: CustomAppColor.of(context).bgShadow,
+                            isPasswordField: false,
+                            hintText: Languages.of(context).addComment,
+                            hintStyle: const TextStyle(fontWeight: FontWeight.w200),
+                            suffixIcon: Image.asset(
+                              AppAssets.icEmoji,
+                              scale: 4.5,
+                            ),
+                          ),
+                        ),
+                        SizedBox(width: AppSizes.setWidth(10)),
+                        IconButton(
+                          onPressed: () {},
+                          icon: Image.asset(
+                            AppAssets.icSend,
+                            scale: 5.5,
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: AppSizes.setHeight(12),
+                    )
+                  ],
+                )),
+          );
+        });
+      },
+    ).whenComplete(() {
+      if (_isBottomSheetOpen) {
+        setState(() {
+          _isBottomSheetOpen = false;
+        });
+        Navigator.pop(context);
+      }
+    });
+  }
+
+  void showShareToBS() {
+    setState(() {
+      _isBottomSheetOpen = true;
+    });
+
+    showModalBottomSheet(
+      scrollControlDisabledMaxHeightRatio: 5.5,
+      showDragHandle: true,
+      isScrollControlled: false,
+      enableDrag: false,
+      isDismissible: false,
+      backgroundColor: CustomAppColor.of(context).bgBottomSheet,
+      context: context,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+      ),
+      builder: (context) {
+        return SafeArea(
+          child: Container(
+            padding: EdgeInsets.only(bottom: AppSizes.setHeight(30), left: AppSizes.setWidth(30), right: AppSizes.setWidth(30)),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                CommonText(
+                  text: Languages.of(context).shareTo,
+                  fontSize: AppSizes.setFontSize(22),
+                  fontWeight: FontWeight.w600,
+                ),
+                Divider(
+                  color: CustomAppColor.of(context).divider,
+                  thickness: 0.4,
+                ),
+                Padding(
+                  padding: EdgeInsets.symmetric(vertical: AppSizes.setHeight(15)),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      shareSheetList(
+                        context: context,
+                        iconPath: AppAssets.icRepost,
+                        iconName: Languages.of(context).repost,
+                      ),
+                      shareSheetList(
+                        context: context,
+                        iconPath: AppAssets.imgProfile,
+                        fit: BoxFit.cover,
+                        iconName: AppStrings.johnDoe,
+                      ),
+                      shareSheetList(
+                        context: context,
+                        iconPath: AppAssets.icSearch,
+                        iconName: Languages.of(context).search,
+                      ),
+                      shareSheetList(
+                        context: context,
+                        iconPath: AppAssets.icCopyLink,
+                        iconName: Languages.of(context).copyLink,
+                      ),
+                    ],
+                  ),
+                ),
+                Divider(
+                  color: CustomAppColor.of(context).divider,
+                  thickness: 0.8,
+                ),
+                Padding(
+                  padding: EdgeInsets.symmetric(vertical: AppSizes.setHeight(15)),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      shareSheetList(
+                        context: context,
+                        iconPath: AppAssets.icInstagram,
+                        iconName: Languages.of(context).instagram,
+                      ),
+                      shareSheetList(
+                        context: context,
+                        iconPath: AppAssets.icWhatsapp,
+                        iconName: Languages.of(context).whatsapp,
+                      ),
+                      shareSheetList(
+                        context: context,
+                        iconPath: AppAssets.icFacebook,
+                        iconName: Languages.of(context).facebook,
+                        fit: BoxFit.contain,
+                      ),
+                      shareSheetList(
+                        context: context,
+                        iconPath: AppAssets.icTwitter,
+                        iconName: Languages.of(context).twitter,
+                      ),
+                    ],
+                  ),
+                ),
+                const Divider(
+                  color: AppColor.btnLightGrey,
+                  thickness: 0.4,
+                ),
+                Padding(
+                  padding: EdgeInsets.symmetric(vertical: AppSizes.setHeight(10)),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      shareSheetList(
+                        context: context,
+                        iconPath: AppAssets.icNotInterested,
+                        iconName: Languages.of(context).notInterest,
+                      ),
+                      shareSheetList(
+                        context: context,
+                        iconPath: AppAssets.icSaveVideo,
+                        iconName: Languages.of(context).saveVideo,
+                      ),
+                      shareSheetList(
+                        context: context,
+                        iconPath: AppAssets.icGif,
+                        iconName: Languages.of(context).shareAsGif,
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    ).whenComplete(() {
+      if (_isBottomSheetOpen) {
+        setState(() {
+          _isBottomSheetOpen = false;
+        });
+        Navigator.pop(context);
+      }
+    });
   }
 
   Future<void> loadVideos() async {
@@ -120,30 +428,42 @@ class _DashboardScreenState extends State<DashboardScreen> with TickerProviderSt
       );
     }
 
-    return Scaffold(
-      body: PageView.builder(
-        controller: pageController,
-        scrollDirection: Axis.vertical,
-        onPageChanged: (index) {
+    return PopScope(
+      canPop: !_isBottomSheetOpen,
+      onPopInvokedWithResult: (didPop, result) {
+        if (!didPop && _isBottomSheetOpen) {
+          Navigator.pop(context);
           setState(() {
-            currantPageIndex = index;
-            for (int i = 0; i < controllers.length; i++) {
-              final controller = controllers[i];
-              if (controller != null && controller.value.isInitialized) {
-                if (i == index) {
-                  controller.play();
-                } else {
-                  controller.pause();
+            _isBottomSheetOpen = false;
+          });
+          Navigator.pop(context);
+        }
+      },
+      child: Scaffold(
+        body: PageView.builder(
+          controller: pageController,
+          scrollDirection: Axis.vertical,
+          onPageChanged: (index) {
+            setState(() {
+              currantPageIndex = index;
+              for (int i = 0; i < controllers.length; i++) {
+                final controller = controllers[i];
+                if (controller != null && controller.value.isInitialized) {
+                  if (i == index) {
+                    controller.play();
+                  } else {
+                    controller.pause();
+                  }
                 }
               }
-            }
-          });
-          playCurrentPauseOthers(index);
-        },
-        itemCount: items.length,
-        itemBuilder: (context, index) {
-          return _dashboardPosts(items[index], context, controllers[index]);
-        },
+            });
+            playCurrentPauseOthers(index);
+          },
+          itemCount: items.length,
+          itemBuilder: (context, index) {
+            return _dashboardPosts(items[index], context, controllers[index]);
+          },
+        ),
       ),
     );
   }
@@ -202,38 +522,41 @@ class _DashboardScreenState extends State<DashboardScreen> with TickerProviderSt
 
   _dashboardIcon(BuildContext context) {
     return SizedBox(
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: [
-          IgnorePointer(
-            ignoring: true,
-            child: _iconButton(
-              context,
-              asset: AppAssets.icFlag,
-              onTap: () => Navigator.push(context, ReportScreen.route()),
+      child: IgnorePointer(
+        ignoring: true,
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            IgnorePointer(
+              ignoring: true,
+              child: _iconButton(
+                context,
+                asset: AppAssets.icFlag,
+                onTap: () => Navigator.push(context, ReportScreen.route()),
+              ),
             ),
-          ),
-          _iconWithText(
-            asset: isLiked ? AppAssets.icLike : AppAssets.icLikeWhite,
-            text: "160.5k",
-            onTap: () {
-              setState(() {
-                isLiked = !isLiked;
-              });
-            },
-          ),
-          _iconWithText(
-            asset: AppAssets.icComment,
-            text: "14.5k",
-            onTap: () => _showCommentBottomSheet(context),
-          ),
-          _iconWithText(
-            asset: AppAssets.icShare,
-            text: "10.3k",
-            onTap: () => _showShareBottomSheet(),
-          ),
-        ],
+            _iconWithText(
+              asset: isLiked ? AppAssets.icLike : AppAssets.icLikeWhite,
+              text: "160.5k",
+              onTap: () {
+                setState(() {
+                  isLiked = !isLiked;
+                });
+              },
+            ),
+            _iconWithText(
+              asset: AppAssets.icComment,
+              text: "14.5k",
+              onTap: () => _showCommentBottomSheet(context),
+            ),
+            _iconWithText(
+              asset: AppAssets.icShare,
+              text: "10.3k",
+              onTap: () => _showShareBottomSheet(),
+            ),
+          ],
+        ),
       ),
     );
   }

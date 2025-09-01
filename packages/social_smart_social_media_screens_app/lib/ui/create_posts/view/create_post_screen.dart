@@ -21,19 +21,24 @@ class CreatePostScreen extends StatefulWidget {
   final bool isCameraSelected;
   final bool isTemplateSelected;
   final int currentIndex;
-  const CreatePostScreen(
-      {super.key,
-      required this.isPhotoSelected,
-      required this.isVideoSelected,
-      required this.isCameraSelected,
-      required this.isTemplateSelected,
-      required this.currentIndex});
-  static Route route(
-      {required int currentIndex,
-      required bool isPhotoSelected,
-      required bool isVideoSelected,
-      required bool isCameraSelected,
-      required bool isTemplateSelected}) {
+  final bool isForEffectBs;
+  const CreatePostScreen({
+    super.key,
+    required this.isPhotoSelected,
+    required this.isVideoSelected,
+    required this.isCameraSelected,
+    required this.isTemplateSelected,
+    required this.currentIndex,
+    this.isForEffectBs = false,
+  });
+  static Route route({
+    required int currentIndex,
+    required bool isPhotoSelected,
+    required bool isVideoSelected,
+    required bool isCameraSelected,
+    required bool isTemplateSelected,
+    bool isForEffectBs = false,
+  }) {
     return MaterialPageRoute(
       builder: (context) => CreatePostScreen(
         isCameraSelected: isCameraSelected,
@@ -41,6 +46,7 @@ class CreatePostScreen extends StatefulWidget {
         isTemplateSelected: isTemplateSelected,
         isVideoSelected: isVideoSelected,
         currentIndex: currentIndex,
+        isForEffectBs: isForEffectBs,
       ),
     );
   }
@@ -58,11 +64,12 @@ class _CreatePostScreenState extends State<CreatePostScreen> with TickerProvider
   List<String> tabList = [];
   late TabController _controller;
   List<IconItem> effectList = [];
+  bool _isBottomSheetOpen = false;
 
   @override
   void initState() {
     super.initState();
-    _controller = TabController(vsync: this, length: 2);
+    _controller = TabController(vsync: this, length: 2, initialIndex: widget.currentIndex);
     effectList = effectItems();
     if (widget.isTemplateSelected) {
       isTemplateSelected = true;
@@ -78,6 +85,194 @@ class _CreatePostScreenState extends State<CreatePostScreen> with TickerProvider
       isCameraSelected = true;
       currentIndex = 0;
     }
+
+    if (widget.isForEffectBs) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        showEffectBS();
+      });
+    }
+  }
+
+  void showEffectBS() {
+    setState(() {
+      _isBottomSheetOpen = true;
+    });
+    final effectList = effectItems();
+    showModalBottomSheet(
+      scrollControlDisabledMaxHeightRatio: 0.57,
+      showDragHandle: true,
+      isScrollControlled: false,
+      enableDrag: false,
+      isDismissible: false,
+      context: context,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+      ),
+      builder: (context) {
+        return StatefulBuilder(builder: (BuildContext context, StateSetter bottomSheetSetState) {
+          return Container(
+            padding: EdgeInsets.only(
+              left: AppSizes.setWidth(20),
+              right: AppSizes.setWidth(20),
+            ),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                CommonText(
+                  text: Languages.of(context).effects,
+                  fontSize: AppSizes.setFontSize(24),
+                  fontWeight: FontWeight.w700,
+                ),
+                const Divider(
+                  color: AppColor.btnLightGrey,
+                  thickness: 0.4,
+                ),
+                Padding(
+                  padding: EdgeInsets.only(top: AppSizes.setHeight(15)),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.only(right: AppSizes.setWidth(10)),
+                        child: Image.asset(
+                          AppAssets.icSearchFilled,
+                          color: CustomAppColor.of(context).txtDarkGrey,
+                          width: AppSizes.setWidth(22),
+                          height: AppSizes.setHeight(22),
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.symmetric(horizontal: AppSizes.setWidth(10)),
+                        child: Image.asset(
+                          AppAssets.icUnsaved,
+                          color: CustomAppColor.of(context).txtDarkGrey,
+                          width: AppSizes.setWidth(22),
+                          height: AppSizes.setHeight(22),
+                        ),
+                      ),
+                      // TabBar
+                      Expanded(
+                        child: IgnorePointer(
+                          ignoring: true,
+                          child: TabBar(
+                            controller: _controller,
+                            tabAlignment: TabAlignment.center,
+                            labelPadding: EdgeInsets.symmetric(horizontal: AppSizes.setWidth(40)),
+                            isScrollable: true,
+                            unselectedLabelColor: AppColor.txtGrey,
+                            labelStyle: TextStyle(
+                              fontFamily: Constant.fontFamilyUrbanist,
+                              fontSize: AppSizes.setFontSize(16),
+                              fontWeight: FontWeight.w600,
+                            ),
+                            indicatorSize: TabBarIndicatorSize.label,
+                            labelColor: AppColor.txtPurple,
+                            indicator: UnderlineTabIndicator(
+                              borderSide: BorderSide(width: AppSizes.setWidth(3), color: AppColor.txtPurple),
+                              insets: EdgeInsets.symmetric(horizontal: AppSizes.setWidth(90)),
+                            ),
+                            tabs: tabList.map((tab) {
+                              return Tab(
+                                text: tab,
+                              );
+                            }).toList(),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Expanded(
+                  child: TabBarView(
+                    physics: NeverScrollableScrollPhysics(),
+                    controller: _controller,
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.only(top: AppSizes.setHeight(10)),
+                        child: GridView.count(
+                          crossAxisCount: 4,
+                          crossAxisSpacing: 12.0,
+                          mainAxisSpacing: 12.0,
+                          childAspectRatio: 0.90,
+                          children: List.generate(
+                            effectList.length,
+                            (index) {
+                              return Stack(
+                                children: [
+                                  Positioned.fill(
+                                    child: Image.asset(
+                                      effectList[index].iconAsset,
+                                    ),
+                                  ),
+                                  Positioned(
+                                    bottom: AppSizes.setHeight(40),
+                                    top: AppSizes.setHeight(0),
+                                    right: AppSizes.setWidth(0),
+                                    left: AppSizes.setWidth(40),
+                                    child: Theme(
+                                      data: Theme.of(context).copyWith(
+                                        checkboxTheme: CheckboxThemeData(
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius: BorderRadius.circular(8),
+                                          ),
+                                        ),
+                                      ),
+                                      child: Checkbox(
+                                        side: WidgetStateBorderSide.resolveWith(
+                                          (states) => const BorderSide(
+                                            width: 3.0,
+                                            color: AppColor.btnGradiant2,
+                                          ),
+                                        ),
+                                        activeColor: AppColor.btnGradiant2,
+                                        value: effectList[index].isSelected,
+                                        onChanged: (bool? value) {
+                                          bottomSheetSetState(() {
+                                            for (int i = 0; i < effectList.length; i++) {
+                                              effectList[i].isSelected = i == index;
+                                            }
+                                          });
+                                        },
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              );
+                            },
+                          ),
+                        ),
+                      ),
+                      GridView.count(
+                        crossAxisCount: 4,
+                        crossAxisSpacing: 5.0,
+                        mainAxisSpacing: 8.0,
+                        childAspectRatio: 0.80,
+                        children: List.generate(
+                          effectList.length,
+                          (index) {
+                            return Image.asset(
+                              effectList[index].iconAsset,
+                            );
+                          },
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          );
+        });
+      },
+    ).whenComplete(() {
+      if (_isBottomSheetOpen) {
+        setState(() {
+          _isBottomSheetOpen = false;
+        });
+        Navigator.pop(context);
+      }
+    });
   }
 
   @override
@@ -179,8 +374,7 @@ class _CreatePostScreenState extends State<CreatePostScreen> with TickerProvider
         IgnorePointer(
           ignoring: true,
           child: IconButton(
-            onPressed: () => Navigator.push(context,
-                HomeScreen.route(isFromHome: false, isFromProfile: false, isFromDiscover: false, isFromInbox: false, isFromOptionsForPosts: false)),
+            onPressed: () => Navigator.push(context, HomeScreen.route(isFromHome: false, isFromProfile: false, isFromDiscover: false, isFromInbox: false, isFromOptionsForPosts: false)),
             icon: const Icon(
               Icons.clear,
               color: AppColor.white,
@@ -228,9 +422,7 @@ class _CreatePostScreenState extends State<CreatePostScreen> with TickerProvider
 
   Widget bottomNavBar(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.only(
-          left: isCameraSelected ? AppSizes.setWidth(140) : AppSizes.setWidth(0),
-          right: isTemplateSelected ? AppSizes.setWidth(140) : AppSizes.setWidth(0)),
+      padding: EdgeInsets.only(left: isCameraSelected ? AppSizes.setWidth(140) : AppSizes.setWidth(0), right: isTemplateSelected ? AppSizes.setWidth(140) : AppSizes.setWidth(0)),
       child: Container(
         padding: EdgeInsets.symmetric(
           vertical: AppSizes.setHeight(6),
@@ -525,10 +717,7 @@ class _CreatePostScreenState extends State<CreatePostScreen> with TickerProvider
             IgnorePointer(
               ignoring: true,
               child: IconButton(
-                onPressed: () => Navigator.push(
-                    context,
-                    CreatePostScreen.route(
-                        isVideoSelected: false, isTemplateSelected: false, isPhotoSelected: false, isCameraSelected: false, currentIndex: 1)),
+                onPressed: () => Navigator.push(context, CreatePostScreen.route(isVideoSelected: false, isTemplateSelected: false, isPhotoSelected: false, isCameraSelected: false, currentIndex: 1)),
                 icon: const Icon(
                   Icons.clear,
                   color: AppColor.white,

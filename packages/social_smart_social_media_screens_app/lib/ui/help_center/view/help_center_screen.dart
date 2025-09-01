@@ -12,10 +12,11 @@ import '../../../widgets/textfield/common_textformfield.dart';
 import '../../edit_profile/datamodel/edit_profile_data.dart';
 
 class HelpCenterScreen extends StatefulWidget {
-  const HelpCenterScreen({super.key});
-  static Route route() {
+  final int currentIndex;
+  const HelpCenterScreen({super.key, this.currentIndex = 0});
+  static Route route({int currentIndex = 0}) {
     return MaterialPageRoute(
-      builder: (context) => const HelpCenterScreen(),
+      builder: (context) => HelpCenterScreen(currentIndex: currentIndex),
     );
   }
 
@@ -39,7 +40,7 @@ class _HelpCenterScreenState extends State<HelpCenterScreen> with TickerProvider
   @override
   void initState() {
     super.initState();
-    _controller = TabController(vsync: this, length: 2);
+    _controller = TabController(initialIndex: widget.currentIndex, vsync: this, length: 2);
   }
 
   @override
@@ -96,6 +97,7 @@ class _HelpCenterScreenState extends State<HelpCenterScreen> with TickerProvider
             tabBar(),
             Expanded(
               child: TabBarView(
+                physics: const NeverScrollableScrollPhysics(),
                 controller: _controller,
                 children: [
                   faqTabView(),
@@ -110,30 +112,33 @@ class _HelpCenterScreenState extends State<HelpCenterScreen> with TickerProvider
   }
 
   Widget tabBar() {
-    return Padding(
-      padding: EdgeInsets.symmetric(vertical: AppSizes.setHeight(15), horizontal: AppSizes.setWidth(22)),
-      child: TabBar(
-        controller: _controller,
-        indicatorSize: TabBarIndicatorSize.tab,
-        tabAlignment: TabAlignment.start,
-        isScrollable: true,
-        unselectedLabelColor: CustomAppColor.of(context).icGrey,
-        labelStyle: TextStyle(
-          fontFamily: Constant.fontFamilyUrbanist,
-          fontSize: AppSizes.setFontSize(16),
-          fontWeight: FontWeight.w600,
+    return IgnorePointer(
+      ignoring: true,
+      child: Padding(
+        padding: EdgeInsets.symmetric(vertical: AppSizes.setHeight(15), horizontal: AppSizes.setWidth(22)),
+        child: TabBar(
+          controller: _controller,
+          indicatorSize: TabBarIndicatorSize.tab,
+          tabAlignment: TabAlignment.start,
+          isScrollable: true,
+          unselectedLabelColor: CustomAppColor.of(context).icGrey,
+          labelStyle: TextStyle(
+            fontFamily: Constant.fontFamilyUrbanist,
+            fontSize: AppSizes.setFontSize(16),
+            fontWeight: FontWeight.w600,
+          ),
+          labelColor: AppColor.txtPurple,
+          indicator: UnderlineTabIndicator(
+            borderRadius: BorderRadius.circular(25),
+            borderSide: BorderSide(width: AppSizes.setWidth(3), color: AppColor.txtPurple),
+          ),
+          tabs: tabList.map((tab) {
+            return SizedBox(
+              width: AppSizes.setWidth(140),
+              child: Tab(text: tab),
+            );
+          }).toList(),
         ),
-        labelColor: AppColor.txtPurple,
-        indicator: UnderlineTabIndicator(
-          borderRadius: BorderRadius.circular(25),
-          borderSide: BorderSide(width: AppSizes.setWidth(3), color: AppColor.txtPurple),
-        ),
-        tabs: tabList.map((tab) {
-          return SizedBox(
-            width: AppSizes.setWidth(140),
-            child: Tab(text: tab),
-          );
-        }).toList(),
       ),
     );
   }

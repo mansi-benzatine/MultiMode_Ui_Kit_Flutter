@@ -16,11 +16,44 @@ import '../../create_posts/datamodel/create_posts_data.dart';
 import '../datamodel/see_live_data.dart';
 
 class SeeLiveScreen extends StatefulWidget {
-  const SeeLiveScreen({super.key});
+  final bool isForViewProfileBs;
+  final bool isForViewersBs;
+  final bool isForWeeklyRankingBs;
+  final bool isForRisingStarBs;
+  final bool isForGoLiveTogetherBs;
+  final bool isForQAndABs;
+  final int currentIndexBs;
 
-  static Route route() {
+  const SeeLiveScreen({
+    super.key,
+    this.isForGoLiveTogetherBs = false,
+    this.isForQAndABs = false,
+    this.isForRisingStarBs = false,
+    this.isForViewersBs = false,
+    this.isForViewProfileBs = false,
+    this.isForWeeklyRankingBs = false,
+    this.currentIndexBs = 0,
+  });
+
+  static Route route({
+    bool isForViewProfileBs = false,
+    bool isForViewersBs = false,
+    bool isForWeeklyRankingBs = false,
+    bool isForRisingStarBs = false,
+    bool isForGoLiveTogetherBs = false,
+    bool isForQAndABs = false,
+    int currentIndexBs = 0,
+  }) {
     return MaterialPageRoute(
-      builder: (context) => const SeeLiveScreen(),
+      builder: (context) => SeeLiveScreen(
+        isForGoLiveTogetherBs: isForGoLiveTogetherBs,
+        isForQAndABs: isForQAndABs,
+        isForRisingStarBs: isForRisingStarBs,
+        isForViewersBs: isForViewersBs,
+        isForViewProfileBs: isForViewProfileBs,
+        isForWeeklyRankingBs: isForWeeklyRankingBs,
+        currentIndexBs: currentIndexBs,
+      ),
     );
   }
 
@@ -31,17 +64,43 @@ class SeeLiveScreen extends StatefulWidget {
 class _SeeLiveScreenState extends State<SeeLiveScreen> with TickerProviderStateMixin {
   List<String> tabList = [];
   late TabController _controller;
-
+  bool _isBottomSheetOpen = false;
   @override
   void initState() {
     super.initState();
-    _controller = TabController(vsync: this, length: 2);
+    _controller = TabController(initialIndex: widget.currentIndexBs, vsync: this, length: 2);
 
     _controller.addListener(() {
       if (_controller.indexIsChanging) {
         setState(() {});
       }
     });
+
+    if (widget.isForViewProfileBs) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        ViewProfileBs();
+      });
+    }
+    if (widget.isForViewersBs) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        ViewersBs();
+      });
+    }
+    if (widget.isForRisingStarBs) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        RisingStarBs();
+      });
+    }
+    if (widget.isForQAndABs) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        QAndABs();
+      });
+    }
+    if (widget.isForGoLiveTogetherBs) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        GoLiveTogetherBs();
+      });
+    }
   }
 
   @override
@@ -53,39 +112,457 @@ class _SeeLiveScreenState extends State<SeeLiveScreen> with TickerProviderStateM
     ];
   }
 
+  void ViewProfileBs() {
+    setState(() {
+      _isBottomSheetOpen = true;
+    });
+    showModalBottomSheet(
+      isScrollControlled: true,
+      backgroundColor: CustomAppColor.of(context).bgScaffold,
+      showDragHandle: true,
+      enableDrag: false,
+      isDismissible: false,
+      context: context,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+      ),
+      builder: (context) {
+        return SafeArea(
+          child: Container(
+            padding: EdgeInsets.symmetric(horizontal: AppSizes.setWidth(20), vertical: AppSizes.setHeight(10)),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                const CircleAvatar(
+                  radius: 70,
+                  backgroundImage: AssetImage(AppAssets.imgProfile),
+                ),
+                SizedBox(height: AppSizes.setHeight(12)),
+                CommonText(
+                  text: "@${AppStrings.johnDoe.toLowerCase()}",
+                  fontSize: AppSizes.setFontSize(20),
+                  fontWeight: FontWeight.w700,
+                ),
+                Padding(
+                  padding: EdgeInsets.symmetric(vertical: AppSizes.setHeight(10)),
+                  child: CommonText(
+                    text: AppStrings.designerPhoto,
+                    fontSize: AppSizes.setFontSize(14),
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+                const Divider(thickness: 0.4),
+                // SizedBox(height: AppSizes.setHeight(4)),
+                profileDetails(context),
+                Padding(
+                  padding: EdgeInsets.symmetric(vertical: AppSizes.setHeight(14)),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: CommonButton(
+                          height: AppSizes.setHeight(45),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Image.asset(
+                                AppAssets.icProfileAdd,
+                                color: CustomAppColor.of(context).white,
+                                width: AppSizes.setWidth(22),
+                                height: AppSizes.setHeight(22),
+                              ),
+                              SizedBox(width: AppSizes.setWidth(8)),
+                              CommonText(
+                                text: Languages.of(context).follow,
+                                fontSize: AppSizes.setFontSize(16),
+                                fontWeight: FontWeight.w700,
+                                textColor: AppColor.txtWhite,
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                      SizedBox(width: AppSizes.setWidth(10)),
+                      Expanded(
+                        child: CommonButton(
+                          height: AppSizes.setHeight(45),
+                          isOutLinedButton: true,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Image.asset(
+                                AppAssets.icComment,
+                                color: AppColor.txtPurple,
+                                width: AppSizes.setWidth(20),
+                                height: AppSizes.setHeight(20),
+                              ),
+                              SizedBox(width: AppSizes.setWidth(8)),
+                              GradientText(
+                                child: CommonText(
+                                  text: Languages.of(context).message,
+                                  fontSize: AppSizes.setFontSize(16),
+                                  fontWeight: FontWeight.w700,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    ).whenComplete(() {
+      if (_isBottomSheetOpen) {
+        setState(() {
+          _isBottomSheetOpen = false;
+        });
+        Navigator.pop(context);
+      }
+    });
+  }
+
+  void ViewersBs() {
+    setState(() {
+      _isBottomSheetOpen = true;
+    });
+    showModalBottomSheet(
+      context: context,
+      showDragHandle: true,
+      enableDrag: false,
+      isDismissible: false,
+      isScrollControlled: false,
+      backgroundColor: CustomAppColor.of(context).bgScaffold,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+      ),
+      builder: (context) {
+        return SafeArea(
+          child: Container(
+            padding: EdgeInsets.symmetric(horizontal: AppSizes.setWidth(20)),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                CommonText(
+                  text: "8.8K ${Languages.of(context).viewers}",
+                  fontWeight: FontWeight.w700,
+                  fontSize: AppSizes.setFontSize(20),
+                  textAlign: TextAlign.center,
+                ),
+                const Divider(thickness: 0.5),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: CommonTextFormField(
+                    fillColor: CustomAppColor.of(context).bgShadow,
+                    borderColor: AppColor.transparent,
+                    leadingIcon: Image.asset(
+                      AppAssets.icSearchFilled,
+                      color: CustomAppColor.of(context).grey,
+                      scale: 5.5,
+                    ),
+                    hintText: Languages.of(context).search,
+                  ),
+                ),
+                Align(
+                  alignment: Alignment.topLeft,
+                  child: CommonText(
+                    text: AppStrings.questionsFromGuests,
+                    fontWeight: FontWeight.w600,
+                    fontSize: AppSizes.setFontSize(16),
+                    textAlign: TextAlign.start,
+                  ),
+                ),
+                Flexible(
+                  child: suggestedFollowersList(
+                    context: context,
+                    isQnA: false,
+                    isWeeklyRanking: false,
+                    isRisingStar: false,
+                    isGoLiveTogether: false,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    ).whenComplete(() {
+      if (_isBottomSheetOpen) {
+        setState(() {
+          _isBottomSheetOpen = false;
+        });
+        Navigator.pop(context);
+      }
+    });
+  }
+
+  void RisingStarBs() {
+    setState(() {
+      _isBottomSheetOpen = true;
+    });
+    showModalBottomSheet(
+      context: context,
+      showDragHandle: true,
+      enableDrag: false,
+      isDismissible: false,
+      isScrollControlled: false,
+      backgroundColor: CustomAppColor.of(context).bgScaffold,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+      ),
+      builder: (context) {
+        return IgnorePointer(
+          ignoring: true,
+          child: DefaultTabController(
+            length: 2,
+            initialIndex: widget.currentIndexBs,
+            child: SafeArea(
+              child: Container(
+                padding: EdgeInsets.symmetric(horizontal: AppSizes.setWidth(20)),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.symmetric(horizontal: AppSizes.setWidth(8)),
+                      child: TabBar(
+                        tabAlignment: TabAlignment.center,
+                        labelPadding: EdgeInsets.symmetric(horizontal: AppSizes.setWidth(30)),
+                        isScrollable: true,
+                        unselectedLabelColor: CustomAppColor.of(context).icGrey,
+                        labelStyle: TextStyle(
+                          fontFamily: Constant.fontFamilyUrbanist,
+                          fontSize: AppSizes.setFontSize(16),
+                          fontWeight: FontWeight.w600,
+                        ),
+                        indicatorSize: TabBarIndicatorSize.tab,
+                        labelColor: AppColor.txtPurple,
+                        indicator: UnderlineTabIndicator(
+                          borderSide: BorderSide(width: AppSizes.setWidth(3), color: AppColor.txtPurple),
+                        ),
+                        tabs: tabList.map((tab) => Tab(text: tab)).toList(),
+                      ),
+                    ),
+                    Flexible(
+                      child: TabBarView(
+                        children: [
+                          suggestedFollowersList(
+                            context: context,
+                            isQnA: false,
+                            isWeeklyRanking: true,
+                            isRisingStar: false,
+                            isGoLiveTogether: false,
+                          ),
+                          suggestedFollowersList(
+                            context: context,
+                            isQnA: false,
+                            isWeeklyRanking: true,
+                            isRisingStar: true,
+                            isGoLiveTogether: false,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        );
+      },
+    ).whenComplete(() {
+      if (_isBottomSheetOpen) {
+        setState(() {
+          _isBottomSheetOpen = false;
+        });
+        Navigator.pop(context);
+      }
+    });
+  }
+
+  void QAndABs() {
+    setState(() {
+      _isBottomSheetOpen = true;
+    });
+    showModalBottomSheet(
+      context: context,
+      showDragHandle: true,
+      enableDrag: false,
+      isDismissible: false,
+      isScrollControlled: false,
+      backgroundColor: CustomAppColor.of(context).bgScaffold,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+      ),
+      builder: (context) {
+        return SafeArea(
+          child: Container(
+            padding: EdgeInsets.symmetric(horizontal: AppSizes.setWidth(20)),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                CommonText(
+                  text: Languages.of(context).questionAndAnswer,
+                  fontWeight: FontWeight.w700,
+                  fontSize: AppSizes.setFontSize(20),
+                  textAlign: TextAlign.center,
+                ),
+                const Divider(thickness: 0.5),
+                SizedBox(height: AppSizes.setHeight(15)),
+                Align(
+                  alignment: Alignment.topLeft,
+                  child: CommonText(
+                    text: AppStrings.questionsFromGuests,
+                    fontWeight: FontWeight.w600,
+                    fontSize: AppSizes.setFontSize(16),
+                    textAlign: TextAlign.start,
+                    textColor: const Color(0xFF424242),
+                  ),
+                ),
+                SizedBox(height: AppSizes.setHeight(15)),
+                Flexible(
+                  child: suggestedFollowersList(
+                    context: context,
+                    isQnA: true,
+                    isWeeklyRanking: false,
+                    isRisingStar: false,
+                    isGoLiveTogether: false,
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.symmetric(vertical: AppSizes.setHeight(10)),
+                  child: textField(),
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    ).whenComplete(() {
+      if (_isBottomSheetOpen) {
+        setState(() {
+          _isBottomSheetOpen = false;
+        });
+        Navigator.pop(context);
+      }
+    });
+  }
+
+  void GoLiveTogetherBs() {
+    setState(() {
+      _isBottomSheetOpen = true;
+    });
+    showModalBottomSheet(
+      context: context,
+      scrollControlDisabledMaxHeightRatio: 0.54,
+      showDragHandle: true,
+      isScrollControlled: false,
+      backgroundColor: CustomAppColor.of(context).bgScaffold,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+      ),
+      builder: (context) {
+        return SafeArea(
+          child: Container(
+            padding: EdgeInsets.symmetric(horizontal: AppSizes.setWidth(20)),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                CommonText(
+                  text: AppStrings.goLiveTogether,
+                  fontWeight: FontWeight.w700,
+                  fontSize: AppSizes.setFontSize(20),
+                  textAlign: TextAlign.center,
+                ),
+                const Divider(thickness: 0.5),
+                SizedBox(height: AppSizes.setHeight(15)),
+                Align(
+                  alignment: Alignment.topLeft,
+                  child: CommonText(
+                    text: AppStrings.guestRequest,
+                    fontWeight: FontWeight.w600,
+                    fontSize: AppSizes.setFontSize(16),
+                    textAlign: TextAlign.start,
+                    textColor: const Color(0xFF424242),
+                  ),
+                ),
+                SizedBox(height: AppSizes.setHeight(15)),
+                Flexible(
+                  child: suggestedFollowersList(
+                    context: context,
+                    isQnA: false,
+                    isWeeklyRanking: false,
+                    isRisingStar: false,
+                    isGoLiveTogether: true,
+                  ),
+                ),
+                Divider(color: CustomAppColor.of(context).containerGrey, thickness: 0.5),
+                Padding(
+                  padding: EdgeInsets.symmetric(vertical: AppSizes.setHeight(15)),
+                  child: CommonButton(btnText: Languages.of(context).request),
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    ).whenComplete(() {
+      if (_isBottomSheetOpen) {
+        setState(() {
+          _isBottomSheetOpen = false;
+        });
+        Navigator.pop(context);
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       bottom: true,
       top: false,
-      child: Scaffold(
-        body: Stack(
-          children: [
-            Image.asset(
-              AppAssets.imgProfile,
-              width: AppSizes.fullWidth,
-              height: AppSizes.fullHeight,
-              fit: BoxFit.cover,
-              colorBlendMode: BlendMode.darken,
-            ),
-            Positioned(top: AppSizes.setHeight(70), left: AppSizes.setWidth(20), child: liveDetails()),
-            Positioned(
-              bottom: AppSizes.setHeight(60),
-              left: AppSizes.setWidth(0),
-              right: AppSizes.setWidth(0),
-              child: Container(
-                padding: EdgeInsets.symmetric(
-                  horizontal: AppSizes.setWidth(20),
-                  vertical: AppSizes.setHeight(10),
-                ),
-                child: usersComments(),
+      child: PopScope(
+        canPop: !_isBottomSheetOpen,
+        onPopInvokedWithResult: (didPop, result) {
+          if (!didPop && _isBottomSheetOpen) {
+            Navigator.pop(context);
+            setState(() {
+              _isBottomSheetOpen = false;
+            });
+            Navigator.pop(context);
+          }
+        },
+        child: Scaffold(
+          body: Stack(
+            children: [
+              Image.asset(
+                AppAssets.imgProfile,
+                width: AppSizes.fullWidth,
+                height: AppSizes.fullHeight,
+                fit: BoxFit.cover,
+                colorBlendMode: BlendMode.darken,
               ),
-            ),
-            Align(
-              alignment: Alignment.bottomCenter,
-              child: liveActionIcons(),
-            ),
-          ],
+              Positioned(top: AppSizes.setHeight(70), left: AppSizes.setWidth(20), child: liveDetails()),
+              Positioned(
+                bottom: AppSizes.setHeight(60),
+                left: AppSizes.setWidth(0),
+                right: AppSizes.setWidth(0),
+                child: Container(
+                  padding: EdgeInsets.symmetric(
+                    horizontal: AppSizes.setWidth(20),
+                    vertical: AppSizes.setHeight(10),
+                  ),
+                  child: usersComments(),
+                ),
+              ),
+              Align(
+                alignment: Alignment.bottomCenter,
+                child: liveActionIcons(),
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -103,28 +580,31 @@ class _SeeLiveScreenState extends State<SeeLiveScreen> with TickerProviderStateM
               backgroundImage: AssetImage(AppAssets.imgProfile),
             ),
             SizedBox(width: AppSizes.setWidth(14)),
-            GestureDetector(
-              onTap: () => _showProfileBottomSheet(context),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  CommonText(
-                    text: AppStrings.johnDoe,
-                    textColor: CustomAppColor.of(context).white,
-                    fontWeight: FontWeight.w700,
-                    fontSize: AppSizes.setFontSize(14),
-                  ),
-                  SizedBox(
-                    width: AppSizes.setWidth(82),
-                    child: CommonText(
-                      text: AppStrings.designerPhoto,
-                      fontSize: AppSizes.setFontSize(12),
-                      fontWeight: FontWeight.w500,
-                      overflow: TextOverflow.ellipsis,
-                      textColor: const Color(0xFFE0E0E0),
+            IgnorePointer(
+              ignoring: true,
+              child: GestureDetector(
+                onTap: () => _showProfileBottomSheet(context),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    CommonText(
+                      text: AppStrings.johnDoe,
+                      textColor: CustomAppColor.of(context).white,
+                      fontWeight: FontWeight.w700,
+                      fontSize: AppSizes.setFontSize(14),
                     ),
-                  ),
-                ],
+                    SizedBox(
+                      width: AppSizes.setWidth(82),
+                      child: CommonText(
+                        text: AppStrings.designerPhoto,
+                        fontSize: AppSizes.setFontSize(12),
+                        fontWeight: FontWeight.w500,
+                        overflow: TextOverflow.ellipsis,
+                        textColor: const Color(0xFFE0E0E0),
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
             SizedBox(width: AppSizes.setWidth(14)),
@@ -140,27 +620,30 @@ class _SeeLiveScreenState extends State<SeeLiveScreen> with TickerProviderStateM
               ),
             ),
             SizedBox(width: AppSizes.setWidth(16)),
-            GestureDetector(
-              onTap: () => _showViewersBottomSheet(context),
-              child: Container(
-                width: AppSizes.setWidth(72),
-                height: AppSizes.setHeight(28),
-                decoration: BoxDecoration(borderRadius: BorderRadius.circular(25), color: AppColor.black.withOpacityPercent(0.5)),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Image.asset(
-                      AppAssets.icViewer,
-                      scale: 4.5,
-                    ),
-                    SizedBox(width: AppSizes.setWidth(8)),
-                    CommonText(
-                      text: "8.8K",
-                      fontSize: AppSizes.setFontSize(12),
-                      fontWeight: FontWeight.w600,
-                      textColor: AppColor.txtWhite,
-                    ),
-                  ],
+            IgnorePointer(
+              ignoring: true,
+              child: GestureDetector(
+                onTap: () => _showViewersBottomSheet(context),
+                child: Container(
+                  width: AppSizes.setWidth(72),
+                  height: AppSizes.setHeight(28),
+                  decoration: BoxDecoration(borderRadius: BorderRadius.circular(25), color: AppColor.black.withOpacityPercent(0.5)),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Image.asset(
+                        AppAssets.icViewer,
+                        scale: 4.5,
+                      ),
+                      SizedBox(width: AppSizes.setWidth(8)),
+                      CommonText(
+                        text: "8.8K",
+                        fontSize: AppSizes.setFontSize(12),
+                        fontWeight: FontWeight.w600,
+                        textColor: AppColor.txtWhite,
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),
@@ -189,26 +672,29 @@ class _SeeLiveScreenState extends State<SeeLiveScreen> with TickerProviderStateM
         Row(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            GestureDetector(
-              onTap: () => _showWeeklyRankingBottomSheet(context),
-              child: Container(
-                padding: EdgeInsets.symmetric(horizontal: AppSizes.setWidth(12)),
-                height: AppSizes.setHeight(28),
-                decoration: BoxDecoration(borderRadius: BorderRadius.circular(25), color: AppColor.black.withOpacityPercent(0.5)),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Image.asset(
-                      AppAssets.icStar,
-                      scale: 4.5,
-                    ),
-                    SizedBox(width: AppSizes.setWidth(6)),
-                    CommonText(
-                      text: Languages.of(context).weeklyRanking,
-                      fontSize: AppSizes.setFontSize(12),
-                      textColor: AppColor.txtWhite,
-                    ),
-                  ],
+            IgnorePointer(
+              ignoring: true,
+              child: GestureDetector(
+                onTap: () => _showWeeklyRankingBottomSheet(context),
+                child: Container(
+                  padding: EdgeInsets.symmetric(horizontal: AppSizes.setWidth(12)),
+                  height: AppSizes.setHeight(28),
+                  decoration: BoxDecoration(borderRadius: BorderRadius.circular(25), color: AppColor.black.withOpacityPercent(0.5)),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Image.asset(
+                        AppAssets.icStar,
+                        scale: 4.5,
+                      ),
+                      SizedBox(width: AppSizes.setWidth(6)),
+                      CommonText(
+                        text: Languages.of(context).weeklyRanking,
+                        fontSize: AppSizes.setFontSize(12),
+                        textColor: AppColor.txtWhite,
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),
@@ -320,15 +806,18 @@ class _SeeLiveScreenState extends State<SeeLiveScreen> with TickerProviderStateM
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          GestureDetector(
-            onTap: () {
-              handleIconTap(item.label, context);
-            },
-            child: Image.asset(
-              item.iconAsset,
-              height: AppSizes.setHeight(20),
-              width: AppSizes.setWidth(22),
-              fit: BoxFit.contain,
+          IgnorePointer(
+            ignoring: true,
+            child: GestureDetector(
+              onTap: () {
+                handleIconTap(item.label, context);
+              },
+              child: Image.asset(
+                item.iconAsset,
+                height: AppSizes.setHeight(20),
+                width: AppSizes.setWidth(22),
+                fit: BoxFit.contain,
+              ),
             ),
           ),
           CommonText(

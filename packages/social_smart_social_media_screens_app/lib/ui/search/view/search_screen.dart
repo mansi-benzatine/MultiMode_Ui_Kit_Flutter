@@ -15,11 +15,14 @@ import '../../followers/datamodel/followers_data.dart';
 import '../datamodel/search_data.dart';
 
 class SearchScreen extends StatefulWidget {
-  const SearchScreen({super.key});
+  final int currentIndex;
+  final bool isSearched;
 
-  static Route route() {
+  const SearchScreen({super.key, this.currentIndex = 0, this.isSearched = false});
+
+  static Route route({int currentIndex = 0, bool isSearched = false}) {
     return MaterialPageRoute(
-      builder: (context) => const SearchScreen(),
+      builder: (context) => SearchScreen(currentIndex: currentIndex, isSearched: isSearched),
     );
   }
 
@@ -35,10 +38,12 @@ class _SearchScreenState extends State<SearchScreen> with TickerProviderStateMix
   List<String> tabList = [];
   bool _isSeeResult = false;
   List<FollowersData> localFollowers = [];
+
   @override
   void initState() {
     super.initState();
-    _controller = TabController(vsync: this, length: 6);
+    _isSeeResult = widget.isSearched;
+    _controller = TabController(vsync: this, length: 6, initialIndex: widget.currentIndex);
     _focusNode.addListener(() {
       setState(() {
         _isTextFieldFocused = _focusNode.hasFocus;
@@ -220,37 +225,41 @@ class _SearchScreenState extends State<SearchScreen> with TickerProviderStateMix
   Widget searchFromTabBar() {
     return Column(
       children: [
-        Padding(
-          padding: EdgeInsets.only(left: AppSizes.setWidth(22), right: AppSizes.setWidth(14)),
-          child: TabBar(
-            controller: _controller,
-            tabAlignment: TabAlignment.center,
-            labelPadding: EdgeInsets.symmetric(horizontal: AppSizes.setWidth(12)),
-            isScrollable: true,
-            indicatorSize: TabBarIndicatorSize.tab,
-            unselectedLabelColor: AppColor.txtGrey,
-            labelStyle: TextStyle(
-              fontFamily: Constant.fontFamilyUrbanist,
-              fontSize: AppSizes.setFontSize(16),
-              fontWeight: FontWeight.w600,
+        IgnorePointer(
+          ignoring: true,
+          child: Padding(
+            padding: EdgeInsets.only(left: AppSizes.setWidth(22), right: AppSizes.setWidth(14)),
+            child: TabBar(
+              controller: _controller,
+              tabAlignment: TabAlignment.center,
+              labelPadding: EdgeInsets.symmetric(horizontal: AppSizes.setWidth(12)),
+              isScrollable: true,
+              indicatorSize: TabBarIndicatorSize.tab,
+              unselectedLabelColor: AppColor.txtGrey,
+              labelStyle: TextStyle(
+                fontFamily: Constant.fontFamilyUrbanist,
+                fontSize: AppSizes.setFontSize(16),
+                fontWeight: FontWeight.w600,
+              ),
+              labelColor: AppColor.txtPurple,
+              indicator: UnderlineTabIndicator(
+                borderRadius: BorderRadius.circular(25),
+                borderSide: BorderSide(width: AppSizes.setWidth(2), color: AppColor.txtPurple),
+              ),
+              tabs: tabList.map((tab) {
+                return SizedBox(
+                  width: AppSizes.setWidth(68),
+                  child: Tab(
+                    text: tab,
+                  ),
+                );
+              }).toList(),
             ),
-            labelColor: AppColor.txtPurple,
-            indicator: UnderlineTabIndicator(
-              borderRadius: BorderRadius.circular(25),
-              borderSide: BorderSide(width: AppSizes.setWidth(2), color: AppColor.txtPurple),
-            ),
-            tabs: tabList.map((tab) {
-              return SizedBox(
-                width: AppSizes.setWidth(68),
-                child: Tab(
-                  text: tab,
-                ),
-              );
-            }).toList(),
           ),
         ),
         Expanded(
           child: TabBarView(
+            physics: NeverScrollableScrollPhysics(),
             controller: _controller,
             children: [
               topTabView(context),

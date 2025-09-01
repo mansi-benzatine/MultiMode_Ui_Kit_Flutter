@@ -18,11 +18,17 @@ import '../datamodel/profile_data.dart';
 
 class ProfileScreen extends StatefulWidget {
   final bool? fromPost;
+  final bool isForSwitchAccount;
+  final int currentIndex;
 
-  const ProfileScreen({super.key, this.fromPost});
-  static Route route({bool? isFromPost}) {
+  const ProfileScreen({super.key, this.fromPost, this.isForSwitchAccount = false, this.currentIndex = 0});
+  static Route route({bool? isFromPost, bool isForSwitchAccount = false, int currentIndex = 0}) {
     return MaterialPageRoute(
-      builder: (context) => ProfileScreen(fromPost: isFromPost),
+      builder: (context) => ProfileScreen(
+        fromPost: isFromPost,
+        isForSwitchAccount: isForSwitchAccount,
+        currentIndex: currentIndex,
+      ),
     );
   }
 
@@ -35,11 +41,12 @@ class _ProfileScreenState extends State<ProfileScreen> with TickerProviderStateM
   late TabController _controller;
   List<ProfileData> profileData = [];
   List<ProfileData> profileDetails = [];
+  bool _isBottomSheetOpen = true;
 
   @override
   void initState() {
     super.initState();
-    _controller = TabController(vsync: this, length: 3);
+    _controller = TabController(vsync: this, length: 3, initialIndex: widget.currentIndex);
     tabList = [
       AppAssets.icCategory,
       AppAssets.icSavePost,
@@ -47,6 +54,104 @@ class _ProfileScreenState extends State<ProfileScreen> with TickerProviderStateM
     ];
     _controller.addListener(() {
       setState(() {});
+    });
+    if (widget.isForSwitchAccount) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        showSwitchAccountBS();
+      });
+    }
+  }
+
+  void showSwitchAccountBS() {
+    setState(() {
+      _isBottomSheetOpen = true;
+    });
+    showModalBottomSheet(
+      backgroundColor: CustomAppColor.of(context).bgBottomSheet,
+      showDragHandle: true,
+      context: context,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+      ),
+      builder: (context) {
+        return Container(
+          padding: EdgeInsets.only(
+            bottom: AppSizes.setHeight(30),
+            left: AppSizes.setWidth(20),
+            right: AppSizes.setWidth(20),
+          ),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              CommonText(
+                text: Languages.of(context).switchAccount,
+                fontSize: AppSizes.setFontSize(20),
+                fontWeight: FontWeight.w700,
+              ),
+              const Divider(color: AppColor.btnLightGrey, thickness: 0.4),
+              SizedBox(height: AppSizes.setHeight(15)),
+              Row(
+                children: [
+                  ClipOval(
+                    child: Image.asset(
+                      AppAssets.imgProfile,
+                      height: AppSizes.setHeight(50),
+                      width: AppSizes.setWidth(50),
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                  SizedBox(width: AppSizes.setWidth(15)),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        CommonText(
+                          text: AppStrings.johnDoe,
+                          fontWeight: FontWeight.w700,
+                          fontSize: AppSizes.setFontSize(16),
+                        ),
+                        CommonText(
+                          text: AppStrings.john.replaceAll("@", ""),
+                          fontWeight: FontWeight.w500,
+                          textColor: CustomAppColor.of(context).txtDarkGrey,
+                        ),
+                      ],
+                    ),
+                  ),
+                  Image.asset(AppAssets.icRightArrow, scale: 4.5)
+                ],
+              ),
+              SizedBox(height: AppSizes.setHeight(14)),
+              Row(
+                children: [
+                  Container(
+                    width: AppSizes.setWidth(50),
+                    height: AppSizes.setHeight(50),
+                    decoration: BoxDecoration(color: AppColor.bgImage, borderRadius: BorderRadius.circular(25)),
+                    child: Image.asset(
+                      AppAssets.icAdd,
+                      scale: 4.5,
+                    ),
+                  ),
+                  SizedBox(width: AppSizes.setWidth(15)),
+                  CommonText(
+                    text: Languages.of(context).addAccount,
+                    fontWeight: FontWeight.w600,
+                    fontSize: AppSizes.setFontSize(16),
+                  ),
+                ],
+              )
+            ],
+          ),
+        );
+      },
+    ).whenComplete(() {
+      if (_isBottomSheetOpen) {
+        setState(() {
+          _isBottomSheetOpen = false;
+        });
+        Navigator.pop(context);
+      }
     });
   }
 
@@ -95,155 +200,168 @@ class _ProfileScreenState extends State<ProfileScreen> with TickerProviderStateM
   @override
   Widget build(BuildContext context) {
     fillData();
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: CustomAppColor.of(context).bgScaffold,
-        centerTitle: (widget.fromPost ?? false) ? false : true,
-        title: Row(
-          mainAxisAlignment: (widget.fromPost ?? false) ? MainAxisAlignment.start : MainAxisAlignment.center,
-          children: [
-            CommonText(
-              text: (widget.fromPost ?? false)
-                  ? AppStrings.elizaWoods
-                  : AppStrings.johnDoe.toLowerCase().replaceAll(' ', '').replaceFirstMapped(RegExp(r'^\w'), (m) => m.group(0)!.toUpperCase()),
-              fontWeight: FontWeight.w700,
-              fontSize: AppSizes.setFontSize(18),
+    return PopScope(
+      canPop: (!_isBottomSheetOpen) || (widget.fromPost ?? false),
+      onPopInvokedWithResult: (didPop, result) {
+        if (!didPop && _isBottomSheetOpen) {
+          Navigator.pop(context);
+          setState(() {
+            _isBottomSheetOpen = false;
+          });
+          Navigator.pop(context);
+        }
+      },
+      child: Scaffold(
+        appBar: AppBar(
+          backgroundColor: CustomAppColor.of(context).bgScaffold,
+          centerTitle: (widget.fromPost ?? false) ? false : true,
+          title: Row(
+            mainAxisAlignment: (widget.fromPost ?? false) ? MainAxisAlignment.start : MainAxisAlignment.center,
+            children: [
+              CommonText(
+                text: (widget.fromPost ?? false) ? AppStrings.elizaWoods : AppStrings.johnDoe.toLowerCase().replaceAll(' ', '').replaceFirstMapped(RegExp(r'^\w'), (m) => m.group(0)!.toUpperCase()),
+                fontWeight: FontWeight.w700,
+                fontSize: AppSizes.setFontSize(18),
+              ),
+              Visibility(
+                visible: !(widget.fromPost ?? false),
+                child: IconButton(
+                  onPressed: () => showAddAccountBottomSheet(context),
+                  icon: const Icon(Icons.keyboard_arrow_down_outlined),
+                ),
+              )
+            ],
+          ),
+          leading: !(widget.fromPost ?? false)
+              ? IgnorePointer(
+                  ignoring: true,
+                  child: IconButton(
+                    icon: Image.asset(
+                      AppAssets.icAddProfile,
+                      color: CustomAppColor.of(context).icBlack,
+                      width: AppSizes.setWidth(21),
+                      height: AppSizes.setHeight(22),
+                    ),
+                    onPressed: () => Navigator.push(context, FindFriendsScreen.route()),
+                  ),
+                )
+              : IgnorePointer(
+                  ignoring: true,
+                  child: IconButton(
+                    icon: const Icon(Icons.arrow_back),
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                  ),
+                ),
+          actions: [
+            Visibility(
+              visible: (widget.fromPost ?? false),
+              child: IgnorePointer(
+                ignoring: true,
+                child: Padding(
+                  padding: EdgeInsets.symmetric(horizontal: AppSizes.setWidth(10)),
+                  child: Image.asset(
+                    color: CustomAppColor.of(context).icBlack,
+                    AppAssets.icNotification,
+                    scale: 4.2,
+                  ),
+                ),
+              ),
             ),
             Visibility(
               visible: !(widget.fromPost ?? false),
-              child: IconButton(
-                onPressed: () => showAddAccountBottomSheet(context),
-                icon: const Icon(Icons.keyboard_arrow_down_outlined),
+              child: IgnorePointer(
+                ignoring: true,
+                child: IconButton(
+                  onPressed: () => Navigator.push(context, SettingScreen.route()),
+                  icon: Image.asset(
+                    AppAssets.icSetting,
+                    color: CustomAppColor.of(context).icBlack,
+                    width: AppSizes.setWidth(26),
+                    height: AppSizes.setHeight(26),
+                  ),
+                ),
               ),
-            )
+            ),
           ],
         ),
-        leading: !(widget.fromPost ?? false)
-            ? IgnorePointer(
-                ignoring: true,
-                child: IconButton(
-                  icon: Image.asset(
-                    AppAssets.icAddProfile,
-                    color: CustomAppColor.of(context).icBlack,
-                    width: AppSizes.setWidth(21),
-                    height: AppSizes.setHeight(22),
-                  ),
-                  onPressed: () => Navigator.push(context, FindFriendsScreen.route()),
-                ),
-              )
-            : IgnorePointer(
-                ignoring: true,
-                child: IconButton(
-                  icon: const Icon(Icons.arrow_back),
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                ),
-              ),
-        actions: [
-          Visibility(
-            visible: (widget.fromPost ?? false),
-            child: IgnorePointer(
-              ignoring: true,
-              child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: AppSizes.setWidth(10)),
-                child: Image.asset(
-                  color: CustomAppColor.of(context).icBlack,
-                  AppAssets.icNotification,
-                  scale: 4.2,
-                ),
-              ),
-            ),
-          ),
-          Visibility(
-            visible: !(widget.fromPost ?? false),
-            child: IgnorePointer(
-              ignoring: true,
-              child: IconButton(
-                onPressed: () => Navigator.push(context, SettingScreen.route()),
-                icon: Image.asset(
-                  AppAssets.icSetting,
-                  color: CustomAppColor.of(context).icBlack,
-                  width: AppSizes.setWidth(26),
-                  height: AppSizes.setHeight(26),
-                ),
-              ),
-            ),
-          ),
-        ],
-      ),
-      body: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Stack(
-              children: [
-                Padding(
-                  padding: EdgeInsets.only(top: AppSizes.setHeight(25), bottom: AppSizes.setHeight(10)),
-                  child: Center(
-                    child: CircleAvatar(
-                      radius: 55,
-                      backgroundImage: AssetImage((widget.fromPost ?? false) ? AppAssets.imgProfile5 : AppAssets.imgProfile),
-                    ),
-                  ),
-                ),
-                Visibility(
-                  visible: !(widget.fromPost ?? false),
-                  child: Positioned.fill(
-                    top: AppSizes.setHeight(90),
-                    left: AppSizes.setWidth(80),
-                    child: GestureDetector(
-                      onTap: () {},
-                      child: Image.asset(
-                        AppAssets.icProfileEdit,
-                        scale: 5,
+        body: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Stack(
+                children: [
+                  Padding(
+                    padding: EdgeInsets.only(top: AppSizes.setHeight(25), bottom: AppSizes.setHeight(10)),
+                    child: Center(
+                      child: CircleAvatar(
+                        radius: 55,
+                        backgroundImage: AssetImage((widget.fromPost ?? false) ? AppAssets.imgProfile5 : AppAssets.imgProfile),
                       ),
                     ),
                   ),
-                ),
-              ],
-            ),
-            CommonText(
-              text: (widget.fromPost ?? false) ? AppStrings.eliza : AppStrings.john,
-              fontSize: AppSizes.setFontSize(18),
-              fontWeight: FontWeight.w700,
-            ),
-            Padding(
-              padding: EdgeInsets.symmetric(vertical: AppSizes.setHeight(6)),
-              child: CommonText(
-                text: (widget.fromPost ?? false) ? AppStrings.fashionDesigner : AppStrings.designerPhoto,
-                fontSize: AppSizes.setFontSize(14),
-                fontWeight: FontWeight.w500,
-              ),
-            ),
-            _profileDetails(context),
-            _postButtons(context),
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: AppSizes.setWidth(20)),
-              child: TabBar(
-                controller: _controller,
-                tabAlignment: TabAlignment.fill,
-                labelPadding: EdgeInsets.symmetric(horizontal: AppSizes.setWidth(40)),
-                isScrollable: false,
-                indicator: UnderlineTabIndicator(
-                  borderRadius: BorderRadius.circular(25),
-                  borderSide: BorderSide(width: AppSizes.setWidth(3), color: CustomAppColor.of(context).purple),
-                  insets: EdgeInsets.symmetric(horizontal: AppSizes.setWidth(65)),
-                ),
-                tabs: tabList.map((tab) {
-                  int index = tabList.indexOf(tab);
-                  return Tab(
-                    icon: Image.asset(
-                      tab,
-                      scale: 4.5,
-                      color: _controller.index == index ? CustomAppColor.of(context).purple : CustomAppColor.of(context).grey,
+                  Visibility(
+                    visible: !(widget.fromPost ?? false),
+                    child: Positioned.fill(
+                      top: AppSizes.setHeight(90),
+                      left: AppSizes.setWidth(80),
+                      child: GestureDetector(
+                        onTap: () {},
+                        child: Image.asset(
+                          AppAssets.icProfileEdit,
+                          scale: 5,
+                        ),
+                      ),
                     ),
-                  );
-                }).toList(),
+                  ),
+                ],
               ),
-            ),
-            _gridPosts(context),
-          ],
+              CommonText(
+                text: (widget.fromPost ?? false) ? AppStrings.eliza : AppStrings.john,
+                fontSize: AppSizes.setFontSize(18),
+                fontWeight: FontWeight.w700,
+              ),
+              Padding(
+                padding: EdgeInsets.symmetric(vertical: AppSizes.setHeight(6)),
+                child: CommonText(
+                  text: (widget.fromPost ?? false) ? AppStrings.fashionDesigner : AppStrings.designerPhoto,
+                  fontSize: AppSizes.setFontSize(14),
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+              _profileDetails(context),
+              _postButtons(context),
+              IgnorePointer(
+                ignoring: true,
+                child: Padding(
+                  padding: EdgeInsets.symmetric(horizontal: AppSizes.setWidth(20)),
+                  child: TabBar(
+                    controller: _controller,
+                    tabAlignment: TabAlignment.fill,
+                    labelPadding: EdgeInsets.symmetric(horizontal: AppSizes.setWidth(40)),
+                    isScrollable: false,
+                    indicator: UnderlineTabIndicator(
+                      borderRadius: BorderRadius.circular(25),
+                      borderSide: BorderSide(width: AppSizes.setWidth(3), color: CustomAppColor.of(context).purple),
+                      insets: EdgeInsets.symmetric(horizontal: AppSizes.setWidth(65)),
+                    ),
+                    tabs: tabList.map((tab) {
+                      int index = tabList.indexOf(tab);
+                      return Tab(
+                        icon: Image.asset(
+                          tab,
+                          scale: 4.5,
+                          color: _controller.index == index ? CustomAppColor.of(context).purple : CustomAppColor.of(context).grey,
+                        ),
+                      );
+                    }).toList(),
+                  ),
+                ),
+              ),
+              _gridPosts(context),
+            ],
+          ),
         ),
       ),
     );
@@ -350,9 +468,7 @@ class _ProfileScreenState extends State<ProfileScreen> with TickerProviderStateM
             child: IgnorePointer(
               ignoring: true,
               child: CommonButton(
-                onTap: () => !(widget.fromPost ?? false)
-                    ? Navigator.push(context, EditProfileScreen.route())
-                    : Navigator.push(context, MessageScreen.route(false)),
+                onTap: () => !(widget.fromPost ?? false) ? Navigator.push(context, EditProfileScreen.route()) : Navigator.push(context, MessageScreen.route(false)),
                 buttonColor: CustomAppColor.of(context).bgScaffold,
                 isOutLinedButton: true,
                 height: AppSizes.setHeight(38),

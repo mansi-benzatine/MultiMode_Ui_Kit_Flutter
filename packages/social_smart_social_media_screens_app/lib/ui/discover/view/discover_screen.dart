@@ -14,10 +14,14 @@ import '../../trending_sound/view/trending_sound_screen.dart';
 import '../datamodel/discover_data.dart';
 
 class DiscoverScreen extends StatefulWidget {
-  const DiscoverScreen({super.key});
-  static Route route() {
+  final int currentIndex;
+
+  const DiscoverScreen({super.key, this.currentIndex = 0});
+  static Route route({int currentIndex = 0}) {
     return MaterialPageRoute(
-      builder: (context) => const DiscoverScreen(),
+      builder: (context) => DiscoverScreen(
+        currentIndex: currentIndex,
+      ),
     );
   }
 
@@ -32,7 +36,7 @@ class _DiscoverScreenState extends State<DiscoverScreen> with TickerProviderStat
   @override
   void initState() {
     super.initState();
-    _controller = TabController(vsync: this, length: 2);
+    _controller = TabController(vsync: this, length: 2, initialIndex: widget.currentIndex);
   }
 
   @override
@@ -84,32 +88,36 @@ class _DiscoverScreenState extends State<DiscoverScreen> with TickerProviderStat
       children: [
         Padding(
           padding: EdgeInsets.only(top: AppSizes.setHeight(15), right: AppSizes.setWidth(22), left: AppSizes.setWidth(20)),
-          child: TabBar(
-            controller: _controller,
-            tabAlignment: TabAlignment.start,
-            isScrollable: true,
-            unselectedLabelColor: CustomAppColor.of(context).icGrey,
-            labelStyle: TextStyle(
-              fontFamily: Constant.fontFamilyUrbanist,
-              fontSize: AppSizes.setFontSize(16),
-              fontWeight: FontWeight.w600,
+          child: IgnorePointer(
+            ignoring: true,
+            child: TabBar(
+              controller: _controller,
+              tabAlignment: TabAlignment.start,
+              isScrollable: true,
+              unselectedLabelColor: CustomAppColor.of(context).icGrey,
+              labelStyle: TextStyle(
+                fontFamily: Constant.fontFamilyUrbanist,
+                fontSize: AppSizes.setFontSize(16),
+                fontWeight: FontWeight.w600,
+              ),
+              indicatorSize: TabBarIndicatorSize.tab,
+              labelColor: AppColor.txtPurple,
+              indicator: UnderlineTabIndicator(
+                borderRadius: BorderRadius.circular(25),
+                borderSide: BorderSide(width: AppSizes.setWidth(4), color: AppColor.txtPurple),
+              ),
+              tabs: tabList.map((tab) {
+                return SizedBox(
+                  width: AppSizes.setWidth(140),
+                  child: Tab(text: tab),
+                );
+              }).toList(),
             ),
-            indicatorSize: TabBarIndicatorSize.tab,
-            labelColor: AppColor.txtPurple,
-            indicator: UnderlineTabIndicator(
-              borderRadius: BorderRadius.circular(25),
-              borderSide: BorderSide(width: AppSizes.setWidth(4), color: AppColor.txtPurple),
-            ),
-            tabs: tabList.map((tab) {
-              return SizedBox(
-                width: AppSizes.setWidth(140),
-                child: Tab(text: tab),
-              );
-            }).toList(),
           ),
         ),
         Expanded(
           child: TabBarView(
+            physics: NeverScrollableScrollPhysics(),
             controller: _controller,
             children: [
               tabview(discoverList, false),

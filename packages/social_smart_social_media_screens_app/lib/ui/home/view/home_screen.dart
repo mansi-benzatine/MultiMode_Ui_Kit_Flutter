@@ -20,12 +20,22 @@ class HomeScreen extends StatefulWidget {
   final bool isFromProfile;
   final bool isFromInbox;
   final bool isFromOptionForPost;
-  static Route route(
-      {required bool isFromHome,
-      required bool isFromDiscover,
-      required bool isFromProfile,
-      required bool isFromInbox,
-      required bool isFromOptionsForPosts}) {
+  final bool isForSwitchAccount;
+  final bool isForCommentBs;
+  final bool isForShareTo;
+  final int currentIndex;
+
+  static Route route({
+    required bool isFromHome,
+    required bool isFromDiscover,
+    required bool isFromProfile,
+    required bool isFromInbox,
+    required bool isFromOptionsForPosts,
+    bool isForSwitchAccountBs = false,
+    int currentIndex = 0,
+    bool isForCommentBs = false,
+    bool isForShareTo = false,
+  }) {
     return MaterialPageRoute(
       builder: (context) => HomeScreen(
         isFromHome: isFromHome,
@@ -33,17 +43,26 @@ class HomeScreen extends StatefulWidget {
         isFromDiscover: isFromDiscover,
         isFromOptionForPost: isFromOptionsForPosts,
         isFromInbox: isFromInbox,
+        isForSwitchAccount: isForSwitchAccountBs,
+        currentIndex: currentIndex,
+        isForCommentBs: isForCommentBs,
+        isForShareTo: isForShareTo,
       ),
     );
   }
 
-  const HomeScreen(
-      {super.key,
-      required this.isFromHome,
-      required this.isFromDiscover,
-      required this.isFromProfile,
-      required this.isFromInbox,
-      required this.isFromOptionForPost});
+  const HomeScreen({
+    super.key,
+    required this.isFromHome,
+    required this.isFromDiscover,
+    required this.isFromProfile,
+    required this.isFromInbox,
+    required this.isFromOptionForPost,
+    this.isForSwitchAccount = false,
+    this.currentIndex = 0,
+    this.isForCommentBs = false,
+    this.isForShareTo = false,
+  });
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -72,8 +91,11 @@ class _HomeScreenState extends State<HomeScreen> {
       pageIndex = 0; // Default to Home
     }
     screens = [
-      const DashboardScreen(),
-      const DiscoverScreen(),
+      DashboardScreen(
+        isForShareTo: widget.isForShareTo,
+        isForCommentBs: widget.isForCommentBs,
+      ),
+      DiscoverScreen(currentIndex: widget.currentIndex),
       const CreatePostScreen(
         isVideoSelected: false,
         isTemplateSelected: false,
@@ -87,9 +109,7 @@ class _HomeScreenState extends State<HomeScreen> {
           setState(() {});
         },
       ),
-      const ProfileScreen(
-        fromPost: false,
-      ),
+      ProfileScreen(fromPost: false, isForSwitchAccount: widget.isForSwitchAccount),
     ];
   }
 

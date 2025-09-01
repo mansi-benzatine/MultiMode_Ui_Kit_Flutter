@@ -12,10 +12,12 @@ import '../../../utils/sizer_utils.dart';
 import '../../create_posts/datamodel/create_posts_data.dart';
 
 class AddMediaScreen extends StatefulWidget {
-  const AddMediaScreen({super.key});
-  static Route route() {
+  final int currentIndex;
+
+  const AddMediaScreen({super.key, this.currentIndex = 0});
+  static Route route({int currentIndex = 0}) {
     return MaterialPageRoute(
-      builder: (context) => const AddMediaScreen(),
+      builder: (context) => AddMediaScreen(currentIndex: currentIndex),
     );
   }
 
@@ -34,7 +36,7 @@ class _AddMediaScreenState extends State<AddMediaScreen> with TickerProviderStat
   @override
   void initState() {
     super.initState();
-    _controller = TabController(vsync: this, length: 3);
+    _controller = TabController(vsync: this, length: 3, initialIndex: widget.currentIndex);
     _controller.addListener(() {
       if (_controller.indexIsChanging == false) {
         setState(() {});
@@ -67,11 +69,7 @@ class _AddMediaScreenState extends State<AddMediaScreen> with TickerProviderStat
           leading: IgnorePointer(
             ignoring: true,
             child: IconButton(
-                onPressed: () => Navigator.push(
-                    context,
-                    CreatePostScreen.route(
-                        isCameraSelected: false, isPhotoSelected: false, isTemplateSelected: false, isVideoSelected: false, currentIndex: 0)),
-                icon: const Icon(Icons.clear)),
+                onPressed: () => Navigator.push(context, CreatePostScreen.route(isCameraSelected: false, isPhotoSelected: false, isTemplateSelected: false, isVideoSelected: false, currentIndex: 0)), icon: const Icon(Icons.clear)),
           ),
           title: Row(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -152,33 +150,37 @@ class _AddMediaScreenState extends State<AddMediaScreen> with TickerProviderStat
   Widget searchFromTabBar() {
     return Column(
       children: [
-        Padding(
-          padding: EdgeInsets.only(top: AppSizes.setHeight(15)),
-          child: TabBar(
-            controller: _controller,
-            tabAlignment: TabAlignment.center,
-            labelPadding: EdgeInsets.symmetric(horizontal: AppSizes.setWidth(40)),
-            isScrollable: true,
-            unselectedLabelColor: AppColor.txtGrey,
-            labelStyle: TextStyle(
-              fontFamily: Constant.fontFamilyUrbanist,
-              fontSize: AppSizes.setFontSize(16),
-              fontWeight: FontWeight.w600,
+        IgnorePointer(
+          ignoring: true,
+          child: Padding(
+            padding: EdgeInsets.only(top: AppSizes.setHeight(15)),
+            child: TabBar(
+              controller: _controller,
+              tabAlignment: TabAlignment.center,
+              labelPadding: EdgeInsets.symmetric(horizontal: AppSizes.setWidth(40)),
+              isScrollable: true,
+              unselectedLabelColor: AppColor.txtGrey,
+              labelStyle: TextStyle(
+                fontFamily: Constant.fontFamilyUrbanist,
+                fontSize: AppSizes.setFontSize(16),
+                fontWeight: FontWeight.w600,
+              ),
+              labelColor: AppColor.txtPurple,
+              indicator: UnderlineTabIndicator(
+                borderSide: BorderSide(width: AppSizes.setWidth(3), color: AppColor.txtPurple),
+                insets: EdgeInsets.symmetric(horizontal: AppSizes.setWidth(60)),
+              ),
+              tabs: tabList.map((tab) {
+                return Tab(
+                  text: tab,
+                );
+              }).toList(),
             ),
-            labelColor: AppColor.txtPurple,
-            indicator: UnderlineTabIndicator(
-              borderSide: BorderSide(width: AppSizes.setWidth(3), color: AppColor.txtPurple),
-              insets: EdgeInsets.symmetric(horizontal: AppSizes.setWidth(60)),
-            ),
-            tabs: tabList.map((tab) {
-              return Tab(
-                text: tab,
-              );
-            }).toList(),
           ),
         ),
         Expanded(
           child: TabBarView(
+            physics: NeverScrollableScrollPhysics(),
             controller: _controller,
             children: [
               tabview(effectList), // All items

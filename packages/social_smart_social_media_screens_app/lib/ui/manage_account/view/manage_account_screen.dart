@@ -11,10 +11,11 @@ import '../../../widgets/text/common_text.dart';
 import '../../change_password/view/change_password_screen.dart';
 
 class ManageAccountScreen extends StatefulWidget {
-  const ManageAccountScreen({super.key});
-  static Route route({bool? isFromPost}) {
+  final bool isForLogoutBs;
+  const ManageAccountScreen({super.key, this.isForLogoutBs = false});
+  static Route route({bool? isFromPost, bool isForLogoutBs = false}) {
     return MaterialPageRoute(
-      builder: (context) => const ManageAccountScreen(),
+      builder: (context) => ManageAccountScreen(isForLogoutBs: isForLogoutBs),
     );
   }
 
@@ -25,6 +26,7 @@ class ManageAccountScreen extends StatefulWidget {
 class _ManageAccountScreenState extends State<ManageAccountScreen> {
   List<EditProfileData> manageAccountList = [];
   List<EditProfileData> accountControlList = [];
+  bool _isBottomSheetOpen = false;
   void fillData() {
     manageAccountList = [
       EditProfileData(
@@ -62,33 +64,130 @@ class _ManageAccountScreenState extends State<ManageAccountScreen> {
   }
 
   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    if (widget.isForLogoutBs) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        showLogoutBS();
+      });
+    }
+  }
+
+  void showLogoutBS() {
+    setState(() {
+      _isBottomSheetOpen = true;
+    });
+    showModalBottomSheet(
+      scrollControlDisabledMaxHeightRatio: 0.6,
+      showDragHandle: true,
+      backgroundColor: CustomAppColor.of(context).bgScaffold,
+      context: context,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+      ),
+      builder: (context) {
+        return Container(
+          padding: EdgeInsets.symmetric(horizontal: AppSizes.setWidth(20), vertical: AppSizes.setHeight(8)),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              CommonText(
+                text: Languages.of(context).logout,
+                fontWeight: FontWeight.w700,
+                fontSize: AppSizes.setFontSize(22),
+                textAlign: TextAlign.center,
+                textColor: AppColor.txtPurple,
+              ),
+              const Divider(),
+              Padding(
+                padding: EdgeInsets.symmetric(vertical: AppSizes.setHeight(10)),
+                child: CommonText(
+                  text: Languages.of(context).areYouSureToLogout,
+                  fontWeight: FontWeight.w700,
+                  fontSize: AppSizes.setFontSize(16),
+                  textAlign: TextAlign.center,
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.symmetric(vertical: AppSizes.setHeight(18)),
+                child: Row(
+                  children: [
+                    Flexible(
+                      child: CommonButton(
+                        useSimpleStyle: true,
+                        radius: 20,
+                        child: CommonText(
+                          text: Languages.of(context).cancel,
+                          fontWeight: FontWeight.w700,
+                          textColor: CustomAppColor.of(context).txtPurple,
+                          fontSize: AppSizes.setFontSize(14),
+                        ),
+                      ),
+                    ),
+                    SizedBox(width: AppSizes.setWidth(12)),
+                    Expanded(
+                      child: CommonButton(
+                        btnText: Languages.of(context).logout,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        );
+      },
+    ).whenComplete(() {
+      if (_isBottomSheetOpen) {
+        setState(() {
+          _isBottomSheetOpen = false;
+        });
+        Navigator.pop(context);
+      }
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
     fillData();
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: CustomAppColor.of(context).bgScaffold,
-        leading: IgnorePointer(
-            ignoring: true,
-            child: IconButton(
-              onPressed: () => Navigator.pop(context),
-              icon: const Icon(Icons.arrow_back),
-            )),
-        centerTitle: false,
-        titleSpacing: 0,
-        title: CommonText(
-          text: "${Languages.of(context).manageAccount}s",
-          fontWeight: FontWeight.w700,
-          fontSize: AppSizes.setFontSize(18),
+    return PopScope(
+      canPop: !_isBottomSheetOpen,
+      onPopInvokedWithResult: (didPop, result) {
+        if (!didPop && _isBottomSheetOpen) {
+          Navigator.pop(context);
+          setState(() {
+            _isBottomSheetOpen = false;
+          });
+          Navigator.pop(context);
+        }
+      },
+      child: Scaffold(
+        appBar: AppBar(
+          backgroundColor: CustomAppColor.of(context).bgScaffold,
+          leading: IgnorePointer(
+              ignoring: true,
+              child: IconButton(
+                onPressed: () => Navigator.pop(context),
+                icon: const Icon(Icons.arrow_back),
+              )),
+          centerTitle: false,
+          titleSpacing: 0,
+          title: CommonText(
+            text: "${Languages.of(context).manageAccount}s",
+            fontWeight: FontWeight.w700,
+            fontSize: AppSizes.setFontSize(18),
+          ),
         ),
-      ),
-      body: Padding(
-        padding: EdgeInsets.symmetric(horizontal: AppSizes.setWidth(24), vertical: AppSizes.setHeight(10)),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            accountInformation(context),
-            accountControl(context),
-          ],
+        body: Padding(
+          padding: EdgeInsets.symmetric(horizontal: AppSizes.setWidth(24), vertical: AppSizes.setHeight(10)),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              accountInformation(context),
+              accountControl(context),
+            ],
+          ),
         ),
       ),
     );

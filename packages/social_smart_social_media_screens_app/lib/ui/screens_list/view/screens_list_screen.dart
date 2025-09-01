@@ -150,14 +150,52 @@ class _SocialSmartSocialMediaScreenListScreen extends State<SocialSmartSocialMed
             )),
       ),
       ScreenListDataModel(
+        title: "Reels Share To",
+        icon: AppAssets.icScreen,
+        onClick: () => Navigator.push(
+            context,
+            HomeScreen.route(
+              isFromHome: true,
+              isFromInbox: false,
+              isFromDiscover: false,
+              isFromProfile: false,
+              isFromOptionsForPosts: false,
+              isForShareTo: true,
+            )),
+      ),
+      ScreenListDataModel(
+        title: "Reel's Comments",
+        icon: AppAssets.icScreen,
+        onClick: () => Navigator.push(
+            context,
+            HomeScreen.route(
+              isFromHome: true,
+              isFromInbox: false,
+              isFromDiscover: false,
+              isFromProfile: false,
+              isFromOptionsForPosts: false,
+              isForCommentBs: true,
+            )),
+      ),
+      ScreenListDataModel(
         title: "Report",
         icon: AppAssets.icScreen,
         onClick: () => Navigator.push(context, ReportScreen.route()),
       ),
       ScreenListDataModel(
-        title: "User's Profile",
+        title: "User's Profile : Reels",
         icon: AppAssets.icScreen,
-        onClick: () => Navigator.push(context, ProfileScreen.route(isFromPost: true)),
+        onClick: () => Navigator.push(context, ProfileScreen.route(isFromPost: true, currentIndex: 0)),
+      ),
+      ScreenListDataModel(
+        title: "User's Profile : Saved Reels",
+        icon: AppAssets.icScreen,
+        onClick: () => Navigator.push(context, ProfileScreen.route(isFromPost: true, currentIndex: 1)),
+      ),
+      ScreenListDataModel(
+        title: "User's Profile : Liked Reels",
+        icon: AppAssets.icScreen,
+        onClick: () => Navigator.push(context, ProfileScreen.route(isFromPost: true, currentIndex: 2)),
       ),
       ScreenListDataModel(
         title: "Followers",
@@ -170,9 +208,39 @@ class _SocialSmartSocialMediaScreenListScreen extends State<SocialSmartSocialMed
         onClick: () => Navigator.push(context, MessageScreen.route(false)),
       ),
       ScreenListDataModel(
-        title: "Search",
+        title: "Search Type Keyword",
         icon: AppAssets.icScreen,
         onClick: () => Navigator.push(context, SearchScreen.route()),
+      ),
+      ScreenListDataModel(
+        title: "Search Result : Top",
+        icon: AppAssets.icScreen,
+        onClick: () => Navigator.push(context, SearchScreen.route(currentIndex: 0, isSearched: true)),
+      ),
+      ScreenListDataModel(
+        title: "Search Result : Users",
+        icon: AppAssets.icScreen,
+        onClick: () => Navigator.push(context, SearchScreen.route(isSearched: true, currentIndex: 1)),
+      ),
+      ScreenListDataModel(
+        title: "Search Result : Videos",
+        icon: AppAssets.icScreen,
+        onClick: () => Navigator.push(context, SearchScreen.route(currentIndex: 2, isSearched: true)),
+      ),
+      ScreenListDataModel(
+        title: "Search Result : Sounds",
+        icon: AppAssets.icScreen,
+        onClick: () => Navigator.push(context, SearchScreen.route(isSearched: true, currentIndex: 3)),
+      ),
+      ScreenListDataModel(
+        title: "Search Result : Live",
+        icon: AppAssets.icScreen,
+        onClick: () => Navigator.push(context, SearchScreen.route(currentIndex: 4, isSearched: true)),
+      ),
+      ScreenListDataModel(
+        title: "Search Result : Hashtag",
+        icon: AppAssets.icScreen,
+        onClick: () => Navigator.push(context, SearchScreen.route(isSearched: true, currentIndex: 5)),
       ),
       ScreenListDataModel(
         title: "Option For Create",
@@ -240,14 +308,52 @@ class _SocialSmartSocialMediaScreenListScreen extends State<SocialSmartSocialMed
             )),
       ),
       ScreenListDataModel(
-        title: "Posts Add Sounds",
+        title: "Add Sounds For Posts",
         icon: AppAssets.icScreen,
         onClick: () => Navigator.push(context, AddSoundScreen.route()),
       ),
       ScreenListDataModel(
-        title: "Posts Upload Media",
+        title: "Add Trending Effect For Posts",
         icon: AppAssets.icScreen,
-        onClick: () => Navigator.push(context, AddMediaScreen.route()),
+        onClick: () => Navigator.push(
+            context,
+            CreatePostScreen.route(
+              isVideoSelected: false,
+              isTemplateSelected: false,
+              isPhotoSelected: false,
+              isCameraSelected: true,
+              currentIndex: 0,
+              isForEffectBs: true,
+            )),
+      ),
+      ScreenListDataModel(
+        title: "Add New Effect For Posts",
+        icon: AppAssets.icScreen,
+        onClick: () => Navigator.push(
+            context,
+            CreatePostScreen.route(
+              isVideoSelected: false,
+              isTemplateSelected: false,
+              isPhotoSelected: false,
+              isCameraSelected: true,
+              currentIndex: 1,
+              isForEffectBs: true,
+            )),
+      ),
+      ScreenListDataModel(
+        title: "Posts Upload Media : All",
+        icon: AppAssets.icScreen,
+        onClick: () => Navigator.push(context, AddMediaScreen.route(currentIndex: 0)),
+      ),
+      ScreenListDataModel(
+        title: "Posts Upload Media : Videos",
+        icon: AppAssets.icScreen,
+        onClick: () => Navigator.push(context, AddMediaScreen.route(currentIndex: 1)),
+      ),
+      ScreenListDataModel(
+        title: "Posts Upload Media : Photos",
+        icon: AppAssets.icScreen,
+        onClick: () => Navigator.push(context, AddMediaScreen.route(currentIndex: 2)),
       ),
       ScreenListDataModel(
         title: "Posts Edit Pages",
@@ -270,7 +376,37 @@ class _SocialSmartSocialMediaScreenListScreen extends State<SocialSmartSocialMed
         onClick: () => Navigator.push(context, SeeLiveScreen.route()),
       ),
       ScreenListDataModel(
-        title: "Discover",
+        title: "View Profile",
+        icon: AppAssets.icScreen,
+        onClick: () => Navigator.push(context, SeeLiveScreen.route(isForViewProfileBs: true)),
+      ),
+      ScreenListDataModel(
+        title: "Viewers",
+        icon: AppAssets.icScreen,
+        onClick: () => Navigator.push(context, SeeLiveScreen.route(isForViewersBs: true)),
+      ),
+      ScreenListDataModel(
+        title: "Weekly Ranking",
+        icon: AppAssets.icScreen,
+        onClick: () => Navigator.push(context, SeeLiveScreen.route(isForRisingStarBs: true, currentIndexBs: 0)),
+      ),
+      ScreenListDataModel(
+        title: "Rising Star",
+        icon: AppAssets.icScreen,
+        onClick: () => Navigator.push(context, SeeLiveScreen.route(isForRisingStarBs: true, currentIndexBs: 1)),
+      ),
+      ScreenListDataModel(
+        title: "Go Live Together",
+        icon: AppAssets.icScreen,
+        onClick: () => Navigator.push(context, SeeLiveScreen.route(isForGoLiveTogetherBs: true)),
+      ),
+      ScreenListDataModel(
+        title: "Question & Answer",
+        icon: AppAssets.icScreen,
+        onClick: () => Navigator.push(context, SeeLiveScreen.route(isForQAndABs: true)),
+      ),
+      ScreenListDataModel(
+        title: "Discover : Trending Sounds",
         icon: AppAssets.icScreen,
         onClick: () => Navigator.push(
             context,
@@ -279,6 +415,21 @@ class _SocialSmartSocialMediaScreenListScreen extends State<SocialSmartSocialMed
               isFromInbox: false,
               isFromDiscover: true,
               isFromProfile: false,
+              currentIndex: 0,
+              isFromOptionsForPosts: false,
+            )),
+      ),
+      ScreenListDataModel(
+        title: "Discover : Hashtag",
+        icon: AppAssets.icScreen,
+        onClick: () => Navigator.push(
+            context,
+            HomeScreen.route(
+              isFromHome: false,
+              isFromInbox: false,
+              isFromDiscover: true,
+              isFromProfile: false,
+              currentIndex: 1,
               isFromOptionsForPosts: false,
             )),
       ),
@@ -334,6 +485,11 @@ class _SocialSmartSocialMediaScreenListScreen extends State<SocialSmartSocialMed
             )),
       ),
       ScreenListDataModel(
+        title: "Switch Account",
+        icon: AppAssets.icScreen,
+        onClick: () => Navigator.push(context, HomeScreen.route(isFromHome: false, isFromInbox: false, isFromDiscover: false, isFromProfile: true, isFromOptionsForPosts: false, isForSwitchAccountBs: true)),
+      ),
+      ScreenListDataModel(
         title: "Find Friends",
         icon: AppAssets.icScreen,
         onClick: () => Navigator.push(context, FindFriendsScreen.route()),
@@ -374,14 +530,24 @@ class _SocialSmartSocialMediaScreenListScreen extends State<SocialSmartSocialMed
         onClick: () => Navigator.push(context, LanguageScreen.route()),
       ),
       ScreenListDataModel(
-        title: "Help Center",
+        title: "Help Center : FAQ",
         icon: AppAssets.icScreen,
-        onClick: () => Navigator.push(context, HelpCenterScreen.route()),
+        onClick: () => Navigator.push(context, HelpCenterScreen.route(currentIndex: 0)),
+      ),
+      ScreenListDataModel(
+        title: "Help Center : Contact Us",
+        icon: AppAssets.icScreen,
+        onClick: () => Navigator.push(context, HelpCenterScreen.route(currentIndex: 1)),
       ),
       ScreenListDataModel(
         title: "Privacy Policy",
         icon: AppAssets.icScreen,
         onClick: () => Navigator.push(context, PrivacyPolicyScreen.route()),
+      ),
+      ScreenListDataModel(
+        title: "Logout",
+        icon: AppAssets.icScreen,
+        onClick: () => Navigator.push(context, ManageAccountScreen.route(isForLogoutBs: true)),
       ),
     ];
   }
@@ -399,23 +565,16 @@ class _SocialSmartSocialMediaScreenListScreen extends State<SocialSmartSocialMed
           backgroundColor: Colors.transparent,
           elevation: 0,
           leading: IconButton(
-            icon: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Icon(
-                Icons.arrow_back,
-                color: CustomAppColor.of(context).white,
-              ),
-            ),
+            icon: Icon(Icons.arrow_back, color: CustomAppColor.of(context).white),
             onPressed: () {
               widget.onBack?.call();
             },
           ),
-          leadingWidth: 38,
           title: CommonText(
             text: "Social Media App",
-            fontSize: AppSizes.setFontSize(22),
-            fontFamily: Constant.fontFamilyMontserratSemiBold,
+            fontSize: AppSizes.setFontSize(20),
             textColor: CustomAppColor.of(context).white,
+            fontWeight: FontWeight.w700,
           ),
         ),
         body: Container(
