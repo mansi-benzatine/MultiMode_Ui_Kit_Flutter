@@ -24,6 +24,13 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController _countryController = TextEditingController();
   final TextEditingController _phoneNumberController = TextEditingController();
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    final defaultCountry = CountryParser.parseCountryCode('US');
+    _countryController.text = "${defaultCountry.flagEmoji} +${defaultCountry.phoneCode}";
+  }
 
   @override
   Widget build(BuildContext context) {

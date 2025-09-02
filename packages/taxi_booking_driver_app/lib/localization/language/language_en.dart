@@ -26,7 +26,7 @@ class LanguageEn extends Languages {
   String get txtMobileNumber => "Mobile Number";
 
   @override
-  String get txtPleaseEnterYourPhoneNumberWeWillSendYou4DigitCodeToVerifyYourAccount => "Please enter your phone number, we will send you 4 digit code to verify your account";
+  String get txtPleaseEnterYourPhoneNumberWeWillSendYou4DigitCodeToVerifyYourAccount => "Please enter your phone number. We will send \nyou 4-digit code to verify your account.";
 
   @override
   String get txtCountry => "Country";

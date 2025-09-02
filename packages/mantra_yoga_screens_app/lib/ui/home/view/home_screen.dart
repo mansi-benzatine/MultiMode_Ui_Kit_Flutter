@@ -67,11 +67,7 @@ class _HomeScreenState extends State<HomeScreen> {
               shape: BoxShape.circle,
               border: Border.all(color: CustomAppColor.of(context).borderColor),
             ),
-            child: Icon(
-              Icons.person_rounded,
-              size: 25.setHeight,
-              color: CustomAppColor.of(context).txtBlack,
-            ),
+            child: Image.asset(AppAssets.imgDummyProfile),
           ),
           SizedBox(width: 10.setWidth),
           Expanded(

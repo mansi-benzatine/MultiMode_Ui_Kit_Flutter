@@ -24,12 +24,18 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController _countryController = TextEditingController();
   final TextEditingController _phoneNumberController = TextEditingController();
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    final defaultCountry = CountryParser.parseCountryCode('US');
+    _countryController.text = "${defaultCountry.flagEmoji} +${defaultCountry.phoneCode}";
+  }
 
   @override
   Widget build(BuildContext context) {
     return AnnotatedRegion<SystemUiOverlayStyle>(
-      value:
-          const SystemUiOverlayStyle(statusBarIconBrightness: Brightness.light),
+      value: const SystemUiOverlayStyle(statusBarIconBrightness: Brightness.light),
       child: Scaffold(
         backgroundColor: CustomAppColor.of(context).bgScreen,
         body: SafeArea(
@@ -42,8 +48,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   width: 0.screenWidth,
                   decoration: BoxDecoration(
                     color: CustomAppColor.of(context).btnPrimary,
-                    borderRadius: const BorderRadius.vertical(
-                        bottom: Radius.circular(80)),
+                    borderRadius: const BorderRadius.vertical(bottom: Radius.circular(80)),
                   ),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -68,8 +73,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       Container(
                         padding: EdgeInsets.symmetric(horizontal: 20.setWidth),
                         child: CommonText(
-                          text: Languages.of(context)
-                              .txtPleaseEnterYourPhoneNumberWeWillSendYou4DigitCodeToVerifyYourAccount,
+                          text: Languages.of(context).txtPleaseEnterYourPhoneNumberWeWillSendYou4DigitCodeToVerifyYourAccount,
                           fontSize: 13.setFontSize,
                           fontWeight: FontWeight.w400,
                           textAlign: TextAlign.center,
@@ -98,22 +102,15 @@ class _LoginScreenState extends State<LoginScreen> {
                   child: RichText(
                     textAlign: TextAlign.center,
                     text: TextSpan(
-                      style: TextStyle(
-                          fontSize: 12.setFontSize,
-                          fontWeight: FontWeight.w500,
-                          color: CustomAppColor.of(context).txtGray,
-                          height: 1.7),
+                      style: TextStyle(fontSize: 12.setFontSize, fontWeight: FontWeight.w500, color: CustomAppColor.of(context).txtGray, height: 1.7),
                       children: [
-                        TextSpan(
-                            text:
-                                "${Languages.of(context).txtByContinuingYouAgreeToOur} "),
+                        TextSpan(text: "${Languages.of(context).txtByContinuingYouAgreeToOur} "),
                         TextSpan(
                           text: Languages.of(context).txtTermsOfService,
                           style: TextStyle(
                             color: CustomAppColor.of(context).txtPrimary,
                             decoration: TextDecoration.underline,
-                            decorationColor:
-                                CustomAppColor.of(context).txtPrimary,
+                            decorationColor: CustomAppColor.of(context).txtPrimary,
                             decorationThickness: 2,
                             fontWeight: FontWeight.w500,
                             fontSize: 14.setFontSize,
@@ -125,8 +122,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           style: TextStyle(
                             color: CustomAppColor.of(context).txtPrimary,
                             decoration: TextDecoration.underline,
-                            decorationColor:
-                                CustomAppColor.of(context).txtPrimary,
+                            decorationColor: CustomAppColor.of(context).txtPrimary,
                             decorationThickness: 2,
                             fontWeight: FontWeight.w500,
                             fontSize: 14.setFontSize,
@@ -164,8 +160,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   showPhoneCode: true,
                   useSafeArea: true,
                   onSelect: (Country country) {
-                    _countryController.text =
-                        "${country.flagEmoji} +${country.phoneCode}";
+                    _countryController.text = "${country.flagEmoji} +${country.phoneCode}";
                   },
                 );
               },
