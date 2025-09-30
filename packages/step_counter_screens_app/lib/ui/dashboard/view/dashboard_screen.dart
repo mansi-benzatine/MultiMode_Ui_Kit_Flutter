@@ -37,8 +37,8 @@ class DashboardScreen extends StatefulWidget {
 
 class _DashboardScreenState extends State<DashboardScreen> {
   final GlobalKey<CurvedNavigationBarState> _bottomNavigationKey = GlobalKey();
-  ValueNotifier<int> currentPage = ValueNotifier<int>(0);
 
+  late ValueNotifier<int> currentPage;
   late PageController _pageController;
 
   @override
@@ -47,10 +47,11 @@ class _DashboardScreenState extends State<DashboardScreen> {
     super.initState();
 
     _pageController = PageController(initialPage: widget.currentIndex);
-    currentPage.value = widget.currentIndex;
+    currentPage = ValueNotifier<int>(widget.currentIndex);
     _pageController.addListener(
       () {},
     );
+    _bottomNavigationKey.currentState?.setPage(widget.currentIndex);
   }
 
   @override
@@ -83,49 +84,53 @@ class _DashboardScreenState extends State<DashboardScreen> {
         bottomNavigationBar: ValueListenableBuilder(
           valueListenable: currentPage,
           builder: (context, value, child) {
-            return Container(
-              decoration: BoxDecoration(
-                boxShadow: [
-                  BoxShadow(
-                    color: CustomAppColor.of(context).black.withValues(alpha: 0.10),
-                    blurRadius: 25,
-                    spreadRadius: 0,
-                    offset: const Offset(0, -2),
-                  ),
-                ],
-              ),
-              child: CurvedNavigationBar(
-                backgroundColor: CustomAppColor.of(context).transparent,
-                color: CustomAppColor.of(context).bgContainerWhiteAndBlack,
-                buttonBackgroundColor: CustomAppColor.of(context).primary,
-                key: _bottomNavigationKey,
-                height: 75.setHeight,
-                items: <Widget>[
-                  Image.asset(
-                    currentPage.value == 0 ? AppAssets.icBottomBarHomeSelected : AppAssets.icBottomBarHome,
-                    height: 24.setHeight,
-                    width: 24.setHeight,
-                  ),
-                  Image.asset(
-                    currentPage.value == 1 ? AppAssets.icBottomBarHistorySelected : AppAssets.icBottomBarHistory,
-                    height: 24.setHeight,
-                    width: 24.setHeight,
-                  ),
-                  Image.asset(
-                    currentPage.value == 2 ? AppAssets.icBottomBarProfileSelected : AppAssets.icBottomBarProfile,
-                    height: 24.setHeight,
-                    width: 24.setHeight,
-                  ),
-                  Image.asset(
-                    currentPage.value == 3 ? AppAssets.icBottomBarSettingSelected : AppAssets.icBottomBarSetting,
-                    height: 24.setHeight,
-                    width: 24.setHeight,
-                  ),
-                ],
-                onTap: (index) {
-                  currentPage.value = index;
-                  _pageController.jumpToPage(index);
-                },
+            return IgnorePointer(
+              ignoring: true,
+              child: Container(
+                decoration: BoxDecoration(
+                  boxShadow: [
+                    BoxShadow(
+                      color: CustomAppColor.of(context).black.withValues(alpha: 0.10),
+                      blurRadius: 25,
+                      spreadRadius: 0,
+                      offset: const Offset(0, -2),
+                    ),
+                  ],
+                ),
+                child: CurvedNavigationBar(
+                  backgroundColor: CustomAppColor.of(context).transparent,
+                  color: CustomAppColor.of(context).bgContainerWhiteAndBlack,
+                  buttonBackgroundColor: CustomAppColor.of(context).primary,
+                  key: _bottomNavigationKey,
+                  index: value, // Set the current index explicitly
+                  height: 75.setHeight,
+                  items: <Widget>[
+                    Image.asset(
+                      currentPage.value == 0 ? AppAssets.icBottomBarHomeSelected : AppAssets.icBottomBarHome,
+                      height: 24.setHeight,
+                      width: 24.setHeight,
+                    ),
+                    Image.asset(
+                      currentPage.value == 1 ? AppAssets.icBottomBarHistorySelected : AppAssets.icBottomBarHistory,
+                      height: 24.setHeight,
+                      width: 24.setHeight,
+                    ),
+                    Image.asset(
+                      currentPage.value == 2 ? AppAssets.icBottomBarProfileSelected : AppAssets.icBottomBarProfile,
+                      height: 24.setHeight,
+                      width: 24.setHeight,
+                    ),
+                    Image.asset(
+                      currentPage.value == 3 ? AppAssets.icBottomBarSettingSelected : AppAssets.icBottomBarSetting,
+                      height: 24.setHeight,
+                      width: 24.setHeight,
+                    ),
+                  ],
+                  onTap: (index) {
+                    currentPage.value = index;
+                    _pageController.jumpToPage(index);
+                  },
+                ),
               ),
             );
           },

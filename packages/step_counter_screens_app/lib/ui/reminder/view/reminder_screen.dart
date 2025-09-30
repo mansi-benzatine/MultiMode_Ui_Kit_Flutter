@@ -38,23 +38,23 @@ class _ReminderScreenState extends State<ReminderScreen> implements TopBarClickL
         setState(() {
           _isBottomSheetOpen = true;
         });
+        Utils.showBottomSheetDialog(
+          context,
+          isScrollControlled: false,
+          isDismissible: false,
+          title: Languages.of(context).txtDailyReminder,
+          widgets: DailyReminderBottomSheetDialog(onSave: () {}),
+        ).whenComplete(
+          () {
+            if (_isBottomSheetOpen) {
+              setState(() {
+                _isBottomSheetOpen = false;
+              });
+              Navigator.pop(context);
+            }
+          },
+        );
       });
-      Utils.showBottomSheetDialog(
-        context,
-        isScrollControlled: false,
-        isDismissible: false,
-        title: Languages.of(context).txtDailyReminder,
-        widgets: DailyReminderBottomSheetDialog(onSave: () {}),
-      ).whenComplete(
-        () {
-          if (_isBottomSheetOpen) {
-            setState(() {
-              _isBottomSheetOpen = false;
-            });
-            Navigator.pop(context);
-          }
-        },
-      );
     }
 
     if (widget.isShowRepeat) {
@@ -62,23 +62,23 @@ class _ReminderScreenState extends State<ReminderScreen> implements TopBarClickL
         setState(() {
           _isBottomSheetOpen = true;
         });
+        Utils.showBottomSheetDialog(
+          context,
+          isScrollControlled: false,
+          isDismissible: false,
+          title: Languages.of(context).txtRepeat,
+          widgets: RepeatBottomSheetDialog(onSave: () {}),
+        ).whenComplete(
+          () {
+            if (_isBottomSheetOpen) {
+              setState(() {
+                _isBottomSheetOpen = false;
+              });
+              Navigator.pop(context);
+            }
+          },
+        );
       });
-      Utils.showBottomSheetDialog(
-        context,
-        isScrollControlled: false,
-        isDismissible: false,
-        title: Languages.of(context).txtRepeat,
-        widgets: RepeatBottomSheetDialog(onSave: () {}),
-      ).whenComplete(
-        () {
-          if (_isBottomSheetOpen) {
-            setState(() {
-              _isBottomSheetOpen = false;
-            });
-            Navigator.pop(context);
-          }
-        },
-      );
     }
   }
 

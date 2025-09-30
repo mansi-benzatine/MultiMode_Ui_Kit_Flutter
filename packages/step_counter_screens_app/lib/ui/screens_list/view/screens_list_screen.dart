@@ -134,11 +134,31 @@ class _ScreenListScreen extends State<ScreenListScreen> {
         icon: AppAssets.icBlueNavigator,
       ),
       ScreenListDataModel(
-        title: "Set Reminder",
+        title: "Choose Language",
         onClick: () => Navigator.push(
           context,
           MaterialPageRoute(
             builder: (_) => const ProfileSetupScreen(currentIndex: 4),
+          ),
+        ),
+        icon: AppAssets.icBlueNavigator,
+      ),
+      ScreenListDataModel(
+        title: "Choose Goal",
+        onClick: () => Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (_) => const ProfileSetupScreen(currentIndex: 5),
+          ),
+        ),
+        icon: AppAssets.icBlueNavigator,
+      ),
+      ScreenListDataModel(
+        title: "Set Reminder",
+        onClick: () => Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (_) => const ProfileSetupScreen(currentIndex: 6),
           ),
         ),
         icon: AppAssets.icBlueNavigator,
