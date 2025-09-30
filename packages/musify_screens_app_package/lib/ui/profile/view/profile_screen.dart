@@ -28,6 +28,7 @@ import '../../premium_plan_list/view/premium_plan_list_screen.dart';
 class ProfileScreen extends StatefulWidget {
   final bool isForDeleteDialog;
   final bool isForLogoutDialog;
+
   const ProfileScreen({super.key, this.isForLogoutDialog = false, this.isForDeleteDialog = false});
 
   @override
@@ -36,6 +37,8 @@ class ProfileScreen extends StatefulWidget {
 
 class _ProfileScreenState extends State<ProfileScreen> implements TopBarClickListener {
   final ValueNotifier<bool> isDarkMode = ValueNotifier(false);
+  bool _isDialogOpen = false;
+
   _fillData() {
     bool isDarkModePref = !Utils.isLightTheme();
     isDarkMode.value = isDarkModePref;
@@ -47,36 +50,42 @@ class _ProfileScreenState extends State<ProfileScreen> implements TopBarClickLis
     _fillData();
     if (widget.isForLogoutDialog) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
+        setState(() {
+          _isDialogOpen = true;
+        });
         showModalBottomSheet(
           isDismissible: false,
           context: context,
-          builder: (dialogContext) => PopScope(
-              canPop: false,
-              onPopInvokedWithResult: (didPop, result) {
-                if (!didPop) {
-                  Navigator.pop(dialogContext);
-                  Navigator.pop(context);
-                }
-              },
-              child: const LogoutBottomSheet()),
-        );
+          builder: (dialogContext) => const LogoutBottomSheet(),
+        ).whenComplete(() {
+          if (_isDialogOpen) {
+            setState(() {
+              _isDialogOpen = false;
+            });
+            Navigator.pop(context);
+          }
+        });
       });
     }
 
     if (widget.isForDeleteDialog) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
+        setState(() {
+          _isDialogOpen = true;
+        });
         showModalBottomSheet(
           isDismissible: false,
           context: context,
-          builder: (dialogContext) => PopScope(
-              canPop: false,
-              onPopInvokedWithResult: (didPop, result) {
-                if (!didPop) {
-                  Navigator.pop(dialogContext);
-                  Navigator.pop(context);
-                }
-              },
-              child: const DeleteAccountBottomSheet()),
+          builder: (dialogContext) => const DeleteAccountBottomSheet(),
+        ).whenComplete(
+          () {
+            if (_isDialogOpen) {
+              setState(() {
+                _isDialogOpen = false;
+              });
+              Navigator.pop(context);
+            }
+          },
         );
       });
     }
@@ -84,321 +93,334 @@ class _ProfileScreenState extends State<ProfileScreen> implements TopBarClickLis
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: CustomAppColor.of(context).bgScreen,
-      body: Container(
-        decoration: BoxDecoration(
-          image: DecorationImage(
-            image: AssetImage(AppAssets.imgCommonBackgroundPlain),
-            fit: BoxFit.cover,
-          ),
-        ),
-        child: Column(
-          children: [
-            Padding(
-              padding: EdgeInsets.only(left: 15.setWidth),
-              child: TopBar(
-                this,
-                title: Languages.of(context).txtProfile,
-                alignment: Alignment.topLeft,
-                isShowBack: false,
-              ),
+    return PopScope(
+      canPop: !_isDialogOpen,
+      onPopInvokedWithResult: (didPop, result) {
+        if (!didPop && _isDialogOpen) {
+          print('PopScope: System back button pressed, isDialogOpen=$_isDialogOpen');
+          Navigator.of(context).pop();
+          setState(() {
+            _isDialogOpen = false;
+          });
+          Navigator.of(context).pop();
+        }
+      },
+      child: Scaffold(
+        backgroundColor: CustomAppColor.of(context).bgScreen,
+        body: Container(
+          decoration: BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage(AppAssets.imgCommonBackgroundPlain),
+              fit: BoxFit.cover,
             ),
-            ValueListenableBuilder<MusicItemData?>(
-                valueListenable: MusifyScreensApp.playingMusicNotifier,
-                builder: (context, playingMusic, child) {
-                  final isMiniPlayerVisible = playingMusic != null;
+          ),
+          child: Column(
+            children: [
+              Padding(
+                padding: EdgeInsets.only(left: 15.setWidth),
+                child: TopBar(
+                  this,
+                  title: Languages.of(context).txtProfile,
+                  alignment: Alignment.topLeft,
+                  isShowBack: false,
+                ),
+              ),
+              ValueListenableBuilder<MusicItemData?>(
+                  valueListenable: MusifyScreensApp.playingMusicNotifier,
+                  builder: (context, playingMusic, child) {
+                    final isMiniPlayerVisible = playingMusic != null;
 
-                  return Expanded(
-                    child: SingleChildScrollView(
-                      padding: EdgeInsets.only(
-                        bottom: isMiniPlayerVisible ? 110.setHeight : 60.setHeight,
-                      ),
-                      child: Column(
-                        children: [
-                          SizedBox(height: 5.setHeight),
+                    return Expanded(
+                      child: SingleChildScrollView(
+                        padding: EdgeInsets.only(
+                          bottom: isMiniPlayerVisible ? 110.setHeight : 60.setHeight,
+                        ),
+                        child: Column(
+                          children: [
+                            SizedBox(height: 5.setHeight),
 
-                          // Profile Section
-                          Container(
-                            margin: EdgeInsets.symmetric(horizontal: 20.setWidth),
-                            child: Row(
-                              children: [
-                                // Profile Image
-                                Stack(
-                                  children: [
-                                    Container(
-                                      margin: EdgeInsets.all(5.setWidth),
-                                      child: ClipOval(
-                                        child: Image.asset(
-                                          AppAssets.imgDummyGirl,
-                                          width: 50.setWidth,
-                                          height: 50.setHeight,
-                                          fit: BoxFit.cover,
-                                          errorBuilder: (context, error, stackTrace) {
-                                            return Container(
-                                              width: 50.setWidth,
-                                              height: 50.setHeight,
-                                              decoration: BoxDecoration(
-                                                color: CustomAppColor.of(context).primary.withOpacityPercent(0.1),
-                                                borderRadius: BorderRadius.circular(25.setWidth),
-                                              ),
-                                              child: Icon(
-                                                Icons.person,
-                                                color: CustomAppColor.of(context).primary,
-                                                size: 24.setWidth,
-                                              ),
-                                            );
-                                          },
+                            // Profile Section
+                            Container(
+                              margin: EdgeInsets.symmetric(horizontal: 20.setWidth),
+                              child: Row(
+                                children: [
+                                  // Profile Image
+                                  Stack(
+                                    children: [
+                                      Container(
+                                        margin: EdgeInsets.all(5.setWidth),
+                                        child: ClipOval(
+                                          child: Image.asset(
+                                            AppAssets.imgDummyGirl,
+                                            width: 50.setWidth,
+                                            height: 50.setHeight,
+                                            fit: BoxFit.cover,
+                                            errorBuilder: (context, error, stackTrace) {
+                                              return Container(
+                                                width: 50.setWidth,
+                                                height: 50.setHeight,
+                                                decoration: BoxDecoration(
+                                                  color: CustomAppColor.of(context).primary.withOpacityPercent(0.1),
+                                                  borderRadius: BorderRadius.circular(25.setWidth),
+                                                ),
+                                                child: Icon(
+                                                  Icons.person,
+                                                  color: CustomAppColor.of(context).primary,
+                                                  size: 24.setWidth,
+                                                ),
+                                              );
+                                            },
+                                          ),
                                         ),
                                       ),
-                                    ),
-                                    Positioned(
-                                      bottom: 5.setHeight,
-                                      right: 5.setWidth,
-                                      child: Container(
-                                        width: 16.setWidth,
-                                        height: 16.setHeight,
-                                        decoration: BoxDecoration(
-                                          color: CustomAppColor.of(context).primary,
-                                          shape: BoxShape.circle,
-                                        ),
-                                        padding: EdgeInsets.all(4.setWidth),
-                                        child: Image.asset(
-                                          AppAssets.icEdit,
-                                          width: 12.setWidth,
-                                          height: 12.setHeight,
-                                          fit: BoxFit.contain,
+                                      Positioned(
+                                        bottom: 5.setHeight,
+                                        right: 5.setWidth,
+                                        child: Container(
+                                          width: 16.setWidth,
+                                          height: 16.setHeight,
+                                          decoration: BoxDecoration(
+                                            color: CustomAppColor.of(context).primary,
+                                            shape: BoxShape.circle,
+                                          ),
+                                          padding: EdgeInsets.all(4.setWidth),
+                                          child: Image.asset(
+                                            AppAssets.icEdit,
+                                            width: 12.setWidth,
+                                            height: 12.setHeight,
+                                            fit: BoxFit.contain,
+                                          ),
                                         ),
                                       ),
-                                    ),
-                                  ],
-                                ),
+                                    ],
+                                  ),
 
-                                SizedBox(width: 10.setWidth),
+                                  SizedBox(width: 10.setWidth),
 
-                                // Profile Info
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    CommonText(
-                                      text: "Stilva Larsen",
-                                      fontSize: 18.setFontSize,
-                                      fontWeight: FontWeight.w700,
-                                      textColor: CustomAppColor.of(context).txtBlack,
-                                      fontFamily: Constant.fontFamily,
-                                      height: 0,
-                                    ),
-                                    CommonText(
-                                      text: "@stilvalarsern",
-                                      fontSize: 14.setFontSize,
-                                      fontWeight: FontWeight.w400,
-                                      textColor: CustomAppColor.of(context).txtBlack,
-                                      fontFamily: Constant.fontFamily,
-                                      height: 0,
-                                    ),
-                                  ],
-                                ),
-                              ],
-                            ),
-                          ),
-
-                          SizedBox(height: 20.setHeight),
-
-                          // Premium Card
-                          Container(
-                            margin: EdgeInsets.symmetric(horizontal: 20.setWidth),
-                            padding: EdgeInsets.all(20.setWidth),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(16.setWidth),
-                              gradient: LinearGradient(
-                                begin: Alignment.topCenter,
-                                end: Alignment.bottomCenter,
-                                colors: [
-                                  CustomAppColor.of(context).primary.withOpacityPercent(0.3),
-                                  CustomAppColor.of(context).txtWhite,
+                                  // Profile Info
+                                  Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      CommonText(
+                                        text: "Stilva Larsen",
+                                        fontSize: 18.setFontSize,
+                                        fontWeight: FontWeight.w700,
+                                        textColor: CustomAppColor.of(context).txtBlack,
+                                        fontFamily: Constant.fontFamily,
+                                        height: 0,
+                                      ),
+                                      CommonText(
+                                        text: "@stilvalarsern",
+                                        fontSize: 14.setFontSize,
+                                        fontWeight: FontWeight.w400,
+                                        textColor: CustomAppColor.of(context).txtBlack,
+                                        fontFamily: Constant.fontFamily,
+                                        height: 0,
+                                      ),
+                                    ],
+                                  ),
                                 ],
-                                stops: const [0, 0.6],
-                              ),
-                              border: Border.all(
-                                color: CustomAppColor.of(context).primary.withOpacityPercent(0.2),
-                                width: 1.5,
                               ),
                             ),
-                            child: Column(
-                              children: [
-                                // Crown Icon
-                                Container(
-                                  width: 80.setWidth,
-                                  height: 80.setHeight,
-                                  padding: EdgeInsets.all(10.setWidth),
-                                  decoration: BoxDecoration(
-                                    shape: BoxShape.circle,
-                                    color: CustomAppColor.of(context).primary,
+
+                            SizedBox(height: 20.setHeight),
+
+                            // Premium Card
+                            Container(
+                              margin: EdgeInsets.symmetric(horizontal: 20.setWidth),
+                              padding: EdgeInsets.all(20.setWidth),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(16.setWidth),
+                                gradient: LinearGradient(
+                                  begin: Alignment.topCenter,
+                                  end: Alignment.bottomCenter,
+                                  colors: [
+                                    CustomAppColor.of(context).primary.withOpacityPercent(0.3),
+                                    CustomAppColor.of(context).txtWhite,
+                                  ],
+                                  stops: const [0, 0.6],
+                                ),
+                                border: Border.all(
+                                  color: CustomAppColor.of(context).primary.withOpacityPercent(0.2),
+                                  width: 1.5,
+                                ),
+                              ),
+                              child: Column(
+                                children: [
+                                  // Crown Icon
+                                  Container(
+                                    width: 80.setWidth,
+                                    height: 80.setHeight,
+                                    padding: EdgeInsets.all(10.setWidth),
+                                    decoration: BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      color: CustomAppColor.of(context).primary,
+                                    ),
+                                    child: Image.asset(
+                                      AppAssets.icPremiumProfile,
+                                      width: 60.setWidth,
+                                      height: 60.setHeight,
+                                      fit: BoxFit.contain,
+                                    ),
                                   ),
-                                  child: Image.asset(
-                                    AppAssets.icPremiumProfile,
-                                    width: 60.setWidth,
-                                    height: 60.setHeight,
-                                    fit: BoxFit.contain,
+
+                                  SizedBox(height: 16.setHeight),
+
+                                  CommonText(
+                                    text: Languages.of(context).txtAppName,
+                                    fontSize: 20.setFontSize,
+                                    fontWeight: FontWeight.w700,
+                                    textColor: CustomAppColor.of(context).txtBlack,
+                                    fontFamily: Constant.fontFamily,
                                   ),
-                                ),
 
-                                SizedBox(height: 16.setHeight),
+                                  SizedBox(height: 6.setHeight),
 
-                                CommonText(
-                                  text: Languages.of(context).txtAppName,
-                                  fontSize: 20.setFontSize,
-                                  fontWeight: FontWeight.w700,
-                                  textColor: CustomAppColor.of(context).txtBlack,
-                                  fontFamily: Constant.fontFamily,
-                                ),
+                                  CommonText(
+                                    text: Languages.of(context).txtUpgradePlanToUnlockMoreFeatures,
+                                    fontSize: 14.setFontSize,
+                                    fontWeight: FontWeight.w600,
+                                    textColor: CustomAppColor.of(context).txtBlack,
+                                    fontFamily: Constant.fontFamily,
+                                    textAlign: TextAlign.center,
+                                  ),
 
-                                SizedBox(height: 6.setHeight),
+                                  SizedBox(height: 20.setHeight),
 
-                                CommonText(
-                                  text: Languages.of(context).txtUpgradePlanToUnlockMoreFeatures,
-                                  fontSize: 14.setFontSize,
-                                  fontWeight: FontWeight.w600,
-                                  textColor: CustomAppColor.of(context).txtBlack,
-                                  fontFamily: Constant.fontFamily,
-                                  textAlign: TextAlign.center,
-                                ),
+                                  IgnorePointer(
+                                    ignoring: true,
+                                    child: CommonButton(
+                                      text: Languages.of(context).txtGetPremium,
+                                      onTap: () {
+                                        // Handle premium upgrade
+                                        Navigator.push(context, MaterialPageRoute(builder: (context) => const PremiumPlanListScreen()));
+                                      },
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
 
-                                SizedBox(height: 20.setHeight),
+                            SizedBox(height: 15.setHeight),
 
-                                IgnorePointer(
-                                  ignoring: true,
-                                  child: CommonButton(
-                                    text: Languages.of(context).txtGetPremium,
+                            // Settings List
+                            Container(
+                              margin: EdgeInsets.symmetric(horizontal: 22.setWidth),
+                              child: Column(
+                                children: [
+                                  _buildSettingsItem(
+                                    icon: AppAssets.icEditProfile,
+                                    title: Languages.of(context).txtEditProfile,
                                     onTap: () {
-                                      // Handle premium upgrade
-                                      Navigator.push(context, MaterialPageRoute(builder: (context) => const PremiumPlanListScreen()));
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) => const EditProfileScreen(),
+                                        ),
+                                      );
                                     },
                                   ),
-                                ),
-                              ],
+                                  _buildSettingsItem(
+                                    icon: AppAssets.icNotification,
+                                    title: Languages.of(context).txtNotification,
+                                    onTap: () {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) => const NotificationSettingScreen(),
+                                        ),
+                                      );
+                                    },
+                                  ),
+                                  _buildSettingsItem(
+                                    icon: AppAssets.icPayment,
+                                    title: Languages.of(context).txtPaymentMethod,
+                                    onTap: () {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) => const PaymentMethodScreen(),
+                                        ),
+                                      );
+                                    },
+                                  ),
+                                  _buildSettingsItem(
+                                    icon: AppAssets.icLanguage,
+                                    title: Languages.of(context).txtLanguages,
+                                    onTap: () {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) => const LanguageSettingScreen(),
+                                        ),
+                                      );
+                                    },
+                                  ),
+                                  _buildSettingsItem(
+                                    icon: AppAssets.icTheme,
+                                    title: Languages.of(context).txtDarkMode,
+                                    onTap: () {},
+                                    hasSwitch: true,
+                                  ),
+                                  _buildSettingsItem(
+                                    icon: AppAssets.icPrivacy,
+                                    title: Languages.of(context).txtPrivacyPolicy,
+                                    onTap: () {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) => const PrivacyPolicyScreen(),
+                                        ),
+                                      );
+                                    },
+                                  ),
+                                  _buildSettingsItem(
+                                    icon: AppAssets.icFaq,
+                                    title: Languages.of(context).txtFaq,
+                                    onTap: () {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) => const FaqScreen(),
+                                        ),
+                                      );
+                                    },
+                                  ),
+                                  _buildSettingsItem(
+                                    icon: AppAssets.icDeleteAccount,
+                                    title: Languages.of(context).txtDeleteAccount,
+                                    onTap: () {
+                                      showModalBottomSheet(
+                                        context: context,
+                                        builder: (context) => const DeleteAccountBottomSheet(),
+                                      );
+                                    },
+                                    isDestructive: true,
+                                  ),
+                                  _buildSettingsItem(
+                                    icon: AppAssets.icLogout,
+                                    title: Languages.of(context).txtLogout,
+                                    onTap: () {
+                                      showModalBottomSheet(
+                                        context: context,
+                                        builder: (context) => const LogoutBottomSheet(),
+                                      );
+                                    },
+                                    isDestructive: true,
+                                    isLastItem: true,
+                                  ),
+                                ],
+                              ),
                             ),
-                          ),
 
-                          SizedBox(height: 15.setHeight),
-
-                          // Settings List
-                          Container(
-                            margin: EdgeInsets.symmetric(horizontal: 22.setWidth),
-                            child: Column(
-                              children: [
-                                _buildSettingsItem(
-                                  icon: AppAssets.icEditProfile,
-                                  title: Languages.of(context).txtEditProfile,
-                                  onTap: () {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) => const EditProfileScreen(),
-                                      ),
-                                    );
-                                  },
-                                ),
-                                _buildSettingsItem(
-                                  icon: AppAssets.icNotification,
-                                  title: Languages.of(context).txtNotification,
-                                  onTap: () {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) => const NotificationSettingScreen(),
-                                      ),
-                                    );
-                                  },
-                                ),
-                                _buildSettingsItem(
-                                  icon: AppAssets.icPayment,
-                                  title: Languages.of(context).txtPaymentMethod,
-                                  onTap: () {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) => const PaymentMethodScreen(),
-                                      ),
-                                    );
-                                  },
-                                ),
-                                _buildSettingsItem(
-                                  icon: AppAssets.icLanguage,
-                                  title: Languages.of(context).txtLanguages,
-                                  onTap: () {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) => const LanguageSettingScreen(),
-                                      ),
-                                    );
-                                  },
-                                ),
-                                _buildSettingsItem(
-                                  icon: AppAssets.icTheme,
-                                  title: Languages.of(context).txtDarkMode,
-                                  onTap: () {},
-                                  hasSwitch: true,
-                                ),
-                                _buildSettingsItem(
-                                  icon: AppAssets.icPrivacy,
-                                  title: Languages.of(context).txtPrivacyPolicy,
-                                  onTap: () {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) => const PrivacyPolicyScreen(),
-                                      ),
-                                    );
-                                  },
-                                ),
-                                _buildSettingsItem(
-                                  icon: AppAssets.icFaq,
-                                  title: Languages.of(context).txtFaq,
-                                  onTap: () {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) => const FaqScreen(),
-                                      ),
-                                    );
-                                  },
-                                ),
-                                _buildSettingsItem(
-                                  icon: AppAssets.icDeleteAccount,
-                                  title: Languages.of(context).txtDeleteAccount,
-                                  onTap: () {
-                                    showModalBottomSheet(
-                                      context: context,
-                                      builder: (context) => const DeleteAccountBottomSheet(),
-                                    );
-                                  },
-                                  isDestructive: true,
-                                ),
-                                _buildSettingsItem(
-                                  icon: AppAssets.icLogout,
-                                  title: Languages.of(context).txtLogout,
-                                  onTap: () {
-                                    showModalBottomSheet(
-                                      context: context,
-                                      builder: (context) => const LogoutBottomSheet(),
-                                    );
-                                  },
-                                  isDestructive: true,
-                                  isLastItem: true,
-                                ),
-                              ],
-                            ),
-                          ),
-
-                          SizedBox(height: 50.setHeight),
-                        ],
+                            SizedBox(height: 50.setHeight),
+                          ],
+                        ),
                       ),
-                    ),
-                  );
-                })
-          ],
+                    );
+                  })
+            ],
+          ),
         ),
       ),
     );
