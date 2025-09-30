@@ -156,10 +156,10 @@ class _FurnitureScreensAppState extends State<FurnitureScreensApp> {
   }
 }
 
-class FurnitureAppWrapper extends StatelessWidget {
+class FurnitureScreensAppWrapper extends StatelessWidget {
   final ThemeData themeData;
 
-  const FurnitureAppWrapper({super.key, required this.themeData});
+  const FurnitureScreensAppWrapper({super.key, required this.themeData});
 
   @override
   Widget build(BuildContext context) {
