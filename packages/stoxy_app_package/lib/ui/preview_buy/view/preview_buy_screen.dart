@@ -69,7 +69,7 @@ class _PreviewBuyScreenState extends State<PreviewBuyScreen> implements TopBarCl
                     showDialog(
                         context: context,
                         barrierColor: CustomAppColor.of(context).black.withOpacityPercent(0.3),
-                        builder: (context) => OrderReceivedDialog(
+                        builder: (dialogContext) => OrderReceivedDialog(
                               title: widget.data.company,
                               message: Languages.of(context).txtYourAccountIsReadyToUse,
                               icon: widget.data.stockIcon,

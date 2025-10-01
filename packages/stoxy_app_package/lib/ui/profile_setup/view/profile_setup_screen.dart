@@ -162,13 +162,13 @@ class _ProfileSetupScreenState extends State<ProfileSetupScreen> {
                                   showDialog(
                                     context: context,
                                     barrierColor: CustomAppColor.of(context).black.withOpacityPercent(0.3),
-                                    builder: (context) => CongratulationsDialog(
+                                    builder: (dialogContext) => CongratulationsDialog(
                                       title: Languages.of(context).txtCongratulations,
                                       message: Languages.of(context).txtYourAccountIsReadyToUse,
                                       onComplete: () {
                                         Navigator.push(
                                           context,
-                                          MaterialPageRoute(builder: (context) => const DashboardScreen()),
+                                          MaterialPageRoute(builder: (_) => const DashboardScreen()),
                                         );
                                       },
                                     ),

@@ -120,15 +120,18 @@ class _OrderReceivedDialogState extends State<OrderReceivedDialog> with SingleTi
                     maxLines: 3,
                   ),
                   SizedBox(height: 15.setHeight),
-                  CommonButton(
-                    gradient: CustomAppColor.of(context).primaryGradient,
-                    text: "View My Portfolio",
-                    onTap: () {
-                      Navigator.of(context).pop();
-                      if (widget.onComplete != null) {
-                        widget.onComplete!();
-                      }
-                    },
+                  IgnorePointer(
+                    ignoring: true,
+                    child: CommonButton(
+                      gradient: CustomAppColor.of(context).primaryGradient,
+                      text: "View My Portfolio",
+                      onTap: () {
+                        Navigator.of(context).pop();
+                        if (widget.onComplete != null) {
+                          widget.onComplete!();
+                        }
+                      },
+                    ),
                   ),
                   SizedBox(height: 10.setHeight),
                   IgnorePointer(

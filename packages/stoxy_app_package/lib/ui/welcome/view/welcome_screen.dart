@@ -49,7 +49,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                       text: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever.",
                       fontSize: 12.setFontSize,
                       fontWeight: FontWeight.w400,
-                      textColor: CustomAppColor.of(context).txtBlack,
+                      textColor: CustomAppColor.of(context).white,
                       height: 0,
                       letterSpacing: 0,
                       maxLines: 3,

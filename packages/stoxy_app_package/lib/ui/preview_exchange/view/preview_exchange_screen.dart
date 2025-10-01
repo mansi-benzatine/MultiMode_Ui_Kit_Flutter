@@ -109,7 +109,7 @@ class _PreviewExchangeScreenState extends State<PreviewExchangeScreen> implement
                     showDialog(
                       context: context,
                       barrierColor: CustomAppColor.of(context).black.withOpacityPercent(0.3),
-                      builder: (context) => OrderExchangeDialog(
+                      builder: (dialogContext) => OrderExchangeDialog(
                         title1: "NFLX",
                         title2: "SPOT",
                         message: Languages.of(context).txtYourAccountIsReadyToUse,
