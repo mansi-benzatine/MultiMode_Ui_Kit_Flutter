@@ -211,12 +211,12 @@ class _CheckOutScreenState extends State<CheckOutScreen> implements TopBarClickL
                   showDialog(
                       context: context,
                       barrierColor: CustomAppColor.of(context).txtBlack.withOpacityPercent(0.3),
-                      builder: (context) => CongratulationsDialog(
+                      builder: (dialogContext) => CongratulationsDialog(
                             title: Languages.of(context).txtCongratulations,
                             message: Languages.of(context).txtLoremIpsumShort,
                             icon: AppAssets.icPremiumProfile,
                             onComplete: () {
-                              Navigator.push(context, MaterialPageRoute(builder: (context) => const DashboardScreen()));
+                              Navigator.push(context, MaterialPageRoute(builder: (_) => const DashboardScreen()));
                             },
                           ));
                 },
