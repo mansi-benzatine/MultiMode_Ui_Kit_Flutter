@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:stoxy_screens_app_package/utils/sizer_utils.dart';
 import 'package:stoxy_screens_app_package/utils/utils.dart';
 
-import '../../localization/language/languages.dart';
 import '../../utils/app_color.dart';
 import '../../widgets/button/common_button.dart';
 import '../../widgets/text/common_text.dart';
@@ -100,7 +99,7 @@ class _OrderExchangeDialogState extends State<OrderExchangeDialog> with SingleTi
                   ),
                   SizedBox(height: 10.setHeight),
                   CommonText(
-                    text: Languages.of(context).txtLoremIpsumShort,
+                    text: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. industry's standard",
                     fontSize: 13.setFontSize,
                     fontWeight: FontWeight.w400,
                     textColor: CustomAppColor.of(context).txtGray,
@@ -111,7 +110,7 @@ class _OrderExchangeDialogState extends State<OrderExchangeDialog> with SingleTi
                   SizedBox(height: 15.setHeight),
                   CommonButton(
                     gradient: CustomAppColor.of(context).primaryGradient,
-                    text: Languages.of(context).txtViewMyPortfolio,
+                    text: "View My Portfolio",
                     onTap: () {
                       Navigator.of(context).pop();
                       if (widget.onComplete != null) {
@@ -120,18 +119,21 @@ class _OrderExchangeDialogState extends State<OrderExchangeDialog> with SingleTi
                     },
                   ),
                   SizedBox(height: 10.setHeight),
-                  CommonButton(
-                    text: Languages.of(context).txtBackToNFLXStock,
-                    onTap: () {
-                      Navigator.of(context).pop();
-                      if (widget.onComplete != null) {
-                        widget.onComplete!();
-                      }
-                    },
-                    buttonColor: CustomAppColor.of(context).bgScreen,
-                    buttonTextColor: CustomAppColor.of(context).txtDarkGray,
-                    borderColor: CustomAppColor.of(context).borderTextFormFeild,
-                    gradient: null,
+                  IgnorePointer(
+                    ignoring: true,
+                    child: CommonButton(
+                      text: "Back To NFLX Stock",
+                      onTap: () {
+                        Navigator.of(context).pop();
+                        if (widget.onComplete != null) {
+                          widget.onComplete!();
+                        }
+                      },
+                      buttonColor: CustomAppColor.of(context).bgScreen,
+                      buttonTextColor: CustomAppColor.of(context).txtDarkGray,
+                      borderColor: CustomAppColor.of(context).borderTextFormFeild,
+                      gradient: null,
+                    ),
                   ),
                 ],
               ),

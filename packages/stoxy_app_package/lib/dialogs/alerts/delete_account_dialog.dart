@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:stoxy_app_package/widgets/button/common_button.dart';
 
 import '../../../../../widgets/text/common_text.dart';
-import '../../localization/language/languages.dart';
 import '../../utils/app_assets.dart';
 import '../../utils/app_color.dart';
 import '../../utils/sizer_utils.dart';
@@ -46,7 +45,7 @@ class _DeleteAccountDialogState extends State<DeleteAccountDialog> with TickerPr
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   CommonText(
-                    text: Languages.of(context).txtDeleteAccount,
+                    text: "Delete Account",
                     fontSize: 20.setFontSize,
                     fontWeight: FontWeight.w700,
                     textColor: CustomAppColor.of(context).txtBlack,
@@ -59,7 +58,7 @@ class _DeleteAccountDialogState extends State<DeleteAccountDialog> with TickerPr
                   ),
                   SizedBox(height: 20.setHeight),
                   CommonText(
-                    text: Languages.of(context).txtAreYouSureWantToDeleteAccount,
+                    text: "Are You Sure Want To Delete Account?",
                     fontSize: 13.setFontSize,
                     fontWeight: FontWeight.w600,
                     textColor: CustomAppColor.of(context).txtBlack,
@@ -71,7 +70,7 @@ class _DeleteAccountDialogState extends State<DeleteAccountDialog> with TickerPr
                       Expanded(
                         child: CommonButton(
                           height: 40.setHeight,
-                          text: Languages.of(context).txtCancel,
+                          text: "Cancel",
                           buttonTextSize: 14.setFontSize,
                           buttonTextColor: CustomAppColor.of(context).txtGray,
                           borderColor: CustomAppColor.of(context).txtGray,
@@ -86,7 +85,7 @@ class _DeleteAccountDialogState extends State<DeleteAccountDialog> with TickerPr
                       Expanded(
                         child: CommonButton(
                           height: 40.setHeight,
-                          text: Languages.of(context).txtDeleteAccount,
+                          text: 'Delete Account',
                           buttonTextSize: 14.setFontSize,
                           buttonTextColor: CustomAppColor.of(context).white,
                           borderColor: CustomAppColor.of(context).red,

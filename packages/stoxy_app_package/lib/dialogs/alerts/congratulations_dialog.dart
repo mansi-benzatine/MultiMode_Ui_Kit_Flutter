@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:stoxy_app_package/localization/language/languages.dart';
 import 'package:stoxy_app_package/utils/app_assets.dart';
 import 'package:stoxy_app_package/utils/utils.dart';
 
@@ -105,7 +104,7 @@ class _CongratulationsDialogState extends State<CongratulationsDialog> with Sing
 
                   // Done button
                   CommonButton(
-                    text: Languages.of(context).txtDoneExclamation,
+                    text: "Done",
                     mLeft: 50.setWidth,
                     mRight: 50.setWidth,
                     gradient: CustomAppColor.of(context).primaryGradient,

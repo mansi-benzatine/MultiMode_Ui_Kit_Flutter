@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:stoxy_app_package/widgets/button/common_button.dart';
 
 import '../../../../../widgets/text/common_text.dart';
-import '../../localization/language/languages.dart';
 import '../../utils/app_assets.dart';
 import '../../utils/app_color.dart';
 import '../../utils/sizer_utils.dart';
@@ -46,7 +45,7 @@ class _LogoutDialogState extends State<LogoutDialog> with TickerProviderStateMix
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   CommonText(
-                    text: Languages.of(context).txtLogout,
+                    text: "Logout",
                     fontSize: 20.setFontSize,
                     fontWeight: FontWeight.w700,
                     textColor: CustomAppColor.of(context).txtBlack,
@@ -59,7 +58,7 @@ class _LogoutDialogState extends State<LogoutDialog> with TickerProviderStateMix
                   ),
                   SizedBox(height: 20.setHeight),
                   CommonText(
-                    text: Languages.of(context).txtAreYouSureYouWantToLogout,
+                    text: "Are You Sure You Want To Logout?",
                     fontSize: 13.setFontSize,
                     fontWeight: FontWeight.w600,
                     textColor: CustomAppColor.of(context).txtBlack,
@@ -71,7 +70,7 @@ class _LogoutDialogState extends State<LogoutDialog> with TickerProviderStateMix
                       Expanded(
                         child: CommonButton(
                           height: 40.setHeight,
-                          text: Languages.of(context).txtCancel,
+                          text: "Cancel",
                           buttonTextColor: CustomAppColor.of(context).txtGray,
                           borderColor: CustomAppColor.of(context).txtGray,
                           gradient: null,
@@ -85,7 +84,7 @@ class _LogoutDialogState extends State<LogoutDialog> with TickerProviderStateMix
                       Expanded(
                         child: CommonButton(
                           height: 40.setHeight,
-                          text: Languages.of(context).txtLogout,
+                          text: "Logout",
                           buttonTextColor: CustomAppColor.of(context).white,
                           borderColor: CustomAppColor.of(context).red,
                           gradient: null,
