@@ -397,7 +397,7 @@ class _ScreenListScreen extends State<ScreenListScreen> {
           ),
           title: CommonText(
             text: "Furnify - Furniture App",
-            fontSize: 18.setFontSize,
+            fontSize: 22.setFontSize,
             fontFamily: Constant.fontFamilyMontserratSemiBold,
             fontWeight: FontWeight.w600,
             textColor: CustomAppColor.of(context).white,
@@ -516,7 +516,7 @@ class _ModeGridView extends StatelessWidget {
                   children: [
                     CommonText(
                       text: "${index.toString()}.  ",
-                      fontSize: 15.setFontSize,
+                      fontSize: 16.setFontSize,
                       fontFamily: Constant.fontFamilyMontserratSemiBold,
                       fontWeight: FontWeight.w600,
                       textColor: CustomAppColor.of(context).txtBlack,
@@ -524,7 +524,7 @@ class _ModeGridView extends StatelessWidget {
                     Expanded(
                       child: CommonText(
                         text: item.title,
-                        fontSize: 14.setFontSize,
+                        fontSize: 16.setFontSize,
                         fontFamily: Constant.fontFamilyMontserratSemiBold,
                         fontWeight: FontWeight.w600,
                         textColor: CustomAppColor.of(context).txtBlack,
