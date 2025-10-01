@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:furniture_app_package/localization/language/languages.dart';
 import 'package:furniture_app_package/utils/app_color.dart';
 import 'package:furniture_app_package/utils/constant.dart';
 import 'package:furniture_app_package/utils/sizer_utils.dart';
@@ -26,7 +25,7 @@ class LogoutDialog extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             CommonText(
-              text: Languages.of(context).txtLogout,
+              text: "Logout",
               fontFamily: Constant.fontFamilyBold700,
               fontSize: 24.setFontSize,
               textColor: CustomAppColor.of(context).red,
@@ -44,7 +43,7 @@ class LogoutDialog extends StatelessWidget {
               children: [
                 Expanded(
                   child: CommonButton(
-                    text: Languages.of(context).txtCancel,
+                    text: "Cancel",
                     onTap: () => Navigator.pop(context),
                     buttonTextColor: CustomAppColor.of(context).txtGray,
                     borderColor: CustomAppColor.of(context).dividerColor,
@@ -54,7 +53,7 @@ class LogoutDialog extends StatelessWidget {
                 SizedBox(width: 16.setWidth),
                 Expanded(
                   child: CommonButton(
-                    text: Languages.of(context).txtLogout,
+                    text: "Cancel",
                     onTap: () => Navigator.pop(context),
                     buttonTextColor: CustomAppColor.of(context).white,
                     borderColor: CustomAppColor.of(context).red,

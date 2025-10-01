@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:furniture_app_package/localization/language/languages.dart';
 import 'package:furniture_app_package/utils/app_color.dart';
 import 'package:furniture_app_package/utils/constant.dart';
 import 'package:furniture_app_package/utils/sizer_utils.dart';
@@ -39,14 +38,14 @@ class ReviewAlertDialogState extends State<ReviewAlertDialog> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             CommonText(
-              text: Languages.of(context).txtReview,
+              text: "Review",
               fontSize: 28.setFontSize,
               fontFamily: Constant.fontFamilyBold700,
             ),
             Divider(color: CustomAppColor.of(context).dividerColor),
             SizedBox(height: 10.setHeight),
             CommonText(
-              text: Languages.of(context).txtReviewDesc,
+              text: "Please Give Your Rates And Also Give Your Review",
               fontSize: 16.setFontSize,
               fontFamily: Constant.fontFamilyMedium500,
               textColor: CustomAppColor.of(context).txtLightGrey,
@@ -91,7 +90,7 @@ class ReviewAlertDialogState extends State<ReviewAlertDialog> {
                     onTap: () {
                       Navigator.pop(context);
                     },
-                    text: Languages.of(context).txtCancel,
+                    text: "Cancel",
                     buttonTextColor: CustomAppColor.of(context).txtLightGrey,
                     buttonColor: CustomAppColor.of(context).transparent,
                     borderColor: CustomAppColor.of(context).dividerColor,
@@ -103,7 +102,7 @@ class ReviewAlertDialogState extends State<ReviewAlertDialog> {
                     onTap: () {
                       Navigator.pop(context);
                     },
-                    text: Languages.of(context).txtSubmit,
+                    text: "Submit",
                   ),
                 ),
               ],

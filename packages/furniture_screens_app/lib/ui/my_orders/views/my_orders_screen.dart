@@ -104,6 +104,7 @@ class _MyOrdersScreenState extends State<MyOrdersScreen> implements TopBarClickL
       WidgetsBinding.instance.addPostFrameCallback((_) {
         showDialog(
           context: context,
+          barrierDismissible: false,
           builder: (dialogContext) => PopScope(
               canPop: false,
               onPopInvokedWithResult: (didPop, result) {
