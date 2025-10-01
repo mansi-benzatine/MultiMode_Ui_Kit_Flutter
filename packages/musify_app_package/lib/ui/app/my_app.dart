@@ -6,7 +6,6 @@ import 'package:musify_app_package/ui/home/view/home_all_page.dart';
 import 'package:musify_app_package/ui/onboarding/on_boarding_screen.dart';
 
 import '../../localization/localizations_delegate.dart';
-import '../../themes/app_theme.dart';
 import '../../themes/theme_provider.dart';
 import '../../utils/app_assets.dart';
 import '../../utils/app_color.dart';
@@ -44,19 +43,20 @@ class _MusifyAppState extends State<MusifyApp> {
   @override
   void initState() {
     super.initState();
-
+    // Initialize with stored theme or default to light
     final isLightTheme = getIt.get<LocalStorageService>().getBool(LocalStorageService.isLightTheme, optionalValue: true);
     _themeData = isLightTheme ? ThemeData.light() : ThemeData.dark();
+    // Override with externalThemeData if provided
+    if (widget.externalThemeData != null) {
+      _themeData = widget.externalThemeData!;
+    }
+    // Update local storage with initial theme
     _updateLocalStorageFromTheme(_themeData!);
-
-    WidgetsBinding.instance.addPostFrameCallback((_) async {
-      ThemeData theme = AppTheme.getTheme(context);
-      if (mounted) {
-        setState(() {
-          _themeData = theme;
-          AppAssets.refreshAssets(context);
-        });
-      }
+    // Refresh assets after theme is set
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      setState(() {
+        AppAssets.refreshAssets(context);
+      });
     });
   }
 
