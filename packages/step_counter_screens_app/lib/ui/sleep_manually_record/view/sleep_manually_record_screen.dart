@@ -258,36 +258,39 @@ class _SleepManuallyRecordScreenState extends State<SleepManuallyRecordScreen> i
                 ),
               ),
             ),
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 12.setWidth, vertical: 20.setHeight),
-              child: Row(
-                children: [
-                  Expanded(
-                    child: CommonButton(
-                      text: Languages.of(context).txtCancel,
-                      mLeft: 15.setWidth,
-                      mRight: 8.setWidth,
-                      buttonColor: CustomAppColor.of(context).transparent,
-                      buttonTextColor: CustomAppColor.of(context).colorTimes,
-                      borderColor: CustomAppColor.of(context).colorTimes,
-                      onTap: () {
-                        Navigator.pop(context);
-                      },
+            IgnorePointer(
+              ignoring: true,
+              child: Padding(
+                padding: EdgeInsets.symmetric(horizontal: 12.setWidth, vertical: 20.setHeight),
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: CommonButton(
+                        text: Languages.of(context).txtCancel,
+                        mLeft: 15.setWidth,
+                        mRight: 8.setWidth,
+                        buttonColor: CustomAppColor.of(context).transparent,
+                        buttonTextColor: CustomAppColor.of(context).colorTimes,
+                        borderColor: CustomAppColor.of(context).colorTimes,
+                        onTap: () {
+                          Navigator.pop(context);
+                        },
+                      ),
                     ),
-                  ),
-                  Expanded(
-                    child: CommonButton(
-                      mLeft: 8.setWidth,
-                      mRight: 15.setWidth,
-                      text: Languages.of(context).txtSave,
-                      buttonColor: CustomAppColor.of(context).colorTimes,
-                      borderColor: CustomAppColor.of(context).colorTimes,
-                      onTap: () {
-                        Navigator.pop(context);
-                      },
+                    Expanded(
+                      child: CommonButton(
+                        mLeft: 8.setWidth,
+                        mRight: 15.setWidth,
+                        text: Languages.of(context).txtSave,
+                        buttonColor: CustomAppColor.of(context).colorTimes,
+                        borderColor: CustomAppColor.of(context).colorTimes,
+                        onTap: () {
+                          Navigator.pop(context);
+                        },
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
           ],
