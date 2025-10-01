@@ -5,7 +5,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:step_counter_app_package/ui/on_boarding/view/on_boarding_screen.dart';
 
 import '../../localization/localizations_delegate.dart';
-import '../../themes/app_theme.dart';
 import '../../themes/theme_provider.dart';
 import '../../utils/app_assets.dart';
 import '../../utils/app_color.dart';
@@ -41,19 +40,23 @@ class _StepCounterAppState extends State<StepCounterApp> {
   @override
   void initState() {
     super.initState();
-
+    // Initialize with stored theme or default to light
     final isLightTheme = getIt.get<LocalStorageService>().getBool(LocalStorageService.isLightTheme, optionalValue: true);
     _themeData = isLightTheme ? ThemeData.light() : ThemeData.dark();
+
+    // Override with externalThemeData if provided
+    if (widget.externalThemeData != null) {
+      _themeData = widget.externalThemeData!;
+    }
+
+    // Update local storage with initial theme
     _updateLocalStorageFromTheme(_themeData!);
 
-    WidgetsBinding.instance.addPostFrameCallback((_) async {
-      ThemeData theme = AppTheme.getTheme(context);
-      if (mounted) {
-        setState(() {
-          _themeData = theme;
-          AppAssets.refreshAssets(context);
-        });
-      }
+    // Refresh assets after theme is set
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      setState(() {
+        AppAssets.refreshAssets(context);
+      });
     });
   }
 
