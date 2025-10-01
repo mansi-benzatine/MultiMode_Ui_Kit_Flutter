@@ -258,15 +258,18 @@ class SocialSignInView extends StatelessWidget {
               fontSize: 16.setFontSize,
             ),
             SizedBox(width: 5.setWidth),
-            GestureDetector(
-              onTap: () {
-                Navigator.push(context, SignUpScreen.route());
-              },
-              child: CommonText(
-                text: Languages.of(context).txtCreateAnAccount,
-                fontFamily: Constant.fontFamilyBold700,
-                textColor: CustomAppColor.of(context).txtOrange,
-                fontSize: 16.setFontSize,
+            IgnorePointer(
+              ignoring: true,
+              child: GestureDetector(
+                onTap: () {
+                  Navigator.push(context, SignUpScreen.route());
+                },
+                child: CommonText(
+                  text: Languages.of(context).txtCreateAnAccount,
+                  fontFamily: Constant.fontFamilyBold700,
+                  textColor: CustomAppColor.of(context).txtOrange,
+                  fontSize: 16.setFontSize,
+                ),
               ),
             ),
           ],

@@ -858,9 +858,9 @@ class _ScreenListScreen extends State<ScreenListScreen> {
             context,
             AchivementSucessScreen.route(
               data: AchievementData("5K", "5K", true, AppAssets.icDailyStepMedal),
-              color: CustomAppColor.of(context).primary,
-              icon: AppAssets.icAchievementTotalDays,
-              title: Languages.of(context).txtTotalDays,
+              icon: AppAssets.icAchievementDailyStep,
+              title: Languages.of(context).txtDailySteps,
+              color: CustomAppColor.of(context).colorSteps,
             )),
         icon: AppAssets.icBlueNavigator,
       ),

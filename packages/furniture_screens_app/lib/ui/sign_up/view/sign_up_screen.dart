@@ -193,9 +193,12 @@ class FormViewState extends State<FormView> {
           },
         ),
         SizedBox(height: 30.setHeight),
-        CommonButton(
-          text: Languages.of(context).txtSignUp,
-          onTap: () => Navigator.push(context, SignInScreen.route()),
+        IgnorePointer(
+          ignoring: true,
+          child: CommonButton(
+            text: Languages.of(context).txtSignUp,
+            onTap: () => Navigator.push(context, SignInScreen.route()),
+          ),
         ),
       ],
     );
@@ -279,15 +282,18 @@ class SocialSignInView extends StatelessWidget {
               fontSize: 16.setFontSize,
             ),
             SizedBox(width: 5.setWidth),
-            GestureDetector(
-              onTap: () {
-                Navigator.push(context, SignInScreen.route());
-              },
-              child: CommonText(
-                text: Languages.of(context).txtSignIn,
-                fontFamily: Constant.fontFamilyBold700,
-                textColor: CustomAppColor.of(context).txtOrange,
-                fontSize: 16.setFontSize,
+            IgnorePointer(
+              ignoring: true,
+              child: GestureDetector(
+                onTap: () {
+                  Navigator.push(context, SignInScreen.route());
+                },
+                child: CommonText(
+                  text: Languages.of(context).txtSignIn,
+                  fontFamily: Constant.fontFamilyBold700,
+                  textColor: CustomAppColor.of(context).txtOrange,
+                  fontSize: 16.setFontSize,
+                ),
               ),
             ),
           ],

@@ -224,48 +224,51 @@ class FormViewState extends State<FormView> {
           },
         ),
         SizedBox(height: 30.setHeight),
-        CommonButton(
-          text: Languages.of(context).txtContinue,
-          onTap: () {
-            showDialog(
-              context: context,
-              builder: (context) {
-                return CommonDialog(
-                  icon: Container(
-                    decoration: BoxDecoration(
-                      color: CustomAppColor.of(context).primary,
-                      shape: BoxShape.circle,
+        IgnorePointer(
+          ignoring: true,
+          child: CommonButton(
+            text: Languages.of(context).txtContinue,
+            onTap: () {
+              showDialog(
+                context: context,
+                builder: (context) {
+                  return CommonDialog(
+                    icon: Container(
+                      decoration: BoxDecoration(
+                        color: CustomAppColor.of(context).primary,
+                        shape: BoxShape.circle,
+                      ),
+                      padding: const EdgeInsets.all(25),
+                      child: Image.asset(
+                        AppAssets.icSelectedProfile,
+                        height: 50.setHeight,
+                        width: 50.setWidth,
+                        color: CustomAppColor.of(context).white,
+                      ),
                     ),
-                    padding: const EdgeInsets.all(25),
-                    child: Image.asset(
-                      AppAssets.icSelectedProfile,
-                      height: 50.setHeight,
-                      width: 50.setWidth,
-                      color: CustomAppColor.of(context).white,
+                    titleText: CommonText(
+                      text: Languages.of(context).txtCongratulations,
+                      fontFamily: Constant.fontFamilyBold700,
+                      textColor: CustomAppColor.of(context).txtPrimary,
+                      fontSize: 26.setFontSize,
                     ),
-                  ),
-                  titleText: CommonText(
-                    text: Languages.of(context).txtCongratulations,
-                    fontFamily: Constant.fontFamilyBold700,
-                    textColor: CustomAppColor.of(context).txtPrimary,
-                    fontSize: 26.setFontSize,
-                  ),
-                  descriptionText: CommonText(
-                    text: Languages.of(context).txtCongratulationsDesc,
-                    fontFamily: Constant.fontFamilyRegular400,
-                    textColor: CustomAppColor.of(context).txtGray,
-                    fontSize: 14.setFontSize,
-                  ),
-                  button: CommonButton(
-                      text: Languages.of(context).txtDone,
-                      onTap: () {
-                        Navigator.pop(context);
-                        Navigator.push(context, SignInScreen.route());
-                      }),
-                );
-              },
-            );
-          },
+                    descriptionText: CommonText(
+                      text: Languages.of(context).txtCongratulationsDesc,
+                      fontFamily: Constant.fontFamilyRegular400,
+                      textColor: CustomAppColor.of(context).txtGray,
+                      fontSize: 14.setFontSize,
+                    ),
+                    button: CommonButton(
+                        text: Languages.of(context).txtDone,
+                        onTap: () {
+                          Navigator.pop(context);
+                          Navigator.push(context, SignInScreen.route());
+                        }),
+                  );
+                },
+              );
+            },
+          ),
         ),
       ],
     );

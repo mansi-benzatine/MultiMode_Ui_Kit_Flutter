@@ -82,12 +82,15 @@ class _SellScreenState extends State<SellScreen> implements TopBarClickListener 
                   ],
                 ),
               ),
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: 20.setWidth, vertical: 20.setHeight),
-                child: CommonButton(
-                  gradient: CustomAppColor.of(context).primaryGradient,
-                  onTap: () => Navigator.push(context, PreviewSellScreen.route(data: widget.data)),
-                  text: Languages.of(context).txtContinue,
+              IgnorePointer(
+                ignoring: true,
+                child: Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 20.setWidth, vertical: 20.setHeight),
+                  child: CommonButton(
+                    gradient: CustomAppColor.of(context).primaryGradient,
+                    onTap: () => Navigator.push(context, PreviewSellScreen.route(data: widget.data)),
+                    text: Languages.of(context).txtContinue,
+                  ),
                 ),
               )
             ],

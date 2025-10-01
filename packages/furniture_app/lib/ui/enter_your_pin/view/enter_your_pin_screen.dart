@@ -90,7 +90,7 @@ class _EnterYourPinScreenState extends State<EnterYourPinScreen> implements TopB
               onTap: () {
                 showDialog(
                   context: context,
-                  builder: (context) {
+                  builder: (dialogContext) {
                     return CommonDialog(
                       icon: CircleAvatar(
                         radius: 35,
@@ -116,7 +116,7 @@ class _EnterYourPinScreenState extends State<EnterYourPinScreen> implements TopB
                       button: CommonButton(
                           text: Languages.of(context).txtTrackOrder,
                           onTap: () {
-                            Navigator.pop(context);
+                            Navigator.pop(dialogContext);
                             Navigator.push(context, TrackOrderScreen.route());
                           }),
                     );

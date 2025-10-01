@@ -163,7 +163,7 @@ class FormViewState extends State<FormView> {
           onTap: () {
             showDialog(
               context: context,
-              builder: (context) {
+              builder: (dialogContext) {
                 return CommonDialog(
                   icon: Container(
                     decoration: BoxDecoration(
@@ -193,7 +193,7 @@ class FormViewState extends State<FormView> {
                   button: CommonButton(
                       text: Languages.of(context).txtDone,
                       onTap: () {
-                        Navigator.pop(context);
+                        Navigator.pop(dialogContext);
                         Navigator.push(context, SignInScreen.route());
                       }),
                 );

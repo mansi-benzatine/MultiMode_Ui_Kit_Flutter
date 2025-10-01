@@ -186,57 +186,60 @@ class _BuyMethodScreenState extends State<BuyMethodScreen> implements TopBarClic
               marketOrderList.length,
               (index) {
                 final data = marketOrderList[index];
-                return GestureDetector(
-                  onTap: () => Navigator.push(context, PreviewBuyScreen.route(data: widget.data)),
-                  child: Padding(
-                    padding: EdgeInsets.symmetric(vertical: 8.setHeight),
-                    child: Container(
-                      padding: const EdgeInsets.all(15),
-                      decoration: BoxDecoration(color: CustomAppColor.of(context).bgCard, borderRadius: BorderRadius.circular(16)),
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Container(
-                            decoration: BoxDecoration(color: CustomAppColor.of(context).dialogBg, shape: BoxShape.circle),
-                            padding: const EdgeInsets.all(15),
-                            child: Image.asset(
-                              data.iconPath,
-                              height: 24.setHeight,
-                              width: 24.setWidth,
-                              color: CustomAppColor.of(context).txtBlack,
+                return IgnorePointer(
+                  ignoring: true,
+                  child: GestureDetector(
+                    onTap: () => Navigator.push(context, PreviewBuyScreen.route(data: widget.data)),
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(vertical: 8.setHeight),
+                      child: Container(
+                        padding: const EdgeInsets.all(15),
+                        decoration: BoxDecoration(color: CustomAppColor.of(context).bgCard, borderRadius: BorderRadius.circular(16)),
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Container(
+                              decoration: BoxDecoration(color: CustomAppColor.of(context).dialogBg, shape: BoxShape.circle),
+                              padding: const EdgeInsets.all(15),
+                              child: Image.asset(
+                                data.iconPath,
+                                height: 24.setHeight,
+                                width: 24.setWidth,
+                                color: CustomAppColor.of(context).txtBlack,
+                              ),
                             ),
-                          ),
-                          SizedBox(width: 10.setWidth),
-                          Expanded(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                CommonText(
-                                  text: data.details,
-                                  fontWeight: FontWeight.w600,
-                                  fontSize: 17.setFontSize,
-                                  textColor: CustomAppColor.of(context).txtBlack,
-                                ),
-                                SizedBox(height: 5.setHeight),
-                                CommonText(
-                                  text: data.data,
-                                  fontSize: 12.setFontSize,
-                                  textAlign: TextAlign.start,
-                                  maxLines: 2,
-                                  overflow: TextOverflow.ellipsis,
-                                  textColor: CustomAppColor.of(context).txtGray,
-                                )
-                              ],
+                            SizedBox(width: 10.setWidth),
+                            Expanded(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  CommonText(
+                                    text: data.details,
+                                    fontWeight: FontWeight.w600,
+                                    fontSize: 17.setFontSize,
+                                    textColor: CustomAppColor.of(context).txtBlack,
+                                  ),
+                                  SizedBox(height: 5.setHeight),
+                                  CommonText(
+                                    text: data.data,
+                                    fontSize: 12.setFontSize,
+                                    textAlign: TextAlign.start,
+                                    maxLines: 2,
+                                    overflow: TextOverflow.ellipsis,
+                                    textColor: CustomAppColor.of(context).txtGray,
+                                  )
+                                ],
+                              ),
                             ),
-                          ),
-                          Padding(
-                            padding: EdgeInsets.only(left: 30.setWidth),
-                            child: Transform.rotate(
-                              angle: -math.pi / 5.0,
-                              child: const Icon(Icons.arrow_forward_rounded),
-                            ),
-                          )
-                        ],
+                            Padding(
+                              padding: EdgeInsets.only(left: 30.setWidth),
+                              child: Transform.rotate(
+                                angle: -math.pi / 5.0,
+                                child: const Icon(Icons.arrow_forward_rounded),
+                              ),
+                            )
+                          ],
+                        ),
                       ),
                     ),
                   ),

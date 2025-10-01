@@ -23,6 +23,7 @@ import 'package:furniture_screens_app_package/ui/notification_settings/views/not
 import 'package:furniture_screens_app_package/ui/on_boarding/view/on_boarding_screen.dart';
 import 'package:furniture_screens_app_package/ui/payment_method/view/payment_method_screen.dart';
 import 'package:furniture_screens_app_package/ui/payment_method_list/views/payment_method_list_screen.dart';
+import 'package:furniture_screens_app_package/ui/privacy_policy/views/privacy_policy_screen.dart';
 import 'package:furniture_screens_app_package/ui/product_details/view/product_details_screen.dart';
 import 'package:furniture_screens_app_package/ui/reset_password/view/reset_password_screen.dart';
 import 'package:furniture_screens_app_package/ui/reviews/view/reviews_screen.dart';
@@ -280,11 +281,6 @@ class _ScreenListScreen extends State<ScreenListScreen> {
         icon: AppAssets.icBlueNavigator,
       ),
       ScreenListDataModel(
-        title: "Empty My Orders",
-        onClick: () => Navigator.push(context, SplashScreen.route()),
-        icon: AppAssets.icBlueNavigator,
-      ),
-      ScreenListDataModel(
         title: "My Profile",
         onClick: () => Navigator.push(context, DashboardScreen.route(currentIndex: 4)),
         icon: AppAssets.icBlueNavigator,
@@ -341,7 +337,7 @@ class _ScreenListScreen extends State<ScreenListScreen> {
       ),
       ScreenListDataModel(
         title: "Privacy Policy",
-        onClick: () => Navigator.push(context, SplashScreen.route()),
+        onClick: () => Navigator.push(context, PrivacyPolicyScreen.route()),
         icon: AppAssets.icBlueNavigator,
       ),
       ScreenListDataModel(
