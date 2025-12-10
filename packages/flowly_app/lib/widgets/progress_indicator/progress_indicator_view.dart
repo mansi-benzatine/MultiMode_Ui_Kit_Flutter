@@ -35,6 +35,7 @@ class _DownloadAlertDialogState extends State<DownloadAlertDialog> with SingleTi
         timer.cancel();
 
         Future.delayed(const Duration(milliseconds: 300), () {
+          if (!mounted) return;
           Navigator.pop(context);
           Navigator.push(context, DashboardScreen.route());
         });
@@ -42,6 +43,7 @@ class _DownloadAlertDialogState extends State<DownloadAlertDialog> with SingleTi
         return;
       }
 
+      if (!mounted) return;
       setState(() {
         progressValue += 0.01;
       });
