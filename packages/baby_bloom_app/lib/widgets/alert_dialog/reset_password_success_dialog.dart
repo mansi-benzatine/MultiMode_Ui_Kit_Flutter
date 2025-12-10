@@ -9,7 +9,9 @@ import '../../utils/app_color.dart';
 import '../button/common_button.dart';
 
 class ResetPasswordSuccessDialog extends StatelessWidget {
-  const ResetPasswordSuccessDialog({super.key});
+  final BuildContext parentContext;
+
+  const ResetPasswordSuccessDialog({super.key, required this.parentContext});
 
   @override
   Widget build(BuildContext context) {
@@ -46,7 +48,7 @@ class ResetPasswordSuccessDialog extends StatelessWidget {
               text: "Continue",
               onTap: () {
                 Navigator.pop(context);
-                Navigator.push(context, LoginScreen.route());
+                Navigator.push(parentContext, LoginScreen.route());
               },
               height: 45,
             ),

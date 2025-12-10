@@ -94,8 +94,8 @@ class _ProfileSetupScreenState extends State<ProfileSetupScreen> implements TopB
                         if (value == stepperLength - 1) {
                           showDialog(
                             context: context,
-                            builder: (context) {
-                              return const DownloadAlertDialog();
+                            builder: (dialogContext) {
+                              return DownloadAlertDialog(parentContext: context);
                             },
                           );
                         } else {

@@ -127,8 +127,8 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> implements To
             onTap: () {
               showDialog(
                 context: context,
-                builder: (context) {
-                  return const ResetPasswordSuccessDialog();
+                builder: (dialogContext) {
+                  return ResetPasswordSuccessDialog(parentContext: context);
                 },
               );
             },

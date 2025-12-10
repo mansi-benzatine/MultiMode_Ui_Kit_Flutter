@@ -62,9 +62,12 @@ class _SetYourDueDateScreenState extends State<SetYourDueDateScreen> implements 
                 ),
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: 20.setWidth, vertical: 30.setHeight),
-                  child: CommonButton(
-                    text: Languages.of(context).txtContinue,
-                    onTap: () => Navigator.push(context, YourWeightScreen.route()),
+                  child: IgnorePointer(
+                    ignoring: true,
+                    child: CommonButton(
+                      text: Languages.of(context).txtContinue,
+                      onTap: () => Navigator.push(context, YourWeightScreen.route()),
+                    ),
                   ),
                 )
               ],
@@ -85,89 +88,92 @@ class _SetYourDueDateScreenState extends State<SetYourDueDateScreen> implements 
   Widget _selectDateView() {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 20.setWidth),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          CommonText(
-            text: Languages.of(context).txtSetYourDueDateDesc,
-            textColor: CustomAppColor.of(context).txtLightGrey,
-            textAlign: TextAlign.start,
-          ),
-          SizedBox(height: 24.setHeight),
-          Center(
-            child: Image.asset(
-              AppAssets.imgSetYourDueDate,
-              height: 150.setHeight,
-              width: 180.setWidth,
+      child: IgnorePointer(
+        ignoring: true,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            CommonText(
+              text: Languages.of(context).txtSetYourDueDateDesc,
+              textColor: CustomAppColor.of(context).txtLightGrey,
+              textAlign: TextAlign.start,
             ),
-          ),
-          SizedBox(height: 24.setHeight),
-          CommonButton(
-            height: 46.setHeight,
-            text: Languages.of(context).txtFirstDayOfLastPeriod,
-            buttonColor: isFirstDayIOfLastPeriodDateSelected ? CustomAppColor.of(context).setYourDueDateBtn : CustomAppColor.of(context).setYourDueDateBtn,
-            buttonTextColor: isFirstDayIOfLastPeriodDateSelected ? CustomAppColor.of(context).secondary : CustomAppColor.of(context).txtLightGrey,
-            borderColor: isFirstDayIOfLastPeriodDateSelected ? CustomAppColor.of(context).secondary : CustomAppColor.of(context).transparent,
-            buttonFontFamily: Constant.fontFamilyMedium500,
-            onTap: () async {
-              final result = await Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const SelectYourFirstDayOfLastPeriodScreen(),
-                  ));
+            SizedBox(height: 24.setHeight),
+            Center(
+              child: Image.asset(
+                AppAssets.imgSetYourDueDate,
+                height: 150.setHeight,
+                width: 180.setWidth,
+              ),
+            ),
+            SizedBox(height: 24.setHeight),
+            CommonButton(
+              height: 46.setHeight,
+              text: Languages.of(context).txtFirstDayOfLastPeriod,
+              buttonColor: isFirstDayIOfLastPeriodDateSelected ? CustomAppColor.of(context).setYourDueDateBtn : CustomAppColor.of(context).setYourDueDateBtn,
+              buttonTextColor: isFirstDayIOfLastPeriodDateSelected ? CustomAppColor.of(context).secondary : CustomAppColor.of(context).txtLightGrey,
+              borderColor: isFirstDayIOfLastPeriodDateSelected ? CustomAppColor.of(context).secondary : CustomAppColor.of(context).transparent,
+              buttonFontFamily: Constant.fontFamilyMedium500,
+              onTap: () async {
+                final result = await Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const SelectYourFirstDayOfLastPeriodScreen(),
+                    ));
 
-              if (result == true) {
-                setState(() {
-                  isFirstDayIOfLastPeriodDateSelected = true;
-                });
-              }
-            },
-          ),
-          SizedBox(height: 24.setHeight),
-          CommonButton(
-            height: 46.setHeight,
-            text: Languages.of(context).txtEstimateDueDate,
-            buttonColor: isEstimatedDueDateSelected ? CustomAppColor.of(context).setYourDueDateBtn : CustomAppColor.of(context).setYourDueDateBtn,
-            borderColor: isEstimatedDueDateSelected ? CustomAppColor.of(context).secondary : CustomAppColor.of(context).transparent,
-            buttonTextColor: isEstimatedDueDateSelected ? CustomAppColor.of(context).secondary : CustomAppColor.of(context).txtLightGrey,
-            buttonFontFamily: Constant.fontFamilyMedium500,
-            onTap: () async {
-              final result = await Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const EstimatedDueDateScreen(),
-                  ));
+                if (result == true) {
+                  setState(() {
+                    isFirstDayIOfLastPeriodDateSelected = true;
+                  });
+                }
+              },
+            ),
+            SizedBox(height: 24.setHeight),
+            CommonButton(
+              height: 46.setHeight,
+              text: Languages.of(context).txtEstimateDueDate,
+              buttonColor: isEstimatedDueDateSelected ? CustomAppColor.of(context).setYourDueDateBtn : CustomAppColor.of(context).setYourDueDateBtn,
+              borderColor: isEstimatedDueDateSelected ? CustomAppColor.of(context).secondary : CustomAppColor.of(context).transparent,
+              buttonTextColor: isEstimatedDueDateSelected ? CustomAppColor.of(context).secondary : CustomAppColor.of(context).txtLightGrey,
+              buttonFontFamily: Constant.fontFamilyMedium500,
+              onTap: () async {
+                final result = await Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const EstimatedDueDateScreen(),
+                    ));
 
-              if (result == true) {
-                setState(() {
-                  isEstimatedDueDateSelected = true;
-                });
-              }
-            },
-          ),
-          SizedBox(height: 24.setHeight),
-          CommonButton(
-            height: 46.setHeight,
-            text: Languages.of(context).txtDateOfConception,
-            buttonColor: isDateOfConceptionSelected ? CustomAppColor.of(context).setYourDueDateBtn : CustomAppColor.of(context).setYourDueDateBtn,
-            buttonTextColor: isDateOfConceptionSelected ? CustomAppColor.of(context).secondary : CustomAppColor.of(context).txtLightGrey,
-            borderColor: isDateOfConceptionSelected ? CustomAppColor.of(context).secondary : CustomAppColor.of(context).transparent,
-            buttonFontFamily: Constant.fontFamilyMedium500,
-            onTap: () async {
-              final result = await Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const DateOfConceptionScreen(),
-                  ));
+                if (result == true) {
+                  setState(() {
+                    isEstimatedDueDateSelected = true;
+                  });
+                }
+              },
+            ),
+            SizedBox(height: 24.setHeight),
+            CommonButton(
+              height: 46.setHeight,
+              text: Languages.of(context).txtDateOfConception,
+              buttonColor: isDateOfConceptionSelected ? CustomAppColor.of(context).setYourDueDateBtn : CustomAppColor.of(context).setYourDueDateBtn,
+              buttonTextColor: isDateOfConceptionSelected ? CustomAppColor.of(context).secondary : CustomAppColor.of(context).txtLightGrey,
+              borderColor: isDateOfConceptionSelected ? CustomAppColor.of(context).secondary : CustomAppColor.of(context).transparent,
+              buttonFontFamily: Constant.fontFamilyMedium500,
+              onTap: () async {
+                final result = await Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const DateOfConceptionScreen(),
+                    ));
 
-              if (result == true) {
-                setState(() {
-                  isDateOfConceptionSelected = true;
-                });
-              }
-            },
-          ),
-        ],
+                if (result == true) {
+                  setState(() {
+                    isDateOfConceptionSelected = true;
+                  });
+                }
+              },
+            ),
+          ],
+        ),
       ),
     );
   }

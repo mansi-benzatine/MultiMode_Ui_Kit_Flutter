@@ -48,9 +48,12 @@ class _EstimatedDueDateScreenState extends State<EstimatedDueDateScreen> impleme
                 Expanded(child: _calenderView()),
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: 20.setWidth, vertical: 20.setHeight),
-                  child: CommonButton(
-                    text: Languages.of(context).txtContinue,
-                    onTap: () => Navigator.pop(context, true),
+                  child: IgnorePointer(
+                    ignoring: true,
+                    child: CommonButton(
+                      text: Languages.of(context).txtContinue,
+                      onTap: () => Navigator.pop(context, true),
+                    ),
                   ),
                 )
               ],

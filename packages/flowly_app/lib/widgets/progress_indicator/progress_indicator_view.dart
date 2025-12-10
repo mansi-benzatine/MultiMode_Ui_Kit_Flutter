@@ -9,11 +9,9 @@ import 'package:flutter/material.dart';
 import '../../utils/app_color.dart' show CustomAppColor;
 
 class DownloadAlertDialog extends StatefulWidget {
-  static Route<void> route() {
-    return MaterialPageRoute(builder: (_) => const DownloadAlertDialog());
-  }
+  final BuildContext parentContext;
 
-  const DownloadAlertDialog({super.key});
+  const DownloadAlertDialog({super.key, required this.parentContext});
 
   @override
   State<DownloadAlertDialog> createState() => _DownloadAlertDialogState();
@@ -34,10 +32,10 @@ class _DownloadAlertDialogState extends State<DownloadAlertDialog> with SingleTi
       if (progressValue >= 1.0) {
         timer.cancel();
 
-        Future.delayed(const Duration(milliseconds: 300), () {
-          if (!mounted) return;
-          Navigator.pop(context);
-          Navigator.push(context, DashboardScreen.route());
+        Navigator.pop(context);
+
+        Future.microtask(() {
+          Navigator.push(widget.parentContext, DashboardScreen.route());
         });
 
         return;
