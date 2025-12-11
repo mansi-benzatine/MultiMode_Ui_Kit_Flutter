@@ -1,0 +1,73 @@
+import 'package:cinemix_app/ui/login/view/login_screen.dart';
+import 'package:cinemix_app/utils/app_assets.dart';
+import 'package:cinemix_app/utils/constant.dart';
+import 'package:cinemix_app/utils/sizer_utils.dart';
+import 'package:cinemix_app/widgets/text/common_text.dart';
+import 'package:flutter/material.dart';
+
+import '../../utils/app_color.dart';
+import '../button/common_button.dart';
+
+class ResetPasswordSuccessDialog extends StatelessWidget {
+  final BuildContext parentContext;
+
+  const ResetPasswordSuccessDialog({super.key, required this.parentContext});
+
+  @override
+  Widget build(BuildContext context) {
+    return Dialog(
+      insetPadding: EdgeInsets.symmetric(horizontal: 30.setWidth),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(24),
+      ),
+      child: Container(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            colors: [
+              CustomAppColor.of(context).bgShadowDark,
+              CustomAppColor.of(context).bgTextFormFieldShadowLight,
+            ],
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+          ),
+          borderRadius: BorderRadius.circular(24),
+        ),
+        padding: EdgeInsets.symmetric(vertical: 26.setWidth, horizontal: 24.setWidth),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Image.asset(
+              AppAssets.icResetPassword,
+              width: 80.setWidth,
+              height: 80.setHeight,
+            ),
+            SizedBox(height: 15.setHeight),
+            CommonText(
+              text: "Congratulations!",
+              fontFamily: Constant.fontFamilyClashDisplaySemiBold600,
+              fontSize: 22.setFontSize,
+            ),
+            SizedBox(height: 8.setHeight),
+            CommonText(
+              text: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem dummy.",
+              fontSize: 13.setFontSize,
+              textColor: CustomAppColor.of(context).txtLightGrey,
+            ),
+            SizedBox(height: 24.setHeight),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 50.setWidth),
+              child: CommonButton(
+                text: "Done!",
+                onTap: () {
+                  Navigator.pop(context);
+                  Navigator.push(parentContext, LoginScreen.route());
+                },
+                height: 45.setHeight,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
