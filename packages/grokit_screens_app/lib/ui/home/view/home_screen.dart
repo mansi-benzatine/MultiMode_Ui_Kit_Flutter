@@ -79,6 +79,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
           _isBottomSheetOpen = true;
         });
         Utils.showBottomSheetDialog(
+          isDismissible: true,
           context,
           widgets: const SelectDeliveryLocationBottomSheet(),
         ).whenComplete(

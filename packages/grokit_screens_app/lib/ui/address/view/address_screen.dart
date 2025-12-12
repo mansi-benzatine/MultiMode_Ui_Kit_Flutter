@@ -51,6 +51,7 @@ class _AddressScreenState extends State<AddressScreen> implements TopBarClickLis
         });
         Utils.showBottomSheetDialog(
           context,
+          isDismissible: true,
           widgets: const SelectOptionBottomSheet(),
         ).whenComplete(
           () {

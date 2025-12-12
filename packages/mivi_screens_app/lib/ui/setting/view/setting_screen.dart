@@ -103,16 +103,18 @@ class _SettingScreenState extends State<SettingScreen> {
       WidgetsBinding.instance.addPostFrameCallback((_) {
         showDialog(
           context: context,
+          barrierDismissible: true,
           builder: (dialogContext) {
             return PopScope(
-                canPop: false,
-                onPopInvokedWithResult: (didPop, result) {
-                  if (!didPop) {
-                    Navigator.pop(dialogContext);
-                    Navigator.pop(context);
-                  }
-                },
-                child: LogoutDialog());
+              canPop: false,
+              onPopInvokedWithResult: (didPop, result) {
+                if (!didPop) {
+                  Navigator.pop(dialogContext);
+                  Navigator.pop(context);
+                }
+              },
+              child: const LogoutDialog(),
+            );
           },
         );
       });

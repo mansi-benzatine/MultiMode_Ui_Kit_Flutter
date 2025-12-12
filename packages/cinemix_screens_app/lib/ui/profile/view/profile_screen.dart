@@ -104,6 +104,7 @@ class _ProfileScreenState extends State<ProfileScreen> implements TopBarClickLis
     if (widget.isShowLogoutAlert) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
         showDialog(
+          barrierDismissible: true,
           context: context,
           builder: (dialogContext) {
             return PopScope(

@@ -59,6 +59,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
       WidgetsBinding.instance.addPostFrameCallback((_) {
         showDialog(
           context: context,
+          barrierDismissible: true,
           builder: (dialogContext) {
             return PopScope(
               canPop: false,

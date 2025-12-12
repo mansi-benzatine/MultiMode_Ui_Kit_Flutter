@@ -45,6 +45,7 @@ class _PaymentMethodScreenState extends State<PaymentMethodScreen> implements To
       WidgetsBinding.instance.addPostFrameCallback((_) {
         showDialog(
           context: context,
+          barrierDismissible: true,
           builder: (dialogContext) {
             return PopScope(
               canPop: false,

@@ -127,7 +127,7 @@ class _MyProfileScreenState extends State<MyProfileScreen> implements TopBarClic
           context: context,
           isScrollControlled: true,
           enableDrag: false,
-          isDismissible: false,
+          isDismissible: true,
           backgroundColor: Colors.transparent,
           builder: (_) {
             return Padding(

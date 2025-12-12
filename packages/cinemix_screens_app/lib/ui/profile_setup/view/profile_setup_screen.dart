@@ -49,6 +49,7 @@ class _ProfileSetupScreenState extends State<ProfileSetupScreen> implements TopB
       WidgetsBinding.instance.addPostFrameCallback((_) {
         showDialog(
           context: context,
+          barrierDismissible: true,
           builder: (dialogContext) {
             return PopScope(
                 canPop: false,

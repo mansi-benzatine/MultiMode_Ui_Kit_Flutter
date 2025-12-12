@@ -74,7 +74,7 @@ class _HomeScreenState extends State<HomeScreen> implements TopBarClickListener 
           context: context,
           isScrollControlled: true,
           enableDrag: false,
-          isDismissible: false,
+          isDismissible: true,
           backgroundColor: Colors.transparent,
           builder: (_) => const SwitchProfileBottomSheet(),
         ).whenComplete(
@@ -99,7 +99,7 @@ class _HomeScreenState extends State<HomeScreen> implements TopBarClickListener 
           context: context,
           isScrollControlled: true,
           enableDrag: false,
-          isDismissible: false,
+          isDismissible: true,
           backgroundColor: Colors.transparent,
           builder: (context) => EditAvatarBottomSheet(),
         ).whenComplete(

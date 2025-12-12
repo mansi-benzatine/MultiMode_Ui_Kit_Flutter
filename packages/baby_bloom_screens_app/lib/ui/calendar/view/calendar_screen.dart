@@ -401,7 +401,7 @@ class _CalendarScreenState extends State<CalendarScreen> implements TopBarClickL
           context: context,
           isScrollControlled: true,
           enableDrag: false,
-          isDismissible: false,
+          isDismissible: true,
           backgroundColor: Colors.white,
           builder: (_) {
             return SafeArea(
@@ -501,7 +501,7 @@ class _CalendarScreenState extends State<CalendarScreen> implements TopBarClickL
           context: context,
           isScrollControlled: true,
           enableDrag: true,
-          isDismissible: false,
+          isDismissible: true,
           backgroundColor: Colors.white,
           builder: (_) {
             return const AddEventBottomSheet();
@@ -528,7 +528,7 @@ class _CalendarScreenState extends State<CalendarScreen> implements TopBarClickL
           context: context,
           isScrollControlled: true,
           enableDrag: true,
-          isDismissible: false,
+          isDismissible: true,
           backgroundColor: Colors.white,
           builder: (_) {
             return const AddEventBottomSheet(
@@ -557,7 +557,7 @@ class _CalendarScreenState extends State<CalendarScreen> implements TopBarClickL
           context: context,
           isScrollControlled: true,
           enableDrag: true,
-          isDismissible: false,
+          isDismissible: true,
           backgroundColor: Colors.white,
           builder: (_) {
             return SafeArea(
@@ -667,7 +667,7 @@ class _CalendarScreenState extends State<CalendarScreen> implements TopBarClickL
           context: context,
           isScrollControlled: true,
           enableDrag: true,
-          isDismissible: false,
+          isDismissible: true,
           backgroundColor: Colors.white,
           builder: (_) {
             return SafeArea(

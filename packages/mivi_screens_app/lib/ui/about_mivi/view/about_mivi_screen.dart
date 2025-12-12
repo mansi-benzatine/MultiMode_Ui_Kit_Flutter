@@ -44,6 +44,7 @@ class _AboutMiviScreenState extends State<AboutMiviScreen> implements TopBarClic
         });
         showModalBottomSheet(
           context: context,
+          isDismissible: true,
           backgroundColor: const Color(0xFF0E0F14),
           shape: const RoundedRectangleBorder(
             borderRadius: BorderRadius.vertical(top: Radius.circular(24)),

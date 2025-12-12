@@ -83,7 +83,7 @@ class _HomeScreenState extends State<HomeScreen> {
           context: context,
           isScrollControlled: true,
           enableDrag: false,
-          isDismissible: false,
+          isDismissible: true,
           backgroundColor: Colors.transparent,
           builder: (_) => const EditDueDateBottomSheet(),
         ).whenComplete(

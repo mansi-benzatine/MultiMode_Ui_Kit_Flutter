@@ -196,7 +196,7 @@ class _MyProfileScreenState extends State<MyProfileScreen> implements TopBarClic
         });
         showModalBottomSheet(
           context: context,
-          isDismissible: false,
+          isDismissible: true,
           isScrollControlled: true,
           enableDrag: false,
           backgroundColor: Colors.transparent,
@@ -216,6 +216,7 @@ class _MyProfileScreenState extends State<MyProfileScreen> implements TopBarClic
       WidgetsBinding.instance.addPostFrameCallback((_) {
         showDialog(
             context: context,
+            barrierDismissible: true,
             builder: (dialogContext) {
               return PopScope(
                 canPop: false,
@@ -235,6 +236,7 @@ class _MyProfileScreenState extends State<MyProfileScreen> implements TopBarClic
       WidgetsBinding.instance.addPostFrameCallback((_) {
         showDialog(
             context: context,
+            barrierDismissible: true,
             builder: (dialogContext) {
               return PopScope(
                 canPop: false,
@@ -254,6 +256,7 @@ class _MyProfileScreenState extends State<MyProfileScreen> implements TopBarClic
       WidgetsBinding.instance.addPostFrameCallback((_) {
         showDialog(
             context: context,
+            barrierDismissible: true,
             builder: (dialogContext) {
               return PopScope(
                 canPop: false,

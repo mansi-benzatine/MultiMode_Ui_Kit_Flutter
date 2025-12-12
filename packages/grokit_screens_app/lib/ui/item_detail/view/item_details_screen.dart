@@ -70,6 +70,7 @@ class _ItemDetailsScreenState extends State<ItemDetailsScreen> implements TopBar
         });
         Utils.showBottomSheetDialog(
           context,
+          isDismissible: true,
           widgets: const ShareBottomSheet(),
         ).whenComplete(
           () {

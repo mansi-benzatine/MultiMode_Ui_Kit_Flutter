@@ -327,6 +327,7 @@ class _ExploreMovieScreenState extends State<ExploreMovieScreen> implements TopB
       WidgetsBinding.instance.addPostFrameCallback((_) {
         showDialog(
           context: context,
+          barrierDismissible: true,
           builder: (dialogContext) {
             return PopScope(
               onPopInvokedWithResult: (didPop, result) {
@@ -347,6 +348,7 @@ class _ExploreMovieScreenState extends State<ExploreMovieScreen> implements TopB
       WidgetsBinding.instance.addPostFrameCallback((_) {
         showDialog(
           context: context,
+          barrierDismissible: true,
           builder: (dialogContext) {
             return PopScope(
               canPop: false,
@@ -370,6 +372,7 @@ class _ExploreMovieScreenState extends State<ExploreMovieScreen> implements TopB
         });
         Utils.showBottomSheetDialog(
           context,
+          isDismissible: true,
           widgets: const ShareBottomSheet(),
         ).whenComplete(
           () {

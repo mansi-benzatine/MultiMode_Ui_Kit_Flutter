@@ -143,7 +143,7 @@ class _CalendarScreenState extends State<CalendarScreen> implements TopBarClickL
           context: context,
           isScrollControlled: true,
           enableDrag: false,
-          isDismissible: false,
+          isDismissible: true,
           backgroundColor: Colors.transparent,
           builder: (_) {
             return Padding(
@@ -189,7 +189,7 @@ class _CalendarScreenState extends State<CalendarScreen> implements TopBarClickL
           context: context,
           isScrollControlled: true,
           enableDrag: false,
-          isDismissible: false,
+          isDismissible: true,
           backgroundColor: Colors.transparent,
           builder: (_) {
             return Padding(

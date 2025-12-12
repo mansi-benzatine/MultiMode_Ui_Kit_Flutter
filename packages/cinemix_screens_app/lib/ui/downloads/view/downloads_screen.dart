@@ -279,6 +279,7 @@ class _DownloadsScreenState extends State<DownloadsScreen> implements TopBarClic
     if (widget.isShowDeleteAlert) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
         showDialog(
+          barrierDismissible: true,
           context: context,
           builder: (dialogContext) {
             return PopScope(

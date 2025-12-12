@@ -103,6 +103,7 @@ class _VaccinationScreenState extends State<VaccinationScreen> implements TopBar
       WidgetsBinding.instance.addPostFrameCallback((_) {
         showDialog(
           context: context,
+          barrierDismissible: true,
           builder: (dialogContext) {
             return PopScope(
                 canPop: false,
@@ -121,6 +122,7 @@ class _VaccinationScreenState extends State<VaccinationScreen> implements TopBar
       WidgetsBinding.instance.addPostFrameCallback((_) {
         showDialog(
           context: context,
+          barrierDismissible: true,
           builder: (dialogContext) {
             return PopScope(
                 canPop: false,
@@ -139,6 +141,7 @@ class _VaccinationScreenState extends State<VaccinationScreen> implements TopBar
       WidgetsBinding.instance.addPostFrameCallback((_) {
         showDialog(
           context: context,
+          barrierDismissible: true,
           builder: (dialogContext) {
             return PopScope(
                 canPop: false,

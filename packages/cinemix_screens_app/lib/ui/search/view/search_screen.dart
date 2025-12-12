@@ -282,6 +282,7 @@ class _SearchScreenState extends State<SearchScreen> {
         });
         Utils.showBottomSheetDialog(
           context,
+          isDismissible: true,
           widgets: const SortFilterBottomSheet(),
         ).whenComplete(
           () {

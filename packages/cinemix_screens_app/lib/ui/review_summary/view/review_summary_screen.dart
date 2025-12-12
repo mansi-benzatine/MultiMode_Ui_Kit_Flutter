@@ -34,7 +34,7 @@ class _ReviewSummaryScreenState extends State<ReviewSummaryScreen> implements To
     if (widget.isShowSubSubscriptionDoneAlert) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
         showDialog(
-          barrierDismissible: false,
+          barrierDismissible: true,
           context: context,
           builder: (dialogContext) {
             return PopScope(

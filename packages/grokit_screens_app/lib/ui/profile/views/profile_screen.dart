@@ -157,6 +157,7 @@ class _ProfileScreenState extends State<ProfileScreen> implements TopBarClickLis
       WidgetsBinding.instance.addPostFrameCallback((_) {
         showDialog(
             context: context,
+            barrierDismissible: true,
             builder: (dialogContext) {
               return PopScope(
                   canPop: false,
