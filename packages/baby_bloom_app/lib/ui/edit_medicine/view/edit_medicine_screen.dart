@@ -131,7 +131,7 @@ class _EditMedicineScreenState extends State<EditMedicineScreen> implements TopB
                                 });
                               },
                               activeColor: Colors.green,
-                              inactiveColor: CustomAppColor.of(context).roundBg,
+                              inactiveColor: CustomAppColor.of(context).grey,
                               activeToggleColor: CustomAppColor.of(context).white,
                               inactiveToggleColor: CustomAppColor.of(context).white,
                               width: 40.setWidth,

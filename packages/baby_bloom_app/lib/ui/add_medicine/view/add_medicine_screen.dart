@@ -130,7 +130,7 @@ class _AddMedicineScreenState extends State<AddMedicineScreen> implements TopBar
                                 });
                               },
                               activeColor: Colors.green,
-                              inactiveColor: CustomAppColor.of(context).roundBg,
+                              inactiveColor: CustomAppColor.of(context).grey,
                               activeToggleColor: CustomAppColor.of(context).white,
                               inactiveToggleColor: CustomAppColor.of(context).white,
                               width: 40.setWidth,
