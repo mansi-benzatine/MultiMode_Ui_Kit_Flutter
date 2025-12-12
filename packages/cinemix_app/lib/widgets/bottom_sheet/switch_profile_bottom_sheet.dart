@@ -106,7 +106,7 @@ class _SwitchProfileBottomSheetState extends State<SwitchProfileBottomSheet> {
                             gradient: item.backgroundColor == null
                                 ? LinearGradient(
                                     colors: [
-                                      CustomAppColor.of(context).bgShadowDark.withValues(alpha: 0.6),
+                                      CustomAppColor.of(context).bgLanguageShadow,
                                       CustomAppColor.of(context).bgTextFormFieldShadowLight,
                                     ],
                                     begin: Alignment.topLeft,

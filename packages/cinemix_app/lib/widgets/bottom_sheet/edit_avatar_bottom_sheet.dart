@@ -1,5 +1,3 @@
-import 'package:cinemix_app/ui/add_avatar/view/add_avatar_screen.dart';
-import 'package:cinemix_app/ui/edit_avatar/view/edit_avatar_screen.dart';
 import 'package:cinemix_app/ui/who_is_watching/datamodel/who_is_watching_data.dart';
 import 'package:cinemix_app/utils/app_assets.dart';
 import 'package:cinemix_app/utils/app_color.dart';
@@ -93,7 +91,7 @@ class _EditAvatarBottomSheetState extends State<EditAvatarBottomSheet> {
                       if (item.isAddProfile) {
                         // Navigator.push(context, AddProfileScreen.route());
                       } else {
-                        Navigator.push(context, EditAvatarScreen.route());
+                        // Navigator.push(context, EditAvatarScreen.route());
                       }
                     },
                     child: Column(
@@ -109,7 +107,7 @@ class _EditAvatarBottomSheetState extends State<EditAvatarBottomSheet> {
                             gradient: item.backgroundColor == null
                                 ? LinearGradient(
                                     colors: [
-                                      CustomAppColor.of(context).bgShadowDark.withValues(alpha: 0.6),
+                                      CustomAppColor.of(context).bgLanguageShadow,
                                       CustomAppColor.of(context).bgTextFormFieldShadowLight,
                                     ],
                                     begin: Alignment.topLeft,
@@ -126,7 +124,7 @@ class _EditAvatarBottomSheetState extends State<EditAvatarBottomSheet> {
                           child: item.isAddProfile
                               ? GestureDetector(
                                   onTap: () {
-                                    Navigator.push(context, AddAvatarScreen.route());
+                                    // Navigator.push(context, AddAvatarScreen.route());
                                   },
                                   child: Icon(
                                     Icons.add,
