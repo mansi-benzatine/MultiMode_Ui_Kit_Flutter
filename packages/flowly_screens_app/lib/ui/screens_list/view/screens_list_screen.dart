@@ -357,7 +357,7 @@ class _ScreenListScreen extends State<ScreenListScreen> {
             },
           ),
           title: CommonText(
-            text: "Flowly App",
+            text: "Flowly - Period Tracker App",
             fontSize: 23.setFontSize,
             fontFamily: Constant.fontFamilyMontserratSemiBold,
             fontWeight: FontWeight.w600,

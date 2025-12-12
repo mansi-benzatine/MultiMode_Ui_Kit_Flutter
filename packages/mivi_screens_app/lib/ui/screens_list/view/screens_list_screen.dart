@@ -589,7 +589,7 @@ class _ScreenListScreen extends State<ScreenListScreen> {
             },
           ),
           title: CommonText(
-            text: "Mivi App",
+            text: "Mivi - Music Video Maker App",
             fontSize: 23.setFontSize,
             fontFamily: Constant.fontFamilySemiBold600,
             fontWeight: FontWeight.w600,

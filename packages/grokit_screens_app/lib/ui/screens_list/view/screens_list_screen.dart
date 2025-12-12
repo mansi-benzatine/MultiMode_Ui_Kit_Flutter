@@ -351,7 +351,7 @@ class _ScreenListScreen extends State<ScreenListScreen> {
             },
           ),
           title: CommonText(
-            text: "Grokit App",
+            text: "Grokit - Grocery,Household Essentials Delivery App",
             fontSize: 23.setFontSize,
             fontFamily: Constant.fontFamilyMontserratSemiBold,
             fontWeight: FontWeight.w600,

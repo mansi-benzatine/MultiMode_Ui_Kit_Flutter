@@ -489,7 +489,7 @@ class _ScreenListScreen extends State<ScreenListScreen> {
             },
           ),
           title: CommonText(
-            text: "Baby Bloom App",
+            text: "BabyBloom - Pregnancy Tracker App",
             fontSize: 23.setFontSize,
             fontFamily: Constant.fontFamilyMontserratSemiBold,
             fontWeight: FontWeight.w600,
