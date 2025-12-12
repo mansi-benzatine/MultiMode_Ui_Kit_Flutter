@@ -54,7 +54,6 @@ class _PlanActivatedAlertDialogState extends State<PlanActivatedAlertDialog> {
               text: "Back to Home",
               onTap: () {
                 Navigator.pop(context);
-                Navigator.pop(context);
               },
               borderColor: CustomAppColor.of(context).secondary,
               buttonColor: CustomAppColor.of(context).secondary,

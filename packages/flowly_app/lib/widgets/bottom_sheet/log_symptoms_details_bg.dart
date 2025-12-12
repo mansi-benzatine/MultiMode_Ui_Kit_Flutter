@@ -14,11 +14,13 @@ import '../../ui/log_symptoms/datamodel/log_symptoms_data.dart';
 class LogDetailsBottomSheet extends StatelessWidget {
   final DailyLog log;
   final String dayStatus;
+  final BuildContext parentContext;
 
   const LogDetailsBottomSheet({
     super.key,
     required this.log,
     required this.dayStatus,
+    required this.parentContext,
   });
 
   @override
@@ -152,7 +154,7 @@ class LogDetailsBottomSheet extends StatelessWidget {
               onTap: () {
                 Navigator.pop(context);
                 Navigator.push(
-                  context,
+                  parentContext,
                   LogSymptomsScreen.route(date: log.date),
                 );
               },

@@ -376,6 +376,7 @@ class _CalendarScreenState extends State<CalendarScreen> implements TopBarClickL
             Utils.showBottomSheetDialog(
               context,
               widgets: LogDetailsBottomSheet(
+                parentContext: context,
                 log: logs[key]!,
                 dayStatus: dayStatus,
               ),
@@ -383,7 +384,10 @@ class _CalendarScreenState extends State<CalendarScreen> implements TopBarClickL
           } else {
             Utils.showBottomSheetDialog(
               context,
-              widgets: LogSymptomsBs(date: date),
+              widgets: LogSymptomsBs(
+                date: date,
+                parentContext: context,
+              ),
             );
           }
         },

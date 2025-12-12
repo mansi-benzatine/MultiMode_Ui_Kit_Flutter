@@ -108,7 +108,6 @@ class _PaymentMethodScreenState extends State<PaymentMethodScreen> implements To
             child: CommonButton(
               text: Languages.of(context).txtUpgradeNow,
               onTap: () {
-                Navigator.pop(context);
                 showDialog(
                   context: context,
                   builder: (context) {

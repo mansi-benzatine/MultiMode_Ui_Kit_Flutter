@@ -132,7 +132,7 @@ class ExportVideoContentState extends State<ExportVideoContent> {
                       ),
                     ),
                     onPressed: () async {
-                      final navigator = Navigator.of(context, rootNavigator: true);
+                      /*  final navigator = Navigator.of(context, rootNavigator: true);
                       navigator.pop();
                       await Future.delayed(const Duration(milliseconds: 300));
                       _showLoader(navigator.context);
@@ -140,7 +140,12 @@ class ExportVideoContentState extends State<ExportVideoContent> {
                       if (navigator.canPop()) {
                         navigator.pop();
                       }
-                      navigator.push(ShareScreen.route());
+                      navigator.push(ShareScreen.route());*/
+
+                      final navigator = Navigator.of(context, rootNavigator: true);
+                      _showLoader(navigator.context);
+                      await Future.delayed(const Duration(seconds: 2));
+                      Navigator.push(widget.parentContext, ShareScreen.route());
                     },
                     child: CommonText(
                       text: "Export",

@@ -256,94 +256,97 @@ class _SelfCareScreenState extends State<SelfCareScreen> implements TopBarClickL
               padding: EdgeInsets.only(left: 20.setWidth),
               child: Wrap(
                 children: list.map((item) {
-                  return GestureDetector(
-                    onTap: () => Navigator.push(context, ExploreSelfCareScreen.route(selfCare: item)),
-                    child: Stack(
-                      children: [
-                        Padding(
-                          padding: EdgeInsets.only(bottom: 12.setHeight),
-                          child: Container(
-                            width: 160.setWidth,
-                            height: 184.setHeight,
-                            decoration: BoxDecoration(
-                              color: CustomAppColor.of(context).cardBg,
-                              borderRadius: BorderRadius.circular(20),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: CustomAppColor.of(context).black.withValues(alpha: 0.08),
-                                  blurRadius: 20,
-                                  spreadRadius: 2,
-                                  offset: const Offset(0, 4),
-                                ),
-                              ],
-                            ),
-                            margin: EdgeInsets.only(right: 15.setHeight),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                ClipRRect(
-                                  borderRadius: const BorderRadius.only(
-                                    topLeft: Radius.circular(24),
-                                    topRight: Radius.circular(24),
-                                  ),
-                                  child: Image.asset(
-                                    item.imageName,
-                                    height: 140.setHeight,
-                                    width: 160.setWidth,
-                                    fit: BoxFit.cover,
-                                  ),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.all(6),
-                                  child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      CommonText(
-                                        text: item.title,
-                                        fontFamily: Constant.fontFamilyMulishBold700,
-                                        fontSize: 12.setFontSize,
-                                        maxLines: 2,
-                                        overflow: TextOverflow.ellipsis,
-                                        textAlign: TextAlign.start,
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                        if (item.isVideo)
-                          Positioned(
-                            top: 22.setHeight,
-                            left: 0.setWidth,
+                  return IgnorePointer(
+                    ignoring: true,
+                    child: GestureDetector(
+                      onTap: () => Navigator.push(context, ExploreSelfCareScreen.route(selfCare: item)),
+                      child: Stack(
+                        children: [
+                          Padding(
+                            padding: EdgeInsets.only(bottom: 12.setHeight),
                             child: Container(
+                              width: 160.setWidth,
+                              height: 184.setHeight,
                               decoration: BoxDecoration(
-                                color: CustomAppColor.of(context).black.withValues(alpha: 0.3),
-                                borderRadius: const BorderRadius.only(
-                                  topRight: Radius.circular(8),
-                                  bottomRight: Radius.circular(8),
-                                ),
-                              ),
-                              padding: EdgeInsets.symmetric(horizontal: 6.setWidth, vertical: 4.setHeight),
-                              child: Row(
-                                children: [
-                                  Image.asset(
-                                    AppAssets.icVideoPlay,
-                                    width: 12.setWidth,
-                                    height: 12.setHeight,
+                                color: CustomAppColor.of(context).cardBg,
+                                borderRadius: BorderRadius.circular(20),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: CustomAppColor.of(context).black.withValues(alpha: 0.08),
+                                    blurRadius: 20,
+                                    spreadRadius: 2,
+                                    offset: const Offset(0, 4),
                                   ),
-                                  SizedBox(width: 2.setWidth),
-                                  CommonText(
-                                    text: item.duration ?? "",
-                                    fontSize: 10.setFontSize,
-                                    textColor: CustomAppColor.of(context).white,
+                                ],
+                              ),
+                              margin: EdgeInsets.only(right: 15.setHeight),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  ClipRRect(
+                                    borderRadius: const BorderRadius.only(
+                                      topLeft: Radius.circular(24),
+                                      topRight: Radius.circular(24),
+                                    ),
+                                    child: Image.asset(
+                                      item.imageName,
+                                      height: 140.setHeight,
+                                      width: 160.setWidth,
+                                      fit: BoxFit.cover,
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.all(6),
+                                    child: Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        CommonText(
+                                          text: item.title,
+                                          fontFamily: Constant.fontFamilyMulishBold700,
+                                          fontSize: 12.setFontSize,
+                                          maxLines: 2,
+                                          overflow: TextOverflow.ellipsis,
+                                          textAlign: TextAlign.start,
+                                        ),
+                                      ],
+                                    ),
                                   ),
                                 ],
                               ),
                             ),
                           ),
-                      ],
+                          if (item.isVideo)
+                            Positioned(
+                              top: 22.setHeight,
+                              left: 0.setWidth,
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  color: CustomAppColor.of(context).black.withValues(alpha: 0.3),
+                                  borderRadius: const BorderRadius.only(
+                                    topRight: Radius.circular(8),
+                                    bottomRight: Radius.circular(8),
+                                  ),
+                                ),
+                                padding: EdgeInsets.symmetric(horizontal: 6.setWidth, vertical: 4.setHeight),
+                                child: Row(
+                                  children: [
+                                    Image.asset(
+                                      AppAssets.icVideoPlay,
+                                      width: 12.setWidth,
+                                      height: 12.setHeight,
+                                    ),
+                                    SizedBox(width: 2.setWidth),
+                                    CommonText(
+                                      text: item.duration ?? "",
+                                      fontSize: 10.setFontSize,
+                                      textColor: CustomAppColor.of(context).white,
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                        ],
+                      ),
                     ),
                   );
                 }).toList(),

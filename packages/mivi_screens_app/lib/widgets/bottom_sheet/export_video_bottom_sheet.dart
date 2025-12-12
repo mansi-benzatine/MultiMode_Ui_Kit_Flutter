@@ -227,7 +227,7 @@ void _showLoader(BuildContext context) async {
 
   if (!context.mounted) return;
 
-  if (Navigator.canPop(context)) {
+  /*if (Navigator.canPop(context)) {
     Navigator.pop(context);
-  }
+  }*/
 }

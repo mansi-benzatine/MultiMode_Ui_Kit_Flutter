@@ -9,8 +9,9 @@ import 'package:intl/intl.dart';
 
 class LogSymptomsBs extends StatelessWidget {
   final DateTime date;
+  final BuildContext parentContext;
 
-  const LogSymptomsBs({super.key, required this.date});
+  const LogSymptomsBs({super.key, required this.date, required this.parentContext});
 
   @override
   Widget build(BuildContext context) {
@@ -43,7 +44,7 @@ class LogSymptomsBs extends StatelessWidget {
             CommonButton(
               onTap: () {
                 Navigator.pop(context);
-                Navigator.push(context, LogSymptomsScreen.route(date: date));
+                Navigator.push(parentContext, LogSymptomsScreen.route(date: date));
               },
               text: "Log Symptoms",
               buttonColor: CustomAppColor.of(context).transparent,
