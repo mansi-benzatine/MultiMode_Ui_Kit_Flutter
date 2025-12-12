@@ -126,7 +126,7 @@ class _ScreenListScreen extends State<ScreenListScreen> {
             },
           ),
           leadingWidth: 38.setWidth,
-          title: CommonText(text: "Tracker Mode App", fontSize: 22.setFontSize, fontWeight: FontWeight.w700, textColor: CustomAppColor.of(context).white, fontFamily: Constant.fontFamilyMontserratSemiBold),
+          title: CommonText(text: "Tracker Mode App", fontSize: 18.setFontSize, fontWeight: FontWeight.w700, textColor: CustomAppColor.of(context).white, fontFamily: Constant.fontFamilyMontserratSemiBold),
         ),
         body: Container(
           width: double.infinity,

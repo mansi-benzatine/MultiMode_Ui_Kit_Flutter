@@ -394,7 +394,7 @@ class _FoodDeliveryScreensListScreen extends State<FoodDeliveryScreensListScreen
           elevation: 0,
           title: CommonText(
             text: "Food Delivery App",
-            fontSize: 22.setFontSize,
+            fontSize: 18.setFontSize,
             fontWeight: FontWeight.w700,
             fontFamily: Constant.fontFamilyMontserratSemiBold,
             textColor: CustomAppColor.of(context).white,

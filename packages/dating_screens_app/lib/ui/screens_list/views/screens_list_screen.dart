@@ -357,7 +357,7 @@ class _DatingAppScreenListScreen extends State<DatingAppScreenListScreen> {
           leadingWidth: 38.setWidth,
           title: CommonText(
             text: "Dating App",
-            fontSize: 22.setFontSize,
+            fontSize: 18.setFontSize,
             fontFamily: Constant.fontFamilyMontserratSemiBold,
             textColor: CustomAppColor.of(context).white,
           ),

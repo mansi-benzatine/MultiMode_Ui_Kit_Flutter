@@ -434,7 +434,7 @@ class _ChatAiScreenListScreen extends State<ChatAiScreenListScreen> {
           leadingWidth: 38.setWidth,
           title: CommonText(
             text: "Chat Ai App",
-            fontSize: 22.setFontSize,
+            fontSize: 18.setFontSize,
             fontWeight: FontWeight.w700,
             textColor: CustomAppColor.of(context).white,
           ),

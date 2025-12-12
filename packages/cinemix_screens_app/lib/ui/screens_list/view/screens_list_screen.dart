@@ -408,7 +408,7 @@ class _ScreenListScreen extends State<ScreenListScreen> {
           ),
           title: CommonText(
             text: "Cinemix - Movie Streaming App",
-            fontSize: 23.setFontSize,
+            fontSize: 18.setFontSize,
             fontFamily: Constant.fontFamilyMontserratSemiBold,
             fontWeight: FontWeight.w600,
             textColor: CustomAppColor.of(context).white,

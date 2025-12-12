@@ -884,7 +884,7 @@ class _GoozzyECommerceScreenListScreen extends State<GoozzyECommerceScreenListSc
           leadingWidth: AppSizes.setWidth(38),
           title: CommonText(
             text: "Goozzy E-Commerce App",
-            fontSize: AppSizes.setFontSize(22),
+            fontSize: AppSizes.setFontSize(18),
             textColor: CustomAppColor.of(context).white,
             fontWeight: FontWeight.w700,
             fontFamily: Constant.fontFamilyMontserratSemiBold,

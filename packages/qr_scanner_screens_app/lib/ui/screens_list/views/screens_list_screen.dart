@@ -778,7 +778,7 @@ class _ScreenListScreen extends State<ScreenListScreen> {
           leadingWidth: 38.setWidth,
           title: CommonText(
             text: "Qr Scanner App",
-            fontSize: 22.setFontSize,
+            fontSize: 18.setFontSize,
             fontWeight: FontWeight.w700,
             fontFamily: Constant.fontFamilyMontserratSemiBold,
             textColor: CustomAppColor.of(context).white,

@@ -918,7 +918,7 @@ class _ScreenListScreen extends State<ScreenListScreen> {
           ),
           title: CommonText(
             text: "Step Mode - Step Counter App",
-            fontSize: 20.setFontSize,
+            fontSize: 18.setFontSize,
             fontFamily: Constant.fontFamilyMontserratSemiBold,
             fontWeight: FontWeight.w600,
             textColor: CustomAppColor.of(context).white,

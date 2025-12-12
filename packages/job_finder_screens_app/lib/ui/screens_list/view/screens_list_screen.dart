@@ -485,7 +485,7 @@ class _ScreenListScreenState extends State<ScreenListScreen> {
         leadingWidth: 38.setWidth,
         title: CommonText(
           text: "Job Finder App",
-          fontSize: 22.setFontSize,
+          fontSize: 18.setFontSize,
           fontFamily: Constant.fontFamilyMontserratSemiBold,
           textColor: CustomAppColor.of(context).white,
           fontWeight: FontWeight.w700,
