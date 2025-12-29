@@ -242,7 +242,7 @@ class _ProfileScreenState extends State<ProfileScreen> implements TopBarClickLis
                                 showDialog(
                                   context: context,
                                   barrierColor: CustomAppColor.of(context).black.withOpacityPercent(0.3),
-                                  builder: (context) => const DeleteAccountDialog(),
+                                  builder: (_) => const DeleteAccountDialog(),
                                 );
                               },
                               isDestructive: true,
@@ -254,7 +254,7 @@ class _ProfileScreenState extends State<ProfileScreen> implements TopBarClickLis
                                 showDialog(
                                   context: context,
                                   barrierColor: CustomAppColor.of(context).black.withOpacityPercent(0.3),
-                                  builder: (context) => const LogoutDialog(),
+                                  builder: (_) => const LogoutDialog(),
                                 );
                               },
                               isDestructive: true,

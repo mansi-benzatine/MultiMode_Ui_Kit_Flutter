@@ -186,7 +186,7 @@ class _ExchangeDetailsBottomSheetState extends State<ExchangeDetailsBottomSheet>
                 showDialog(
                   context: widget.parentContext,
                   barrierColor: CustomAppColor.of(context).black.withOpacityPercent(0.3),
-                  builder: (context) => OrderExchangeDialog(
+                  builder: (_) => OrderExchangeDialog(
                     icon1: widget.to.stockIcon,
                     icon2: widget.from.stockIcon,
                     title1: widget.to.symbol,

@@ -153,7 +153,7 @@ class _DepositDetailsBottomSheetState extends State<DepositDetailsBottomSheet> {
                 showDialog(
                   context: widget.parentContext,
                   barrierColor: CustomAppColor.of(context).black.withOpacityPercent(0.3),
-                  builder: (context) => OrderReceivedDialog(
+                  builder: (_) => OrderReceivedDialog(
                     title: widget.data.company,
                     icon: widget.data.stockIcon,
                     onComplete: () {},

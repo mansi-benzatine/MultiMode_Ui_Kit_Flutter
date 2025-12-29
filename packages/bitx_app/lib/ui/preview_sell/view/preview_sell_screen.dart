@@ -54,14 +54,15 @@ class _PreviewSellScreenState extends State<PreviewSellScreen> implements TopBar
                 text: Languages.of(context).txtSellNow,
                 onTap: () {
                   showDialog(
-                      context: context,
-                      barrierColor: CustomAppColor.of(context).black.withOpacityPercent(0.3),
-                      builder: (context) => OrderReceivedDialog(
-                            title: widget.data.company,
-                            message: Languages.of(context).txtYourAccountIsReadyToUse,
-                            icon: widget.data.stockIcon,
-                            onComplete: () {},
-                          ));
+                    context: context,
+                    barrierColor: CustomAppColor.of(context).black.withOpacityPercent(0.3),
+                    builder: (_) => OrderReceivedDialog(
+                      title: widget.data.company,
+                      message: Languages.of(context).txtYourAccountIsReadyToUse,
+                      icon: widget.data.stockIcon,
+                      onComplete: () {},
+                    ),
+                  );
                 },
               ),
             )

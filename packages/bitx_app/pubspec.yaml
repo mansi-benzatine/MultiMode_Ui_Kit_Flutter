@@ -56,7 +56,6 @@ flutter:
     - assets/images/
     - assets/dark_images/
     - assets/icons/
-    - assets/dark_icons/
 
   fonts:
     - family: AvenirNextLTPro

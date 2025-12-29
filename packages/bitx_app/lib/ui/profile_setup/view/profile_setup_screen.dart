@@ -174,7 +174,7 @@ class _ProfileSetupScreenState extends State<ProfileSetupScreen> {
                                   showDialog(
                                     context: context,
                                     barrierColor: CustomAppColor.of(context).black.withOpacityPercent(0.3),
-                                    builder: (context) => CongratulationsDialog(
+                                    builder: (_) => CongratulationsDialog(
                                       title: Languages.of(context).txtCongratulations,
                                       message: Languages.of(context).txtYourAccountIsReadyToUse,
                                       onComplete: () {
